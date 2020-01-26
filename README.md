@@ -14,7 +14,7 @@ The technology for the frontend is not yet defined
 ## How to use the ...
 
 ### Backend
-See the [Backend Readme](./packages/backend/readme.md)
+See the [Backend Readme](./packages/backend/README.md)
 
 ### Frontend
 ...
