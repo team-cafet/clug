@@ -1,9 +1,13 @@
 const { Config } = require('@foal/core');
 
 module.exports = {
-  type: "sqlite",
-  database: Config.get('database.database'),
-  dropSchema: Config.get('database.dropSchema', false),
+  type: "postgres",
+  host:Config.get('database.host',"localhost"),
+  port:Config.get('database.port',"5432"),
+  username:Config.get('database.username',"postgres"),
+  password:Config.get('database.password',"1234"),
+  database:Config.get('database.name',"foaltstest"),
+  dropSchema: Config.get('database.dropschema', true),
   entities: ["build/app/**/*.entity.js"],
   migrations: ["build/migrations/*.js"],
   cli: {
