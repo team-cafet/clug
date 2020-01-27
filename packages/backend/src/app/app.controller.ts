@@ -4,6 +4,6 @@ import { ApiController } from './controllers';
 
 export class AppController {
   subControllers = [
-    controller('/api', ApiController),
+    controller('/api/v1', ApiController),
   ];
 }
