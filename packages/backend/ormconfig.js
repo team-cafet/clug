@@ -13,5 +13,5 @@ module.exports = {
   cli: {
     migrationsDir: "src/migrations"
   },
-  synchronize: Config.get('database.sync', true)
+  synchronize: Config.get('database.synchronize', true)
 }

@@ -31,7 +31,7 @@ export class AuthController {
     const user = new User();
     user.email = ctx.request.body.email;
     user.password = await hashPassword(ctx.request.body.password);
-    await getRepository(User).save(user);
+    user.save()
 
     return this.generateLoginResponse(user);
   }
@@ -39,7 +39,7 @@ export class AuthController {
   @Post('/login')
   @ValidateBody(credentialsSchema)
   async login(ctx: Context) {
-    const user = await getRepository(User).findOne({
+    const user = await User.findOne({
       email: ctx.request.body.email
     });
 

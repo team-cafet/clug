@@ -9,8 +9,5 @@
         "sameSite": "lax"
       }
     }
-  },
-  "database": {
-    "synchronize": false
   }
 }
