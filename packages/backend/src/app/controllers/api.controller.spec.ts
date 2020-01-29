@@ -1,5 +1,5 @@
 // std
-import { strictEqual } from 'assert';
+import { strictEqual, ok } from 'assert';
 
 // 3p
 import { Context, createController, getHttpMethod, getPath, isHttpResponseOK } from '@foal/core';
@@ -22,11 +22,7 @@ describe('ApiController', () => {
 
       const response = controller.index(ctx);
 
-      if (!isHttpResponseOK(response)) {
-        throw new Error('The response should be an instance of HttpResponseOK.');
-      }
-
-      strictEqual(response.body, 'Hello world!');
+      ok(isHttpResponseOK(response))
     });
 
   });

@@ -31,7 +31,7 @@ export class AuthController {
     const user = new User();
     user.email = ctx.request.body.email;
     user.password = await hashPassword(ctx.request.body.password);
-    user.save()
+    await user.save()
 
     return this.generateLoginResponse(user);
   }

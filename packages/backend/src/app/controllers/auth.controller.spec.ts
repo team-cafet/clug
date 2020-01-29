@@ -36,7 +36,7 @@ describe("AuthController", () => {
 
       let response = await controller.signup(ctx)
       ok(isHttpResponseOK(response))
-      //ok(isString(response.body.token))
+      ok(isString(response.body.token))
     });
 
   });
