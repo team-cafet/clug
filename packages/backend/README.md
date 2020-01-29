@@ -20,15 +20,35 @@ For the complete CLI documentation for FoalTS, take a look [here](https://foalts
 npm run develop
 ```
 
+### Run the unit test
+```shell
+npm run test
+```
 
+## How to Create a new CRUD resouce (Step by Step)
 
-## How to generate code
-#### Generate a new CRUD Resource
+### Generate the code with the CLI
 [Complete documentation](https://foalts.gitbook.io/docs/topic-guides/cli-and-development-environment/code-generation#create-rest-api)
 
 ```shell
+# <nameOfTheResource> must be without 's' at the end.
 foal g rest-api <nameOfTheResource>
+
+# for example to generate a new resource to manage members
+foal g rest-api member
 ```
+The cli used above will generate two files, a controller and an entity and update both index.ts located in the controller and entities folder.
+
+### Complete the newly generated entity
+Entity are your models for the application. They are based on TypeORM which is a powerful ORM for JS. You can take a look at the documentation for entity [here](https://typeorm.io/#/entities)
+
+### Complete the validation schema in your controller
+(Ajv Validation Schema documentation)[https://github.com/epoberezkin/ajv/blob/master/KEYWORDS.md]
+
+### Modify the specs.ts for your controller to pass the test
+
 
 ## Avaible Custom Script
 ### Create User
+
+
