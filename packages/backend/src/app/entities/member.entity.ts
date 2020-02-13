@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, ManyToOne } from "typeorm";
+import { Club } from "./club.entity";
 
 export enum Sexe {
   "MALE",
@@ -72,5 +73,8 @@ export class Member extends BaseEntity{
 
   @Column({ type: "date", nullable: true })
   deletedAt: Date;
+
+  @ManyToOne(type => Club, club => club.members)
+  club: Club;
 
 }
