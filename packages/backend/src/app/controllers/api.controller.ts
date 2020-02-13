@@ -1,11 +1,13 @@
 import { Context, Get, HttpResponseOK, controller } from '@foal/core';
 import { JWTRequired } from '@foal/jwt';
 import { AuthController } from './auth.controller';
+import { ClubController } from './club.controller';
 
 export class ApiController {
 
   subControllers = [
     controller('/auth', AuthController),
+    controller('/club', ClubController),
   ]
 
   @Get('/')
