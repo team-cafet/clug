@@ -9,7 +9,7 @@ export class Club {
   @Column()
   designation: string;
 
-  @Column()
+  @Column({nullable: true})
   description: string;
 
 }
