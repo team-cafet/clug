@@ -30,10 +30,10 @@ describe('ClubController', () => {
     await repository.clear();
     [ club1, club2 ] = await repository.save([
       {
-        text: 'Club 1'
+        designation: 'Club 1'
       },
       {
-        text: 'Club 2'
+        designation: 'Club 2'
       },
     ]);
   });
@@ -58,13 +58,13 @@ describe('ClubController', () => {
       }
 
       strictEqual(response.body.length, 2);
-      ok(response.body.find(club => club.text === club1.text));
-      ok(response.body.find(club => club.text === club2.text));
+      ok(response.body.find(club => club.designation === club1.designation));
+      ok(response.body.find(club => club.designation === club2.designation));
     });
 
     it('should support pagination', async () => {
       const club3 = await getRepository(Club).save({
-        text: 'Club 3',
+        designation: 'Club 3',
       });
 
       let ctx = new Context({
@@ -114,7 +114,7 @@ describe('ClubController', () => {
       }
 
       strictEqual(response.body.id, club2.id);
-      strictEqual(response.body.text, club2.text);
+      strictEqual(response.body.designation, club2.designation);
     });
 
     it('should return an HttpResponseNotFound object if the club was not found.', async () => {
@@ -143,7 +143,7 @@ describe('ClubController', () => {
         + 'an HttpResponseCreated object.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Club 3',
+          designation: 'Club 3',
         }
       });
       const response = await controller.createClub(ctx);
@@ -152,16 +152,16 @@ describe('ClubController', () => {
         throw new Error('The returned value should be an HttpResponseCreated object.');
       }
 
-      const club = await getRepository(Club).findOne({ text: 'Club 3' });
+      const club = await getRepository(Club).findOne({ designation: 'Club 3' });
 
       if (!club) {
         throw new Error('No club 3 was found in the database.');
       }
 
-      strictEqual(club.text, 'Club 3');
+      strictEqual(club.designation, 'Club 3');
 
       strictEqual(response.body.id, club.id);
-      strictEqual(response.body.text, club.text);
+      strictEqual(response.body.designation, club.designation);
     });
 
   });
@@ -176,7 +176,7 @@ describe('ClubController', () => {
     it('should update the club in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Club 2 (version 2)',
+          designation: 'Club 2 (version 2)',
         },
         params: {
           clubId: club2.id
@@ -194,16 +194,16 @@ describe('ClubController', () => {
         throw new Error();
       }
 
-      strictEqual(club.text, 'Club 2 (version 2)');
+      strictEqual(club.designation, 'Club 2 (version 2)');
 
       strictEqual(response.body.id, club.id);
-      strictEqual(response.body.text, club.text);
+      strictEqual(response.body.designation, club.designation);
     });
 
     it('should not update the other clubs.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Club 2 (version 2)',
+          designation: 'Club 2 (version 2)',
         },
         params: {
           clubId: club2.id
@@ -217,13 +217,13 @@ describe('ClubController', () => {
         throw new Error();
       }
 
-      notStrictEqual(club.text, 'Club 2 (version 2)');
+      notStrictEqual(club.designation, 'Club 2 (version 2)');
     });
 
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          text: '',
+          designation: '',
         },
         params: {
           clubId: -1
@@ -248,7 +248,7 @@ describe('ClubController', () => {
     it('should update the club in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Club 2 (version 2)',
+          designation: 'Club 2 (version 2)',
         },
         params: {
           clubId: club2.id
@@ -266,16 +266,16 @@ describe('ClubController', () => {
         throw new Error();
       }
 
-      strictEqual(club.text, 'Club 2 (version 2)');
+      strictEqual(club.designation, 'Club 2 (version 2)');
 
       strictEqual(response.body.id, club.id);
-      strictEqual(response.body.text, club.text);
+      strictEqual(response.body.designation, club.designation);
     });
 
     it('should not update the other clubs.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Club 2 (version 2)',
+          designation: 'Club 2 (version 2)',
         },
         params: {
           clubId: club2.id
@@ -289,13 +289,13 @@ describe('ClubController', () => {
         throw new Error();
       }
 
-      notStrictEqual(club.text, 'Club 2 (version 2)');
+      notStrictEqual(club.designation, 'Club 2 (version 2)');
     });
 
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          text: '',
+          designation: '',
         },
         params: {
           clubId: -1
