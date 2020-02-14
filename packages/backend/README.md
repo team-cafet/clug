@@ -49,6 +49,18 @@ Entity are your models for the application. They are based on TypeORM which is a
 
 
 ## Avaible Custom Script
+⚠ If customs scripts are not working, maybe they are not build. To build the custom script, use the following command ` npm run build:scripts `
+
 ### Create User
+```shell
+foal run create-user email="test@test.ch" password="MyS3cur3Passw0rd" userPermissions='[ "my-first-perm" ]' groups='[ "my-group" ]'
+```
 
-
+### Create Permisssion
+```shell
+foal run create-perm name="Permission to access the secret" codeName="access-secret"
+```
+### Create Group
+```shell
+foal run create-group name="Administrators" codeName="admin" permissions='[ "delete-users" ]'
+```
