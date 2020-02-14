@@ -28,7 +28,7 @@ export class AuthController {
   @Post('/signup')
   @ValidateBody(credentialsSchema)
   async signup(ctx: Context) {    
-    const USER_REPO = await getRepository(User)
+    const USER_REPO = getRepository(User)
 
     const user = new User();
     user.email = ctx.request.body.email;
@@ -41,7 +41,7 @@ export class AuthController {
   @Post('/login')
   @ValidateBody(credentialsSchema)
   async login(ctx: Context) {
-    const USER_REPO = await getRepository(User)
+    const USER_REPO = getRepository(User)
 
     const user = await USER_REPO.findOne({
       email: ctx.request.body.email

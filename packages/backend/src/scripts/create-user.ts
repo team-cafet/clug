@@ -1,30 +1,30 @@
 // 3p
-import { Group, Permission } from "@foal/typeorm";
-import { createConnection, getManager, getRepository } from "typeorm";
+import { Group, Permission } from '@foal/typeorm';
+import { createConnection, getManager, getRepository } from 'typeorm';
 
 // App
-import { User } from "../app/entities";
+import { User } from '../app/entities';
 
 export const schema = {
   additionalProperties: false,
   properties: {
-    email: { type: "string", format: "email" },
+    email: { type: 'string', format: 'email' },
     groups: {
-      type: "array",
-      items: { type: "string" },
+      type: 'array',
+      items: { type: 'string' },
       uniqueItems: true,
       default: []
     },
-    password: { type: "string" },
+    password: { type: 'string' },
     userPermissions: {
-      type: "array",
-      items: { type: "string" },
+      type: 'array',
+      items: { type: 'string' },
       uniqueItems: true,
       default: []
     }
   },
-  required: ["email", "password"],
-  type: "object"
+  required: ['email', 'password'],
+  type: 'object'
 };
 
 export async function main(args) {

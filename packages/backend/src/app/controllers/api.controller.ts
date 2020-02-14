@@ -17,7 +17,7 @@ export class ApiController {
 
   @Get('/protected')
   @JWTRequired({user:fetchUserWithPermissions(User)})
-  testOfProtectedRoute(ctx:Context) {
+  testOfProtectedRoute(ctx: Context) {
     return new HttpResponseOK('You are authentified')
   }
 

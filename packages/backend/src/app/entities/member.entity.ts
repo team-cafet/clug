@@ -1,15 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
 
 export enum Sexe {
-  "MALE",
-  "FEMALE",
-  "NON-BINARY"
+  'MALE',
+  'FEMALE',
+  'NON-BINARY'
 }
 
 export enum FinancialStatus {
-  "OK",
-  "WARNING",
-  "ALERT"
+  'OK',
+  'WARNING',
+  'ALERT'
 }
 
 @Entity()
@@ -28,7 +28,7 @@ export class Member extends BaseEntity{
   surname: string;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: Sexe,
     default: Sexe.MALE
   })
@@ -46,7 +46,7 @@ export class Member extends BaseEntity{
   })
   phone: string;
 
-  @Column({ type: "date", nullable: true })
+  @Column({ type: 'date', nullable: true })
   birthdate: Date;
 
   // TODO
@@ -57,7 +57,7 @@ export class Member extends BaseEntity{
   // picture: string;
 
   @Column({
-    type: "enum",
+    type: 'enum',
     enum: FinancialStatus,
     default: FinancialStatus.OK,
     nullable: true
@@ -70,7 +70,7 @@ export class Member extends BaseEntity{
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: "date", nullable: true })
+  @Column({ type: 'date', nullable: true })
   deletedAt: Date;
 
 }
