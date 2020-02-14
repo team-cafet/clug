@@ -13,7 +13,7 @@ export class Club {
   @Column({nullable: true})
   description: string;
 
-  @OneToMany(type => Member, member => member.club, {cascade: true})
+  @OneToMany(type => Member, member => member.club)
   members: Member[];
 
 }

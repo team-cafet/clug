@@ -10,7 +10,7 @@ import {
 import { createConnection, getConnection, getRepository } from 'typeorm';
 
 // App
-import { Club } from '../entities';
+import { Club, Member } from '../entities';
 import { ClubController } from './club.controller';
 
 describe('ClubController', () => {
@@ -39,7 +39,6 @@ describe('ClubController', () => {
   });
 
   describe('has a "findClubs" method that', () => {
-
     it('should handle requests at GET /.', () => {
       strictEqual(getHttpMethod(ClubController, 'findClubs'), 'GET');
       strictEqual(getPath(ClubController, 'findClubs'), undefined);

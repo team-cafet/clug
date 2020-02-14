@@ -14,7 +14,7 @@ export enum FinancialStatus {
 }
 
 @Entity()
-export class Member extends BaseEntity{
+export class Member extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -74,7 +74,10 @@ export class Member extends BaseEntity{
   @Column({ type: "date", nullable: true })
   deletedAt: Date;
 
-  @ManyToOne(type => Club, club => club.members)
+  @ManyToOne(
+    type => Club,
+    club => club.members,
+    { onDelete: "CASCADE", nullable: false }
+  )
   club: Club;
-
 }
