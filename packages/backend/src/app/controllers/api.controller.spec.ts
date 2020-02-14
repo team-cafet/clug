@@ -21,7 +21,7 @@ describe('ApiController', () => {
       const ctx = new Context({});
 
       const response = controller.index(ctx);
-
+      
       ok(isHttpResponseOK(response))
     });
 

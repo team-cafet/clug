@@ -17,3 +17,5 @@ export class User extends UserWithPermissions {
     this.password = await hashPassword(password);
   }
 }
+
+export { Group, Permission } from '@foal/typeorm';
