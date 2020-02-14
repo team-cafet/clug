@@ -43,9 +43,12 @@ The cli used above will generate two files, a controller and an entity and updat
 Entity are your models for the application. They are based on TypeORM which is a powerful ORM for JS. You can take a look at the documentation for entity [here](https://typeorm.io/#/entities)
 
 ### Complete the validation schema in your controller
-(Ajv Validation Schema documentation)[https://github.com/epoberezkin/ajv/blob/master/KEYWORDS.md]
+[Ajv Validation Schema documentation](https://github.com/epoberezkin/ajv/blob/master/KEYWORDS.md)
 
 ### Modify the specs.ts for your controller to pass the test
+
+## Use Group and Permission in the API
+See the [official documentation](https://foalts.gitbook.io/docs/topic-guides/authentication-and-access-control/groups-and-permissions#the-hasperm-method)
 
 
 ## Avaible Custom Script
