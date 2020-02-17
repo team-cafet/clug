@@ -9,7 +9,7 @@ export class createMemberTable1581695060002 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.createTable(
       new Table({
-        name: "member",
+        name: "members",
         columns: [
           {
             name: "id",
@@ -34,29 +34,24 @@ export class createMemberTable1581695060002 implements MigrationInterface {
       })
     );
     await queryRunner.createForeignKey(
-      "member",
+      "members",
       new TableForeignKey({
         columnNames: ["club_id"],
         referencedColumnNames: ["id"],
-        referencedTableName: "club",
+        referencedTableName: "clubs",
         onDelete: "CASCADE"
       })
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    const table = await queryRunner.getTable("member");
+    const table = await queryRunner.getTable("members");
 
     let foreignKey = table!.foreignKeys.find(
-      fk => fk.columnNames.indexOf("genre_id") !== -1
+      fk => fk.columnNames.indexOf("club_id") !== -1
     );
-    await queryRunner.dropForeignKey("films", foreignKey!);
+    await queryRunner.dropForeignKey("members", foreignKey!);
 
-    foreignKey = table!.foreignKeys.find(
-      fk => fk.columnNames.indexOf("type_id") !== -1
-    );
-    await queryRunner.dropForeignKey("films", foreignKey!);
-
-    await queryRunner.dropTable("films");
+    await queryRunner.dropTable("members");
   }
 }

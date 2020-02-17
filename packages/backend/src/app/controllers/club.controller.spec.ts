@@ -27,7 +27,11 @@ describe('ClubController', () => {
     controller = createController(ClubController);
 
     const repository = getRepository(Club);
-    await repository.clear();
+
+    //The function: repository.clear() does not work with relations, here is another way to do it. Probably not the most efective.
+    const clubs = await repository.find()
+    await repository.remove(clubs); 
+
     [ club1, club2 ] = await repository.save([
       {
         designation: 'Club 1'
