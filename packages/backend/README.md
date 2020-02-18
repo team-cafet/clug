@@ -48,8 +48,27 @@ Entity are your models for the application. They are based on TypeORM which is a
 ### Modify the specs.ts for your controller to pass the test
 
 ## Use Group and Permission in the API
-See the [official documentation](https://foalts.gitbook.io/docs/topic-guides/authentication-and-access-control/groups-and-permissions#the-hasperm-method)
+See the complete [official documentation](https://foalts.gitbook.io/docs/topic-guides/authentication-and-access-control/groups-and-permissions#the-hasperm-method)
 
+below an simple example from the doc:
+```typescript
+import { Context, Get } from '@foal/core';
+import { JWTRequired } from '@foal/jwt';
+import { fetchUserWithPermissions } from '@foal/typeorm';
+
+@JWTRequired({
+  user: fetchUserWithPermissions(User)
+})
+export class ProductController {
+  @Get('/products')
+  readProduct(ctx: Context) {
+    if (!ctx.user.hasPerm('read-products')) {
+      return new HttpResponseForbidden();
+    }
+    return new HttpResponseOK([]);
+  }
+}
+```
 
 ## Avaible Custom Script
 ⚠ If customs scripts are not working, maybe they are not build. To build the custom script, use the following command ` npm run build:scripts `
