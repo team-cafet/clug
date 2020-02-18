@@ -1,3 +1,3 @@
 export { ApiController } from './api.controller';
 export { MemberController } from './member.controller';
-export { SubscriptionPlanController } from './subscriptionplan.controller';
+export { MembershipPlanController } from './membership-plan.controller';

@@ -41,7 +41,7 @@ const memberSchema = {
       maxLength: 255
     },
     financialStatus: {
-      type: 'string',
+      type: 'integer',
       enum: [
         FinancialStatus.ALERT,
         FinancialStatus.OK,
