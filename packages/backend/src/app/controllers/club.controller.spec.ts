@@ -10,7 +10,7 @@ import {
 import { createConnection, getConnection, getRepository } from 'typeorm';
 
 // App
-import { Club, Member } from '../entities';
+import { Club } from '../entities';
 import { ClubController } from './club.controller';
 
 describe('ClubController', () => {

@@ -1,5 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, ManyToOne } from "typeorm";
-import { Club } from "./club.entity";
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  BaseEntity,
+  ManyToOne
+} from 'typeorm';
+import { Club } from './club.entity';
 
 export enum Sexe {
   'MALE',
@@ -77,7 +85,7 @@ export class Member extends BaseEntity {
   @ManyToOne(
     type => Club,
     club => club.members,
-    { onDelete: "CASCADE", nullable: false }
+    { onDelete: 'CASCADE', nullable: true }
   )
   club: Club;
 }
