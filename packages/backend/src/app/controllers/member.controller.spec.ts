@@ -107,6 +107,7 @@
         });
         let response = await controller.findMembers(ctx);
 
+
         strictEqual(response.body.length, 2);
         ok(response.body.find(member => member.id === simpleMember.id));
         ok(
@@ -156,6 +157,7 @@
         strictEqual(response.body.name, memberWithAdditionalProps.name);
       });
 
+
       it("should return an HttpResponseNotFound object if the member was not found.", async () => {
         const ctx = new Context({
           params: {
@@ -171,6 +173,7 @@
         }
       });
     });
+
 
     describe('has a "createMember" method that', () => {
       it("should handle requests at POST /.", () => {
@@ -260,13 +263,11 @@
           }
         });
         await controller.modifyMember(ctx);
-
         const member = await getRepository(Member).findOne(simpleMember.id);
 
         if (!member) {
           throw new Error();
         }
-
         notStrictEqual(member.name, "Member 2 (version 2)");
       });
 
@@ -338,7 +339,6 @@
         await controller.replaceMember(ctx);
 
         const member = await getRepository(Member).findOne(simpleMember.id);
-
         if (!member) {
           throw new Error();
         }
@@ -407,7 +407,7 @@
         }
 
         const member = await getRepository(Member).findOne(simpleMember.id);
-
+        
         notStrictEqual(member, undefined);
       });
 
