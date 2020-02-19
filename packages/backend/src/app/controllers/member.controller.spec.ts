@@ -15,9 +15,8 @@ import {
 import { createConnection, getConnection, getRepository } from 'typeorm';
 
 // App
-import { Member } from '../entities';
 import { MemberController } from './member.controller';
-import { Sexe, FinancialStatus } from '../entities/member.entity';
+import { Member, Sexe, FinancialStatus } from '../entities/member.entity';
 
 describe('MemberController', () => {
   let controller: MemberController;
@@ -25,24 +24,22 @@ describe('MemberController', () => {
   let memberWithAdditionalProps: Member;
   //let club: Club;
 
-  before(() => {createConnection();});
+  before(() => createConnection());
 
   after(() => getConnection().close());
 
   beforeEach(async () => {
     controller = createController(MemberController);
-
+    
     const repository = getRepository(Member);
 
-    const members = await repository.find();
-    await repository.remove(members);
+    await repository.clear();
 
     [simpleMember, memberWithAdditionalProps] = await repository.save([
       {
         surname: 'Geralt',
         name: 'Of Rivia',
-        email: 'geralt@rivia.com',
-        //club: club
+        email: 'geralt@rivia.com'
       },
       {
         surname: 'Yennefer',
@@ -52,7 +49,7 @@ describe('MemberController', () => {
         phone: '+01 12 123 45 67',
         birthdate: '2019-01-12',
         financialStatus: FinancialStatus.WARNING,
-        //club: club
+        club: {designation:'Club 1'}
       }
     ]);
   });
