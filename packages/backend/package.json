@@ -25,7 +25,8 @@
     "build:migrations": "tsc -p tsconfig.migrations.json",
     "migration:generate": "./node_modules/.bin/typeorm migration:generate",
     "migration:run": "./node_modules/.bin/typeorm migration:run",
-    "migration:revert": "./node_modules/.bin/typeorm migration:revert"
+    "migration:revert": "./node_modules/.bin/typeorm migration:revert",
+    "migration:create": "./node_modules/.bin/typeorm migration:create"
   },
   "engines": {
     "node": ">=8"
