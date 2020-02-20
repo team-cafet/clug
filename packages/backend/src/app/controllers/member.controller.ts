@@ -20,7 +20,7 @@
   } from '@foal/core';
   import { getRepository } from 'typeorm';
 
-  import { Member, Club } from '../entities';
+  import { Member, Club, Address } from '../entities';
   import { FinancialStatus, Sexe } from '../entities/member.entity';
 
   const memberSchema = {
@@ -49,10 +49,11 @@
         ],
         maxLength: 255
       },
-      club: {type: 'object'}
-      // TODO: picture: { type: 'string', maxLength: 255 }
+      club: {type: 'object'},
+
+      address: {type: 'object'},
     },
-    required: ['name', 'surname', 'email', 'club'],
+    required: ['name', 'surname', 'email', 'club', 'address'],
     type: 'object'
   };
 
