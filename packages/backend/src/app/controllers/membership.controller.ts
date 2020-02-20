@@ -1,8 +1,22 @@
 import {
-  ApiOperationDescription, ApiOperationId, ApiOperationSummary, ApiResponse,
-  ApiUseTag, Context, Delete, Get, HttpResponseCreated,
-  HttpResponseNoContent, HttpResponseNotFound, HttpResponseOK, Patch, Post,
-  Put, ValidateBody, ValidateParams, ValidateQuery
+  ApiOperationDescription,
+  ApiOperationId,
+  ApiOperationSummary,
+  ApiResponse,
+  ApiUseTag,
+  Context,
+  Delete,
+  Get,
+  HttpResponseCreated,
+  HttpResponseNoContent,
+  HttpResponseNotFound,
+  HttpResponseOK,
+  Patch,
+  Post,
+  Put,
+  ValidateBody,
+  ValidateParams,
+  ValidateQuery
 } from '@foal/core';
 import { getRepository } from 'typeorm';
 
@@ -11,30 +25,44 @@ import { Membership } from '../entities';
 const membershipSchema = {
   additionalProperties: false,
   properties: {
-    text: { type: 'string', maxLength: 255 },
+    startDate: { type: 'string', format: 'date' },
+    endDate: { type: 'string', format: 'date' },
+    member: {
+      type: 'object',
+      properties: {
+        id: { type: 'number' },
+        email: { type: 'string', format: 'email', maxLength: 255 }
+      }
+    },
+    membershipPlan: {
+      type: 'object',
+      properties: {
+        id: { type: 'number' },
+        designation: { type: 'string', maxLength: 30 }
+      }
+    }
   },
-  required: [ 'text' ],
-  type: 'object',
+  required: ['startDate', 'member', 'membershipPlan'],
+  type: 'object'
 };
 
 @ApiUseTag('membership')
 export class MembershipController {
-
   @Get()
   @ApiOperationId('findMemberships')
   @ApiOperationSummary('Find memberships.')
   @ApiOperationDescription(
     'The query parameters "skip" and "take" can be used for pagination. The first ' +
-    'is the offset and the second is the number of elements to be returned.'
+      'is the offset and the second is the number of elements to be returned.'
   )
   @ApiResponse(400, { description: 'Invalid query parameters.' })
   @ApiResponse(200, { description: 'Returns a list of memberships.' })
   @ValidateQuery({
     properties: {
       skip: { type: 'number' },
-      take: { type: 'number' },
+      take: { type: 'number' }
     },
-    type: 'object',
+    type: 'object'
   })
   async findMemberships(ctx: Context) {
     const memberships = await getRepository(Membership).find({
@@ -49,9 +77,14 @@ export class MembershipController {
   @ApiOperationSummary('Find a membership by ID.')
   @ApiResponse(404, { description: 'Membership not found.' })
   @ApiResponse(200, { description: 'Returns the membership.' })
-  @ValidateParams({ properties: { membershipId: { type: 'number' } }, type: 'object' })
+  @ValidateParams({
+    properties: { membershipId: { type: 'number' } },
+    type: 'object'
+  })
   async findMembershipById(ctx: Context) {
-    const membership = await getRepository(Membership).findOne(ctx.request.params.membershipId);
+    const membership = await getRepository(Membership).findOne(
+      ctx.request.params.membershipId
+    );
 
     if (!membership) {
       return new HttpResponseNotFound();
@@ -64,7 +97,9 @@ export class MembershipController {
   @ApiOperationId('createMembership')
   @ApiOperationSummary('Create a new membership.')
   @ApiResponse(400, { description: 'Invalid membership.' })
-  @ApiResponse(201, { description: 'Membership successfully created. Returns the membership.' })
+  @ApiResponse(201, {
+    description: 'Membership successfully created. Returns the membership.'
+  })
   @ValidateBody(membershipSchema)
   async createMembership(ctx: Context) {
     const membership = await getRepository(Membership).save(ctx.request.body);
@@ -76,11 +111,18 @@ export class MembershipController {
   @ApiOperationSummary('Update/modify an existing membership.')
   @ApiResponse(400, { description: 'Invalid membership.' })
   @ApiResponse(404, { description: 'Membership not found.' })
-  @ApiResponse(200, { description: 'Membership successfully updated. Returns the membership.' })
-  @ValidateParams({ properties: { membershipId: { type: 'number' } }, type: 'object' })
+  @ApiResponse(200, {
+    description: 'Membership successfully updated. Returns the membership.'
+  })
+  @ValidateParams({
+    properties: { membershipId: { type: 'number' } },
+    type: 'object'
+  })
   @ValidateBody({ ...membershipSchema, required: [] })
   async modifyMembership(ctx: Context) {
-    const membership = await getRepository(Membership).findOne(ctx.request.params.membershipId);
+    const membership = await getRepository(Membership).findOne(
+      ctx.request.params.membershipId
+    );
 
     if (!membership) {
       return new HttpResponseNotFound();
@@ -98,11 +140,18 @@ export class MembershipController {
   @ApiOperationSummary('Update/replace an existing membership.')
   @ApiResponse(400, { description: 'Invalid membership.' })
   @ApiResponse(404, { description: 'Membership not found.' })
-  @ApiResponse(200, { description: 'Membership successfully updated. Returns the membership.' })
-  @ValidateParams({ properties: { membershipId: { type: 'number' } }, type: 'object' })
+  @ApiResponse(200, {
+    description: 'Membership successfully updated. Returns the membership.'
+  })
+  @ValidateParams({
+    properties: { membershipId: { type: 'number' } },
+    type: 'object'
+  })
   @ValidateBody(membershipSchema)
   async replaceMembership(ctx: Context) {
-    const membership = await getRepository(Membership).findOne(ctx.request.params.membershipId);
+    const membership = await getRepository(Membership).findOne(
+      ctx.request.params.membershipId
+    );
 
     if (!membership) {
       return new HttpResponseNotFound();
@@ -120,9 +169,14 @@ export class MembershipController {
   @ApiOperationSummary('Delete a membership.')
   @ApiResponse(404, { description: 'Membership not found.' })
   @ApiResponse(204, { description: 'Membership successfully deleted.' })
-  @ValidateParams({ properties: { membershipId: { type: 'number' } }, type: 'object' })
+  @ValidateParams({
+    properties: { membershipId: { type: 'number' } },
+    type: 'object'
+  })
   async deleteMembership(ctx: Context) {
-    const membership = await getRepository(Membership).findOne(ctx.request.params.membershipId);
+    const membership = await getRepository(Membership).findOne(
+      ctx.request.params.membershipId
+    );
 
     if (!membership) {
       return new HttpResponseNotFound();
@@ -132,5 +186,4 @@ export class MembershipController {
 
     return new HttpResponseNoContent();
   }
-
 }

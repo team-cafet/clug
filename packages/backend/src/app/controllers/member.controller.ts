@@ -52,7 +52,7 @@
       club: {type: 'object'}
       // TODO: picture: { type: 'string', maxLength: 255 }
     },
-    required: ['name', 'surname', 'email', 'club'],
+    required: ['name', 'surname', 'email'],
     type: 'object'
   };
 
