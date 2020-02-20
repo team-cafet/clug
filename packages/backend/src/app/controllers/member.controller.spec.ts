@@ -17,12 +17,13 @@ import { createConnection, getConnection, getRepository } from 'typeorm';
 // App
 import { MemberController } from './member.controller';
 import { Member, Sexe, FinancialStatus } from '../entities/member.entity';
+import { Club } from '../entities';
 
 describe('MemberController', () => {
   let controller: MemberController;
   let simpleMember: Member;
   let memberWithAdditionalProps: Member;
-  //let club: Club;
+  let club: Club;
 
   before(() => createConnection());
 
@@ -32,8 +33,13 @@ describe('MemberController', () => {
     controller = createController(MemberController);
     
     const repository = getRepository(Member);
+    const clubRepo = getRepository(Club);
 
     await repository.clear();
+
+    [club] = await clubRepo.save([
+      {designation:'Club 1'}
+    ]);
 
     [simpleMember, memberWithAdditionalProps] = await repository.save([
       {
@@ -49,7 +55,7 @@ describe('MemberController', () => {
         phone: '+01 12 123 45 67',
         birthdate: '2019-01-12',
         financialStatus: FinancialStatus.WARNING,
-        club: {designation:'Club 1'}
+        club: club
       }
     ]);
   });

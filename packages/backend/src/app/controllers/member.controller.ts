@@ -17,31 +17,31 @@
     ValidateBody,
     ValidateParams,
     ValidateQuery
-  } from "@foal/core";
-  import { getRepository } from "typeorm";
+  } from '@foal/core';
+  import { getRepository } from 'typeorm';
 
-  import { Member, Club } from "../entities";
-  import { FinancialStatus, Sexe } from "../entities/member.entity";
+  import { Member, Club } from '../entities';
+  import { FinancialStatus, Sexe } from '../entities/member.entity';
 
   const memberSchema = {
     additionalProperties: false,
     properties: {
-      name: { type: "string", maxLength: 255 },
-      surname: { type: "string", maxLength: 255 },
+      name: { type: 'string', maxLength: 255 },
+      surname: { type: 'string', maxLength: 255 },
       sexe: {
-        type: "string",
-        enum: [Sexe.MALE, Sexe.FEMALE, Sexe["NON-BINARY"]],
+        type: 'string',
+        enum: [Sexe.MALE, Sexe.FEMALE, Sexe['NON-BINARY']],
         maxLength: 255
       },
-      email: { type: "string", format: "email", maxLength: 255 },
-      phone: { type: "string", maxLength: 50 },
+      email: { type: 'string', format: 'email', maxLength: 255 },
+      phone: { type: 'string', maxLength: 50 },
       birthdate: {
-        type: "string",
-        format: "date",
+        type: 'string',
+        format: 'date',
         maxLength: 255
       },
       financialStatus: {
-        type: "string",
+        type: 'string',
         enum: [
           FinancialStatus.ALERT,
           FinancialStatus.OK,
@@ -49,30 +49,30 @@
         ],
         maxLength: 255
       },
-      club: {type: "object"}
+      club: {type: 'object'}
       // TODO: picture: { type: 'string', maxLength: 255 }
     },
-    required: ["name", "surname", "email", "club"],
-    type: "object"
+    required: ['name', 'surname', 'email', 'club'],
+    type: 'object'
   };
 
-  @ApiUseTag("member")
+  @ApiUseTag('member')
   export class MemberController {
     @Get()
-    @ApiOperationId("findMembers")
-    @ApiOperationSummary("Find members.")
+    @ApiOperationId('findMembers')
+    @ApiOperationSummary('Find members.')
     @ApiOperationDescription(
       'The query parameters "skip" and "take" can be used for pagination. The first ' +
-        "is the offset and the second is the number of elements to be returned."
+        'is the offset and the second is the number of elements to be returned.'
     )
-    @ApiResponse(400, { description: "Invalid query parameters." })
-    @ApiResponse(200, { description: "Returns a list of members." })
+    @ApiResponse(400, { description: 'Invalid query parameters.' })
+    @ApiResponse(200, { description: 'Returns a list of members.' })
     @ValidateQuery({
       properties: {
-        skip: { type: "number" },
-        take: { type: "number" }
+        skip: { type: 'number' },
+        take: { type: 'number' }
       },
-      type: "object"
+      type: 'object'
     })
     async findMembers(ctx: Context) {
       const members = await getRepository(Member).find({
@@ -82,14 +82,14 @@
       return new HttpResponseOK(members);
     }
 
-    @Get("/:memberId")
-    @ApiOperationId("findMemberById")
-    @ApiOperationSummary("Find a member by ID.")
-    @ApiResponse(404, { description: "Member not found." })
-    @ApiResponse(200, { description: "Returns the member." })
+    @Get('/:memberId')
+    @ApiOperationId('findMemberById')
+    @ApiOperationSummary('Find a member by ID.')
+    @ApiResponse(404, { description: 'Member not found.' })
+    @ApiResponse(200, { description: 'Returns the member.' })
     @ValidateParams({
-      properties: { memberId: { type: "number" } },
-      type: "object"
+      properties: { memberId: { type: 'number' } },
+      type: 'object'
     })
     async findMemberById(ctx: Context) {
       const member = await getRepository(Member).findOne(
@@ -104,11 +104,11 @@
     }
 
     @Post()
-    @ApiOperationId("createMember")
-    @ApiOperationSummary("Create a new member.")
-    @ApiResponse(400, { description: "Invalid member." })
+    @ApiOperationId('createMember')
+    @ApiOperationSummary('Create a new member.')
+    @ApiResponse(400, { description: 'Invalid member.' })
     @ApiResponse(201, {
-      description: "Member successfully created. Returns the member."
+      description: 'Member successfully created. Returns the member.'
     })
     @ValidateBody(memberSchema)
     async createMember(ctx: Context) {
@@ -121,17 +121,17 @@
       return new HttpResponseCreated(member);
     }
 
-    @Patch("/:memberId")
-    @ApiOperationId("modifyMember")
-    @ApiOperationSummary("Update/modify an existing member.")
-    @ApiResponse(400, { description: "Invalid member." })
-    @ApiResponse(404, { description: "Member not found." })
+    @Patch('/:memberId')
+    @ApiOperationId('modifyMember')
+    @ApiOperationSummary('Update/modify an existing member.')
+    @ApiResponse(400, { description: 'Invalid member.' })
+    @ApiResponse(404, { description: 'Member not found.' })
     @ApiResponse(200, {
-      description: "Member successfully updated. Returns the member."
+      description: 'Member successfully updated. Returns the member.'
     })
     @ValidateParams({
-      properties: { memberId: { type: "number" } },
-      type: "object"
+      properties: { memberId: { type: 'number' } },
+      type: 'object'
     })
     @ValidateBody({ ...memberSchema, required: [] })
     async modifyMember(ctx: Context) {
@@ -150,17 +150,17 @@
       return new HttpResponseOK(member);
     }
 
-    @Put("/:memberId")
-    @ApiOperationId("replaceMember")
-    @ApiOperationSummary("Update/replace an existing member.")
-    @ApiResponse(400, { description: "Invalid member." })
-    @ApiResponse(404, { description: "Member not found." })
+    @Put('/:memberId')
+    @ApiOperationId('replaceMember')
+    @ApiOperationSummary('Update/replace an existing member.')
+    @ApiResponse(400, { description: 'Invalid member.' })
+    @ApiResponse(404, { description: 'Member not found.' })
     @ApiResponse(200, {
-      description: "Member successfully updated. Returns the member."
+      description: 'Member successfully updated. Returns the member.'
     })
     @ValidateParams({
-      properties: { memberId: { type: "number" } },
-      type: "object"
+      properties: { memberId: { type: 'number' } },
+      type: 'object'
     })
     @ValidateBody(memberSchema)
     async replaceMember(ctx: Context) {
@@ -179,14 +179,14 @@
       return new HttpResponseOK(member);
     }
 
-    @Delete("/:memberId")
-    @ApiOperationId("deleteMember")
-    @ApiOperationSummary("Delete a member.")
-    @ApiResponse(404, { description: "Member not found." })
-    @ApiResponse(204, { description: "Member successfully deleted." })
+    @Delete('/:memberId')
+    @ApiOperationId('deleteMember')
+    @ApiOperationSummary('Delete a member.')
+    @ApiResponse(404, { description: 'Member not found.' })
+    @ApiResponse(204, { description: 'Member successfully deleted.' })
     @ValidateParams({
-      properties: { memberId: { type: "number" } },
-      type: "object"
+      properties: { memberId: { type: 'number' } },
+      type: 'object'
     })
     async deleteMember(ctx: Context) {
       const member = await getRepository(Member).findOne(
