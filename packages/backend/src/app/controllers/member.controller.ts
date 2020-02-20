@@ -49,10 +49,11 @@
         ],
         maxLength: 255
       },
-      club: {type: 'object'}
-      // TODO: picture: { type: 'string', maxLength: 255 }
+      club: {type: 'object'},
+
+      address: {type: 'object'},
     },
-    required: ['name', 'surname', 'email', 'club'],
+    required: ['name', 'surname', 'email', 'club', 'address'],
     type: 'object'
   };
 

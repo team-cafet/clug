@@ -7,7 +7,7 @@ module.exports = {
   username:Config.get('database.username',"postgres"),
   password:Config.get('database.password',"root"),
   database:Config.get('database.name',"foaltstest"),
-  dropSchema: Config.get('database.dropschema', false),
+  dropSchema: Config.get('database.dropschema', true),
   entities: ["build/app/**/*.entity.js"],
   migrations: ["build/migrations/*.js"],
   cli: {
