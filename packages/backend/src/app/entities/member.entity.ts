@@ -5,20 +5,23 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
-  ManyToOne
-} from 'typeorm';
-import { Club } from './club.entity';
+  ManyToOne,
+  OneToOne,
+  JoinColumn
+} from "typeorm";
+import { Club } from "./club.entity";
+import { Address } from "./address.entity";
 
 export enum Sexe {
-  'MALE',
-  'FEMALE',
-  'NON-BINARY'
+  "MALE",
+  "FEMALE",
+  "NON-BINARY"
 }
 
 export enum FinancialStatus {
-  'OK',
-  'WARNING',
-  'ALERT'
+  "OK",
+  "WARNING",
+  "ALERT"
 }
 
 @Entity()
@@ -37,7 +40,7 @@ export class Member extends BaseEntity {
   surname: string;
 
   @Column({
-    type: 'enum',
+    type: "enum",
     enum: Sexe,
     default: Sexe.MALE
   })
@@ -55,18 +58,11 @@ export class Member extends BaseEntity {
   })
   phone: string;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ type: "date", nullable: true })
   birthdate: Date;
 
-  // TODO
-  // @Column({
-  //   length: "254",
-  //   nullable: true
-  // })
-  // picture: string;
-
   @Column({
-    type: 'enum',
+    type: "enum",
     enum: FinancialStatus,
     default: FinancialStatus.OK,
     nullable: true
@@ -79,13 +75,17 @@ export class Member extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ type: "date", nullable: true })
   deletedAt: Date;
 
   @ManyToOne(
     type => Club,
     club => club.members,
-    { onDelete: 'CASCADE', nullable: true }
+    { onDelete: "CASCADE", nullable: true }
   )
   club: Club;
+
+  @OneToOne(type => Address)
+  @JoinColumn()
+  address: Address;
 }

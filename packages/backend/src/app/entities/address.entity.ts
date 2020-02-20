@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Member } from './member.entity';
 
 @Entity()
 export class Address {
@@ -21,5 +22,8 @@ export class Address {
 
   @Column({nullable: false})
   country: string
+
+  @OneToOne(type => Member)
+  member: Member;
 
 }

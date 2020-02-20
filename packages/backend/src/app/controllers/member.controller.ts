@@ -20,7 +20,7 @@
   } from '@foal/core';
   import { getRepository } from 'typeorm';
 
-  import { Member, Club } from '../entities';
+  import { Member, Club, Address } from '../entities';
   import { FinancialStatus, Sexe } from '../entities/member.entity';
 
   const memberSchema = {
