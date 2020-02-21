@@ -9,7 +9,7 @@ import { MembershipPlanController } from './membership-plan.controller';
 import { AuthController } from './auth.controller';
 import { ClubController } from './club.controller';
 
-@JWTRequired()
+@JWTRequired({ user: fetchUserWithPermissions(User) })
 export class ApiController {
 
   subControllers = [

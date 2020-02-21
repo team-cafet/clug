@@ -58,7 +58,6 @@ import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
     required: ['name', 'surname', 'email'],
     type: 'object'
   };
-  @JWTRequired({ user: fetchUserWithPermissions(User) })
   @PermissionRequired('member_read')
   @ApiUseTag('member')
   export class MemberController {
