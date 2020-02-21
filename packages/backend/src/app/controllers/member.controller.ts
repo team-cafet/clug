@@ -20,8 +20,10 @@
   } from '@foal/core';
   import { getRepository } from 'typeorm';
 
-  import { Member, Club, Address } from '../entities';
+  import { Member, Club, Address, User } from '../entities';
   import { FinancialStatus, Sexe } from '../entities/member.entity';
+import { JWTRequired } from '@foal/jwt';
+import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
 
   const memberSchema = {
     additionalProperties: false,
@@ -56,7 +58,8 @@
     required: ['name', 'surname', 'email'],
     type: 'object'
   };
-
+  @JWTRequired({ user: fetchUserWithPermissions(User) })
+  @PermissionRequired('member_read')
   @ApiUseTag('member')
   export class MemberController {
     @Get()

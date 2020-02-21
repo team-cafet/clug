@@ -1,5 +1,4 @@
 import { controller } from '@foal/core';
-
 import { ApiController, ClubController } from './controllers';
 import { AuthController } from './controllers/auth.controller';
 
