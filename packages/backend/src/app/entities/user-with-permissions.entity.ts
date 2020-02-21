@@ -1,15 +1,17 @@
 import { UserWithPermissions, Group, Permission } from "@foal/typeorm";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
 
 @Entity()
 export class User extends UserWithPermissions {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("simple-array")
+  @ManyToMany(type => Group)
+  @JoinTable()
   groups: Group[];
 
-  @Column("simple-array")
+  @ManyToMany(type => Permission)
+  @JoinTable()
   userPermissions: Permission[];
 }
 

@@ -10,7 +10,7 @@ export class Permission {
   @Column()
   name: string;
 
-  @Column()
+  @Column({unique: true, length: 100})
   codeName: string
 
 }

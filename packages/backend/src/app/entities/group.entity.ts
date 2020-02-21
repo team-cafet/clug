@@ -13,10 +13,10 @@ export class Group {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({length: 80})
   name: string;
 
-  @Column()
+  @Column({unique: true, length: 100})
   codeName: string;
 
   @ManyToMany(type => Permission)
