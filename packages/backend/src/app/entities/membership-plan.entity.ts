@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Membership } from './membership.entity';
 
 export enum TypeOfFacturation {
   WEEKLY,
@@ -26,4 +27,10 @@ export class MembershipPlan {
   @Column({type:'enum', enum:TypeOfFacturation})
   typeOfFacturation: TypeOfFacturation;
 
+  @OneToMany(
+    type=>Membership,
+    membership=>membership.member,
+    {nullable:true}
+  )
+  memberships: Membership
 }

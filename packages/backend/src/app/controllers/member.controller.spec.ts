@@ -37,7 +37,8 @@ describe("MemberController", () => {
     const clubRepo = getRepository(Club);
     const addressRepo = getRepository(Address);
 
-    await repository.clear();
+    await repository.query(`TRUNCATE ${clubRepo.metadata.tableName} CASCADE`);
+    await repository.query(`TRUNCATE ${repository.metadata.tableName} CASCADE`);
 
     [club] = await clubRepo.save([{ designation: "Club 1" }]);
     [address] = await addressRepo.save([

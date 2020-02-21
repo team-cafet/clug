@@ -53,7 +53,7 @@
 
       address: {type: 'object'},
     },
-    required: ['name', 'surname', 'email', 'club', 'address'],
+    required: ['name', 'surname', 'email'],
     type: 'object'
   };
 

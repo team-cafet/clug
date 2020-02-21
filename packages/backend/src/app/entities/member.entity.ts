@@ -7,9 +7,11 @@ import {
   BaseEntity,
   ManyToOne,
   OneToOne,
-  JoinColumn
-} from "typeorm";
-import { Club } from "./club.entity";
+  JoinColumn,
+  OneToMany
+} from 'typeorm';
+import { Club } from './club.entity';
+import { Membership } from './membership.entity';
 import { Address } from "./address.entity";
 
 export enum Sexe {
@@ -42,7 +44,8 @@ export class Member extends BaseEntity {
   @Column({
     type: "enum",
     enum: Sexe,
-    default: Sexe.MALE
+    default: Sexe.MALE,
+    nullable: true
   })
   sexe: Sexe;
 
@@ -81,9 +84,16 @@ export class Member extends BaseEntity {
   @ManyToOne(
     type => Club,
     club => club.members,
-    { onDelete: "CASCADE", nullable: true }
+    { onDelete: 'NO ACTION', nullable: true }
   )
   club: Club;
+
+  @OneToMany(
+    type => Membership,
+    membership => membership.member,
+    { nullable: true, onDelete: 'NO ACTION' }
+  )
+  memberships: Membership;
 
   @OneToOne(type => Address)
   @JoinColumn()

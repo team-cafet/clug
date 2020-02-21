@@ -28,7 +28,9 @@ describe('MembershipPlanController', () => {
     controller = createController(MembershipPlanController);
 
     const repository = getRepository(MembershipPlan);
-    await repository.clear();
+    
+    await repository.query(`TRUNCATE ${repository.metadata.tableName} CASCADE`);
+
     [ membershipPlan1, membershipPlan2 ] = await repository.save([
       {
         designation: 'MembershipPlan 1',
