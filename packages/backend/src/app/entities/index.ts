@@ -5,4 +5,3 @@ export { Membership } from './membership.entity';
 export { Club } from './club.entity';
 export { Address } from './address.entity';export { Permission } from './permission.entity';
 export { Group } from './group.entity';
-export { UserWithPermissions } from './user-with-permissions.entity';

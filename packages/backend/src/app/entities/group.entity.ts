@@ -1,10 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Permission } from '@foal/typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable
+} from "typeorm";
+import { Permission } from "@foal/typeorm";
 
 @Entity()
 export class Group {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,7 +19,7 @@ export class Group {
   @Column()
   codeName: string;
 
-  @Column()
+  @ManyToMany(type => Permission)
+  @JoinTable()
   permissions: Permission[];
-
 }

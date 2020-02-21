@@ -6,10 +6,10 @@ export class User extends UserWithPermissions {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column("simple-array")
   groups: Group[];
 
-  @Column()
+  @Column("simple-array")
   userPermissions: Permission[];
 }
 
