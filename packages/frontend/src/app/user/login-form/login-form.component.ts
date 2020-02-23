@@ -15,11 +15,14 @@ export class LoginFormComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   async login(loginForm: NgForm) {
-    try{
-      await this.userService.login(this.credentials.email, this.credentials.password);
-    } catch(error) {
+    try {
+      await this.userService.login(
+        this.credentials.email,
+        this.credentials.password
+      );
+    } catch (error) {
       console.error(error);
-      this.invalidCredential = true
+      this.invalidCredential = true;
     }
   }
 
