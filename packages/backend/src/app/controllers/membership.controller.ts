@@ -21,6 +21,7 @@ import {
 import { getRepository } from 'typeorm';
 
 import { Membership } from '../entities';
+import { PermissionRequired } from '@foal/typeorm';
 
 const membershipSchema = {
   additionalProperties: false,
@@ -48,6 +49,7 @@ const membershipSchema = {
 
 @ApiUseTag('membership')
 export class MembershipController {
+  @PermissionRequired('member_read')
   @Get()
   @ApiOperationId('findMemberships')
   @ApiOperationSummary('Find memberships.')
@@ -72,6 +74,7 @@ export class MembershipController {
     return new HttpResponseOK(memberships);
   }
 
+  @PermissionRequired('member_read')
   @Get('/:membershipId')
   @ApiOperationId('findMembershipById')
   @ApiOperationSummary('Find a membership by ID.')
@@ -93,6 +96,7 @@ export class MembershipController {
     return new HttpResponseOK(membership);
   }
 
+  @PermissionRequired('member_write')
   @Post()
   @ApiOperationId('createMembership')
   @ApiOperationSummary('Create a new membership.')
@@ -106,6 +110,7 @@ export class MembershipController {
     return new HttpResponseCreated(membership);
   }
 
+  @PermissionRequired('member_write')
   @Patch('/:membershipId')
   @ApiOperationId('modifyMembership')
   @ApiOperationSummary('Update/modify an existing membership.')
@@ -135,6 +140,7 @@ export class MembershipController {
     return new HttpResponseOK(membership);
   }
 
+  @PermissionRequired('member_write')
   @Put('/:membershipId')
   @ApiOperationId('replaceMembership')
   @ApiOperationSummary('Update/replace an existing membership.')
@@ -164,6 +170,7 @@ export class MembershipController {
     return new HttpResponseOK(membership);
   }
 
+  @PermissionRequired('member_write')
   @Delete('/:membershipId')
   @ApiOperationId('deleteMembership')
   @ApiOperationSummary('Delete a membership.')

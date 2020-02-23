@@ -58,9 +58,9 @@ import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
     required: ['name', 'surname', 'email'],
     type: 'object'
   };
-  @PermissionRequired('member_read')
   @ApiUseTag('member')
   export class MemberController {
+    @PermissionRequired('member_read')
     @Get()
     @ApiOperationId('findMembers')
     @ApiOperationSummary('Find members.')
@@ -85,6 +85,7 @@ import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
       return new HttpResponseOK(members);
     }
 
+    @PermissionRequired('member_read')
     @Get('/:memberId')
     @ApiOperationId('findMemberById')
     @ApiOperationSummary('Find a member by ID.')
@@ -105,7 +106,8 @@ import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
 
       return new HttpResponseOK(member);
     }
-
+    
+    @PermissionRequired('member_write')
     @Post()
     @ApiOperationId('createMember')
     @ApiOperationSummary('Create a new member.')
@@ -119,6 +121,7 @@ import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
       return new HttpResponseCreated(member);
     }
 
+    @PermissionRequired('member_write')
     @Patch('/:memberId')
     @ApiOperationId('modifyMember')
     @ApiOperationSummary('Update/modify an existing member.')
@@ -148,6 +151,7 @@ import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
       return new HttpResponseOK(member);
     }
 
+    @PermissionRequired('member_write')
     @Put('/:memberId')
     @ApiOperationId('replaceMember')
     @ApiOperationSummary('Update/replace an existing member.')
@@ -177,6 +181,7 @@ import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
       return new HttpResponseOK(member);
     }
 
+    @PermissionRequired('member_write')
     @Delete('/:memberId')
     @ApiOperationId('deleteMember')
     @ApiOperationSummary('Delete a member.')
