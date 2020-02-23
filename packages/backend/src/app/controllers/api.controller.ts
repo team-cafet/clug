@@ -6,7 +6,6 @@ import { User } from '../entities';
 
 import { MemberController } from './member.controller';
 import { MembershipPlanController } from './membership-plan.controller';
-import { AuthController } from './auth.controller';
 import { ClubController } from './club.controller';
 
 @JWTRequired({
@@ -17,7 +16,6 @@ export class ApiController {
   subControllers = [
     controller('/member', MemberController),
     controller('/membership-plan', MembershipPlanController),
-    controller('/auth', AuthController),
     controller('/club', ClubController),
   ]
 

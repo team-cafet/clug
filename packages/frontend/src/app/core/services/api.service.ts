@@ -9,13 +9,13 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   async get(url: string, body: object) {
-    let req = await this.http.get(`${this.API_URL}${url}`).toPromise();
+    const req = await this.http.get(`${this.API_URL}${url}`).toPromise();
 
     return req;
   }
 
   async post(url: string, body: any) {
-    let req = await this.http.post(`${this.API_URL}${url}`, body).toPromise();
+    const req = await this.http.post(`${this.API_URL}${url}`, body).toPromise();
 
     return req;
   }

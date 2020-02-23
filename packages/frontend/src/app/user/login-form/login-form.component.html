@@ -1,0 +1,19 @@
+<form (ngSubmit)="login(loginForm)" #loginForm="ngForm">
+    <div >
+        <label for="email">Email</label>
+        <input type="text" id="email" [(ngModel)]='credentials.email' name="email" required>
+      </div>
+
+      <div >
+        <label for="password">Password</label>
+        <input type="password" id="password" [(ngModel)]='credentials.password' name="password" required>
+      </div>
+
+      <div *ngIf="invalidCredential">
+          <pre>
+            Invalid Credentials
+          </pre>
+      </div>
+
+    <button type="submit" >Submit</button>
+  </form>
