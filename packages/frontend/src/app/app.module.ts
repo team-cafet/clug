@@ -9,11 +9,11 @@ import { SharedModule } from './shared/shared.module';
 import { MemberModule } from './member/member.module';
 import { UserModule } from './user/user.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppMaterialModule } from './app-material.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,9 +22,11 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     MemberModule,
     UserModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AppMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

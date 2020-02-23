@@ -1,1 +1,20 @@
-<router-outlet></router-outlet>
+<mat-toolbar></mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <mat-list>
+      <mat-list-item>
+        <a routerLink="/" routerLinkActive="active">Home </a></mat-list-item
+      >
+      <mat-list-item>
+        <a routerLink="/404" routerLinkActive="active">404 </a>
+      </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<footer></footer>
