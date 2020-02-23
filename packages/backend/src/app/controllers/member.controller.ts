@@ -115,11 +115,6 @@ import { fetchUserWithPermissions, PermissionRequired } from '@foal/typeorm';
     })
     @ValidateBody(memberSchema)
     async createMember(ctx: Context) {
-      const club: Club|undefined = await getRepository(Club).findOne(ctx.request.body.club)
-      if(!club){
-          return new HttpResponseNotFound('Club not found')
-      }
-      ctx.request.body.club = club
       const member = await getRepository(Member).save(ctx.request.body);
       return new HttpResponseCreated(member);
     }
