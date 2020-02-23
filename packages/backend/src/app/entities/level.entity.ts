@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Member } from './member.entity';
 
 @Entity()
 export class Level {
@@ -7,6 +8,12 @@ export class Level {
   id: number;
 
   @Column()
-  text: string;
+  name: string;
+
+  @Column({nullable: true})
+  description: string;
+
+  @OneToMany(type => Member, member => member.club)
+  members: Member[];
 
 }

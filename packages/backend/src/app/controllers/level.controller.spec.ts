@@ -30,10 +30,10 @@ describe('LevelController', () => {
     await repository.clear();
     [ level1, level2 ] = await repository.save([
       {
-        text: 'Level 1'
+        name: 'Level 1'
       },
       {
-        text: 'Level 2'
+        name: 'Level 2'
       },
     ]);
   });
@@ -58,13 +58,13 @@ describe('LevelController', () => {
       }
 
       strictEqual(response.body.length, 2);
-      ok(response.body.find(level => level.text === level1.text));
-      ok(response.body.find(level => level.text === level2.text));
+      ok(response.body.find(level => level.name === level1.name));
+      ok(response.body.find(level => level.name === level2.name));
     });
 
     it('should support pagination', async () => {
       const level3 = await getRepository(Level).save({
-        text: 'Level 3',
+        name: 'Level 3',
       });
 
       let ctx = new Context({
@@ -114,7 +114,7 @@ describe('LevelController', () => {
       }
 
       strictEqual(response.body.id, level2.id);
-      strictEqual(response.body.text, level2.text);
+      strictEqual(response.body.name, level2.name);
     });
 
     it('should return an HttpResponseNotFound object if the level was not found.', async () => {
@@ -143,7 +143,7 @@ describe('LevelController', () => {
         + 'an HttpResponseCreated object.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Level 3',
+          name: 'Level 3',
         }
       });
       const response = await controller.createLevel(ctx);
@@ -152,16 +152,16 @@ describe('LevelController', () => {
         throw new Error('The returned value should be an HttpResponseCreated object.');
       }
 
-      const level = await getRepository(Level).findOne({ text: 'Level 3' });
+      const level = await getRepository(Level).findOne({ name: 'Level 3' });
 
       if (!level) {
         throw new Error('No level 3 was found in the database.');
       }
 
-      strictEqual(level.text, 'Level 3');
+      strictEqual(level.name, 'Level 3');
 
       strictEqual(response.body.id, level.id);
-      strictEqual(response.body.text, level.text);
+      strictEqual(response.body.name, level.name);
     });
 
   });
@@ -176,7 +176,7 @@ describe('LevelController', () => {
     it('should update the level in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Level 2 (version 2)',
+          name: 'Level 2 (version 2)',
         },
         params: {
           levelId: level2.id
@@ -194,16 +194,16 @@ describe('LevelController', () => {
         throw new Error();
       }
 
-      strictEqual(level.text, 'Level 2 (version 2)');
+      strictEqual(level.name, 'Level 2 (version 2)');
 
       strictEqual(response.body.id, level.id);
-      strictEqual(response.body.text, level.text);
+      strictEqual(response.body.name, level.name);
     });
 
     it('should not update the other levels.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Level 2 (version 2)',
+          name: 'Level 2 (version 2)',
         },
         params: {
           levelId: level2.id
@@ -217,7 +217,7 @@ describe('LevelController', () => {
         throw new Error();
       }
 
-      notStrictEqual(level.text, 'Level 2 (version 2)');
+      notStrictEqual(level.name, 'Level 2 (version 2)');
     });
 
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
@@ -248,7 +248,7 @@ describe('LevelController', () => {
     it('should update the level in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Level 2 (version 2)',
+          name: 'Level 2 (version 2)',
         },
         params: {
           levelId: level2.id
@@ -266,16 +266,16 @@ describe('LevelController', () => {
         throw new Error();
       }
 
-      strictEqual(level.text, 'Level 2 (version 2)');
+      strictEqual(level.name, 'Level 2 (version 2)');
 
       strictEqual(response.body.id, level.id);
-      strictEqual(response.body.text, level.text);
+      strictEqual(response.body.name, level.name);
     });
 
     it('should not update the other levels.', async () => {
       const ctx = new Context({
         body: {
-          text: 'Level 2 (version 2)',
+          name: 'Level 2 (version 2)',
         },
         params: {
           levelId: level2.id
@@ -289,13 +289,13 @@ describe('LevelController', () => {
         throw new Error();
       }
 
-      notStrictEqual(level.text, 'Level 2 (version 2)');
+      notStrictEqual(level.name, 'Level 2 (version 2)');
     });
 
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          text: '',
+          name: '',
         },
         params: {
           levelId: -1

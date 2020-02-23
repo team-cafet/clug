@@ -11,9 +11,10 @@ import { Level } from '../entities';
 const levelSchema = {
   additionalProperties: false,
   properties: {
-    name: { type: 'string', maxLength: 255 },
+    name: { type: 'string', maxLength: 50 },
+    description: { type: 'string', maxLength: 500 },
   },
-  required: [ 'text' ],
+  required: [ 'name' ],
   type: 'object',
 };
 
