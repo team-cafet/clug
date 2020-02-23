@@ -9,7 +9,7 @@ This project will use Lerna for managing in one repo the backend and the fronten
 The backend is created with [Foalts](https://foalts.gitbook.io/)
 
 ### Frontend
-The technology for the frontend is not yet defined
+The frontend is created with [Angular](https://angular.io)
 
 ## How to use the ...
 
@@ -17,7 +17,7 @@ The technology for the frontend is not yet defined
 See the [Backend Readme](./packages/backend/README.md)
 
 ### Frontend
-...
+See the [Frontend Readme](./packages/frontend/README.md)
 
 ## Authors
 - Audrey Huguenin
