@@ -1,0 +1,31 @@
+<form (ngSubmit)="login(loginForm)" #loginForm="ngForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input
+      type="text"
+      id="email"
+      [(ngModel)]="credentials.email"
+      name="email"
+      required
+      matInput
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label for="password">Password</mat-label>
+    <input
+      type="password"
+      id="password"
+      [(ngModel)]="credentials.password"
+      name="password"
+      required
+      matInput
+    />
+  </mat-form-field>
+
+  <div *ngIf="invalidCredential">
+    <pre>Invalid Credentials</pre>
+  </div>
+
+  <button type="submit" mat-button>Submit</button>
+</form>
