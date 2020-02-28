@@ -86,3 +86,23 @@ foal run create-perm name="Permission to access the secret" codeName="access-sec
 ```shell
 foal run create-group name="Administrators" codeName="admin" permissions='[ "delete-users" ]'
 ```
+
+## Rights and Permissions
+
+*The stucture below can possibly change in the future depending on the needs of our users.* Technically based on the foalTS official documentation : https://foalts.gitbook.io/docs/topic-guides/authentication-and-access-control/groups-and-permissions
+
+For each module, a right ``write`` and a right ``read`` is available. ``Write`` allow all the modifications and ``Read`` is only for retrieving data. The user is part of a group, and a group owns a list of rights.
+
+### Table of permissions by group
+| | Membership  | Accountant  | Management  | Admin  |
+|---|:---:|:---:|:---:|:---:|
+| member_read  | x  | x  |  x |  x |  
+| member_write  | x  |   |   | x  |
+| invoice_read  | x  | x  |  x |  x |
+| invoice_write  |   | x  |   | x  |
+| user_read  |  x |  x | x  | x  |
+| user_write  |   |   | x  | x  |
+
+### Schema
+
+![src\app\assets\permission-schema.png](src\app\assets\permission-schema.png)
