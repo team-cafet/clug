@@ -1,6 +1,6 @@
 // 3p
 import { Group, Permission } from '@foal/typeorm';
-import { createConnection, getManager, getRepository, getConnection } from 'typeorm';
+import { createConnection, getManager, getRepository } from 'typeorm';
 
 // App
 import { User } from '../app/entities';
@@ -54,7 +54,6 @@ export async function main(args) {
     }
     user.groups.push(group);
   }
-  console.log(user.groups.length)
 
   try {
     console.log(await getManager().save(user));
