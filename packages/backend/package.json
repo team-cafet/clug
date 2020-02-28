@@ -25,17 +25,18 @@
     "build:migrations": "tsc -p tsconfig.migrations.json",
     "migration:generate": "./node_modules/.bin/typeorm migration:generate",
     "migration:run": "./node_modules/.bin/typeorm migration:run",
-    "migration:revert": "./node_modules/.bin/typeorm migration:revert"
+    "migration:revert": "./node_modules/.bin/typeorm migration:revert",
+    "migration:create": "./node_modules/.bin/typeorm migration:create"
   },
   "engines": {
     "node": ">=8"
   },
   "dependencies": {
-    "@foal/core": "^1.0.0",
-    "@foal/jwt": "^1.5.0",
-    "@foal/typeorm": "^1.0.0",
+    "@foal/core": "^1.6.0",
+    "@foal/jwt": "^1.6.0",
+    "@foal/typeorm": "^1.6.0",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^7.17.1",
+    "pg": "^7.18.1",
     "source-map-support": "^0.5.1",
     "sqlite3": "^4.0.0",
     "typeorm": "^0.2.6"
@@ -43,14 +44,14 @@
   "devDependencies": {
     "@types/mocha": "^5.2.1",
     "@types/node": "^8.0.47",
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.19.2",
     "concurrently": "^3.5.1",
     "copy": "^0.3.2",
+    "eslint": "^6.7.0",
     "mocha": "^5.2.0",
     "supertest": "^3.3.0",
     "supervisor": "^0.12.0",
-    "eslint": "^6.7.0",
-    "@typescript-eslint/eslint-plugin": "^2.7.0",
-    "@typescript-eslint/parser": "^2.7.0",
     "typescript": "~3.5.3"
   }
 }

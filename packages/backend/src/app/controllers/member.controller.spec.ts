@@ -15,14 +15,16 @@ import {
 import { createConnection, getConnection, getRepository } from "typeorm";
 
 // App
-import { Member } from "../entities";
 import { MemberController } from "./member.controller";
-import { Sexe, FinancialStatus } from "../entities/member.entity";
+import { Member, Sexe, FinancialStatus } from "../entities/member.entity";
+import { Club, Address } from "../entities";
 
 describe("MemberController", () => {
   let controller: MemberController;
   let simpleMember: Member;
   let memberWithAdditionalProps: Member;
+  let club: Club;
+  let address: Address;
 
   before(() => createConnection());
 
@@ -32,7 +34,17 @@ describe("MemberController", () => {
     controller = createController(MemberController);
 
     const repository = getRepository(Member);
-    await repository.clear();
+    const clubRepo = getRepository(Club);
+    const addressRepo = getRepository(Address);
+
+    await repository.query(`TRUNCATE ${clubRepo.metadata.tableName} CASCADE`);
+    await repository.query(`TRUNCATE ${repository.metadata.tableName} CASCADE`);
+
+    [club] = await clubRepo.save([{ designation: "Club 1" }]);
+    [address] = await addressRepo.save([
+      { street: "chemin de montétan", streetNumber: 1, city: "Lausanne", postalCode:  1004, country: 'Switzerland'}
+    ]);
+
     [simpleMember, memberWithAdditionalProps] = await repository.save([
       {
         surname: "Geralt",
@@ -46,7 +58,9 @@ describe("MemberController", () => {
         sexe: Sexe.FEMALE,
         phone: "+01 12 123 45 67",
         birthdate: "2019-01-12",
-        financialStatus: FinancialStatus.WARNING
+        financialStatus: FinancialStatus.WARNING,
+        club: club,
+        address: address
       }
     ]);
   });
@@ -185,7 +199,7 @@ describe("MemberController", () => {
         }
 
         const member = await getRepository(Member).findOne({
-          name: "Of Cyntra",
+          name: "Of Cyntra"
         });
 
         if (!member) {
@@ -247,13 +261,11 @@ describe("MemberController", () => {
         }
       });
       await controller.modifyMember(ctx);
-
       const member = await getRepository(Member).findOne(simpleMember.id);
 
       if (!member) {
         throw new Error();
       }
-
       notStrictEqual(member.name, "Member 2 (version 2)");
     });
 
@@ -325,7 +337,6 @@ describe("MemberController", () => {
       await controller.replaceMember(ctx);
 
       const member = await getRepository(Member).findOne(simpleMember.id);
-
       if (!member) {
         throw new Error();
       }
