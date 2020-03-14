@@ -8,6 +8,7 @@ import { getRepository } from 'typeorm';
 
 import { MembershipPlan } from '../entities';
 import { TypeOfFacturation } from '../entities/membership-plan.entity';
+import { PermissionRequired } from '@foal/typeorm';
 
 const membershipPlanSchema = {
   additionalProperties: false,
@@ -33,6 +34,7 @@ const membershipPlanSchema = {
 @ApiUseTag('membershipPlan')
 export class MembershipPlanController {
 
+  @PermissionRequired('member_read')
   @Get()
   @ApiOperationId('findMembershipPlans')
   @ApiOperationSummary('Find membershipPlans.')
@@ -57,6 +59,7 @@ export class MembershipPlanController {
     return new HttpResponseOK(membershipPlans);
   }
 
+  @PermissionRequired('member_read')
   @Get('/:membershipPlanId')
   @ApiOperationId('findMembershipPlanById')
   @ApiOperationSummary('Find a membershipPlan by ID.')
@@ -73,6 +76,7 @@ export class MembershipPlanController {
     return new HttpResponseOK(membershipPlan);
   }
 
+  @PermissionRequired('member_write')
   @Post()
   @ApiOperationId('createMembershipPlan')
   @ApiOperationSummary('Create a new membershipPlan.')
@@ -84,6 +88,7 @@ export class MembershipPlanController {
     return new HttpResponseCreated(membershipPlan);
   }
 
+  @PermissionRequired('member_write')
   @Patch('/:membershipPlanId')
   @ApiOperationId('modifyMembershipPlan')
   @ApiOperationSummary('Update/modify an existing membershipPlan.')
@@ -106,6 +111,7 @@ export class MembershipPlanController {
     return new HttpResponseOK(membershipPlan);
   }
 
+  @PermissionRequired('member_write')
   @Put('/:membershipPlanId')
   @ApiOperationId('replaceMembershipPlan')
   @ApiOperationSummary('Update/replace an existing membershipPlan.')
@@ -128,6 +134,7 @@ export class MembershipPlanController {
     return new HttpResponseOK(membershipPlan);
   }
 
+  @PermissionRequired('member_write')
   @Delete('/:membershipPlanId')
   @ApiOperationId('deleteMembershipPlan')
   @ApiOperationSummary('Delete a membershipPlan.')

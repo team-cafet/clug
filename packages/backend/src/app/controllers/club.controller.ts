@@ -7,6 +7,7 @@ import {
 import { getRepository } from 'typeorm';
 
 import { Club } from '../entities';
+import { PermissionRequired } from '@foal/typeorm';
 
 const clubSchema = {
   additionalProperties: false,
@@ -21,6 +22,7 @@ const clubSchema = {
 @ApiUseTag('club')
 export class ClubController {
 
+  @PermissionRequired('member_read')
   @Get()
   @ApiOperationId('findClubs')
   @ApiOperationSummary('Find clubs.')
@@ -45,6 +47,7 @@ export class ClubController {
     return new HttpResponseOK(clubs);
   }
 
+  @PermissionRequired('member_read')
   @Get('/:clubId')
   @ApiOperationId('findClubById')
   @ApiOperationSummary('Find a club by ID.')
@@ -61,6 +64,7 @@ export class ClubController {
     return new HttpResponseOK(club);
   }
 
+  @PermissionRequired('member_write')
   @Post()
   @ApiOperationId('createClub')
   @ApiOperationSummary('Create a new club.')
@@ -72,6 +76,7 @@ export class ClubController {
     return new HttpResponseCreated(club);
   }
 
+  @PermissionRequired('member_write')
   @Patch('/:clubId')
   @ApiOperationId('modifyClub')
   @ApiOperationSummary('Update/modify an existing club.')
@@ -94,6 +99,7 @@ export class ClubController {
     return new HttpResponseOK(club);
   }
 
+  @PermissionRequired('member_write')
   @Put('/:clubId')
   @ApiOperationId('replaceClub')
   @ApiOperationSummary('Update/replace an existing club.')
@@ -116,6 +122,7 @@ export class ClubController {
     return new HttpResponseOK(club);
   }
 
+  @PermissionRequired('member_write')
   @Delete('/:clubId')
   @ApiOperationId('deleteClub')
   @ApiOperationSummary('Delete a club.')

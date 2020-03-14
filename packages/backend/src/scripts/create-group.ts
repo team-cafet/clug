@@ -1,26 +1,26 @@
 // 3p
-import { Group, Permission } from '@foal/typeorm';
+import { Group, Permission } from "@foal/typeorm";
 import {
   createConnection,
   getConnection,
   getManager,
   getRepository
-} from 'typeorm';
+} from "typeorm";
 
 export const schema = {
   additionalProperties: false,
   properties: {
-    codeName: { type: 'string', maxLength: 100 },
-    name: { type: 'string', maxLength: 80 },
+    codeName: { type: "string", maxLength: 100 },
+    name: { type: "string", maxLength: 80 },
     permissions: {
-      type: 'array',
-      items: { type: 'string' },
+      type: "array",
+      items: { type: "string" },
       uniqueItems: true,
       default: []
     }
   },
-  required: ['name', 'codeName'],
-  type: 'object'
+  required: ["name", "codeName"],
+  type: "object"
 };
 
 export async function main(args: {
