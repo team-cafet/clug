@@ -15,3 +15,6 @@ import { MemberService } from './services/member.service';
     ApiService, UserService, JwtService, MemberService]
 })
 export class CoreModule {}
+
+export * from './models/index';
+export * from './services/index';
