@@ -87,6 +87,16 @@ foal run create-perm name="Permission to access the secret" codeName="access-sec
 foal run create-group name="Administrators" codeName="admin" permissions='[ "delete-users" ]'
 ```
 
+### Populate Mockdata
+This script will clean database and populate it with some mockdata. 
+
+**Be careful as it will CLEAN DATABASE**
+
+```shell
+foal run populate-mockdata
+```
+
+
 ## Rights and Permissions
 
 *The stucture below can possibly change in the future depending on the needs of our users.* Technically based on the foalTS official documentation : https://foalts.gitbook.io/docs/topic-guides/authentication-and-access-control/groups-and-permissions

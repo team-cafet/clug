@@ -91,11 +91,11 @@ export class Member extends BaseEntity {
   @OneToMany(
     type => Membership,
     membership => membership.member,
-    { nullable: true, onDelete: 'NO ACTION' }
+    { nullable: true, onDelete: 'NO ACTION', cascade: ['insert'] }
   )
   memberships: Membership;
 
-  @OneToOne(type => Address)
+  @OneToOne(type => Address, { cascade: true })
   @JoinColumn()
   address: Address;
 }

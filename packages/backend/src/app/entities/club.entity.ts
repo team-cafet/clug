@@ -7,7 +7,7 @@ export class Club {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({unique:true})
   designation: string;
 
   @Column({nullable: true})
