@@ -16,6 +16,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent implements OnInit {
+  credentials = { email: '', password: '' };
+  invalidCredentials: boolean;
+
   constructor(private userService: UserService) {}
 
   ngOnInit() {
@@ -26,13 +29,13 @@ export class LoginFormComponent implements OnInit {
   ]);
   passwordFormControl = new FormControl('', [
     Validators.required,
-    Validators.minLength(6),
+    Validators.minLength(2),
   ]);
 
   matcher = new MyErrorStateMatcher();
 
-  /*
-  async login(loginForm: NgForm) {
+
+  async login(): Promise<void> {
     try {
       await this.userService.login(
         this.credentials.email,
@@ -40,8 +43,7 @@ export class LoginFormComponent implements OnInit {
       );
     } catch (error) {
       console.error(error);
-      this.invalidCredential = true;
+      this.invalidCredentials = true;
     }
   }
-  */
 }
