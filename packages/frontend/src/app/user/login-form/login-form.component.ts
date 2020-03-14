@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user.service';
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-login-form',
@@ -8,12 +16,22 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent implements OnInit {
-  credentials = { email: '', password: '' };
-
-  invalidCredential = false;
-
   constructor(private userService: UserService) {}
 
+  ngOnInit() {
+  }
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  passwordFormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+
+  matcher = new MyErrorStateMatcher();
+
+  /*
   async login(loginForm: NgForm) {
     try {
       await this.userService.login(
@@ -25,6 +43,5 @@ export class LoginFormComponent implements OnInit {
       this.invalidCredential = true;
     }
   }
-
-  ngOnInit(): void {}
+  */
 }

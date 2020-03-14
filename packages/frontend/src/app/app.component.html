@@ -1,20 +1,11 @@
-<mat-toolbar></mat-toolbar>
-
-<mat-sidenav-container>
-  <mat-sidenav mode="side" opened>
-    <mat-list>
-      <mat-list-item>
-        <a routerLink="/" routerLinkActive="active">Home </a></mat-list-item
-      >
-      <mat-list-item>
-        <a routerLink="/404" routerLinkActive="active">404 </a>
-      </mat-list-item>
-    </mat-list>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side">
+    Sidenav content
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <router-outlet></router-outlet>
+    <p><button mat-button (click)="sidenav.toggle()">Menu</button></p>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<footer></footer>
+<router-outlet></router-outlet>

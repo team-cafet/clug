@@ -1,31 +1,24 @@
-<form (ngSubmit)="login(loginForm)" #loginForm="ngForm">
-  <mat-form-field appearance="fill">
-    <mat-label>Email</mat-label>
-    <input
-      type="text"
-      id="email"
-      [(ngModel)]="credentials.email"
-      name="email"
-      required
-      matInput
-    />
+  
+<form class="login-form">
+  <mat-form-field class="full-width-input">
+    <input matInput placeholder="Email" [formControl]="emailFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Veuillez entrer un email conforme
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email est <strong>requis</strong>
+    </mat-error>
   </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label for="password">Password</mat-label>
-    <input
-      type="password"
-      id="password"
-      [(ngModel)]="credentials.password"
-      name="password"
-      required
-      matInput
-    />
+  <mat-form-field class="full-width-input">
+    <input matInput placeholder="Mot de passe" [formControl]="passwordFormControl"
+           [errorStateMatcher]="matcher">
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      Mot de passe est <strong>requis</strong>
+    </mat-error>
+    <mat-error *ngIf="passwordFormControl.hasError('minlength')">
+      Veuillez rentrer au minimum 6 charactère
+    </mat-error>
   </mat-form-field>
-
-  <div *ngIf="invalidCredential">
-    <pre>Invalid Credentials</pre>
-  </div>
-
-  <button type="submit" mat-button>Submit</button>
+  <button mat-raised-button color="primary">Connexion</button>
 </form>
