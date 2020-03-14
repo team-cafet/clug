@@ -3,7 +3,7 @@ import { Group, Permission } from '@foal/typeorm';
 import { createConnection, getManager, getRepository } from 'typeorm';
 
 // App
-import { User, Member, Club } from '../app/entities';
+import { User, Member, Club, Address, Membership } from '../app/entities';
 import { FinancialStatus, Sexe } from '../app/entities/member.entity';
 
 export const schema = {
@@ -14,60 +14,54 @@ export const schema = {
 };
 
 const clearTable = async () => {
-  const membRpo = getRepository(Member);
-  const userRepo = getRepository(User);
-  const groupRepo = getRepository(Group);
-  const permRepo = getRepository(Permission);
+  const tabEntity = [
+    Member,
+    User,
+    Group,
+    Permission,
+    Club,
+    Address,
+    Membership
+  ];
+  let repo;
 
-  await membRpo.query(`TRUNCATE public.${membRpo.metadata.tableName} CASCADE`);
-  await userRepo.query(
-    `TRUNCATE public.${userRepo.metadata.tableName} CASCADE`
-  );
-  await groupRepo.query(
-    `TRUNCATE public.${groupRepo.metadata.tableName} CASCADE`
-  );
-  await permRepo.query(
-    `TRUNCATE public.${permRepo.metadata.tableName} CASCADE`
-  );
+  tabEntity.forEach(entity => {
+    repo = getRepository(entity);
+    repo.query(`TRUNCATE public.${repo.metadata.tableName} CASCADE`);
+  });
 };
 
 const createMockPermission = async () => {
   const permRepo = getRepository(Permission);
 
   return await permRepo.save([
-    { codeName: 'mr', name: 'member_read' },
-    { codeName: 'mw', name: 'member_write' },
-    { codeName: 'ir', name: 'invoice_read' },
-    { codeName: 'iw', name: 'invoice_write' },
-    { codeName: 'ur', name: 'user_read' },
-    { codeName: 'uw', name: 'user_write' }
+    { codeName: 'member_read', name: 'member_read' },
+    { codeName: 'member_write', name: 'member_write' },
+    { codeName: 'invoice_read', name: 'invoice_read' },
+    { codeName: 'invoice_write', name: 'invoice_write' },
+    { codeName: 'user_read', name: 'user_read' },
+    { codeName: 'user_write', name: 'user_write' }
   ]);
 };
 
-const createMockGroup = async () => {
+const createMockGroup = async (tabPerm: Permission[]) => {
   const groupRepo = getRepository(Group);
+
+  let mr = tabPerm.find(perm => perm.name === 'member_read') || {};
+  let mw = tabPerm.find(perm => perm.name === 'member_write') || {};
+  let ir = tabPerm.find(perm => perm.name === 'invoice_read') || {};
+  let ur = tabPerm.find(perm => perm.name === 'user_read') || {};
+
   return await groupRepo.save([
     {
       codeName: 'grp_mem',
       name: 'Membership',
-      permissions: [
-        { name: 'member_read' },
-        { name: 'member_write' },
-        { name: 'invoice_read' },
-        { name: 'user_read' }
-      ]
+      permissions: [mr, mw, ir, ur]
     },
     {
       codeName: 'grp_adm',
       name: 'Admin',
-      permissions: [
-        { name: 'member_read' },
-        { name: 'member_write' },
-        { name: 'invoice_read' },
-        { name: 'invoice_write' },
-        { name: 'user_read' },
-        { name: 'user_write' }
-      ]
+      permissions: tabPerm
     }
   ]);
 };
@@ -131,6 +125,8 @@ const createMemberMock = async () => {
 };
 
 export async function main(args) {
+  let tabPerm: Permission[];
+
   await createConnection();
 
   try {
@@ -142,7 +138,7 @@ export async function main(args) {
 
   // ----- PERMISSION MOCK
   try {
-    await createMockPermission();
+    tabPerm = await createMockPermission();
   } catch (e) {
     console.error('Error on creating permissions:', e);
     return;
@@ -150,7 +146,7 @@ export async function main(args) {
 
   // ----- GROUP MOCK
   try {
-    await createMockGroup();
+    await createMockGroup(tabPerm);
   } catch (e) {
     console.error('Error on creating groups:', e);
     return;
