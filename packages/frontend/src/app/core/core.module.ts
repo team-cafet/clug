@@ -5,12 +5,13 @@ import { UserService } from './services/user.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
 import { JwtService } from './services/jwt.service';
+import { MemberService } from './services/member.service';
 
 @NgModule({
   declarations: [],
   imports: [CommonModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
-    ApiService, UserService, JwtService]
+    ApiService, UserService, JwtService, MemberService]
 })
 export class CoreModule {}
