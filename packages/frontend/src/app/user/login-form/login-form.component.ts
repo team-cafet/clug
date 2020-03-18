@@ -7,6 +7,7 @@ import {
   Validators
 } from '@angular/forms';
 import { UserService } from 'src/app/core/services/user.service';
+import { Router } from '@angular/router';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(
@@ -28,7 +29,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./login-form.component.scss']
 })
 export class LoginFormComponent implements OnInit {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
   credentials = { email: '', password: '' };
   invalidCredentials: boolean;
   emailFormControl = new FormControl('', [
@@ -51,6 +52,7 @@ export class LoginFormComponent implements OnInit {
         this.emailFormControl.value,
         this.passwordFormControl.value
       );
+      this.router.navigate(['/members'])
     } catch (error) {
       console.error(error);
       this.invalidCredentials = true;
