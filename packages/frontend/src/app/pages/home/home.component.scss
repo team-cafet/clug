@@ -1,11 +1,15 @@
-.home-container{
+.home-container {
   height: 100%;
   background-color: lightgray;
-  .login-container{
+  background-image: url(../../../assets/backround-login.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 90%;
+  .login-container {
     margin: 0 auto;
     position: relative;
     max-height: 30%;
     top: 25%;
   }
 }
-
