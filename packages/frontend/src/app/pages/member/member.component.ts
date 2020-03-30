@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Member, MemberService } from 'src/app/core/core.module';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Member,
+  MemberService,
+  displaySexe,
+  displayFinancialStatus
+} from 'src/app/core/core.module';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-member',
@@ -8,18 +16,62 @@ import { Member, MemberService } from 'src/app/core/core.module';
 })
 export class MemberComponent implements OnInit {
   members: Member[];
-  displayedColumns: string[] = ['name', 'surname', 'sexe', 'phone', 'financialStatus' ];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'surname',
+    'sexe',
+    'financialStatus',
+    'phone',
+    'action'
+  ];
+  tableDataSource = new MatTableDataSource([]);
 
   constructor(private memberSrv: MemberService) {}
 
+  @ViewChild(MatSort, { static: true }) tableSort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
+
   ngOnInit(): void {
+    this.tableDataSource.sort = this.tableSort;
+    this.tableDataSource.paginator = this.tablePaginator;
+
     this.memberSrv
       .getAllMember()
       .then(reqMembers => {
         this.members = reqMembers;
+        this.tableDataSource.data = this.members;
       })
       .catch(e => {
         console.error(e);
       });
+  }
+
+  public displaySexe(sexe) {
+    return displaySexe(sexe);
+  }
+
+  public displayFinancialStatus(financialStatus) {
+    return displayFinancialStatus(financialStatus);
+  }
+
+  public applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.tableDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  public editMember(id: number) {
+    console.log(`edit member no ${id}`);
+    // TODO
+  }
+
+  public deleteMember(id: number) {
+    console.log(`delete member no ${id}`);
+    // TODO
+  }
+
+  public addMember() {
+    console.log(`Add member`);
+    // TODO
   }
 }

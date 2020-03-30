@@ -1,1 +1,1 @@
-export * from './member.interface';
+export * from './member.model';
