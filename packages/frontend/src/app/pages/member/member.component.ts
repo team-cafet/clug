@@ -1,18 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import {
   Member,
   MemberService,
   displaySexe,
-  displayFinancialStatus
+  displayFinancialStatus,
 } from 'src/app/core/core.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-member',
   templateUrl: './member.component.html',
-  styleUrls: ['./member.component.scss']
+  styleUrls: ['./member.component.scss'],
 })
 export class MemberComponent implements OnInit {
   members: Member[];
@@ -23,11 +25,14 @@ export class MemberComponent implements OnInit {
     'sexe',
     'financialStatus',
     'phone',
-    'action'
+    'action',
   ];
   tableDataSource = new MatTableDataSource([]);
 
-  constructor(private memberSrv: MemberService) {}
+  constructor(
+    private memberSrv: MemberService,
+    public dialog: MatDialog,
+  ) {}
 
   @ViewChild(MatSort, { static: true }) tableSort: MatSort;
   @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
@@ -38,11 +43,11 @@ export class MemberComponent implements OnInit {
 
     this.memberSrv
       .getAllMember()
-      .then(reqMembers => {
+      .then((reqMembers) => {
         this.members = reqMembers;
         this.tableDataSource.data = this.members;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
       });
   }
@@ -73,5 +78,15 @@ export class MemberComponent implements OnInit {
   public addMember() {
     console.log(`Add member`);
     // TODO
+  }
+  private openDialog(): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '250px',
+      data: 'test'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }
