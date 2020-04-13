@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Member, Sexe, displaySexe } from 'src/app/core/models';
 import { MemberService } from 'src/app/core/services';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-member-details',

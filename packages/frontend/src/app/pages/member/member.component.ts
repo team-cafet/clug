@@ -3,16 +3,17 @@ import {
   Member,
   MemberService,
   displaySexe,
-  displayFinancialStatus
+  displayFinancialStatus,
 } from 'src/app/core/core.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-member',
   templateUrl: './member.component.html',
-  styleUrls: ['./member.component.scss']
+  styleUrls: ['./member.component.scss'],
 })
 export class MemberComponent implements OnInit {
   members: Member[];
@@ -23,7 +24,7 @@ export class MemberComponent implements OnInit {
     'sexe',
     'financialStatus',
     'phone',
-    'action'
+    'action',
   ];
   tableDataSource = new MatTableDataSource([]);
 
@@ -38,11 +39,11 @@ export class MemberComponent implements OnInit {
 
     this.memberSrv
       .getAllMember()
-      .then(reqMembers => {
+      .then((reqMembers) => {
         this.members = reqMembers;
         this.tableDataSource.data = this.members;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
       });
   }

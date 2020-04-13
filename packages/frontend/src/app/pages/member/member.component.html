@@ -10,7 +10,11 @@
     <div>
       <mat-form-field>
         <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Search member" />
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Search member"
+        />
       </mat-form-field>
 
       <table
@@ -71,7 +75,7 @@
             <div>
               <button
                 mat-icon-button
-                (click)="editMember(element.id)"
+                [routerLink]="['/member-details/', element.id]"
                 color="primary"
               >
                 <mat-icon>edit</mat-icon>
