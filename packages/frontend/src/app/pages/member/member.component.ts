@@ -1,15 +1,10 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import {
-  Member,
-  MemberService,
-  displaySexe,
-  displayFinancialStatus,
-} from 'src/app/core/core.module';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { displayFinancialStatus, displaySexe, Member, MemberService } from 'src/app/core/core.module';
+import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-member',
@@ -79,6 +74,7 @@ export class MemberComponent implements OnInit {
         console.error(e);
       });
   }
+  
   private openDialog(member: Member): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '450px',

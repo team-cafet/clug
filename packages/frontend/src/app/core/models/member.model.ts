@@ -1,7 +1,7 @@
 export enum Sexe {
   'MALE',
   'FEMALE',
-  'NON-BINARY'
+  'NON_BINARY'
 }
 
 export enum FinancialStatus {
@@ -32,7 +32,7 @@ export function displaySexe(sexe: Sexe): string {
     case Sexe.MALE:
       return 'M';
       break;
-    case Sexe['NON-BINARY']:
+    case Sexe['NON_BINARY']:
       return '-';
       break;
     default:
