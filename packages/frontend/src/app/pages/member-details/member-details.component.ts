@@ -26,14 +26,12 @@ export class MemberDetailsComponent implements OnInit {
       if (!this.member) {
         throw new Error(`Member with id ${this.ID_MEMBER} Not Defined`);
       }
-      console.log(this.member);
     } catch (error) {
       console.error(error);
     }
   }
 
   async save() {
-    console.log(this.member);
     try {
       delete this.member.createdAt;
       delete this.member.updatedAt;
