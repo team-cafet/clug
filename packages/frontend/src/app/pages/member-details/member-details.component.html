@@ -5,12 +5,12 @@
         <mat-card-title>
           <mat-form-field>
             <mat-label></mat-label>
-            <input matInput placeholder="name" [(value)]="member.name" />
+            <input matInput placeholder="name" [ngModelOptions]="{standalone: true}" [(ngModel)]="member.name" />
           </mat-form-field>
 
           <mat-form-field>
             <mat-label></mat-label>
-            <input matInput placeholder="surname" [(value)]="member.surname" />
+            <input matInput placeholder="surname" [ngModelOptions]="{standalone: true}" [(ngModel)]="member.surname" />
           </mat-form-field>
         </mat-card-title>
       </mat-card-header>
@@ -22,7 +22,6 @@
               <mat-select [(value)]="member.sexe">
                 <mat-option *ngFor="let sexe of SEXE_LABEL" [value]="sexe">
                   {{displaySexe(sexe)}}
-                  
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -34,14 +33,14 @@
               matInput
               placeholder="Birthdate"
               type="date"
-              [value]="member.birthdate"
+              [ngModelOptions]="{standalone: true}" [(ngModel)]="member.birthdate"
             />
           </mat-form-field>
         </p>
         <p>
           <mat-form-field>
             <mat-label>Phone</mat-label>
-            <input matInput placeholder="Phone" [(value)]="member.phone" />
+            <input matInput placeholder="Phone" [ngModelOptions]="{standalone: true}" [(ngModel)]="member.phone" />
           </mat-form-field>
         </p>
         <p>
@@ -51,7 +50,7 @@
               matInput
               placeholder="Email"
               type="email"
-              [(value)]="member.email"
+              [ngModelOptions]="{standalone: true}" [(ngModel)]="member.email"
             />
           </mat-form-field>
         </p>
