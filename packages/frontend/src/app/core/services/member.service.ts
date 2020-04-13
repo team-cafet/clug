@@ -8,12 +8,12 @@ export class MemberService {
   constructor(private apiService: ApiService) {}
 
   async getAllMember(filter?) {
-    try {
-      const req = await this.apiService.get(API_MEMBER);
-      console.log(req);
-      return req;
-    } catch (error) {
-      throw new Error('Error during fetching member');
-    }
+      return await this.apiService.get(API_MEMBER);
   }
+
+  async getOneById(id) {
+      return await this.apiService.get(`${API_MEMBER}${id}`);
+  }
+
+
 }
