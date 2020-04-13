@@ -10,7 +10,7 @@ import { UserModule } from './user/user.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app-material.module';
-import { MatMenuModule } from '@angular/material/menu';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,8 +24,7 @@ import { MatMenuModule } from '@angular/material/menu';
     UserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AppMaterialModule,
-    MatMenuModule,
+    AppMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
