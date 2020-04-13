@@ -70,8 +70,8 @@ export class MemberComponent implements OnInit {
     // TODO
   }
 
-  public deleteMember(id: number) {
-    console.log(`delete member no ${id}`);
+  public deleteMember(member: Member) {
+    this.openDialog(member);
     // TODO
   }
 
@@ -79,14 +79,14 @@ export class MemberComponent implements OnInit {
     console.log(`Add member`);
     // TODO
   }
-  private openDialog(): void {
+  private openDialog(member: Member): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      width: '250px',
-      data: 'test'
+      width: '450px',
+      data: member
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed', result);
     });
   }
 }

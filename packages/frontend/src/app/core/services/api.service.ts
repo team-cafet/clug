@@ -15,4 +15,8 @@ export class ApiService {
   async post(url: string, body: any): Promise<any> {
     return await this.http.post(`${this.API_URL}${url}`, body).toPromise();
   }
+
+  async delete(url: string): Promise<any> {
+    return await this.http.delete(`${this.API_URL}${url}`).toPromise();
+  }
 }
