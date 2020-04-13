@@ -30,9 +30,8 @@ const memberSchema = {
     name: { type: 'string', maxLength: 255 },
     surname: { type: 'string', maxLength: 255 },
     sexe: {
-      type: 'string',
-      enum: [Sexe.MALE, Sexe.FEMALE, Sexe['NON-BINARY']],
-      maxLength: 255
+      type: 'number',
+      enum: [Sexe.MALE, Sexe.FEMALE, Sexe['NON-BINARY']]
     },
     email: { type: 'string', format: 'email', maxLength: 255 },
     phone: { type: 'string', maxLength: 50 },

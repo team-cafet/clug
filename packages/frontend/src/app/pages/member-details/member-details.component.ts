@@ -38,8 +38,16 @@ export class MemberDetailsComponent implements OnInit {
     try {
       delete this.member.createdAt;
       delete this.member.updatedAt;
+      delete this.member.deletedAt;
       delete this.member.financialStatus;
-      await this.memberSrv.saveOne(this.member);
+
+      for (const props in this.member) {
+        if (this.member[props] === null) {
+          delete this.member[props];
+        }
+      }
+
+      this.member = await this.memberSrv.saveOne(this.member);
     } catch (error) {
       console.error(error);
     }
