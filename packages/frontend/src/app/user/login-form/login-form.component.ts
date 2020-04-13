@@ -46,15 +46,13 @@ export class LoginFormComponent implements OnInit {
   ngOnInit() {}
 
   async login(): Promise<void> {
-    console.log('email:', this.emailFormControl.value);
     try {
       await this.userService.login(
         this.emailFormControl.value,
         this.passwordFormControl.value
       );
-      this.router.navigate(['/members'])
+      this.router.navigate(['/members']); // TODO: Change depending on the general member view's url
     } catch (error) {
-      console.error(error);
       this.invalidCredentials = true;
     }
   }

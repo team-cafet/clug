@@ -36,6 +36,9 @@
         Veuillez rentrer au minimum 6 charactère
       </mat-error>
     </mat-form-field>
+    <mat-error *ngIf="invalidCredentials">
+      Email ou mot de passe incorrect
+    </mat-error>
     <button mat-stroked-button color="accent" class="btn-block" (click)="login()">Log in</button>
   </form>
 </mat-card>
