@@ -4,9 +4,13 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UserModule } from '../user/user.module';
 import { AppMaterialModule } from '../app-material.module';
+import { MemberDetailsComponent } from './member-details/member-details.component';
+import { MemberComponent } from './member/member.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [HomeComponent, NotFoundComponent],
-  imports: [CommonModule, UserModule, AppMaterialModule]
+  declarations: [HomeComponent, NotFoundComponent, MemberComponent, MemberDetailsComponent],
+  imports: [CommonModule, UserModule, AppMaterialModule, RouterModule, FormsModule]
 })
 export class PagesModule {}

@@ -1,17 +1,39 @@
-<mat-sidenav-container>
-  <mat-sidenav mode="side" hidden={{!opened}}>
-    <mat-list>
-      <mat-list-item>
-        <a routerLink="/" routerLinkActive="active">Home </a>
-        </mat-list-item
-      >
-      <mat-list-item>
-        <a routerLink="/404" routerLinkActive="active">404 </a>
-      </mat-list-item>
-    </mat-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-<footer></footer>
+<div class="main-container" [class.is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="main-toolbar">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container
+    class="main-sidenav-container"
+    [style.marginTop.px]="mobileQuery.matches ? 56 : 0"
+  >
+    <mat-sidenav
+      #sidenav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+      opened
+    >
+      <mat-nav-list>
+        <mat-list-item>
+          <a routerLink="/" routerLinkActive="active">Home </a></mat-list-item
+        >
+
+        <mat-list-item>
+          <a routerLink="/member" routerLinkActive="active">Member</a>
+        </mat-list-item>
+
+        <mat-list-item>
+          <a routerLink="/404" routerLinkActive="active">404 </a>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  <footer></footer>
+</div>

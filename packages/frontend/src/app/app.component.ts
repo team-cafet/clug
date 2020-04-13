@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { Location } from '@angular/common';
+import { Component, ChangeDetectorRef } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
@@ -8,18 +7,17 @@ import { Location } from '@angular/common';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'frontend';
-  opened: boolean;
+  mobileQuery: MediaQueryList;
 
-  constructor(location: Location) {}
+  private _mobileQueryListener: () => void;
 
-  ngOnInit() {
-    console.log(`The location ${location.pathname}`);
-    if (location.pathname === '/') {
-      this.opened = false;
-      console.log('im on base page')
-    } else {
-      this.opened = true;
-    }
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 }
