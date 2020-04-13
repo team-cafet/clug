@@ -1,42 +1,66 @@
-<h1>Member profile</h1>
-<mat-card class="member-card">
-    <mat-card-header>
-      <div mat-card-avatar class="profile-pic"></div>
-      <mat-card-title>Jean-Michel Pinard</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <mat-card>
-            <mat-card-title> Adhésion</mat-card-title>
-            <mat-card-content>
-                <mat-grid-list cols="2" rowHeight="100px">
-                    <mat-grid-tile [colspan]="1">
-                        <mat-list>
-                            <mat-list-item> [type abo] </mat-list-item>
-                            <mat-list-item> Début : </mat-list-item>
-                            <mat-list-item> Fin : </mat-list-item>
-                        </mat-list>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1">
-                        <p>payé/impayé</p>
-                    </mat-grid-tile>
-                  </mat-grid-list>
-            </mat-card-content>
-        </mat-card>
-        <mat-card>
-            <mat-card-title> Informations</mat-card-title>
-            <mat-card-content>
-                <mat-list>
-                    <mat-list-item> Niveau : </mat-list-item>
-                    <mat-list-item> Mail : </mat-list-item>
-                    <mat-list-item> Tél.: </mat-list-item>
-                    <mat-list-item> Date de naissance : </mat-list-item>
-                    <mat-list-item> Adresse : </mat-list-item>
-                   </mat-list>
-            </mat-card-content>
-        </mat-card>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-  </mat-card>
+<div id="page-member-details">
+  <form *ngIf="member">
+    <mat-card class="member-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-form-field>
+            <mat-label></mat-label>
+            <input matInput placeholder="name" [(value)]="member.name" />
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label></mat-label>
+            <input matInput placeholder="surname" [(value)]="member.surname" />
+          </mat-form-field>
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p>
+            <mat-form-field>
+              <mat-label>Sexe</mat-label>
+              <mat-select [(value)]="member.sexe">
+                <mat-option *ngFor="let sexe of SEXE_LABEL" [value]="sexe">
+                  {{displaySexe(sexe)}}
+                  
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Birthdate</mat-label>
+            <input
+              matInput
+              placeholder="Birthdate"
+              type="date"
+              [value]="member.birthdate"
+            />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="Phone" [(value)]="member.phone" />
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              placeholder="Email"
+              type="email"
+              [(value)]="member.email"
+            />
+          </mat-form-field>
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button type="button" color="warn" (click)="delete()">Delete</button>
+        <button mat-button type="button" color="primary" (click)="save()">Save</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

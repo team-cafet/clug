@@ -20,6 +20,12 @@ export class ApiService {
     );
   }
 
+  async put(url: string, body: any): Promise<any> {
+    return await this.doRequest(
+      this.http.put(`${this.API_URL}${url}`, body).toPromise()
+    );
+  }
+
   private async doRequest(request: Promise<any>) {
     try {
       return await request;

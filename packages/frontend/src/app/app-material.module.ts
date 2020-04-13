@@ -11,7 +11,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import {MatChipsModule} from '@angular/material/chips'; 
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatTableModule,
     MatGridListModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule,
   ],
   exports: [
     MatToolbarModule,
@@ -40,7 +42,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatTableModule,
     MatGridListModule,
     MatPaginatorModule,
-    MatSortModule
-  ]
+    MatSortModule,
+    MatSelectModule,
+  ],
 })
 export class AppMaterialModule {}

@@ -9,7 +9,7 @@ import { MemberComponent } from './pages/member/member.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'member', component: MemberComponent },
-  { path: 'member-details', component: MemberDetailsComponent },
+  { path: 'member-details/:id', component: MemberDetailsComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
