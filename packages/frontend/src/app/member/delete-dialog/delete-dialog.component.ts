@@ -22,7 +22,7 @@ export class DeleteDialogComponent implements OnInit {
 
   public async deleteMember(): Promise<void> {
     this.memberSrv.delete(this.data).then((reqMembers) => {
-      this.dialogRef.close();
+      this.dialogRef.close('member deleted');
     })
     .catch((e) => {
       console.error(e);

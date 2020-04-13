@@ -29,10 +29,7 @@ export class MemberComponent implements OnInit {
   ];
   tableDataSource = new MatTableDataSource([]);
 
-  constructor(
-    private memberSrv: MemberService,
-    public dialog: MatDialog,
-  ) {}
+  constructor(private memberSrv: MemberService, public dialog: MatDialog) {}
 
   @ViewChild(MatSort, { static: true }) tableSort: MatSort;
   @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
@@ -40,16 +37,7 @@ export class MemberComponent implements OnInit {
   ngOnInit(): void {
     this.tableDataSource.sort = this.tableSort;
     this.tableDataSource.paginator = this.tablePaginator;
-
-    this.memberSrv
-      .getAllMember()
-      .then((reqMembers) => {
-        this.members = reqMembers;
-        this.tableDataSource.data = this.members;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    this.fetchMembersList();
   }
 
   public displaySexe(sexe) {
@@ -79,14 +67,28 @@ export class MemberComponent implements OnInit {
     console.log(`Add member`);
     // TODO
   }
+
+  public async fetchMembersList(): Promise<void> {
+    return this.memberSrv
+      .getAllMember()
+      .then((reqMembers) => {
+        this.members = reqMembers;
+        this.tableDataSource.data = this.members;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
   private openDialog(member: Member): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '450px',
-      data: member
+      data: member,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.fetchMembersList();
+      }
     });
   }
 }
