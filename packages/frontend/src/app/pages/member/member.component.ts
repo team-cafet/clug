@@ -1,14 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  Member,
-  MemberService,
-  displaySexe,
-  displayFinancialStatus,
-} from 'src/app/core/core.module';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { RouterLink } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { displayFinancialStatus, displaySexe, Member, MemberService } from 'src/app/core/core.module';
+import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-member',
@@ -28,7 +24,7 @@ export class MemberComponent implements OnInit {
   ];
   tableDataSource = new MatTableDataSource([]);
 
-  constructor(private memberSrv: MemberService) {}
+  constructor(private memberSrv: MemberService, public dialog: MatDialog) {}
 
   @ViewChild(MatSort, { static: true }) tableSort: MatSort;
   @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
@@ -36,16 +32,7 @@ export class MemberComponent implements OnInit {
   ngOnInit(): void {
     this.tableDataSource.sort = this.tableSort;
     this.tableDataSource.paginator = this.tablePaginator;
-
-    this.memberSrv
-      .getAllMember()
-      .then((reqMembers) => {
-        this.members = reqMembers;
-        this.tableDataSource.data = this.members;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    this.fetchMembersList();
   }
 
   public displaySexe(sexe) {
@@ -66,13 +53,38 @@ export class MemberComponent implements OnInit {
     // TODO
   }
 
-  public deleteMember(id: number) {
-    console.log(`delete member no ${id}`);
+  public deleteMember(member: Member) {
+    this.openDialog(member);
     // TODO
   }
 
   public addMember() {
     console.log(`Add member`);
     // TODO
+  }
+
+  public async fetchMembersList(): Promise<void> {
+    return this.memberSrv
+      .getAllMember()
+      .then((reqMembers) => {
+        this.members = reqMembers;
+        this.tableDataSource.data = this.members;
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+  
+  private openDialog(member: Member): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '450px',
+      data: member,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.fetchMembersList();
+      }
+    });
   }
 }

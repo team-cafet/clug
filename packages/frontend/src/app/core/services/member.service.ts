@@ -23,4 +23,12 @@ export class MemberService {
 
     return await this.apiService.put(`${API_MEMBER}${member.id}`, member);
   }
+
+  async delete(member: Member) {
+    try {
+      const req = await this.apiService.delete(`${API_MEMBER}${member.id}`);
+    } catch (error) {
+      throw new Error('Error during member deletion');
+    }
+  }
 }

@@ -33,4 +33,8 @@ export class ApiService {
       console.error(error);
     }
   }
+
+  async delete(url: string): Promise<any> {
+    return await this.http.delete(`${this.API_URL}${url}`).toPromise();
+  }
 }
