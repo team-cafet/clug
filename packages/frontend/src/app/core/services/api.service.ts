@@ -30,7 +30,7 @@ export class ApiService {
     try {
       return await request;
     } catch (error) {
-      console.error(error);
+      console.error('ApiService:RequestError:', error);
     }
   }
 

@@ -12,7 +12,7 @@ export class UserService {
         email,
         password
       });
-      console.log(req);
+
       this.jwtService.saveToken(req.token);
 
       return req;

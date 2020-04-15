@@ -51,7 +51,7 @@ export class LoginFormComponent implements OnInit {
         this.emailFormControl.value,
         this.passwordFormControl.value
       );
-      this.router.navigate(['/members']); // TODO: Change depending on the general member view's url
+      this.router.navigate(['/member']); // TODO: Change depending on the general member view's url
     } catch (error) {
       this.invalidCredentials = true;
     }

@@ -18,3 +18,4 @@ export class CoreModule {}
 
 export * from './models/index';
 export * from './services/index';
+export * from './guards/index';

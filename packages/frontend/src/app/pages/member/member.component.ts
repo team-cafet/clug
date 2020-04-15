@@ -3,7 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { displayFinancialStatus, displaySexe, Member, MemberService } from 'src/app/core/core.module';
+import {
+  displayFinancialStatus,
+  displaySexe,
+  Member,
+  MemberService,
+} from 'src/app/core/core.module';
 import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
 
 @Component({
@@ -48,14 +53,8 @@ export class MemberComponent implements OnInit {
     this.tableDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  public editMember(id: number) {
-    console.log(`edit member no ${id}`);
-    // TODO
-  }
-
   public deleteMember(member: Member) {
     this.openDialog(member);
-    // TODO
   }
 
   public addMember() {
@@ -74,7 +73,7 @@ export class MemberComponent implements OnInit {
         console.error(e);
       });
   }
-  
+
   private openDialog(member: Member): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '450px',

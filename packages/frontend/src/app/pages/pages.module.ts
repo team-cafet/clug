@@ -8,9 +8,10 @@ import { MemberDetailsComponent } from './member-details/member-details.componen
 import { MemberComponent } from './member/member.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [HomeComponent, NotFoundComponent, MemberComponent, MemberDetailsComponent],
+  declarations: [HomeComponent, NotFoundComponent, MemberComponent, MemberDetailsComponent, LoginComponent],
   imports: [CommonModule, UserModule, AppMaterialModule, RouterModule, FormsModule]
 })
 export class PagesModule {}
