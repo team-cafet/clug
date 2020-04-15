@@ -26,7 +26,6 @@ export class AppComponent {
 
     router.events.subscribe((routeEvt: RouterEvent) => {
       if (routeEvt instanceof NavigationEnd) {
-        console.log(routeEvt);
         this.is404OrLogin = (routeEvt.url === '/login' || routeEvt.url === '/404' ? true : false);
       }
     });
