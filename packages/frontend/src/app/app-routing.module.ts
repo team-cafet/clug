@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { MemberDetailsComponent } from './pages/member-details/member-details.component';
+import { MemberDetailsComponent } from './pages/member/member-details/member-details.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MemberComponent } from './pages/member/member.component';
 import { AuthGuard } from './core/guards';
@@ -15,7 +15,10 @@ const routes: Routes = [
     path: 'member',
     component: MemberComponent,
     canActivate: [AuthGuard],
-    children: [{ path: ':id', component: MemberDetailsComponent }],
+  },
+  {
+    path: 'member/:id',
+    component: MemberDetailsComponent,
   },
   { path: '**', component: NotFoundComponent },
 ];
