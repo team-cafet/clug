@@ -11,17 +11,17 @@ export enum FinancialStatus {
 }
 
 export interface Member {
-  id: string;
+  id?: string;
   name: string;
   surname: string;
   sexe: Sexe;
   email: string;
   phone: string;
   birthdate: Date;
-  financialStatus: FinancialStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
+  financialStatus?: FinancialStatus;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }
 
 export function displaySexe(sexe: Sexe): string {

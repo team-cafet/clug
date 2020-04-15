@@ -1,7 +1,13 @@
 <div id="page-member">
   <div id="page-member-header">
     <h2>List of all member</h2>
-    <button mat-mini-fab color="primary" (click)="addMember()" color="primary">
+    <button
+      mat-mini-fab
+      color="primary"
+      (click)="addMember()"
+      color="primary"
+      [routerLink]="['/member/add']"
+    >
       <mat-icon>add</mat-icon>
     </button>
   </div>

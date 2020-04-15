@@ -24,6 +24,10 @@ export class MemberService {
     return await this.apiService.put(`${API_MEMBER}${member.id}`, member);
   }
 
+  async addOne(member: Member) {
+    return await this.apiService.post(`${API_MEMBER}`, member);
+  }
+
   async delete(member: Member) {
     return await this.apiService.delete(`${API_MEMBER}${member.id}`);
   }
