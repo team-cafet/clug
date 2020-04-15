@@ -48,6 +48,4 @@ export class MemberAddComponent implements OnInit {
       console.error(error);
     }
   }
-
-  async delete() {}
 }

@@ -11,7 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app-material.module';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

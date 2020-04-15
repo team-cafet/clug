@@ -19,6 +19,7 @@
               matInput
               placeholder="name"
               [ngModelOptions]="{ standalone: true }"
+              i18n-placeholder="member-detail|Name@@mem-name"
               [(ngModel)]="member.name"
             />
           </mat-form-field>
@@ -28,6 +29,7 @@
             <input
               matInput
               placeholder="surname"
+              i18n-placeholder="member-detail|Surname@@mem-surname"
               [ngModelOptions]="{ standalone: true }"
               [(ngModel)]="member.surname"
             />
@@ -38,7 +40,7 @@
       <mat-card-content>
         <p>
           <mat-form-field>
-            <mat-label>Sexe</mat-label>
+            <mat-label i18n="member-detail|Sexe@@mem-sexe">Sexe</mat-label>
             <mat-select [(value)]="member.sexe">
               <mat-option *ngFor="let sexe of SEXE_LABEL" [value]="sexe">
                 {{ displaySexe(sexe) }}
@@ -48,7 +50,7 @@
         </p>
         <p>
           <mat-form-field>
-            <mat-label>Birthdate</mat-label>
+            <mat-label i18n="member-detail|Birthdate@@mem-birthdate">Birthdate</mat-label>
             <input
               matInput
               placeholder="Birthdate"
@@ -60,7 +62,7 @@
         </p>
         <p>
           <mat-form-field>
-            <mat-label>Phone</mat-label>
+            <mat-label i18n="member-detail|Phone@@mem-phone">Phone</mat-label>
             <input
               matInput
               placeholder="Phone"
@@ -71,7 +73,7 @@
         </p>
         <p>
           <mat-form-field>
-            <mat-label>Email</mat-label>
+            <mat-label i18n="member-detail|Email@@mem-email">Email</mat-label>
             <input
               matInput
               placeholder="Email"
@@ -84,9 +86,9 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-button type="button" color="warn" (click)="delete()">
+        <!-- <button mat-button type="button" color="warn" (click)="delete()">
           Delete
-        </button>
+        </button> -->
         <button mat-button type="button" color="primary" (click)="save()">
           Save
         </button>
