@@ -10,6 +10,7 @@ import { MemberAddComponent } from './member/member-add/member-add.component';
 import { MemberDetailsComponent } from './member/member-details/member-details.component';
 import { MemberComponent } from './member/member.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ClubComponent } from './club/club/club.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     MemberDetailsComponent,
     MemberAddComponent,
     LoginComponent,
+    ClubComponent,
   ],
   imports: [
     CommonModule,
