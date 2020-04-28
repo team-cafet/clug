@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+
+  # Main Express.js application container
+  app:
+    image: teamcafet/clug-test
+    build:
+      context: "app"
+    depends_on:
+      - db
+    environment:
+      DATABASE_NAME: foaltstest
+      DATABASE_HOST: localhost
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: 1234
+      DATABASE_SYNCHRONIZE: true
+      DATABASE_DROPSCHEMA: false
+      SETTINGS_JWT_SECRET_OR_PUBLIC_KEY: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
+    
+    restart: always
+    
+  db:
+    image: postgres:12-alpine
+    environment:      
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+    restart: always
+    
+
+volumes:
+  db_data:

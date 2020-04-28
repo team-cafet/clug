@@ -103,6 +103,7 @@ WORKDIR /usr/src/app
 
 
 # Copy the application's compiled files from the builder image.
+COPY --chown=clug:clug --from=builder /usr/src/app/backend/node_modules /usr/src/app/node_modules
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/
 
 EXPOSE 4200
