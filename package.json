@@ -1,6 +1,9 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "docker:build": "docker image build -t teamcafet/clug-test -f ./container/Dockerfile ."
+  },
   "devDependencies": {
     "lerna": "^3.20.2"
   },
