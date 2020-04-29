@@ -2,7 +2,8 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "docker:build": "docker image build -t teamcafet/clug-test -f ./container/Dockerfile ."
+    "docker:up": "docker-compose -f ./container/docker-compose.yml up",
+    "docker:build": "docker image build -t teamcafet/clug-test -f ./container/app/Dockerfile ."
   },
   "devDependencies": {
     "lerna": "^3.20.2"
