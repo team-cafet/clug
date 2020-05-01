@@ -48,7 +48,7 @@ WORKDIR /usr/src/app/backend
 RUN npm ci
 
 
-## 
+## Copy source code into builder container
 WORKDIR /usr/src/app
 COPY --chown=clug:clug ./packages/backend/ /usr/src/app/backend/
 COPY --chown=clug:clug ./packages/frontend/ /usr/src/app/frontend/
@@ -64,24 +64,7 @@ RUN npm run build:app && \
     npm run build:scripts
 
 
-
-
-
-# # ------------------------------- APP CONTAINER
-
-# FROM node:14.0.0-alpine3.11 as app
-
-
-# # create user
-# # At the end, set the user to use when running this image
-# RUN addgroup -S clug && \
-#     adduser -S -G clug clug && \
-#     chown -R mapsparty:mapsparty /usr/src/app
-
-# USER clug:clug
-
-# ## Copy built node modules and binaries without including the toolchain
-# COPY --from=builder node_modules .
+# ------------------------------- APP CONTAINER
 
 FROM node:13-alpine as app
 
