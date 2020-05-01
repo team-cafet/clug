@@ -2,7 +2,8 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "docker:up": "docker-compose -f ./container/docker-compose.yml up",
+    "docker:up": "docker-compose -f ./container/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f ./container/docker-compose.yml down",
     "docker:build": "docker image build -t teamcafet/clug-test -f ./container/app/Dockerfile ."
   },
   "devDependencies": {

@@ -14,7 +14,7 @@
 
 # ------------------------------- BUILDER CONTAINER
 # Node alpine is the smallest build for node js
-FROM node:14.0.0-alpine3.11 as builder
+FROM node:13-alpine as builder
 
 ENV NODE_ENV=production
 
@@ -83,12 +83,20 @@ RUN npm run build:app && \
 # ## Copy built node modules and binaries without including the toolchain
 # COPY --from=builder node_modules .
 
-FROM node:14.0.0-alpine3.11 as app
+FROM node:13-alpine as app
 
 LABEL maintainer="team-cafet"
 
 ENV NODE_ENV=production \
-    PORT=4200
+    PORT=3100 \
+    DATABASE_NAME=clug-db \
+    DATABASE_HOST=db \
+    DATABASE_PORT=5432 \
+    DATABASE_USERNAME=user \
+    DATABASE_PASSWORD=password \
+    DATABASE_SYNCHRONIZE=0 \
+    DATABASE_DROPSCHEMA=0 \
+    SETTINGS_JWT_SECRET_OR_PUBLIC_KEY=secret
 
 # * Create build && app directory.
 # * Create clug user & group.
@@ -104,11 +112,12 @@ WORKDIR /usr/src/app
 
 # Copy the application's compiled files from the builder image.
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/node_modules /usr/src/app/node_modules
-COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/
+COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/build
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/ormconfig.js /usr/src/app/ormconfig.js
+COPY --chown=clug:clug --from=builder /usr/src/app/backend/public /usr/src/app/public
 
-EXPOSE 4200
+EXPOSE 3100
 
 # Copy the application's compiled files to the build directory when the
 # container runs.
-CMD [ "node", "index.js" ]
+CMD [ "node", "build/index.js" ]

@@ -16,8 +16,12 @@ services:
       DATABASE_SYNCHRONIZE: 0
       DATABASE_DROPSCHEMA: 0
       SETTINGS_JWT_SECRET_OR_PUBLIC_KEY: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
-    
-    restart: always
+      NODE_ENV: development 
+    #volumes: 
+    #  - ./test:/usr/src/app
+    ports:
+      - 3100:3100
+    #restart: always
     
   db:
     image: postgres:12-alpine
@@ -26,7 +30,3 @@ services:
       POSTGRES_PASSWORD: .Clug-123
       POSTGRES_DB: clug-db
     restart: always
-    
-
-volumes:
-  db_data:
