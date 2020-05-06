@@ -8,6 +8,7 @@ import { MemberDetailsComponent } from './pages/member/member-details/member-det
 import { MemberComponent } from './pages/member/member.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ClubComponent } from './pages/club/club/club.component';
+import { AddClubComponent } from './pages/club/add-club/add-club.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,6 +32,11 @@ const routes: Routes = [
   {
     path: 'club',
     component: ClubComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'club/add',
+    component: AddClubComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', component: NotFoundComponent },
