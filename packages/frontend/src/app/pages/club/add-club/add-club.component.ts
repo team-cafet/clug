@@ -6,15 +6,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-club',
   templateUrl: './add-club.component.html',
-  styleUrls: ['./add-club.component.scss']
+  styleUrls: ['./add-club.component.scss'],
 })
 export class AddClubComponent implements OnInit {
-
   club: Club;
-  constructor(private clubSrv: ClubService, private router: Router) { }
+  constructor(private clubSrv: ClubService, private router: Router) {}
 
   ngOnInit(): void {
-    this.club = {designation: null, description: null}
+    this.club = { designation: null, description: null };
   }
   async save() {
     try {
@@ -29,5 +28,4 @@ export class AddClubComponent implements OnInit {
       console.error(error);
     }
   }
-
 }

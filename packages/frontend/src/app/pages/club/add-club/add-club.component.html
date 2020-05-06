@@ -14,9 +14,7 @@
         <mat-label>Designation</mat-label>
         <input
           matInput
-          placeholder="designation"
           [ngModelOptions]="{ standalone: true }"
-          i18n-placeholder="club-add|Name@@mem-name"
           [(ngModel)]="club.designation"
         />
       </mat-form-field>
@@ -24,8 +22,6 @@
         <mat-label>Description</mat-label>
         <textarea
           matInput
-          placeholder="description"
-          i18n-placeholder="member-add|Surname@@mem-surname"
           [ngModelOptions]="{ standalone: true }"
           [(ngModel)]="club.description"
         ></textarea>

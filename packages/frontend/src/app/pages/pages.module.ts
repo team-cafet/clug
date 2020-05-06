@@ -12,6 +12,7 @@ import { MemberComponent } from './member/member.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ClubComponent } from './club/club.component';
 import { AddClubComponent } from './club/add-club/add-club.component';
+import { ClubDetailsComponent } from './club/club-details/club-details.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AddClubComponent } from './club/add-club/add-club.component';
     LoginComponent,
     ClubComponent,
     AddClubComponent,
+    ClubDetailsComponent,
   ],
   imports: [
     CommonModule,
