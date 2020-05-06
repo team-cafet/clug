@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Member } from 'src/app/core/models';
-import { MemberService } from 'src/app/core/services';
+import { Member } from './node_modules/src/app/core/models';
+import { MemberService } from './node_modules/src/app/core/services';
 
 
 @Component({

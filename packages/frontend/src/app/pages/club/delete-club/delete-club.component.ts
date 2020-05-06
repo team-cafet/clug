@@ -1,20 +1,20 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Member } from 'src/app/core/models';
-import { MemberService } from 'src/app/core/services';
+import { MemberService, ClubService } from 'src/app/core/services';
 
 
 @Component({
   selector: 'app-delete-dialog',
-  templateUrl: './delete-dialog.component.html',
-  styleUrls: ['./delete-dialog.component.scss'],
+  templateUrl: './delete-club.component.html',
+  styleUrls: ['./delete-club.component.scss'],
 })
 // TODO: It is better to have only one dynamic delete dialog or one by entity ?
-export class DeleteDialogComponent implements OnInit {
+export class DeleteClubDialogComponent implements OnInit {
   constructor(
-    public dialogRef: MatDialogRef<DeleteDialogComponent>,
+    public dialogRef: MatDialogRef<DeleteClubDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
-    private memberSrv: MemberService
+    private clubSrv: ClubService
   ) {}
   ngOnInit(): void {}
 
@@ -22,9 +22,9 @@ export class DeleteDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  public async deleteMember(): Promise<void> {
-    this.memberSrv.delete(this.data).then((reqMembers) => {
-      this.dialogRef.close('member deleted');
+  public async deleteClub(): Promise<void> {
+    this.clubSrv.delete(this.data).then((reqClub) => {
+      this.dialogRef.close('club deleted');
     })
     .catch((e) => {
       console.error(e);

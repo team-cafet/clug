@@ -33,7 +33,7 @@ export class ClubDetailsComponent implements OnInit {
           delete this.club[props];
         }
       }
-      this.club = await this.clubSrv.addOne(this.club);
+      this.club = await this.clubSrv.saveOne(this.club);
       this.router.navigate(['/club', this.club.id]);
     } catch (error) {
       console.error(error);

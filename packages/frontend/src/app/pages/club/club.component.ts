@@ -6,6 +6,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
 import { Router } from '@angular/router';
+import { DeleteClubDialogComponent } from './delete-club/delete-club.component';
 
 @Component({
   selector: 'app-club',
@@ -50,7 +51,7 @@ constructor(private clubSrv: ClubService, public dialog: MatDialog, private rout
   }
 
   private openDialog(club: Club): void {
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteClubDialogComponent, {
       width: '450px',
       data: club,
     });
