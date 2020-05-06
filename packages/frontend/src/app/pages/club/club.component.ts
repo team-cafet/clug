@@ -5,6 +5,7 @@ import {
 } from 'src/app/core/core.module';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-club',
@@ -17,9 +18,10 @@ export class ClubComponent implements OnInit {
   displayedColumns: string[] = [
     'designation',
     'description',
+    'action'
   ];
 
-constructor(private clubSrv: ClubService, public dialog: MatDialog) { }
+constructor(private clubSrv: ClubService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.fetchClubList();
@@ -28,6 +30,9 @@ constructor(private clubSrv: ClubService, public dialog: MatDialog) { }
   public addClub() {
     console.log(`Add club`);
     // TODO
+  }
+  public showDetails(idClub: number){
+    this.router.navigate(['/club', idClub]);
   }
 
   public async fetchClubList(): Promise<void>{
