@@ -7,8 +7,8 @@ import { MemberAddComponent } from './pages/member/member-add/member-add.compone
 import { MemberDetailsComponent } from './pages/member/member-details/member-details.component';
 import { MemberComponent } from './pages/member/member.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { ClubComponent } from './pages/club/club/club.component';
 import { AddClubComponent } from './pages/club/add-club/add-club.component';
+import { ClubComponent } from './pages/club/club.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
