@@ -34,7 +34,7 @@ export class ClubDetailsComponent implements OnInit {
         }
       }
       this.club = await this.clubSrv.saveOne(this.club);
-      this.router.navigate(['/club', this.club.id]);
+      this.router.navigate(['/club']);
     } catch (error) {
       console.error(error);
     }
