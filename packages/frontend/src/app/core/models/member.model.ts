@@ -1,3 +1,5 @@
+import { Club } from '.';
+
 export enum Sexe {
   'MALE',
   'FEMALE',
@@ -22,6 +24,7 @@ export interface Member {
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
+  club?: Club;
 }
 
 export function displaySexe(sexe: Sexe): string {

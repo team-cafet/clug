@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Member, Sexe, displaySexe } from 'src/app/core/models';
-import { MemberService } from 'src/app/core/services';
+import { Member, Sexe, displaySexe, Club } from 'src/app/core/models';
+import { MemberService, ClubService } from 'src/app/core/services';
 import { Router } from '@angular/router';
 
 class NewMember implements Member {
@@ -10,6 +10,7 @@ class NewMember implements Member {
   email: string;
   phone: string;
   birthdate: Date;
+  club?: Club;
 }
 
 @Component({
@@ -21,12 +22,13 @@ export class MemberAddComponent implements OnInit {
   SEXE_LABEL = [Sexe.FEMALE, Sexe.MALE, Sexe.NON_BINARY];
   member: Member;
   displaySexe = displaySexe;
+  clubs: Club[];
 
-  constructor(private memberSrv: MemberService, private router: Router) {}
+  constructor(private memberSrv: MemberService, private router: Router, private clubSrv: ClubService) {}
 
   async ngOnInit() {
     this.member = new NewMember();
-
+    this.clubs = await this.clubSrv.getAllClubs();
     for (const key in this.member) {
       if (this.member[key]) {
         this.member[key] = null;

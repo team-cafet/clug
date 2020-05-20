@@ -96,7 +96,8 @@ export class MemberController {
   })
   async findMemberById(ctx: Context) {
     const member = await getRepository(Member).findOne(
-      ctx.request.params.memberId
+      ctx.request.params.memberId,
+      {relations: ['club']}
     );
 
     if (!member) {
