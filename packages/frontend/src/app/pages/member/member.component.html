@@ -74,6 +74,10 @@
           <th mat-header-cell *matHeaderCellDef>Phone</th>
           <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
         </ng-container>
+        <ng-container matColumnDef="club" i18n="member|Club@@mem-club">
+          <th mat-header-cell *matHeaderCellDef>Club</th>
+          <td mat-cell *matCellDef="let element">{{element.club? element.club.designation: '' }}</td>
+        </ng-container>
 
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef></th>

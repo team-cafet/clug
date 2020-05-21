@@ -1,0 +1,12 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title>Supprimer un club</h1>
+  <div mat-dialog-content>
+    <p>Voulez-vous supprimer le club - {{ data.designation }}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button (click)="onNoClick()">Annuler</button>
+    <button mat-raised-button color="warn" (click)="deleteClub()">
+      Supprimer
+    </button>
+  </div>
+</div>

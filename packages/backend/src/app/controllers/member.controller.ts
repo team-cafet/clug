@@ -78,7 +78,8 @@ export class MemberController {
   async findMembers(ctx: Context) {
     const members = await getRepository(Member).find({
       skip: ctx.request.query.skip,
-      take: ctx.request.query.take
+      take: ctx.request.query.take,
+      relations: ['club']
     });
     return new HttpResponseOK(members);
   }
@@ -95,7 +96,8 @@ export class MemberController {
   })
   async findMemberById(ctx: Context) {
     const member = await getRepository(Member).findOne(
-      ctx.request.params.memberId
+      ctx.request.params.memberId,
+      {relations: ['club']}
     );
 
     if (!member) {

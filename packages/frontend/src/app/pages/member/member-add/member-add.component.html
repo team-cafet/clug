@@ -1,6 +1,6 @@
 <div id="page-member-details">
   <mat-toolbar color="primary">
-    
+
     <mat-toolbar-row>
       <button mat-icon-button type="button" [routerLink]="['/member/']">
         <mat-icon>arrow_back</mat-icon>
@@ -83,6 +83,14 @@
             />
           </mat-form-field>
         </p>
+        <mat-form-field>
+          <mat-label>Club</mat-label>
+          <mat-select [(value)]="member.club">
+            <mat-option *ngFor="let club of clubs" [value]="club">
+              {{club.designation}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </mat-card-content>
 
       <mat-card-actions>
