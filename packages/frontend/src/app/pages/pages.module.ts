@@ -13,6 +13,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ClubComponent } from './club/club.component';
 import { AddClubComponent } from './club/add-club/add-club.component';
 import { ClubDetailsComponent } from './club/club-details/club-details.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ClubDetailsComponent } from './club/club-details/club-details.component
     AppMaterialModule,
     RouterModule,
     FormsModule,
+    SharedModule
   ],
 })
 export class PagesModule {}

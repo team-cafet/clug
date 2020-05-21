@@ -4,7 +4,6 @@
     <button
       mat-mini-fab
       color="primary"
-      (click)="addMember()"
       color="primary"
       [routerLink]="['/member/add']"
     >
@@ -74,8 +73,9 @@
           <th mat-header-cell *matHeaderCellDef>Phone</th>
           <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
         </ng-container>
+        
         <ng-container matColumnDef="club" i18n="member|Club@@mem-club">
-          <th mat-header-cell *matHeaderCellDef>Club</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Club</th>
           <td mat-cell *matCellDef="let element">{{element.club? element.club.designation: '' }}</td>
         </ng-container>
 

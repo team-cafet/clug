@@ -9,7 +9,7 @@ import {
   Member,
   MemberService,
 } from 'src/app/core/core.module';
-import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-member',
@@ -25,8 +25,8 @@ export class MemberComponent implements OnInit {
     'sexe',
     'financialStatus',
     'phone',
+    'club',
     'action',
-    'club'
   ];
   tableDataSource = new MatTableDataSource([]);
 
@@ -55,12 +55,20 @@ export class MemberComponent implements OnInit {
   }
 
   public deleteMember(member: Member) {
-    this.openDialog(member);
-  }
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '450px',
+    });
 
-  public addMember() {
-    console.log(`Add member`);
-    // TODO
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result) {
+        try {
+          await this.memberSrv.delete(member);
+          this.fetchMembersList();
+        } catch (err) {
+          //TODO
+        }
+      }
+    });
   }
 
   public async fetchMembersList(): Promise<void> {
@@ -68,24 +76,10 @@ export class MemberComponent implements OnInit {
       .getAllMember()
       .then((reqMembers) => {
         this.members = reqMembers;
-        console.log('members', this.members)
         this.tableDataSource.data = this.members;
       })
       .catch((e) => {
         console.error(e);
       });
-  }
-
-  private openDialog(member: Member): void {
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      width: '450px',
-      data: member,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.fetchMembersList();
-      }
-    });
   }
 }
