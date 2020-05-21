@@ -25,7 +25,7 @@ import { SharedModule } from '../shared/shared.module';
     LoginComponent,
     ClubComponent,
     AddClubComponent,
-    ClubDetailsComponent,
+    ClubDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +34,6 @@ import { SharedModule } from '../shared/shared.module';
     RouterModule,
     FormsModule,
     SharedModule
-  ],
+  ]
 })
 export class PagesModule {}

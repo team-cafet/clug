@@ -6,13 +6,13 @@ import { ClubService } from 'src/app/core/services';
 @Component({
   selector: 'app-club-details',
   templateUrl: './club-details.component.html',
-  styleUrls: ['./club-details.component.scss']
+  styleUrls: [ './club-details.component.scss' ]
 })
 export class ClubDetailsComponent implements OnInit {
   ID_CLUB = null;
   club: Club;
 
-  constructor(private route: ActivatedRoute, private clubSrv: ClubService, private router: Router) { }
+  constructor(private readonly route: ActivatedRoute, private readonly clubSrv: ClubService, private readonly router: Router) { }
 
   async ngOnInit(): Promise<void> {
     this.ID_CLUB = this.route.snapshot.paramMap.get('id');
@@ -30,11 +30,12 @@ export class ClubDetailsComponent implements OnInit {
     try {
       for (const props in this.club) {
         if (this.club[props] === null) {
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete this.club[props];
         }
       }
       this.club = await this.clubSrv.saveOne(this.club);
-      this.router.navigate(['/club']);
+      await this.router.navigate([ '/club' ]);
     } catch (error) {
       console.error(error);
     }

@@ -10,10 +10,15 @@ import { ClubService } from './services/club.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [ CommonModule ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
-    ApiService, UserService, JwtService, MemberService, ClubService]
+    ApiService,
+    UserService,
+    JwtService,
+    MemberService,
+    ClubService
+  ]
 })
 export class CoreModule {}
 

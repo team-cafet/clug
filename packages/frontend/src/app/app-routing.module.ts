@@ -18,38 +18,38 @@ const routes: Routes = [
   {
     path: 'member',
     component: MemberComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'member/add',
     component: MemberAddComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'member/:id',
     component: MemberDetailsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'club',
     component: ClubComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'club/add',
     component: AddClubComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ AuthGuard ]
   },
   {
     path: 'club/:id',
     component: ClubDetailsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [ AuthGuard ]
   },
-  { path: '**', component: NotFoundComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  imports: [ RouterModule.forRoot(routes) ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule {}

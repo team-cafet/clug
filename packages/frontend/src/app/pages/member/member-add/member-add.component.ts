@@ -16,15 +16,15 @@ class NewMember implements Member {
 @Component({
   selector: 'app-member-add',
   templateUrl: './member-add.component.html',
-  styleUrls: ['./member-add.component.scss'],
+  styleUrls: [ './member-add.component.scss' ]
 })
 export class MemberAddComponent implements OnInit {
-  SEXE_LABEL = [Sexe.FEMALE, Sexe.MALE, Sexe.NON_BINARY];
+  SEXE_LABEL = [ Sexe.FEMALE, Sexe.MALE, Sexe.NON_BINARY ];
   member: Member;
   displaySexe = displaySexe;
   clubs: Club[];
 
-  constructor(private memberSrv: MemberService, private router: Router, private clubSrv: ClubService) {}
+  constructor(private readonly memberSrv: MemberService, private readonly router: Router, private readonly clubSrv: ClubService) {}
 
   async ngOnInit() {
     this.member = new NewMember();
@@ -40,12 +40,13 @@ export class MemberAddComponent implements OnInit {
     try {
       for (const props in this.member) {
         if (this.member[props] === null) {
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete this.member[props];
         }
       }
 
       this.member = await this.memberSrv.addOne(this.member);
-      this.router.navigate(['/member', this.member.id]);
+      await this.router.navigate([ '/member', this.member.id ]);
     } catch (error) {
       console.error(error);
     }

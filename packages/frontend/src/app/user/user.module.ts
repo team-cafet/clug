@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
-  declarations: [LoginFormComponent],
+  declarations: [ LoginFormComponent ],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,6 +23,6 @@ import { MatDividerModule } from '@angular/material/divider';
     ReactiveFormsModule,
     MatDividerModule
   ],
-  exports: [LoginFormComponent]
+  exports: [ LoginFormComponent ]
 })
 export class UserModule {}

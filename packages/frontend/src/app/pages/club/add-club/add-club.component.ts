@@ -6,24 +6,26 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-club',
   templateUrl: './add-club.component.html',
-  styleUrls: ['./add-club.component.scss'],
+  styleUrls: [ './add-club.component.scss' ]
 })
 export class AddClubComponent implements OnInit {
   club: Club;
-  constructor(private clubSrv: ClubService, private router: Router) {}
+  constructor(private readonly clubSrv: ClubService, private readonly router: Router) {}
 
   ngOnInit(): void {
     this.club = { designation: null, description: null };
   }
+
   async save() {
     try {
       for (const props in this.club) {
         if (this.club[props] === null) {
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete this.club[props];
         }
       }
       this.club = await this.clubSrv.addOne(this.club);
-      this.router.navigate(['/club', this.club.id]);
+      await this.router.navigate([ '/club', this.club.id ]);
     } catch (error) {
       console.error(error);
     }

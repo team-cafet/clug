@@ -6,14 +6,14 @@ const API_CLUB = 'club/';
 
 @Injectable()
 export class ClubService {
-  constructor(private apiService: ApiService) {}
+  constructor(private readonly apiService: ApiService) {}
 
-  async getAllClubs(filter?) {
-    return await this.apiService.get(API_CLUB);
+  async getAllClubs() {
+    return this.apiService.get(API_CLUB);
   }
 
   async getOneById(id) {
-    return await this.apiService.get(`${API_CLUB}${id}`);
+    return this.apiService.get(`${API_CLUB}${id}`);
   }
 
   async saveOne(club: Club) {
@@ -21,14 +21,14 @@ export class ClubService {
       throw new Error('Can not save a club without his id');
     }
 
-    return await this.apiService.put(`${API_CLUB}${club.id}`, club);
+    return this.apiService.put(`${API_CLUB}${club.id}`, club);
   }
 
   async addOne(club: Club) {
-    return await this.apiService.post(`${API_CLUB}`, club);
+    return this.apiService.post(`${API_CLUB}`, club);
   }
 
   async delete(club: Club) {
-    return await this.apiService.delete(`${API_CLUB}${club.id}`);
+    return this.apiService.delete(`${API_CLUB}${club.id}`);
   }
 }

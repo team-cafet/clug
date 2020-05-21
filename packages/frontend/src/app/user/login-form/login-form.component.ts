@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ErrorStateMatcher } from '@angular/material/core';
 import {
   FormControl,
@@ -14,28 +14,25 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     control: FormControl | null,
     form: FormGroupDirective | NgForm | null
   ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
+    const isSubmitted = form?.submitted;
+    return Boolean(control?.invalid &&
+      (control.dirty || control.touched || isSubmitted));
   }
 }
 
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss']
+  styleUrls: [ './login-form.component.scss' ]
 })
-export class LoginFormComponent implements OnInit {
-  constructor(private userService: UserService, private router: Router) {}
+export class LoginFormComponent {
   credentials = { email: '', password: '' };
   invalidCredentials: boolean;
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email
   ]);
+
   passwordFormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(2)
@@ -43,7 +40,7 @@ export class LoginFormComponent implements OnInit {
 
   matcher = new MyErrorStateMatcher();
 
-  ngOnInit() {}
+  constructor(private readonly userService: UserService, private readonly router: Router) {}
 
   async login(): Promise<void> {
     try {
@@ -51,7 +48,7 @@ export class LoginFormComponent implements OnInit {
         this.emailFormControl.value,
         this.passwordFormControl.value
       );
-      this.router.navigate(['/member']); // TODO: Change depending on the general member view's url
+      await this.router.navigate([ '/member' ]); // TODO: Change depending on the general member view's url
     } catch (error) {
       this.invalidCredentials = true;
     }

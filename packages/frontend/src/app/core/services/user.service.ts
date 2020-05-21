@@ -4,7 +4,7 @@ import { JwtService } from './jwt.service';
 
 @Injectable()
 export class UserService {
-  constructor(private apiService: ApiService, private jwtService: JwtService) {}
+  constructor(private readonly apiService: ApiService, private readonly jwtService: JwtService) {}
 
   async login(email: string, password: string) {
     try {

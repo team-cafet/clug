@@ -8,13 +8,13 @@ import { JwtService } from '../services';
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private router: Router,
-    private jwtService: JwtService
+    private readonly router: Router,
+    private readonly jwtService: JwtService
   ) { }
 
   async canActivate(): Promise<boolean> {
-    if (!await this.jwtService.isTokenValid()) {
-      this.router.navigate(['login']);
+    if (!this.jwtService.isTokenValid()) {
+      await this.router.navigate([ 'login' ]);
       return false;
     }
     return true;

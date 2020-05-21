@@ -7,16 +7,19 @@ import {
   displayFinancialStatus,
   displaySexe,
   Member,
-  MemberService,
+  MemberService
 } from 'src/app/core/core.module';
 import { DeleteDialogComponent } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-member',
   templateUrl: './member.component.html',
-  styleUrls: ['./member.component.scss'],
+  styleUrls: [ './member.component.scss' ]
 })
 export class MemberComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) tableSort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
+
   members: Member[];
   displayedColumns: string[] = [
     'id',
@@ -26,60 +29,63 @@ export class MemberComponent implements OnInit {
     'financialStatus',
     'phone',
     'club',
-    'action',
+    'action'
   ];
+
+
   tableDataSource = new MatTableDataSource([]);
 
-  constructor(private memberSrv: MemberService, public dialog: MatDialog) {}
+  constructor(private readonly memberSrv: MemberService, private readonly dialog: MatDialog) {}
 
-  @ViewChild(MatSort, { static: true }) tableSort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
 
   ngOnInit(): void {
     this.tableDataSource.sort = this.tableSort;
     this.tableDataSource.paginator = this.tablePaginator;
-    this.fetchMembersList();
+    this.fetchMembersList().finally(() => {
+      // TODO
+    });
   }
 
-  public displaySexe(sexe) {
+  displaySexe(sexe) {
     return displaySexe(sexe);
   }
 
-  public displayFinancialStatus(financialStatus) {
+  displayFinancialStatus(financialStatus) {
     return displayFinancialStatus(financialStatus);
   }
 
-  public applyFilter(event: Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  public deleteMember(member: Member) {
+  deleteMember(member: Member) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      width: '450px',
+      width: '450px'
     });
 
-    dialogRef.afterClosed().subscribe(async (result) => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        try {
-          await this.memberSrv.delete(member);
-          this.fetchMembersList();
-        } catch (err) {
-          //TODO
-        }
+        this.memberSrv.delete(member).catch(err => {
+          console.error(err);
+        }).finally(() => {
+          this.fetchMembersList().finally(() => {
+            // TODO
+          });
+        });
       }
     });
   }
 
-  public async fetchMembersList(): Promise<void> {
+  async fetchMembersList(): Promise<void> {
     return this.memberSrv
       .getAllMember()
-      .then((reqMembers) => {
+      .then(reqMembers => {
         this.members = reqMembers;
         this.tableDataSource.data = this.members;
       })
-      .catch((e) => {
-        console.error(e);
+      .catch(err => {
+        console.error(err);
       });
   }
 }
