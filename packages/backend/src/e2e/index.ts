@@ -17,10 +17,8 @@ describe('The server', () => {
 
   after(() => getConnection().close());
 
-  it('should return a 200 status on GET / requests.', () => {
-    return request(app)
-      .get('/')
-      .expect(200);
-  });
+  it('should return a 200 status on GET / requests.', () => request(app)
+    .get('/')
+    .expect(200));
 
 });

@@ -7,24 +7,24 @@ import {
   Context,
   HttpResponseOK,
   Config
-} from "@foal/core";
+} from '@foal/core';
 
-import { User } from "../entities";
-import { getRepository } from "typeorm";
-import { sign } from "jsonwebtoken";
+import { User } from '../entities';
+import { getRepository } from 'typeorm';
+import { sign } from 'jsonwebtoken';
 
 const credentialsSchema = {
   additionalProperties: false,
   properties: {
-    email: { type: "string", format: "email" },
-    password: { type: "string" }
+    email: { type: 'string', format: 'email' },
+    password: { type: 'string' }
   },
-  required: ["email", "password"],
-  type: "object"
+  required: [ 'email', 'password' ],
+  type: 'object'
 };
 
 export class AuthController {
-  @Post("/signup")
+  @Post('/signup')
   @ValidateBody(credentialsSchema)
   async signup(ctx: Context) {
     const USER_REPO = getRepository(User);
@@ -33,12 +33,11 @@ export class AuthController {
     user.email = ctx.request.body.email;
     user.password = await hashPassword(ctx.request.body.password);
     await USER_REPO.save(user);
-    console.log("Im in signup")
 
     return this.generateLoginResponse(user);
   }
 
-  @Post("/login")
+  @Post('/login')
   @ValidateBody(credentialsSchema)
   async login(ctx: Context) {
     const USER_REPO = getRepository(User);
@@ -51,7 +50,7 @@ export class AuthController {
       return new HttpResponseUnauthorized();
     }
 
-    if (!(await verifyPassword(ctx.request.body.password, user.password))) {
+    if (!await verifyPassword(ctx.request.body.password, user.password)) {
       return new HttpResponseUnauthorized();
     }
 
@@ -63,7 +62,7 @@ export class AuthController {
       email: user.email,
       id: user.id
     };
-    const secret = Config.get<string>("settings.jwt.secretOrPublicKey");
+    const secret = Config.get<string>('settings.jwt.secretOrPublicKey');
 
     const token = await new Promise<string>((resolve, reject) => {
       sign(

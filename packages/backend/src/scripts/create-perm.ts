@@ -8,7 +8,7 @@ export const schema = {
     codeName: { type: 'string', maxLength: 100 },
     name: { type: 'string' }
   },
-  required: ['name', 'codeName'],
+  required: [ 'name', 'codeName' ],
   type: 'object'
 };
 
@@ -20,9 +20,9 @@ export async function main(args: { codeName: string; name: string }) {
   await createConnection();
 
   try {
-    console.log(await getManager().save(permission));
+    await getManager().save(permission);
   } catch (error) {
-    console.log(error.message);
+    throw new Error(error.message);
   } finally {
     await getConnection().close();
   }

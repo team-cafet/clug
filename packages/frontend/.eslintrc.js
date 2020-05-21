@@ -17,7 +17,6 @@ module.exports = {
     "@typescript-eslint"
   ],
   "rules": {
-    'react/prop-types': 'off',
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": [
       "error",

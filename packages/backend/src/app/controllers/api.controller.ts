@@ -14,10 +14,11 @@ export class ApiController {
   subControllers = [
     controller('/member', MemberController),
     controller('/membership-plan', MembershipPlanController),
-    controller('/club', ClubController),
-  ]
+    controller('/club', ClubController)
+  ];
 
   @Get('/')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   index(ctx: Context) {
     return new HttpResponseOK('List of endpoint:');
   }

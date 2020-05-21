@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Membership } from './membership.entity';
 
@@ -15,22 +16,22 @@ export class MembershipPlan {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({type:'varchar', length:30, unique:true})
+  @Column({ type: 'varchar', length: 30, unique: true })
   designation: string;
 
-  @Column({type:'text', nullable:true})
+  @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column({type:'real'})
+  @Column({ type: 'real' })
   amount: number;
 
-  @Column({type:'enum', enum:TypeOfFacturation})
+  @Column({ type: 'enum', enum: TypeOfFacturation })
   typeOfFacturation: TypeOfFacturation;
 
   @OneToMany(
-    type=>Membership,
-    membership=>membership.member,
-    {nullable:true}
+    type => Membership,
+    membership => membership.member,
+    { nullable: true }
   )
-  memberships: Membership
+  memberships: Membership;
 }

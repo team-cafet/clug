@@ -6,13 +6,13 @@ export const schema = {
   additionalProperties: false,
   properties: {
     codeName: { type: 'string', maxLength: 100 },
-    name: { type: 'string' },
+    name: { type: 'string' }
   },
   required: [ 'name', 'codeName' ],
-  type: 'object',
+  type: 'object'
 };
 
-export async function main(args: { codeName: string, name: string }) {
+export async function main(args: { codeName: string; name: string }) {
   const permission = new Permission();
   permission.codeName = args.codeName;
   permission.name = args.name;
@@ -20,11 +20,9 @@ export async function main(args: { codeName: string, name: string }) {
   await createConnection();
 
   try {
-    console.log(
-      await getManager().save(permission)
-    );
+    await getManager().save(permission);
   } catch (error) {
-    console.log(error.message);
+    throw new Error(error.message);
   } finally {
     await getConnection().close();
   }

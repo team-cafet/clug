@@ -24,11 +24,11 @@ const membershipPlanSchema = {
         TypeOfFacturation.QUARTERLY,
         TypeOfFacturation.HALF_YEARLY,
         TypeOfFacturation.YEARLY
-      ] 
-    },
+      ]
+    }
   },
   required: [ 'designation', 'amount', 'typeOfFacturation' ],
-  type: 'object',
+  type: 'object'
 };
 
 @ApiUseTag('membershipPlan')
@@ -47,9 +47,9 @@ export class MembershipPlanController {
   @ValidateQuery({
     properties: {
       skip: { type: 'number' },
-      take: { type: 'number' },
+      take: { type: 'number' }
     },
-    type: 'object',
+    type: 'object'
   })
   async findMembershipPlans(ctx: Context) {
     const membershipPlans = await getRepository(MembershipPlan).find({

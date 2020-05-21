@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Column,
   Entity,
@@ -91,7 +92,7 @@ export class Member extends BaseEntity {
   @OneToMany(
     type => Membership,
     membership => membership.member,
-    { nullable: true, onDelete: 'NO ACTION', cascade: ['insert'] }
+    { nullable: true, onDelete: 'NO ACTION', cascade: [ 'insert' ] }
   )
   memberships: Membership;
 

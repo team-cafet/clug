@@ -23,7 +23,7 @@ export const schema = {
       default: []
     }
   },
-  required: ['email', 'password'],
+  required: [ 'email', 'password' ],
   type: 'object'
 };
 
@@ -32,32 +32,32 @@ export async function main(args) {
   user.userPermissions = [];
   user.groups = [];
   user.email = args.email;
-  
+
   await user.setPassword(args.password);
 
   await createConnection();
 
   for (const codeName of args.userPermissions as string[]) {
+    // eslint-disable-next-line no-await-in-loop
     const permission = await getRepository(Permission).findOne({ codeName });
     if (!permission) {
-      console.log(`No permission with the code name "${codeName}" was found.`);
-      return;
+      throw new Error(`No permission with the code name "${codeName}" was found.`);
     }
     user.userPermissions.push(permission);
   }
 
   for (const codeName of args.groups as string[]) {
+    // eslint-disable-next-line no-await-in-loop
     const group = await getRepository(Group).findOne({ codeName });
     if (!group) {
-      console.log(`No group with the code name "${codeName}" was found.`);
-      return;
+      throw new Error(`No group with the code name "${codeName}" was found.`);
     }
     user.groups.push(group);
   }
 
   try {
-    console.log(await getManager().save(user));
+    await getManager().save(user);
   } catch (error) {
-    console.log(error.message);
+    throw new Error(error.message);
   }
 }

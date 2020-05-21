@@ -13,10 +13,10 @@ const clubSchema = {
   additionalProperties: false,
   properties: {
     designation: { type: 'string', maxLength: 50 },
-    description: { type: 'string', maxLength: 500 },
+    description: { type: 'string', maxLength: 500 }
   },
   required: [ 'designation' ],
-  type: 'object',
+  type: 'object'
 };
 
 @ApiUseTag('club')
@@ -35,9 +35,9 @@ export class ClubController {
   @ValidateQuery({
     properties: {
       skip: { type: 'number' },
-      take: { type: 'number' },
+      take: { type: 'number' }
     },
-    type: 'object',
+    type: 'object'
   })
   async findClubs(ctx: Context) {
     const clubs = await getRepository(Club).find({

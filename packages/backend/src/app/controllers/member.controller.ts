@@ -31,7 +31,7 @@ const memberSchema = {
     surname: { type: 'string', maxLength: 255 },
     sexe: {
       type: 'number',
-      enum: [Sexe.MALE, Sexe.FEMALE, Sexe['NON-BINARY']]
+      enum: [ Sexe.MALE, Sexe.FEMALE, Sexe['NON-BINARY'] ]
     },
     email: { type: 'string', format: 'email', maxLength: 255 },
     phone: { type: 'string', maxLength: 50 },
@@ -53,7 +53,7 @@ const memberSchema = {
 
     address: { type: 'object' }
   },
-  required: ['name', 'surname', 'email'],
+  required: [ 'name', 'surname', 'email' ],
   type: 'object'
 };
 @ApiUseTag('member')
@@ -79,7 +79,7 @@ export class MemberController {
     const members = await getRepository(Member).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take,
-      relations: ['club']
+      relations: [ 'club' ]
     });
     return new HttpResponseOK(members);
   }
@@ -97,7 +97,7 @@ export class MemberController {
   async findMemberById(ctx: Context) {
     const member = await getRepository(Member).findOne(
       ctx.request.params.memberId,
-      {relations: ['club']}
+      { relations: [ 'club' ] }
     );
 
     if (!member) {

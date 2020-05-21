@@ -13,6 +13,7 @@ import { createConnection, getConnection, getRepository } from 'typeorm';
 import { Club } from '../entities';
 import { ClubController } from './club.controller';
 
+// eslint-disable-next-line max-lines-per-function
 describe('ClubController', () => {
 
   let controller: ClubController;
@@ -28,9 +29,9 @@ describe('ClubController', () => {
 
     const repository = getRepository(Club);
 
-    //The function: repository.clear() does not work with relations, here is another way to do it. Probably not the most efective.
-    const clubs = await repository.find()
-    await repository.remove(clubs); 
+    // The function: repository.clear() does not work with relations, here is another way to do it. Probably not the most efective.
+    const clubs = await repository.find();
+    await repository.remove(clubs);
 
     [ club1, club2 ] = await repository.save([
       {
@@ -38,7 +39,7 @@ describe('ClubController', () => {
       },
       {
         designation: 'Club 2'
-      },
+      }
     ]);
   });
 
@@ -67,7 +68,7 @@ describe('ClubController', () => {
 
     it('should support pagination', async () => {
       const club3 = await getRepository(Club).save({
-        designation: 'Club 3',
+        designation: 'Club 3'
       });
 
       let ctx = new Context({
@@ -142,11 +143,11 @@ describe('ClubController', () => {
       strictEqual(getPath(ClubController, 'createClub'), undefined);
     });
 
-    it('should create the club in the database and return it through '
-        + 'an HttpResponseCreated object.', async () => {
+    it('should create the club in the database and return it through ' +
+        'an HttpResponseCreated object.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'Club 3',
+          designation: 'Club 3'
         }
       });
       const response = await controller.createClub(ctx);
@@ -179,7 +180,7 @@ describe('ClubController', () => {
     it('should update the club in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'Club 2 (version 2)',
+          designation: 'Club 2 (version 2)'
         },
         params: {
           clubId: club2.id
@@ -206,7 +207,7 @@ describe('ClubController', () => {
     it('should not update the other clubs.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'Club 2 (version 2)',
+          designation: 'Club 2 (version 2)'
         },
         params: {
           clubId: club2.id
@@ -226,7 +227,7 @@ describe('ClubController', () => {
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          designation: '',
+          designation: ''
         },
         params: {
           clubId: -1
@@ -251,7 +252,7 @@ describe('ClubController', () => {
     it('should update the club in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'Club 2 (version 2)',
+          designation: 'Club 2 (version 2)'
         },
         params: {
           clubId: club2.id
@@ -278,7 +279,7 @@ describe('ClubController', () => {
     it('should not update the other clubs.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'Club 2 (version 2)',
+          designation: 'Club 2 (version 2)'
         },
         params: {
           clubId: club2.id
@@ -298,7 +299,7 @@ describe('ClubController', () => {
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          designation: '',
+          designation: ''
         },
         params: {
           clubId: -1
