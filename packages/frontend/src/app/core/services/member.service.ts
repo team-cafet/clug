@@ -32,7 +32,7 @@ export class MemberService {
     return await this.apiService.delete(`${API_MEMBER}${member.id}`);
   }
 
-  async getStatistics(filter?) {
+  async getStatistics(filter?): Promise<{membersCount: number, badPayersCount: number, newMembersCount: number}> {
     return await this.apiService.get(`${API_MEMBER}statistics`);
   }
 }

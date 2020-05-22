@@ -105,18 +105,18 @@ export class MemberController {
     const membersCount: [{count: number}] = await getRepository(Member).query(
       'SELECT count(*) from member'
     );
-    const badPayer: [{count: number}] = await getRepository(Member).query(
+    const badPayersCount: [{count: number}] = await getRepository(Member).query(
       `SELECT count(*) from member where "financialStatus" = '0'`
     );
-    const newMembers: [{count: number}] = await getRepository(Member).query(
+    const newMembersCount: [{count: number}] = await getRepository(Member).query(
       `SELECT count(*) from member where "createdAt" >= '${startDate}'
       AND "createdAt" <  '${endDate}'`
     );
 
     return new HttpResponseOK({
-      count: membersCount[0].count,
-      badPayer: badPayer[0].count,
-      newMembers: newMembers[0].count
+      membersCount: membersCount[0].count,
+      badPayersCount: badPayersCount[0].count,
+      newMembersCount: newMembersCount[0].count
     });
   }
 
