@@ -45,20 +45,22 @@ const createMockPermission = () => {
   ]);
 };
 
-const createMockGroup = (tabPerm: Permission[]) => {
+const createMockGroup = async (tabPerm: Permission[]) => {
   const groupRepo = getRepository(Group);
 
-  // const mr: Permission = tabPerm.find(perm => perm.name === 'member_read');
-  // const mw: Permission = tabPerm.find(perm => perm.name === 'member_write');
-  // const ir: Permission = tabPerm.find(perm => perm.name === 'invoice_read');
-  // const ur: Permission = tabPerm.find(perm => perm.name === 'user_read');
+  const [ mr, mw, ir, ur ] = await Promise.all([
+    Permission.findOneOrFail({ name: 'member_read' }),
+    Permission.findOneOrFail({ name: 'member_write' }),
+    Permission.findOneOrFail({ name: 'invoice_read' }),
+    Permission.findOneOrFail({ name: 'user_read' })
+  ]);
 
   return groupRepo.save([
-    // {
-    //   codeName: 'grp_mem',
-    //   name: 'Membership',
-    //   permissions: [ mr, mw, ir, ur ]
-    // },
+    {
+      codeName: 'grp_mem',
+      name: 'Membership',
+      permissions: [ mr, mw, ir, ur ]
+    },
     {
       codeName: 'grp_adm',
       name: 'Admin',
@@ -80,9 +82,11 @@ const createUserMock = async () => {
 
 const createMemberMock = async () => {
   const membRepo = getRepository(Member);
-  // const clubRepo = getRepository(Club);
+  const clubRepo = getRepository(Club);
 
-  // const club1 = await clubRepo.save([ { designation: 'Club 1' } ]);
+
+  await clubRepo.save([ { designation: 'Club 1' } ]);
+  const club1 = await clubRepo.findOneOrFail({ designation: 'Club 1' });
 
   return membRepo.save([
     {
@@ -98,7 +102,7 @@ const createMemberMock = async () => {
       phone: '+01 12 123 45 67',
       birthdate: '2019-01-12',
       financialStatus: FinancialStatus.WARNING,
-      // club: club1,
+      club: club1,
       address: {
         street: 'chemin de montétan',
         streetNumber: 1,
@@ -115,7 +119,7 @@ const createMemberMock = async () => {
       phone: '+01 12 123 45 67',
       birthdate: '2000-01-12',
       financialStatus: FinancialStatus.OK,
-      // club: club1,
+      club: club1,
       address: {
         street: 'Rue de la Borde',
         streetNumber: 1,
