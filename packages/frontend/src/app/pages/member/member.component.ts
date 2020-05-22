@@ -68,7 +68,6 @@ export class MemberComponent implements OnInit {
       .getAllMember()
       .then((reqMembers) => {
         this.members = reqMembers;
-        console.log('members', this.members)
         this.tableDataSource.data = this.members;
       })
       .catch((e) => {
