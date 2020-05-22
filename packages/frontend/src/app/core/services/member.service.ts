@@ -31,4 +31,8 @@ export class MemberService {
   async delete(member: Member) {
     return await this.apiService.delete(`${API_MEMBER}${member.id}`);
   }
+
+  async getStatistics(filter?) {
+    return await this.apiService.get(`${API_MEMBER}statistics`);
+  }
 }
