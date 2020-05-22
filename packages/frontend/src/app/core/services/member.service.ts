@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { Member } from '../models';
+export class Statistics {
+  membersCount: number;
+  badPayersCount: number;
+  newMembersCount: number;
+}
 
 const API_MEMBER = 'member/';
 
@@ -32,7 +37,9 @@ export class MemberService {
     return await this.apiService.delete(`${API_MEMBER}${member.id}`);
   }
 
-  async getStatistics(filter?): Promise<{membersCount: number, badPayersCount: number, newMembersCount: number}> {
+  async getStatistics(
+    filter?
+  ): Promise<Statistics> {
     return await this.apiService.get(`${API_MEMBER}statistics`);
   }
 }

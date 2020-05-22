@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MemberService } from 'src/app/core/services';
-import Chart from 'chart.js';
+import { MemberService, Statistics } from 'src/app/core/services';
+import Chart from 'chart.js'; // https://www.chartjs.org/docs/latest/getting-started/usage.html
 
 @Component({
   selector: 'app-dashboard',
@@ -8,12 +8,13 @@ import Chart from 'chart.js';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  statistics: {};
+  statistics: Statistics;
 
   constructor(private memberSrv: MemberService) {}
 
   async ngOnInit(): Promise<void> {
     this.statistics = await this.memberSrv.getStatistics();
+    this.setupGraph();
   }
 
   private setupGraph(): void {
@@ -21,26 +22,20 @@ export class DashboardComponent implements OnInit {
     const myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: ['Membres', 'Mauvais payeur', 'Inscrits ce mois'],
         datasets: [
           {
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: 'Nombre de membre',
+            data: [70, this.statistics.badPayersCount, this.statistics.newMembersCount],
             backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
+              '#3FBF3F',
+              '#BF3F3F',
+              '#3FBFBF',
             ],
             borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
+              '#3FBF3F',
+              '#BF3F3F',
+              '#3FBFBF',
             ],
             borderWidth: 1,
           },
