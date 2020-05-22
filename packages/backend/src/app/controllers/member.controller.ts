@@ -112,11 +112,31 @@ export class MemberController {
       `SELECT count(*) from member where "createdAt" >= '${startDate}'
       AND "createdAt" <  '${endDate}'`
     );
+    const averageAge: [{average_age: Date}] = await getRepository(Member).query(
+      `SELECT to_timestamp(avg(extract(epoch from birthdate)))::date AS average_age
+      FROM member`
+    );
+    const oldestMember: [Member] = await getRepository(Member).query(
+      `SELECT *
+      FROM member
+      order by birthdate ASC
+      LIMIT 1`
+    );
+    const youngestMember: [Member] = await getRepository(Member).query(
+      `SELECT *
+      FROM member
+      order by birthdate DESC
+      LIMIT 1`
+    );
+
 
     return new HttpResponseOK({
       membersCount: membersCount[0].count,
       badPayersCount: badPayersCount[0].count,
-      newMembersCount: newMembersCount[0].count
+      newMembersCount: newMembersCount[0].count,
+      averageAge: averageAge[0].average_age,
+      olderMember: oldestMember[0],
+      youngestMember: youngestMember[0]
     });
   }
 

@@ -9,24 +9,26 @@ import Chart from 'chart.js'; // https://www.chartjs.org/docs/latest/getting-sta
 })
 export class DashboardComponent implements OnInit {
   statistics: Statistics;
+  averageAge: number;
 
   constructor(private memberSrv: MemberService) {}
 
   async ngOnInit(): Promise<void> {
     this.statistics = await this.memberSrv.getStatistics();
+    this.averageAge = parseInt(new Date().toISOString().substring(0, 4), 10) - parseInt(this.statistics.averageAge.substring(0, 4), 10);
     this.setupGraph();
   }
 
   private setupGraph(): void {
-    const ctx = document.getElementById('myChart');
-    const myChart = new Chart(ctx, {
+    const ctx = document.getElementById('membersCountChart');
+    const membersCountChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Membres', 'Mauvais payeur', 'Inscrits ce mois'],
+        labels: ['Membres', 'Mauvais payeur', 'Inscrit ce mois'],
         datasets: [
           {
             label: 'Nombre de membre',
-            data: [70, this.statistics.badPayersCount, this.statistics.newMembersCount],
+            data: [this.statistics.membersCount, this.statistics.badPayersCount, this.statistics.newMembersCount],
             backgroundColor: [
               '#3FBF3F',
               '#BF3F3F',

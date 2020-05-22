@@ -5,6 +5,9 @@ export class Statistics {
   membersCount: number;
   badPayersCount: number;
   newMembersCount: number;
+  olderMember: Member;
+  youngestMember: Member;
+  averageAge: string; //date
 }
 
 const API_MEMBER = 'member/';
