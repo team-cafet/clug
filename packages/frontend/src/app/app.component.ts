@@ -1,7 +1,6 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { Component } from '@angular/core';
 import { JwtService } from './core/services';
-import { Router, RouterEvent, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,29 +8,12 @@ import { Router, RouterEvent, NavigationEnd } from '@angular/router';
   styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent {
-  mobileQuery: MediaQueryList;
-  is404OrLogin = false;
-
-  private readonly mobileQueryListener: () => void;
-
   constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher,
     private readonly jwtSrv: JwtService,
     private readonly router: Router
-  ) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this.mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this.mobileQueryListener);
-
-    router.events.subscribe((routeEvt: RouterEvent) => {
-      if (routeEvt instanceof NavigationEnd) {
-        this.is404OrLogin = Boolean(routeEvt.url === '/login' || routeEvt.url === '/404');
-      }
-    });
-  }
+  ) { }
 
   ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this.mobileQueryListener);
+    //
   }
 }

@@ -10,40 +10,46 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AddClubComponent } from './pages/club/add-club/add-club.component';
 import { ClubComponent } from './pages/club/club.component';
 import { ClubDetailsComponent } from './pages/club/club-details/club-details.component';
+import { AppAdminComponent } from './app-admin.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', component: HomeComponent },
-
   {
-    path: 'member',
-    component: MemberComponent,
-    canActivate: [ AuthGuard ]
-  },
-  {
-    path: 'member/add',
-    component: MemberAddComponent,
-    canActivate: [ AuthGuard ]
-  },
-  {
-    path: 'member/:id',
-    component: MemberDetailsComponent,
-    canActivate: [ AuthGuard ]
-  },
-  {
-    path: 'club',
-    component: ClubComponent,
-    canActivate: [ AuthGuard ]
-  },
-  {
-    path: 'club/add',
-    component: AddClubComponent,
-    canActivate: [ AuthGuard ]
-  },
-  {
-    path: 'club/:id',
-    component: ClubDetailsComponent,
-    canActivate: [ AuthGuard ]
+    path: 'app',
+    component: AppAdminComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      {
+        path: 'member',
+        component: MemberComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'member/add',
+        component: MemberAddComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'member/:id',
+        component: MemberDetailsComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'club',
+        component: ClubComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'club/add',
+        component: AddClubComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'club/:id',
+        component: ClubDetailsComponent,
+        canActivate: [ AuthGuard ]
+      }
+    ]
   },
   { path: '**', component: NotFoundComponent }
 ];
