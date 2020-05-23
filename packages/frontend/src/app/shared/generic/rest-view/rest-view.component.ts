@@ -11,25 +11,25 @@ import { RESTService } from 'src/app/core/services/rest.service';
         mat-mini-fab
         color="primary"
         color="primary"
-        [routerLink]="['/', 'app', ressourceName, 'add']"
+        [routerLink]="['/', 'app', resourceName, 'add']"
       >
         <mat-icon>add</mat-icon>
       </button>
     </div>
     <div>
       <app-rest-data-table
-        [ressourceColumns]="ressourceColumns"
-        [ressourceName]="ressourceName"
-        [ressourceAPI]="ressourceName"
+        [resourceColumns]="resourceColumns"
+        [resourceName]="resourceName"
+        [resourceAPI]="resourceName"
         action='true'></app-rest-data-table>
     </div>
   </div>`,
   styleUrls: [ './rest-view.component.scss' ]
 })
 export class RestViewComponent implements OnInit {
-  @Input() ressourceName: string;
-  @Input() ressourceAPI: string;
-  @Input() ressourceColumns: string;
+  @Input() resourceName: string;
+  @Input() resourceAPI: string;
+  @Input() resourceColumns: string;
 
   private restSrv: RESTService;
 
@@ -39,7 +39,7 @@ export class RestViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.restSrv = new RESTService(this.ressourceAPI, this.apiSrv);
+    this.restSrv = new RESTService(this.resourceAPI, this.apiSrv);
   }
 
 }

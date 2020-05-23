@@ -11,8 +11,8 @@ import { RESTService } from 'src/app/core/services/rest.service';
   selector: 'app-rest-data-table',
   template: `
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-      <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(ressourceColumns)">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ressourceColumns[tableData]}} </th>
+      <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(resourceColumns)">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{resourceColumns[tableData]}} </th>
           <td mat-cell *matCellDef="let element; let i=index;"> {{element[tableData]}}</td>
       </ng-container>
 
@@ -21,7 +21,7 @@ import { RESTService } from 'src/app/core/services/rest.service';
         <td mat-cell *matCellDef="let element">
           <button
             mat-icon-button
-            [routerLink]="['/', 'app', ressourceName, element.id]"
+            [routerLink]="['/', 'app', resourceName, element.id]"
             color="primary"
           >
             <mat-icon>edit</mat-icon>
@@ -39,9 +39,9 @@ import { RESTService } from 'src/app/core/services/rest.service';
 })
 export class RestDataTableComponent implements OnInit {
 
-  @Input() ressourceAPI: string;
-  @Input() ressourceName: string;
-  @Input() ressourceColumns: string;
+  @Input() resourceAPI: string;
+  @Input() resourceName: string;
+  @Input() resourceColumns: string;
   @Input() action: boolean;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -59,7 +59,7 @@ export class RestDataTableComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.restSrv = new RESTService(this.ressourceAPI, this.apiSrv);
+    this.restSrv = new RESTService(this.resourceAPI, this.apiSrv);
     this.init().catch(err => console.error(err));
   }
 
@@ -83,7 +83,7 @@ export class RestDataTableComponent implements OnInit {
   private async init() {
     this.dataSource.data = await this.restSrv.getAll();
     this.dataSource.sort = this.sort;
-    this.displayedCol = Object.keys(this.ressourceColumns);
+    this.displayedCol = Object.keys(this.resourceColumns);
     if (this.action) {
       this.displayedCol.push('action');
     }

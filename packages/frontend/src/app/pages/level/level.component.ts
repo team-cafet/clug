@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [ './level.component.scss' ]
 })
 export class LevelComponent implements OnInit {
-  ressourceCols = { name: 'Name', description: 'Description' };
+  resourceCols = { name: 'Name', description: 'Description' };
 
   ngOnInit(): void {
     // ...

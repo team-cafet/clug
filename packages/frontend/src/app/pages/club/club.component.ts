@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [ './club.component.scss' ]
 })
 export class ClubComponent implements OnInit {
-  ressourceCols = { designation: 'Designation', description: 'Description' };
+  resourceCols = { designation: 'Designation', description: 'Description' };
 
   ngOnInit(): void {
     // ...
