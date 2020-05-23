@@ -1,9 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { AppMaterialModule } from '../app-material.module';
-import { UserModule } from '../user/user.module';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MemberAddComponent } from './member/member-add/member-add.component';
@@ -30,7 +25,6 @@ import { AppCommonModule } from '../app-common.module';
   ],
   imports: [
     AppCommonModule,
-    UserModule,
     SharedModule
   ]
 })

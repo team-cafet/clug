@@ -3,6 +3,7 @@ import { DeleteDialogComponent } from './generic/delete-dialog/delete-dialog.com
 import { MemberFormComponent } from './forms/member-form/member-form.component';
 import { AppCommonModule } from '../app-common.module';
 import { ClubFormComponent } from './forms/club-form/club-form.component';
+import { LoginFormComponent } from './forms/login-form/login-form.component';
 
 @NgModule({
   imports: [ AppCommonModule ],
@@ -12,7 +13,8 @@ import { ClubFormComponent } from './forms/club-form/club-form.component';
 
     // FORMS
     MemberFormComponent,
-    ClubFormComponent
+    ClubFormComponent,
+    LoginFormComponent
   ],
   exports: [
     // GENERIC
@@ -20,7 +22,8 @@ import { ClubFormComponent } from './forms/club-form/club-form.component';
 
     // FORMS
     MemberFormComponent,
-    ClubFormComponent
+    ClubFormComponent,
+    LoginFormComponent
   ]
 })
 export class SharedModule {}
