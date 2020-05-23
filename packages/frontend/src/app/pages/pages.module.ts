@@ -14,6 +14,7 @@ import { ClubComponent } from './club/club.component';
 import { AddClubComponent } from './club/add-club/add-club.component';
 import { ClubDetailsComponent } from './club/club-details/club-details.component';
 import { SharedModule } from '../shared/shared.module';
+import { AppCommonModule } from '../app-common.module';
 
 @NgModule({
   declarations: [
@@ -28,11 +29,8 @@ import { SharedModule } from '../shared/shared.module';
     ClubDetailsComponent
   ],
   imports: [
-    CommonModule,
+    AppCommonModule,
     UserModule,
-    AppMaterialModule,
-    RouterModule,
-    FormsModule,
     SharedModule
   ]
 })

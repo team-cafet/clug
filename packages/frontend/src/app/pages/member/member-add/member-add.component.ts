@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Member, Sexe, displaySexe, Club } from 'src/app/core/models';
-import { MemberService, ClubService } from 'src/app/core/services';
+import { Member, Sexe, Club } from 'src/app/core/models';
 import { Router } from '@angular/router';
 
 class NewMember implements Member {
@@ -19,36 +18,19 @@ class NewMember implements Member {
   styleUrls: [ './member-add.component.scss' ]
 })
 export class MemberAddComponent implements OnInit {
-  SEXE_LABEL = [ Sexe.FEMALE, Sexe.MALE, Sexe.NON_BINARY ];
-  member: Member;
-  displaySexe = displaySexe;
-  clubs: Club[];
+  member: NewMember;
 
-  constructor(private readonly memberSrv: MemberService, private readonly router: Router, private readonly clubSrv: ClubService) {}
+  constructor(
+    private readonly router: Router
+  ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.member = new NewMember();
-    this.clubs = await this.clubSrv.getAllClubs();
-    for (const key in this.member) {
-      if (this.member[key]) {
-        this.member[key] = null;
-      }
-    }
   }
 
-  async save() {
-    try {
-      for (const props in this.member) {
-        if (this.member[props] === null) {
-          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-          delete this.member[props];
-        }
-      }
-
-      this.member = await this.memberSrv.addOne(this.member);
-      await this.router.navigate([ '/member', this.member.id ]);
-    } catch (error) {
-      console.error(error);
+  async saved(savedMember) {
+    if (savedMember.id) {
+      await this.router.navigate([ '/member', savedMember.id ]);
     }
   }
 }

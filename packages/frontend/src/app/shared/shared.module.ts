@@ -1,12 +1,27 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AppMaterialModule } from '../app-material.module';
 import { DeleteDialogComponent } from './generic/delete-dialog/delete-dialog.component';
+import { MemberFormComponent } from './forms/member-form/member-form.component';
+import { AppCommonModule } from '../app-common.module';
+import { ClubFormComponent } from './forms/club-form/club-form.component';
 
 @NgModule({
-  imports: [ CommonModule, AppMaterialModule ],
-  declarations: [ DeleteDialogComponent ],
-  exports: [ DeleteDialogComponent ]
+  imports: [ AppCommonModule ],
+  declarations: [
+    // GENERIC
+    DeleteDialogComponent,
+
+    // FORMS
+    MemberFormComponent,
+    ClubFormComponent
+  ],
+  exports: [
+    // GENERIC
+    DeleteDialogComponent,
+
+    // FORMS
+    MemberFormComponent,
+    ClubFormComponent
+  ]
 })
 export class SharedModule {}
-export { DeleteDialogComponent };
+export { DeleteDialogComponent, MemberFormComponent, ClubFormComponent };

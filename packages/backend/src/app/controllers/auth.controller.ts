@@ -65,17 +65,12 @@ export class AuthController {
     const secret = Config.get<string>('settings.jwt.secretOrPublicKey');
 
     const token = await new Promise<string>((resolve, reject) => {
-      sign(
-        payload,
-        secret,
-        { subject: user.id.toString() },
-        (err, value: string) => {
-          if (err) {
-            return reject(err);
-          }
-          resolve(value);
+      sign(payload, secret, { subject: user.id.toString() }, (err, value) => {
+        if (err) {
+          return reject(err);
         }
-      );
+        resolve(value);
+      });
     });
 
     return new HttpResponseOK({

@@ -40,6 +40,10 @@ export class ClubController {
     type: 'object'
   })
   async findClubs(ctx: Context) {
+
+    ctx.request.query.skip = ctx.request.query.skip || 0;
+    ctx.request.query.take = ctx.request.query.take || null;
+
     const clubs = await getRepository(Club).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take

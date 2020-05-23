@@ -35,6 +35,7 @@ export class ApiService {
       return await request;
     } catch (error) {
       console.error('ApiService:RequestError:', error);
+      throw new Error('ApiService:RequestError');
     }
   }
 }
