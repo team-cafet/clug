@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Club } from 'src/app/core/models';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ClubService } from 'src/app/core/services';
 
 @Component({
@@ -9,17 +9,19 @@ import { ClubService } from 'src/app/core/services';
   styleUrls: [ './club-details.component.scss' ]
 })
 export class ClubDetailsComponent implements OnInit {
-  ID_CLUB = null;
   club: Club;
 
-  constructor(private readonly route: ActivatedRoute, private readonly clubSrv: ClubService, private readonly router: Router) { }
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly clubSrv: ClubService
+  ) { }
 
   async ngOnInit(): Promise<void> {
-    this.ID_CLUB = this.route.snapshot.paramMap.get('id');
+    const ID_CLUB = this.route.snapshot.paramMap.get('id');
     try {
-      this.club = await this.clubSrv.getOneById(this.ID_CLUB);
+      this.club = await this.clubSrv.getOneById(ID_CLUB);
       if (!this.club) {
-        throw new Error(`Club with id ${this.ID_CLUB} Not Defined`);
+        throw new Error(`Club with id ${ID_CLUB} Not Defined`);
       }
     } catch (error) {
       console.error(error);

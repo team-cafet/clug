@@ -5,6 +5,6 @@ import { RESTService } from './rest.service';
 @Injectable()
 export class LevelService extends RESTService {
   constructor(apiService: ApiService) {
-    super('/level', apiService);
+    super('level/', apiService);
   }
 }

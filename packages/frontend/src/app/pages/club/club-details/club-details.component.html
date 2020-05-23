@@ -1,12 +1,5 @@
 <div id="page-club-details">
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <button mat-icon-button type="button" [routerLink]="['/club/']">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <span>Club details</span>
-    </mat-toolbar-row>
-  </mat-toolbar>
+  <app-header-details ressourceName='club'></app-header-details>  
 
   <app-club-form *ngIf="club" [club]="club"></app-club-form>
 </div>

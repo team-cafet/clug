@@ -79,7 +79,7 @@ export class MemberComponent implements OnInit {
 
   async fetchMembersList(): Promise<void> {
     return this.memberSrv
-      .getAllMember()
+      .getAll()
       .then(reqMembers => {
         this.members = reqMembers;
         this.tableDataSource.data = this.members;

@@ -6,6 +6,7 @@ import { ClubFormComponent } from './forms/club-form/club-form.component';
 import { LoginFormComponent } from './forms/login-form/login-form.component';
 import { RestDataTableComponent } from './generic/rest-data-table/rest-data-table.component';
 import { RestViewComponent } from './generic/rest-view/rest-view.component';
+import { HeaderDetailsComponent } from './layout/header-details/header-details.component';
 
 @NgModule({
   imports: [ AppCommonModule ],
@@ -18,7 +19,10 @@ import { RestViewComponent } from './generic/rest-view/rest-view.component';
     // FORMS
     MemberFormComponent,
     ClubFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+
+    // LAYOUT
+    HeaderDetailsComponent
   ],
   exports: [
     // GENERIC
@@ -29,7 +33,10 @@ import { RestViewComponent } from './generic/rest-view/rest-view.component';
     // FORMS
     MemberFormComponent,
     ClubFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+
+    // LAYOUT
+    HeaderDetailsComponent
   ]
 })
 export class SharedModule {}

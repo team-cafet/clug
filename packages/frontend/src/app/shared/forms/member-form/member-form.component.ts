@@ -22,7 +22,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
 
   async ngOnInit() {
 
-    this.clubs = await this.clubSrv.getAllClubs();
+    this.clubs = await this.clubSrv.getAll();
   }
 
   ngOnChanges(changes) {
