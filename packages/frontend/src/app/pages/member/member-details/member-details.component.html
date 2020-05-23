@@ -1,13 +1,5 @@
 <div id="page-member-details">
-  <mat-toolbar color="primary">
-
-    <mat-toolbar-row>
-      <button mat-icon-button type="button" [routerLink]="['/member/']">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <span *ngIf="member">{{member.surname}} {{member.name}}</span>
-    </mat-toolbar-row>
-  </mat-toolbar>
+  <app-header-details ressourceName="member"></app-header-details>
 
   <app-member-form *ngIf="member" [member]="member"></app-member-form>
 </div>

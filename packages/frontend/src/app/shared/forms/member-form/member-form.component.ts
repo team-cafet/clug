@@ -1,6 +1,18 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Member, Sexe, displaySexe, Club } from 'src/app/core/models';
-import { MemberService, ClubService } from 'src/app/core/services';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges
+} from '@angular/core';
+import { Member, Sexe, displaySexe, Club, Level } from 'src/app/core/models';
+import {
+  MemberService,
+  ClubService,
+  LevelService
+} from 'src/app/core/services';
+import { cleanObjectForSending } from 'src/app/core/functions';
 
 @Component({
   selector: 'app-member-form',
@@ -14,15 +26,19 @@ export class MemberFormComponent implements OnInit, OnChanges {
   SEXE_LABEL = [ Sexe.FEMALE, Sexe.MALE, Sexe.NON_BINARY ];
   displaySexe = displaySexe;
   clubs: Club[];
+  levels: Level[];
 
   constructor(
     private readonly memberSrv: MemberService,
-    private readonly clubSrv: ClubService
+    private readonly clubSrv: ClubService,
+    private readonly levelSrv: LevelService
   ) {}
 
   async ngOnInit() {
-
-    this.clubs = await this.clubSrv.getAll();
+    [ this.clubs, this.levels ] = await Promise.all([
+      this.clubSrv.getAll(),
+      this.levelSrv.getAll()
+    ]);
   }
 
   ngOnChanges(changes) {
@@ -31,30 +47,25 @@ export class MemberFormComponent implements OnInit, OnChanges {
     if (!currentMemberToCheck.club || !currentMemberToCheck.club.id) {
       this.member.club = { id: undefined, designation: '' };
     }
+
+    if (!currentMemberToCheck.level || !currentMemberToCheck.level.id) {
+      this.member.level = { id: undefined, name: '' };
+    }
   }
 
   async save() {
     const backupMember = this.member;
     try {
-      // delete this.member.createdAt;
-      // delete this.member.updatedAt;
-      // delete this.member.deletedAt;
-      // delete this.member.financialStatus;
-      // for (const props in this.member) {
-      //   if (this.member[props] === null) {
-      //     // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      //     delete this.member[props];
-      //   }
-      // }
+      const cleanedMember = cleanObjectForSending(this.member);
+      delete this.member.financialStatus;
 
       if (this.member.id) {
-        this.member = await this.memberSrv.saveOne(this.member);
+        this.member = await this.memberSrv.saveOne(cleanedMember);
       } else {
-        this.member = await this.memberSrv.addOne(this.member);
+        this.member = await this.memberSrv.addOne(cleanedMember);
       }
 
       this.saved.emit(this.member);
-
     } catch (error) {
       console.error(error);
       this.member = backupMember;

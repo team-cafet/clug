@@ -1,4 +1,5 @@
 import { Club } from '.';
+import { Level } from './level.model';
 
 export enum Sexe {
   'MALE',
@@ -16,15 +17,16 @@ export interface Member {
   id?: string;
   name: string;
   surname: string;
-  sexe: Sexe;
+  sexe?: Sexe;
   email: string;
-  phone: string;
-  birthdate: Date;
+  phone?: string;
+  birthdate?: Date;
   financialStatus?: FinancialStatus;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
   club?: Club;
+  level?: Level;
 }
 
 export function displaySexe(sexe: Sexe): string {

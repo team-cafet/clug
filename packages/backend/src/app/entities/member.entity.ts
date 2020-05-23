@@ -14,6 +14,7 @@ import {
 import { Club } from './club.entity';
 import { Membership } from './membership.entity';
 import { Address } from './address.entity';
+import { Level } from './level.entity';
 
 export enum Sexe {
   'MALE',
@@ -88,6 +89,13 @@ export class Member extends BaseEntity {
     { onDelete: 'NO ACTION', nullable: true }
   )
   club: Club;
+
+  @ManyToOne(
+    type => Level,
+    level => level.members,
+    { onDelete: 'NO ACTION', nullable: true }
+  )
+  level: Level;
 
   @OneToMany(
     type => Membership,

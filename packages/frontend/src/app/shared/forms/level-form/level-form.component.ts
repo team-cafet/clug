@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Level } from 'src/app/core/models';
 import { LevelService } from 'src/app/core/services';
+import { cleanObjectForSending } from 'src/app/core/functions';
 
 @Component({
   selector: 'app-level-form',
@@ -46,9 +47,9 @@ export class LevelFormComponent {
     const backupLevel = this.level;
     try {
       if (this.level.id) {
-        this.level = await this.levelSrv.saveOne(this.level);
+        this.level = await this.levelSrv.saveOne(cleanObjectForSending(this.level));
       } else {
-        this.level = await this.levelSrv.addOne(this.level);
+        this.level = await this.levelSrv.addOne(cleanObjectForSending(this.level));
       }
 
       this.saved.emit(this.level);

@@ -50,7 +50,7 @@ const memberSchema = {
       maxLength: 255
     },
     club: { type: 'object' },
-
+    level: { type: 'object' },
     address: { type: 'object' }
   },
   required: [ 'name', 'surname', 'email' ],
@@ -97,7 +97,7 @@ export class MemberController {
   async findMemberById(ctx: Context) {
     const member = await getRepository(Member).findOne(
       ctx.request.params.memberId,
-      { relations: [ 'club' ] }
+      { relations: [ 'club', 'level' ] }
     );
 
     if (!member) {
