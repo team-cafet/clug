@@ -38,6 +38,10 @@ export class LevelController {
     type: 'object'
   })
   async findLevels(ctx: Context) {
+
+    ctx.request.query.skip = ctx.request.query.skip || 0;
+    ctx.request.query.take = ctx.request.query.take || null;
+
     const levels = await getRepository(Level).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take

@@ -3,11 +3,11 @@ import { Club } from 'src/app/core/models';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-club',
-  templateUrl: './add-club.component.html',
-  styleUrls: [ './add-club.component.scss' ]
+  selector: 'app-club-add',
+  templateUrl: './club-add.component.html',
+  styleUrls: [ './club-add.component.scss' ]
 })
-export class AddClubComponent implements OnInit {
+export class ClubAddComponent implements OnInit {
   club: Club;
   constructor(private readonly router: Router) {}
 

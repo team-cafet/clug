@@ -7,6 +7,7 @@ import { User } from '../entities';
 import { MemberController } from './member.controller';
 import { MembershipPlanController } from './membership-plan.controller';
 import { ClubController } from './club.controller';
+import { LevelController } from './level.controller';
 
 @JWTRequired({ user: fetchUserWithPermissions(User) })
 export class ApiController {
@@ -14,7 +15,8 @@ export class ApiController {
   subControllers = [
     controller('/member', MemberController),
     controller('/membership-plan', MembershipPlanController),
-    controller('/club', ClubController)
+    controller('/club', ClubController),
+    controller('/level', LevelController)
   ];
 
   @Get('/')

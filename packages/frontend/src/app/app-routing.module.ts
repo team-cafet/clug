@@ -7,10 +7,13 @@ import { MemberAddComponent } from './pages/member/member-add/member-add.compone
 import { MemberDetailsComponent } from './pages/member/member-details/member-details.component';
 import { MemberComponent } from './pages/member/member.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { AddClubComponent } from './pages/club/add-club/add-club.component';
+import { ClubAddComponent } from './pages/club/club-add/club-add.component';
 import { ClubComponent } from './pages/club/club.component';
 import { ClubDetailsComponent } from './pages/club/club-details/club-details.component';
 import { AppAdminComponent } from './app-admin.component';
+import { LevelComponent } from './pages/level/level.component';
+import { LevelAddComponent } from './pages/level/level-add/level-add.component';
+import { LevelDetailsComponent } from './pages/level/level-details/level-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -41,14 +44,30 @@ const routes: Routes = [
       },
       {
         path: 'club/add',
-        component: AddClubComponent,
+        component: ClubAddComponent,
         canActivate: [ AuthGuard ]
       },
       {
         path: 'club/:id',
         component: ClubDetailsComponent,
         canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'level',
+        component: LevelComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'level/add',
+        component: LevelAddComponent,
+        canActivate: [ AuthGuard ]
+      },
+      {
+        path: 'level/:id',
+        component: LevelDetailsComponent,
+        canActivate: [ AuthGuard ]
       }
+
     ]
   },
   { path: '**', component: NotFoundComponent }

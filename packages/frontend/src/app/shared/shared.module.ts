@@ -4,12 +4,16 @@ import { MemberFormComponent } from './forms/member-form/member-form.component';
 import { AppCommonModule } from '../app-common.module';
 import { ClubFormComponent } from './forms/club-form/club-form.component';
 import { LoginFormComponent } from './forms/login-form/login-form.component';
+import { RestDataTableComponent } from './generic/rest-data-table/rest-data-table.component';
+import { RestViewComponent } from './generic/rest-view/rest-view.component';
 
 @NgModule({
   imports: [ AppCommonModule ],
   declarations: [
     // GENERIC
     DeleteDialogComponent,
+    RestDataTableComponent,
+    RestViewComponent,
 
     // FORMS
     MemberFormComponent,
@@ -19,6 +23,8 @@ import { LoginFormComponent } from './forms/login-form/login-form.component';
   exports: [
     // GENERIC
     DeleteDialogComponent,
+    RestDataTableComponent,
+    RestViewComponent,
 
     // FORMS
     MemberFormComponent,
@@ -27,4 +33,4 @@ import { LoginFormComponent } from './forms/login-form/login-form.component';
   ]
 })
 export class SharedModule {}
-export { DeleteDialogComponent, MemberFormComponent, ClubFormComponent };
+export { DeleteDialogComponent, MemberFormComponent, ClubFormComponent, RestDataTableComponent, RestViewComponent };

@@ -7,6 +7,7 @@ import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
 import { JwtService } from './services/jwt.service';
 import { MemberService } from './services/member.service';
 import { ClubService } from './services/club.service';
+import { LevelService } from './services/level.service';
 
 @NgModule({
   declarations: [],
@@ -17,7 +18,8 @@ import { ClubService } from './services/club.service';
     UserService,
     JwtService,
     MemberService,
-    ClubService
+    ClubService,
+    LevelService
   ]
 })
 export class CoreModule {}

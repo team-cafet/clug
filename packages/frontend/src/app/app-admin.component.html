@@ -7,21 +7,23 @@
 <mat-sidenav-container class="main-sidenav-container">
   <mat-sidenav mode="side" opened class="sidenav-menu" [ngClass]='isMobileMenuOpen ? "sidenav-menu-open" : ""'>
     <mat-nav-list>
+      
       <a routerLink="/app/" routerLinkActive="active">
-        <mat-list-item>
-          Home
-        </mat-list-item>
+        <mat-list-item>Home</mat-list-item>
       </a>
 
       <a routerLink="/app/member" routerLinkActive="active">
-        <mat-list-item>Member </mat-list-item>
+        <mat-list-item>Members</mat-list-item>
       </a>
 
       <a routerLink="/app/club" routerLinkActive="active">
-        <mat-list-item>
-          club
-        </mat-list-item>
+        <mat-list-item>Clubs</mat-list-item>
       </a>
+
+      <a routerLink="/app/levels" routerLinkActive="active">
+        <mat-list-item>Levels</mat-list-item>
+      </a>
+
     </mat-nav-list>
   </mat-sidenav>
 
