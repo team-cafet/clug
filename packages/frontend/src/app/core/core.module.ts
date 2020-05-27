@@ -7,16 +7,25 @@ import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
 import { JwtService } from './services/jwt.service';
 import { MemberService } from './services/member.service';
 import { ClubService } from './services/club.service';
+import { LevelService } from './services/level.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [ CommonModule ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
-    ApiService, UserService, JwtService, MemberService, ClubService]
+    ApiService,
+    UserService,
+    JwtService,
+    MemberService,
+    ClubService,
+    LevelService
+  ]
 })
 export class CoreModule {}
 
 export * from './models/index';
 export * from './services/index';
 export * from './guards/index';
+export * from './classes/index';
+export * from './functions/index';

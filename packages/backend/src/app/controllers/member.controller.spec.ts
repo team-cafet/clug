@@ -19,6 +19,7 @@ import { MemberController } from './member.controller';
 import { Member, Sexe, FinancialStatus } from '../entities/member.entity';
 import { Club, Address } from '../entities';
 
+// eslint-disable-next-line max-lines-per-function
 describe('MemberController', () => {
   let controller: MemberController;
   let simpleMember: Member;
@@ -40,8 +41,8 @@ describe('MemberController', () => {
     await repository.query(`TRUNCATE ${clubRepo.metadata.tableName} CASCADE`);
     await repository.query(`TRUNCATE ${repository.metadata.tableName} CASCADE`);
 
-    [club] = await clubRepo.save([{ designation: 'Club 1' }]);
-    [address] = await addressRepo.save([
+    [ club ] = await clubRepo.save([ { designation: 'Club 1' } ]);
+    [ address ] = await addressRepo.save([
       {
         street: 'chemin de montétan',
         streetNumber: 1,
@@ -51,7 +52,7 @@ describe('MemberController', () => {
       }
     ]);
 
-    [simpleMember, memberWithAdditionalProps] = await repository.save([
+    [ simpleMember, memberWithAdditionalProps ] = await repository.save([
       {
         surname: 'Geralt',
         name: 'Of Rivia',
@@ -65,8 +66,8 @@ describe('MemberController', () => {
         phone: '+01 12 123 45 67',
         birthdate: '2019-01-12',
         financialStatus: FinancialStatus.WARNING,
-        club: club,
-        address: address
+        club,
+        address
       }
     ]);
   });

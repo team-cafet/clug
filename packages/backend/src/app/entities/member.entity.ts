@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Column,
   Entity,
@@ -13,6 +14,7 @@ import {
 import { Club } from './club.entity';
 import { Membership } from './membership.entity';
 import { Address } from './address.entity';
+import { Level } from './level.entity';
 
 export enum Sexe {
   'MALE',
@@ -88,10 +90,17 @@ export class Member extends BaseEntity {
   )
   club: Club;
 
+  @ManyToOne(
+    type => Level,
+    level => level.members,
+    { onDelete: 'NO ACTION', nullable: true }
+  )
+  level: Level;
+
   @OneToMany(
     type => Membership,
     membership => membership.member,
-    { nullable: true, onDelete: 'NO ACTION', cascade: ['insert'] }
+    { nullable: true, onDelete: 'NO ACTION', cascade: [ 'insert' ] }
   )
   memberships: Membership;
 

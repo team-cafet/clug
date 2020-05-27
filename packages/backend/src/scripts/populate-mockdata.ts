@@ -25,16 +25,17 @@ const clearTable = async () => {
   ];
   let repo;
 
-  tabEntity.forEach(entity => {
+  for (const entity of tabEntity) {
     repo = getRepository(entity);
-    repo.query(`TRUNCATE public.${repo.metadata.tableName} CASCADE`);
-  });
+    // eslint-disable-next-line no-await-in-loop
+    await repo.query(`TRUNCATE public.${repo.metadata.tableName} CASCADE`);
+  }
 };
 
-const createMockPermission = async () => {
+const createMockPermission = () => {
   const permRepo = getRepository(Permission);
 
-  return await permRepo.save([
+  return permRepo.save([
     { codeName: 'member_read', name: 'member_read' },
     { codeName: 'member_write', name: 'member_write' },
     { codeName: 'invoice_read', name: 'invoice_read' },
@@ -47,16 +48,18 @@ const createMockPermission = async () => {
 const createMockGroup = async (tabPerm: Permission[]) => {
   const groupRepo = getRepository(Group);
 
-  let mr = tabPerm.find(perm => perm.name === 'member_read') || {};
-  let mw = tabPerm.find(perm => perm.name === 'member_write') || {};
-  let ir = tabPerm.find(perm => perm.name === 'invoice_read') || {};
-  let ur = tabPerm.find(perm => perm.name === 'user_read') || {};
+  const [ mr, mw, ir, ur ] = await Promise.all([
+    Permission.findOneOrFail({ name: 'member_read' }),
+    Permission.findOneOrFail({ name: 'member_write' }),
+    Permission.findOneOrFail({ name: 'invoice_read' }),
+    Permission.findOneOrFail({ name: 'user_read' })
+  ]);
 
-  return await groupRepo.save([
+  return groupRepo.save([
     {
       codeName: 'grp_mem',
       name: 'Membership',
-      permissions: [mr, mw, ir, ur]
+      permissions: [ mr, mw, ir, ur ]
     },
     {
       codeName: 'grp_adm',
@@ -72,21 +75,25 @@ const createUserMock = async () => {
   const usrAdmin = new User();
   usrAdmin.email = 'admin@test.ch';
   await usrAdmin.setPassword('1234');
-  usrAdmin.groups = ADMIN_GROUP ? [ADMIN_GROUP] : [];
+  usrAdmin.groups = ADMIN_GROUP ? [ ADMIN_GROUP ] : [];
 
-  getManager().save(usrAdmin);
+  await getManager().save(usrAdmin);
 };
 
 const createMemberMock = async () => {
   const membRepo = getRepository(Member);
   const clubRepo = getRepository(Club);
 
-  let club1: Club;
 
-  [club1] = await clubRepo.save([{ designation: 'Club 1' }]);
+  await clubRepo.save([ { designation: 'Club 1' } ]);
+  const club1 = await clubRepo.findOneOrFail({ designation: 'Club 1' });
 
-  return await membRepo.save([
-    { surname: 'Geralt', name: 'Of Rivia', email: 'geralt@rivia.com' },
+  return membRepo.save([
+    {
+      surname: 'Geralt',
+      name: 'Of Rivia',
+      email: 'geralt@rivia.com'
+    },
     {
       surname: 'Yennefer',
       name: 'Of Vanderberg',
@@ -124,6 +131,7 @@ const createMemberMock = async () => {
   ]);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function main(args) {
   let tabPerm: Permission[];
 
@@ -131,40 +139,39 @@ export async function main(args) {
 
   try {
     await clearTable();
-  } catch (e) {
-    console.error('Error on clearing table:', e);
+  } catch (err) {
+    console.error('Error on clearing table:', err);
     return;
   }
 
   // ----- PERMISSION MOCK
   try {
     tabPerm = await createMockPermission();
-  } catch (e) {
-    console.error('Error on creating permissions:', e);
+  } catch (err) {
+    console.error('Error on creating permissions:', err);
     return;
   }
 
   // ----- GROUP MOCK
   try {
     await createMockGroup(tabPerm);
-  } catch (e) {
-    console.error('Error on creating groups:', e);
+  } catch (err) {
+    console.error('Error on creating groups:', err);
     return;
   }
 
   // ----- USER MOCK
   try {
     await createUserMock();
-  } catch (e) {
-    console.error('Error on creating users:', e);
+  } catch (err) {
+    console.error('Error on creating users:', err);
     return;
   }
 
   // ----- MEMBER MOCK
   try {
     await createMemberMock();
-  } catch (e) {
-    console.error('Error on creating members:', e);
-    return;
+  } catch (err) {
+    console.error('Error on creating members:', err);
   }
 }

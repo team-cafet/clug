@@ -13,6 +13,7 @@ import { createConnection, getConnection, getRepository } from 'typeorm';
 import { Level } from '../entities';
 import { LevelController } from './level.controller';
 
+// eslint-disable-next-line max-lines-per-function
 describe('LevelController', () => {
 
   let controller: LevelController;
@@ -34,7 +35,7 @@ describe('LevelController', () => {
       },
       {
         name: 'Level 2'
-      },
+      }
     ]);
   });
 
@@ -64,7 +65,7 @@ describe('LevelController', () => {
 
     it('should support pagination', async () => {
       const level3 = await getRepository(Level).save({
-        name: 'Level 3',
+        name: 'Level 3'
       });
 
       let ctx = new Context({
@@ -139,11 +140,11 @@ describe('LevelController', () => {
       strictEqual(getPath(LevelController, 'createLevel'), undefined);
     });
 
-    it('should create the level in the database and return it through '
-        + 'an HttpResponseCreated object.', async () => {
+    it('should create the level in the database and return it through ' +
+        'an HttpResponseCreated object.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Level 3',
+          name: 'Level 3'
         }
       });
       const response = await controller.createLevel(ctx);
@@ -176,7 +177,7 @@ describe('LevelController', () => {
     it('should update the level in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Level 2 (version 2)',
+          name: 'Level 2 (version 2)'
         },
         params: {
           levelId: level2.id
@@ -203,7 +204,7 @@ describe('LevelController', () => {
     it('should not update the other levels.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Level 2 (version 2)',
+          name: 'Level 2 (version 2)'
         },
         params: {
           levelId: level2.id
@@ -223,7 +224,7 @@ describe('LevelController', () => {
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          text: '',
+          text: ''
         },
         params: {
           levelId: -1
@@ -248,7 +249,7 @@ describe('LevelController', () => {
     it('should update the level in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Level 2 (version 2)',
+          name: 'Level 2 (version 2)'
         },
         params: {
           levelId: level2.id
@@ -275,7 +276,7 @@ describe('LevelController', () => {
     it('should not update the other levels.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Level 2 (version 2)',
+          name: 'Level 2 (version 2)'
         },
         params: {
           levelId: level2.id
@@ -295,7 +296,7 @@ describe('LevelController', () => {
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          name: '',
+          name: ''
         },
         params: {
           levelId: -1

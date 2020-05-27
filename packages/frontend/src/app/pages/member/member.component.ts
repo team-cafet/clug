@@ -7,16 +7,19 @@ import {
   displayFinancialStatus,
   displaySexe,
   Member,
-  MemberService,
+  MemberService
 } from 'src/app/core/core.module';
-import { DeleteDialogComponent } from 'src/app/member/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-member',
   templateUrl: './member.component.html',
-  styleUrls: ['./member.component.scss'],
+  styleUrls: [ './member.component.scss' ]
 })
 export class MemberComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) tableSort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
+
   members: Member[];
   displayedColumns: string[] = [
     'id',
@@ -25,67 +28,64 @@ export class MemberComponent implements OnInit {
     'sexe',
     'financialStatus',
     'phone',
-    'action',
-    'club'
+    'club',
+    'action'
   ];
+
+
   tableDataSource = new MatTableDataSource([]);
 
-  constructor(private memberSrv: MemberService, public dialog: MatDialog) {}
+  constructor(private readonly memberSrv: MemberService, private readonly dialog: MatDialog) {}
 
-  @ViewChild(MatSort, { static: true }) tableSort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
 
   ngOnInit(): void {
     this.tableDataSource.sort = this.tableSort;
     this.tableDataSource.paginator = this.tablePaginator;
-    this.fetchMembersList();
+    this.fetchMembersList().finally(() => {
+      // TODO
+    });
   }
 
-  public displaySexe(sexe) {
+  displaySexe(sexe) {
     return displaySexe(sexe);
   }
 
-  public displayFinancialStatus(financialStatus) {
+  displayFinancialStatus(financialStatus) {
     return displayFinancialStatus(financialStatus);
   }
 
-  public applyFilter(event: Event) {
+  applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.tableDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  public deleteMember(member: Member) {
-    this.openDialog(member);
-  }
-
-  public addMember() {
-    console.log(`Add member`);
-    // TODO
-  }
-
-  public async fetchMembersList(): Promise<void> {
-    return this.memberSrv
-      .getAllMember()
-      .then((reqMembers) => {
-        this.members = reqMembers;
-        console.log('members', this.members)
-        this.tableDataSource.data = this.members;
-      })
-      .catch((e) => {
-        console.error(e);
-      });
-  }
-
-  private openDialog(member: Member): void {
+  deleteMember(member: Member) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
-      width: '450px',
-      data: member,
+      width: '450px'
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.fetchMembersList();
+        this.memberSrv.delete(member).catch(err => {
+          console.error(err);
+        }).finally(() => {
+          this.fetchMembersList().finally(() => {
+            // TODO
+          });
+        });
       }
     });
+  }
+
+  async fetchMembersList(): Promise<void> {
+    return this.memberSrv
+      .getAll()
+      .then(reqMembers => {
+        this.members = reqMembers;
+        this.tableDataSource.data = this.members;
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 }

@@ -7,6 +7,7 @@ import { User } from '../entities';
 import { MemberController } from './member.controller';
 import { MembershipPlanController } from './membership-plan.controller';
 import { ClubController } from './club.controller';
+import { LevelController } from './level.controller';
 
 @JWTRequired({ user: fetchUserWithPermissions(User) })
 export class ApiController {
@@ -15,9 +16,11 @@ export class ApiController {
     controller('/member', MemberController),
     controller('/membership-plan', MembershipPlanController),
     controller('/club', ClubController),
-  ]
+    controller('/level', LevelController)
+  ];
 
   @Get('/')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   index(ctx: Context) {
     return new HttpResponseOK('List of endpoint:');
   }

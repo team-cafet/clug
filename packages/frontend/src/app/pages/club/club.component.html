@@ -1,44 +1,8 @@
 <div id="page-club">
-  <div id="page-club-header">
     <h1>List of all clubs</h1>
-    <button
-      mat-mini-fab
-      color="primary"
-      color="primary"
-      (click)="addClub()"
-      [routerLink]="['/club/add']"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
-  <div id="page-club-main-content">
-    <table mat-table [dataSource]="tableDataSource" class="club-table">
-      <ng-container matColumnDef="designation">
-        <th mat-header-cell *matHeaderCellDef>Designation</th>
-        <td mat-cell *matCellDef="let element">{{ element.designation }}</td>
-      </ng-container>
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
-      </ng-container>
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element" class="club-table-action">
-          <button
-            mat-icon-button
-            [routerLink]="['/club/', element.id]"
-            color="primary"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="deleteClub(element)" color="warn">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-  </div>
+    <app-rest-view 
+    resourceName='club' 
+    resourceAPI='club' 
+    [resourceColumns]='resourceCols'
+  ></app-rest-view>
 </div>

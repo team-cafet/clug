@@ -43,7 +43,7 @@ const membershipSchema = {
       }
     }
   },
-  required: ['startDate', 'member', 'membershipPlan'],
+  required: [ 'startDate', 'member', 'membershipPlan' ],
   type: 'object'
 };
 

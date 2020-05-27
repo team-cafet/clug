@@ -12,10 +12,10 @@ const levelSchema = {
   additionalProperties: false,
   properties: {
     name: { type: 'string', maxLength: 50 },
-    description: { type: 'string', maxLength: 500 },
+    description: { type: 'string', maxLength: 500 }
   },
   required: [ 'name' ],
-  type: 'object',
+  type: 'object'
 };
 
 @ApiUseTag('level')
@@ -33,11 +33,15 @@ export class LevelController {
   @ValidateQuery({
     properties: {
       skip: { type: 'number' },
-      take: { type: 'number' },
+      take: { type: 'number' }
     },
-    type: 'object',
+    type: 'object'
   })
   async findLevels(ctx: Context) {
+
+    ctx.request.query.skip = ctx.request.query.skip || 0;
+    ctx.request.query.take = ctx.request.query.take || null;
+
     const levels = await getRepository(Level).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take

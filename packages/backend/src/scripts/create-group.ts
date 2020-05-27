@@ -1,26 +1,26 @@
 // 3p
-import { Group, Permission } from "@foal/typeorm";
+import { Group, Permission } from '@foal/typeorm';
 import {
   createConnection,
   getConnection,
   getManager,
   getRepository
-} from "typeorm";
+} from 'typeorm';
 
 export const schema = {
   additionalProperties: false,
   properties: {
-    codeName: { type: "string", maxLength: 100 },
-    name: { type: "string", maxLength: 80 },
+    codeName: { type: 'string', maxLength: 100 },
+    name: { type: 'string', maxLength: 80 },
     permissions: {
-      type: "array",
-      items: { type: "string" },
+      type: 'array',
+      items: { type: 'string' },
       uniqueItems: true,
       default: []
     }
   },
-  required: ["name", "codeName"],
-  type: "object"
+  required: [ 'name', 'codeName' ],
+  type: 'object'
 };
 
 export async function main(args: {
@@ -36,18 +36,18 @@ export async function main(args: {
   await createConnection();
 
   for (const codeName of args.permissions) {
+    // eslint-disable-next-line no-await-in-loop
     const permission = await getRepository(Permission).findOne({ codeName });
     if (!permission) {
-      console.log(`No permission with the code name "${codeName}" was found.`);
-      return;
+      throw new Error(`No permission with the code name "${codeName}" was found.`);
     }
     group.permissions.push(permission);
   }
 
   try {
-    console.log(await getManager().save(group));
+    await getManager().save(group);
   } catch (error) {
-    console.log(error.message);
+    throw new Error(error);
   } finally {
     await getConnection().close();
   }

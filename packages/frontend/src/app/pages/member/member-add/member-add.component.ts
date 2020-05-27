@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Member, Sexe, displaySexe, Club } from 'src/app/core/models';
-import { MemberService, ClubService } from 'src/app/core/services';
+import { Member, Sexe, Club } from 'src/app/core/models';
 import { Router } from '@angular/router';
 
 class NewMember implements Member {
@@ -16,38 +15,22 @@ class NewMember implements Member {
 @Component({
   selector: 'app-member-add',
   templateUrl: './member-add.component.html',
-  styleUrls: ['./member-add.component.scss'],
+  styleUrls: [ './member-add.component.scss' ]
 })
 export class MemberAddComponent implements OnInit {
-  SEXE_LABEL = [Sexe.FEMALE, Sexe.MALE, Sexe.NON_BINARY];
-  member: Member;
-  displaySexe = displaySexe;
-  clubs: Club[];
+  member: NewMember;
 
-  constructor(private memberSrv: MemberService, private router: Router, private clubSrv: ClubService) {}
+  constructor(
+    private readonly router: Router
+  ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     this.member = new NewMember();
-    this.clubs = await this.clubSrv.getAllClubs();
-    for (const key in this.member) {
-      if (this.member[key]) {
-        this.member[key] = null;
-      }
-    }
   }
 
-  async save() {
-    try {
-      for (const props in this.member) {
-        if (this.member[props] === null) {
-          delete this.member[props];
-        }
-      }
-
-      this.member = await this.memberSrv.addOne(this.member);
-      this.router.navigate(['/member', this.member.id]);
-    } catch (error) {
-      console.error(error);
+  async saved(savedMember) {
+    if (savedMember.id) {
+      await this.router.navigate([ '/member', savedMember.id ]);
     }
   }
 }

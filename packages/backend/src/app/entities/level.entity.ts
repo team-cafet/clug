@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Member } from './member.entity';
 
@@ -10,7 +11,7 @@ export class Level {
   @Column()
   name: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   description: string;
 
   @OneToMany(type => Member, member => member.club)
