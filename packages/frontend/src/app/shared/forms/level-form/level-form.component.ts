@@ -1,62 +1,76 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Level } from 'src/app/core/models';
 import { LevelService } from 'src/app/core/services';
-import { cleanObjectForSending } from 'src/app/core/functions';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-level-form',
   template: `
   <div>
-    <form>
-      <mat-card class="club-card">
-        <mat-form-field class="full-width">
+    <mat-card>
+      <form [formGroup]="levelForm" (ngSubmit)="save()">
+        <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
           <input
             matInput
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="level.name"
+            formControlName="name"
           />
         </mat-form-field>
-        <mat-form-field class="full-width">
+
+        <br>
+
+        <mat-form-field appearance="outline">
           <mat-label>Description</mat-label>
           <textarea
             matInput
-            [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="level.description"
+            formControlName="description"
           ></textarea>
         </mat-form-field>
+
         <mat-card-actions>
-          <button mat-button type="button" color="primary" (click)="save()">
+          <button mat-button type="submit" [disabled]="!levelForm.valid" color="primary">
             Save
           </button>
         </mat-card-actions>
-      </mat-card>
-    </form>
+      </form>
+    </mat-card>
   </div>`,
   styleUrls: [ './level-form.component.scss' ]
 })
-export class LevelFormComponent {
+export class LevelFormComponent implements OnInit {
   @Input() level: Level;
   @Output() saved = new EventEmitter<Level>();
 
+  levelForm: FormGroup;
+
   constructor(
-    private readonly levelSrv: LevelService
+    private readonly levelSrv: LevelService,
+    private readonly fb: FormBuilder
   ) { }
 
+  ngOnInit(): void {
+    if (!this.level) {
+      throw new Error('LevelFormComponent: level undefined');
+    }
+
+    this.levelForm = this.fb.group({
+      name: [ this.level.name, [ Validators.required, Validators.minLength(3) ] ],
+      description: [ this.level.description, [ Validators.maxLength(255) ] ]
+    });
+  }
+
   async save() {
-    const backupLevel = this.level;
     try {
       if (this.level.id) {
-        this.level = await this.levelSrv.saveOne(cleanObjectForSending(this.level));
+        this.level = await this.levelSrv.saveOne({ id: this.level.id, ...this.levelForm.value });
       } else {
-        this.level = await this.levelSrv.addOne(cleanObjectForSending(this.level));
+        this.level = await this.levelSrv.addOne(this.levelForm.value);
       }
 
-      this.saved.emit(this.level);
+      this.saved.emit(this.levelForm.value);
 
     } catch (error) {
       console.error(error);
-      this.level = backupLevel;
     }
   }
 

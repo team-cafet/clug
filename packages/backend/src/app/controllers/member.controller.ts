@@ -36,8 +36,7 @@ const memberSchema = {
     email: { type: 'string', format: 'email', maxLength: 255 },
     phone: { type: 'string', maxLength: 50 },
     birthdate: {
-      type: 'string',
-      format: 'date',
+      type: [ 'string' ],
       maxLength: 255
     },
     financialStatus: {
@@ -49,9 +48,9 @@ const memberSchema = {
       ],
       maxLength: 255
     },
-    club: { type: 'object' },
-    level: { type: 'object' },
-    address: { type: 'object' }
+    club: { type: 'number', minimum: 1, nullable: false },
+    level: { type: 'number', minimum: 1, nullable: false },
+    address: { type: 'number', minimum: 1, nullable: false }
   },
   required: [ 'name', 'surname', 'email' ],
   type: 'object'

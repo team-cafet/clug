@@ -30,7 +30,7 @@ export class MemberAddComponent implements OnInit {
 
   async saved(savedMember) {
     if (savedMember.id) {
-      await this.router.navigate([ '/member', savedMember.id ]);
+      await this.router.navigate([ '/app/member', savedMember.id ]);
     }
   }
 }
