@@ -78,7 +78,7 @@ export class MemberController {
     const members = await getRepository(Member).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take,
-      relations: [ 'club' ]
+      relations: [ 'club', 'level' ]
     });
     return new HttpResponseOK(members);
   }

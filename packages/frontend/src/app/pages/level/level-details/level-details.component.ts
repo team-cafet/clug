@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Level } from 'src/app/core/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LevelService } from 'src/app/core/services';
+import { RestDataTableComponent } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-level-details',
@@ -9,23 +10,45 @@ import { LevelService } from 'src/app/core/services';
   styleUrls: [ './level-details.component.scss' ]
 })
 export class LevelDetailsComponent implements OnInit {
+
+  @ViewChild(RestDataTableComponent)
+  private readonly restDataTableMembersComponent: RestDataTableComponent;
+
   level: Level;
+  columnsMember = { name: 'Name', surname: 'Surname' };
+
+  private readonly ID_LEVEL: number;
+
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly levelSrv: LevelService,
     private readonly router: Router
-  ) { }
+  ) {
+    this.ID_LEVEL = Number.parseInt(this.route.snapshot.paramMap.get('id'), 10);
+  }
 
   async ngOnInit(): Promise<void> {
-    const ID_LEVEL = this.route.snapshot.paramMap.get('id');
     try {
-      this.level = await this.levelSrv.getOneById(ID_LEVEL);
+      this.level = await this.levelSrv.getOneById(this.ID_LEVEL);
       if (!this.level) {
-        throw new Error(`Level with id ${ID_LEVEL} Not Defined`);
+        throw new Error(`Level with id ${this.ID_LEVEL} Not Defined`);
       }
+
     } catch (error) {
       console.error(error);
     }
+  }
+
+  onRestDataTableReady() {
+    this.restDataTableMembersComponent.filter(data => this.filterMemberByClub(data));
+  }
+
+  private filterMemberByClub(members: any[]) {
+    const filteredMembers = members.filter(
+      member => member.level?.id === this.ID_LEVEL
+    );
+
+    return filteredMembers;
   }
 }

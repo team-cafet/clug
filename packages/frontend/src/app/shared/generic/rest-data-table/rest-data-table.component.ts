@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -44,6 +44,8 @@ export class RestDataTableComponent implements OnInit {
   @Input() resourceColumns: string;
   @Input() action: boolean;
 
+  @Output() ready = new EventEmitter<boolean>();
+
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
@@ -52,6 +54,7 @@ export class RestDataTableComponent implements OnInit {
   displayedCol = [];
 
   private restSrv: RESTService;
+  private loadedData: [] | null;
 
   constructor(
     private readonly apiSrv: ApiService,
@@ -60,14 +63,32 @@ export class RestDataTableComponent implements OnInit {
 
   ngOnInit() {
     this.restSrv = new RESTService(this.resourceAPI, this.apiSrv);
-    this.init().catch(err => console.error(err));
+    this.init().catch(err => console.error(err)).finally(() => {
+      this.ready.emit(true);
+    });
   }
 
+  // TODO: Add search filter
+  // applyFilter(filterValue: string) {
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  // }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  /**
+   * Filter the REST data of the data table
+   * @param filterFunc The function used to filter, rest data are passed in params
+   * @returns void
+   */
+  filter(filterFunc: (data: any) => any) {
+    if (filterFunc) {
+      const filteredData = filterFunc(this.loadedData);
+      this.dataSource.data = filteredData;
+    }
   }
 
+  /**
+   * Delete an element on the table
+   * @param element the element to delete
+   */
   deleteEle(element) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '450px'
@@ -80,8 +101,12 @@ export class RestDataTableComponent implements OnInit {
     });
   }
 
+  /**
+   * Will init the rest data table
+   */
   private async init() {
-    this.dataSource.data = await this.restSrv.getAll();
+    this.loadedData = await this.restSrv.getAll();
+    this.dataSource.data = this.loadedData;
     this.dataSource.sort = this.sort;
     this.displayedCol = Object.keys(this.resourceColumns);
     if (this.action) {
