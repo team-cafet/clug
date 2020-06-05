@@ -48,7 +48,7 @@ export class LoginFormComponent {
         this.emailFormControl.value,
         this.passwordFormControl.value
       );
-      await this.router.navigate([ '/member' ]); // TODO: Change depending on the general member view's url
+      await this.router.navigate([ 'app/member' ]); // TODO: Change depending on the general member view's url
     } catch (error) {
       this.invalidCredentials = true;
     }

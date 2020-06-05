@@ -6,7 +6,7 @@ import { Statistic } from 'src/app/core/models/statistic.model';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: [ './dashboard.component.scss' ]
 })
 export class DashboardComponent implements OnInit {
   statistics: Statistic;
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     const membersCountChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Membres', 'Mauvais payeur', 'Inscrit ce mois'],
+        labels: [ 'Membres', 'Mauvais payeur', 'Inscrit ce mois' ],
         datasets: [
           {
             label: 'Nombre de membre',
@@ -37,8 +37,8 @@ export class DashboardComponent implements OnInit {
               this.statistics.badPayersCount,
               this.statistics.newMembersCount
             ],
-            backgroundColor: ['#3FBF3F', '#BF3F3F', '#3FBFBF'],
-            borderColor: ['#3FBF3F', '#BF3F3F', '#3FBFBF'],
+            backgroundColor: [ '#3FBF3F', '#BF3F3F', '#3FBFBF' ],
+            borderColor: [ '#3FBF3F', '#BF3F3F', '#3FBFBF' ],
             borderWidth: 1
           }
         ]

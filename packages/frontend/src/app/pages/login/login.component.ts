@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService } from 'src/app/core/services/api.service';
+
 
 @Component({
   selector: 'app-login',
@@ -7,12 +7,4 @@ import { ApiService } from 'src/app/core/services/api.service';
   styleUrls: [ './login.component.scss' ]
 })
 export class LoginComponent {
-  constructor(private readonly api: ApiService) {}
-
-  fetchMember() {
-    this.api
-      .get('/app/member')
-      .catch(err => console.error(err));
-  }
-
 }
