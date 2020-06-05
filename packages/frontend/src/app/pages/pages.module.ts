@@ -13,6 +13,7 @@ import { AppCommonModule } from '../app-common.module';
 import { LevelAddComponent } from './level/level-add/level-add.component';
 import { LevelDetailsComponent } from './level/level-details/level-details.component';
 import { LevelComponent } from './level/level.component';
+import { DashboardComponent } from './home/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LevelComponent } from './level/level.component';
     ClubDetailsComponent,
     LevelAddComponent,
     LevelDetailsComponent,
-    LevelComponent
+    LevelComponent,
+    DashboardComponent
   ],
   imports: [
     AppCommonModule,
