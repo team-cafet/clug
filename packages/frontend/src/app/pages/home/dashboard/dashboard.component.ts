@@ -35,25 +35,25 @@ export class DashboardComponent implements OnInit {
             data: [
               this.statistics.membersCount,
               this.statistics.badPayersCount,
-              this.statistics.newMembersCount,
+              this.statistics.newMembersCount
             ],
             backgroundColor: ['#3FBF3F', '#BF3F3F', '#3FBFBF'],
             borderColor: ['#3FBF3F', '#BF3F3F', '#3FBFBF'],
-            borderWidth: 1,
-          },
-        ],
+            borderWidth: 1
+          }
+        ]
       },
       options: {
         scales: {
           yAxes: [
             {
               ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      }
     });
   }
 }

@@ -17,7 +17,7 @@ export class ApiController {
     controller('/member', MemberController),
     controller('/membership-plan', MembershipPlanController),
     controller('/club', ClubController),
-    controller('/level', LevelController)
+    controller('/level', LevelController),
     controller('/statistic', StatisticController)
   ];
 
