@@ -16,9 +16,6 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.statistics = await this.statisticSrv.get('/');
-    this.averageAge =
-      parseInt(new Date().toISOString().substring(0, 4), 10) -
-      parseInt(this.statistics.averageAge.substring(0, 4), 10);
     this.setupGraph();
   }
 

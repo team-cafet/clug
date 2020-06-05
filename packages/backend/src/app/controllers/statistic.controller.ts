@@ -1,4 +1,4 @@
-import { Context, Get, HttpResponseOK, ApiOperationId, ApiOperationSummary, ApiOperationDescription, ApiResponse } from '@foal/core';
+import { Get, HttpResponseOK, ApiOperationId, ApiOperationSummary, ApiOperationDescription, ApiResponse } from '@foal/core';
 import { PermissionRequired } from '@foal/typeorm';
 import { getRepository } from 'typeorm';
 import { Member } from '../entities';
@@ -32,10 +32,13 @@ export class StatisticController {
       `SELECT count(*) from member where "createdAt" >= '${startDate}'
       AND "createdAt" <  '${endDate}'`
     );
-    const averageAge: [{averageAge: Date}] = await getRepository(Member).query(
+
+    /*
+     const averageAge: [{averageAge: Date}] = await getRepository(Member).query(
       `SELECT to_timestamp(avg(extract(epoch from birthdate)))::date AS averageAge
       FROM member`
     );
+    */
     const oldestMember: [Member] = await getRepository(Member).query(
       `SELECT *
       FROM member
@@ -54,7 +57,7 @@ export class StatisticController {
       membersCount: membersCount[0].count,
       badPayersCount: badPayersCount[0].count,
       newMembersCount: newMembersCount[0].count,
-      averageAge: averageAge[0].averageAge,
+      averageAge: null,
       olderMember: oldestMember[0],
       youngestMember: youngestMember[0]
     });

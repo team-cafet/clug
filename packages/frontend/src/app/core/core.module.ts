@@ -8,6 +8,7 @@ import { JwtService } from './services/jwt.service';
 import { MemberService } from './services/member.service';
 import { ClubService } from './services/club.service';
 import { LevelService } from './services/level.service';
+import { StatisticService } from './services';
 
 @NgModule({
   declarations: [],
@@ -19,7 +20,8 @@ import { LevelService } from './services/level.service';
     JwtService,
     MemberService,
     ClubService,
-    LevelService
+    LevelService,
+    StatisticService
   ]
 })
 export class CoreModule {}

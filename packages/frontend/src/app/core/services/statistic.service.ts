@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class StatisticService {
-  API_URL = environment.apiUrl;
+  API_URL = `${environment.apiUrl}/statistic`;
 
   constructor(private readonly http: HttpClient) {}
 
