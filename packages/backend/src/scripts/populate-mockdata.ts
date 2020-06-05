@@ -47,12 +47,14 @@ const createMockPermission = () => {
 
 const createMockGroup = async (tabPerm: Permission[]) => {
   const groupRepo = getRepository(Group);
+  const permissionRepo = getRepository(Permission);
 
   const [ mr, mw, ir, ur ] = await Promise.all([
-    Permission.findOneOrFail({ name: 'member_read' }),
-    Permission.findOneOrFail({ name: 'member_write' }),
-    Permission.findOneOrFail({ name: 'invoice_read' }),
-    Permission.findOneOrFail({ name: 'user_read' })
+    // Is that the think you wanted to to @darkOmega
+    permissionRepo.findOneOrFail({ name: 'member_read' }),
+    permissionRepo.findOneOrFail({ name: 'member_write' }),
+    permissionRepo.findOneOrFail({ name: 'invoice_read' }),
+    permissionRepo.findOneOrFail({ name: 'user_read' })
   ]);
 
   return groupRepo.save([
