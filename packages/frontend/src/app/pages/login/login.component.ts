@@ -11,7 +11,7 @@ export class LoginComponent {
 
   fetchMember() {
     this.api
-      .get('app/member')
+      .get('/app/member')
       .catch(err => console.error(err));
   }
 

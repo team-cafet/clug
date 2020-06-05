@@ -196,7 +196,7 @@ module.exports = {
     ],
     "array-bracket-spacing": [
       "error",
-      "never"
+      "always"
     ],
     "array-callback-return": "error",
     "array-element-newline": [
