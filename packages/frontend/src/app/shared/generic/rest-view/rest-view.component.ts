@@ -4,7 +4,7 @@ import { RESTService } from 'src/app/core/services/rest.service';
 
 @Component({
   selector: 'app-rest-view',
-  template: ``,
+  template: './rest-view.component.html',
   styleUrls: [ './rest-view.component.scss' ]
 })
 export class RestViewComponent implements OnInit {
