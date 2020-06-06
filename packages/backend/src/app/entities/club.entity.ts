@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Member } from './member.entity';
 
 @Entity()
@@ -17,4 +17,12 @@ export class Club {
   @OneToMany(type => Member, member => member.club)
   members: Member[];
 
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @Column({ type: 'date', nullable: true })
+  deletedAt: Date;
 }
