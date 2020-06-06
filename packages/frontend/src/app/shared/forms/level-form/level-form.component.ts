@@ -44,5 +44,4 @@ export class LevelFormComponent implements OnInit {
       console.error(error);
     }
   }
-
 }

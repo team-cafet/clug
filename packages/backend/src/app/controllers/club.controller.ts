@@ -140,7 +140,7 @@ export class ClubController {
       return new HttpResponseNotFound();
     }
 
-    await getRepository(Club).delete(ctx.request.params.clubId);
+    await getRepository(Club).softDelete(ctx.request.params.clubId);
 
     return new HttpResponseNoContent();
   }

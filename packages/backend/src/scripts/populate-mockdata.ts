@@ -92,13 +92,13 @@ const createMemberMock = async () => {
 
   return membRepo.save([
     {
-      surname: 'Geralt',
-      name: 'Of Rivia',
+      firstname: 'Geralt',
+      lastname: 'Of Rivia',
       email: 'geralt@rivia.com'
     },
     {
-      surname: 'Yennefer',
-      name: 'Of Vanderberg',
+      firstname: 'Yennefer',
+      lastname: 'Of Vanderberg',
       email: 'yen@vanderberg.com',
       sexe: Sexe.FEMALE,
       phone: '+01 12 123 45 67',
@@ -114,8 +114,8 @@ const createMemberMock = async () => {
       }
     },
     {
-      name: 'Of Cyntra',
-      surname: 'Cyrila',
+      lastname: 'Of Cyntra',
+      firstname: 'Cyrila',
       email: 'cirla@cyntra.com',
       sexe: Sexe.FEMALE,
       phone: '+01 12 123 45 67',

@@ -44,8 +44,8 @@ export class MemberFormComponent implements OnInit, OnChanges {
     }
 
     this.memberForm = this.fb.group({
-      name: [ this.member.name, [ Validators.required ] ],
-      surname: [ this.member.surname, [ Validators.required ] ],
+      firstname: [ this.member.firstname, [ Validators.required ] ],
+      lastname: [ this.member.lastname, [ Validators.required ] ],
       sexe: [ this.member.sexe ],
       birthdate: [ this.member.birthdate ],
       phone: [ this.member.phone ],

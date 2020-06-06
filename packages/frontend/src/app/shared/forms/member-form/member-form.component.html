@@ -1,32 +1,32 @@
-<div>
+<div class="memberform">
   <mat-card>
     <form [formGroup]="memberForm" (ngSubmit)="save()">
       <mat-card-header>
         <mat-card-title>
-          {{memberForm.value.name}} {{memberForm.value.surname}}
+          {{memberForm.value.firstname}} {{memberForm.value.lastname}}
         </mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
         <mat-form-field appearance="outline">
-          <mat-label></mat-label>
+          <mat-label>Firstname</mat-label>
           <input
             matInput
-            placeholder="name"
-            i18n-placeholder="member-add|Name@@mem-name"
-            formControlName="name"
+            placeholder="firstname"
+            i18n-placeholder="member-add|Firstname@@mem-firstname"
+            formControlName="firstname"
           />
         </mat-form-field>
 
         <br />
 
         <mat-form-field appearance="outline">
-          <mat-label></mat-label>
+          <mat-label>Lastname</mat-label>
           <input
             matInput
-            placeholder="surname"
-            i18n-placeholder="member-add|Surname@@mem-surname"
-            formControlName="surname"
+            placeholder="lastname"
+            i18n-placeholder="member-add|Lastname@@mem-lastname"
+            formControlName="lastname"
           />
         </mat-form-field>
 

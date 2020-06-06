@@ -25,10 +25,10 @@ export class DashboardComponent implements OnInit {
     const membersCountChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: [ 'Membres', 'Mauvais payeur', 'Inscrit ce mois' ],
+        labels: [ 'Membres', 'Bad payer', 'Registered this month' ],
         datasets: [
           {
-            label: 'Nombre de membre',
+            label: 'Number of members',
             data: [
               this.statistics.membersCount,
               this.statistics.badPayersCount,

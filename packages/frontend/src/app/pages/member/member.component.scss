@@ -1,50 +1,43 @@
-#page-member {
+.member {
   margin-top: 10px;
-
   display: grid;
   grid-template-columns: 1% 98% 1%;
   grid-template-rows: auto;
   grid-template-areas:
     '. header .'
     '. main .';
-}
 
-#page-member-header {
-  grid-area: header;
+    .header {
+      grid-area: header;
 
-  min-height: 10vh;
-  display:inline-grid;
-  grid-template-columns: 90% 10%;
-  align-items: flex-end;
+      min-height: 10vh;
+      display:inline-grid;
+      grid-template-columns: 90% 10%;
+      align-items: flex-end;
 
-  h2{padding: 0; margin:0;}
-  button{justify-self: end;}
-}
-
-#page-member-main-content {
-  grid-area: main;
-  min-height: 80vh;
-  width: 100%;
-
-  .member-table {
-    width: 100%;
-    .member-table-action {
-      div {
-        width: 100%;
-        display: grid;
-        grid-template-columns: auto auto;
-        grid-template-rows: auto;
-        justify-items: center;
-        align-items: center;
-        button {
-        }
+      h2{padding: 0; margin:0;}
+      button{justify-self: end;}
+    }
+    .content {
+      grid-area: main;
+      min-height: 80vh;
+      width: 100%;
+    }
+    .table {
+      width: 100%;
+      &__action {
+          width: 100%;
+          display: grid;
+          grid-template-columns: auto auto;
+          grid-template-rows: auto;
+          justify-items: center;
+          align-items: center;
       }
     }
-  }
 }
 
 @media (min-width: 768px) {
-  #page-member {
+  .member {
     grid-template-columns: 10% 80% 10%;
     grid-template-areas:
       '. header .'

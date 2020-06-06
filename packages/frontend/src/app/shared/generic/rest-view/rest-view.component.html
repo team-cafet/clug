@@ -1,0 +1,20 @@
+<div class="restview">
+  <div>
+    <button
+      mat-mini-fab
+      color="primary"
+      color="primary"
+      [routerLink]="['/', 'app', resourceName, 'add']"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div>
+    <app-rest-data-table
+      [resourceColumns]="resourceColumns"
+      [resourceName]="resourceName"
+      [resourceAPI]="resourceName"
+      action="true"
+    ></app-rest-data-table>
+  </div>
+</div>

@@ -15,18 +15,6 @@ describe('StatisticController', () => {
     controller = createController(StatisticController);
   });
 
-  describe('has a "foo" method that', () => {
-
-    it('should handle requests at GET /.', () => {
-      strictEqual(getHttpMethod(StatisticController, 'foo'), 'GET');
-      strictEqual(getPath(StatisticController, 'foo'), '/');
-    });
-
-    it('should return an HttpResponseOK.', () => {
-      const ctx = new Context({});
-      ok(isHttpResponseOK(controller.foo(ctx)));
-    });
-
-  });
+  // TODO
 
 });

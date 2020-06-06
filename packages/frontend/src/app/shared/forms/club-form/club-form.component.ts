@@ -24,10 +24,10 @@ export class ClubFormComponent implements OnInit {
     if (!this.club) {
       throw new Error('ClubFormComponent: club undefined');
     }
-
+    console.log(this.club)
     this.clubForm = this.fb.group({
-      designation: [ this.club.designation, [Validators.required, Validators.minLength(3) ] ],
-      description: [ this.club.description, [Validators.maxLength(255)] ]
+      designation: [ this.club.designation, [ Validators.required, Validators.minLength(3) ] ],
+      description: [ this.club.description, [ Validators.maxLength(255) ] ]
     });
   }
 

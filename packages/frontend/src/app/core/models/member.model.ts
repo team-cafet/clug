@@ -16,8 +16,8 @@ export enum FinancialStatus {
 
 export interface Member {
   id?: string;
-  name: string;
-  surname: string;
+  firstname: string;
+  lastname: string;
   sexe?: Sexe;
   email: string;
   phone?: string;

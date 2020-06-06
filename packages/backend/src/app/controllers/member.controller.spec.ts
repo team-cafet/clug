@@ -54,13 +54,13 @@ describe('MemberController', () => {
 
     [ simpleMember, memberWithAdditionalProps ] = await repository.save([
       {
-        surname: 'Geralt',
-        name: 'Of Rivia',
+        firstname: 'Geralt',
+        lastname: 'Of Rivia',
         email: 'geralt@rivia.com'
       },
       {
-        surname: 'Yennefer',
-        name: 'Of Vanderberg',
+        firstname: 'Yennefer',
+        lastname: 'Of Vanderberg',
         email: 'yen@vanderberg.com',
         sexe: Sexe.FEMALE,
         phone: '+01 12 123 45 67',
@@ -93,18 +93,18 @@ describe('MemberController', () => {
       }
 
       strictEqual(response.body.length, 2);
-      ok(response.body.find(member => member.name === simpleMember.name));
+      ok(response.body.find(member => member.lastname === simpleMember.lastname));
       ok(
         response.body.find(
-          member => member.name === memberWithAdditionalProps.name
+          member => member.lastname === memberWithAdditionalProps.lastname
         )
       );
     });
 
     it('should support pagination', async () => {
       const newMemberForPagination = await getRepository(Member).save({
-        name: 'Of Cyntra',
-        surname: 'Cyrila',
+        lastname: 'Of Cyntra',
+        firstname: 'Cyrila',
         email: 'cirla@cyntra.com'
       });
 
@@ -161,7 +161,7 @@ describe('MemberController', () => {
       }
 
       strictEqual(response.body.id, memberWithAdditionalProps.id);
-      strictEqual(response.body.name, memberWithAdditionalProps.name);
+      strictEqual(response.body.lastname, memberWithAdditionalProps.lastname);
     });
 
     it('should return an HttpResponseNotFound object if the member was not found.', async () => {
@@ -192,8 +192,8 @@ describe('MemberController', () => {
       async () => {
         const ctx = new Context({
           body: {
-            name: 'Of Cyntra',
-            surname: 'Cyrila',
+            lastname: 'Of Cyntra',
+            firstname: 'Cyrila',
             email: 'cirla@cyntra.com'
           }
         });
@@ -206,17 +206,17 @@ describe('MemberController', () => {
         }
 
         const member = await getRepository(Member).findOne({
-          name: 'Of Cyntra'
+          lastname: 'Of Cyntra'
         });
 
         if (!member) {
           throw new Error('No Cyrila Of Cintra was found in the database.');
         }
 
-        strictEqual(member.name, 'Of Cyntra');
+        strictEqual(member.lastname, 'Of Cyntra');
 
         strictEqual(response.body.id, member.id);
-        strictEqual(response.body.name, member.name);
+        strictEqual(response.body.lastname, member.lastname);
       }
     );
   });
@@ -230,7 +230,7 @@ describe('MemberController', () => {
     it('should update the member in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Member 2 (version 2)'
+          lastname: 'Member 2 (version 2)'
         },
         params: {
           memberId: memberWithAdditionalProps.id
@@ -252,16 +252,16 @@ describe('MemberController', () => {
         throw new Error();
       }
 
-      strictEqual(member.name, 'Member 2 (version 2)');
+      strictEqual(member.lastname, 'Member 2 (version 2)');
 
       strictEqual(response.body.id, member.id);
-      strictEqual(response.body.name, member.name);
+      strictEqual(response.body.lastname, member.lastname);
     });
 
     it('should not update the other members.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Member 2 (version 2)'
+          lastname: 'Member 2 (version 2)'
         },
         params: {
           memberId: memberWithAdditionalProps.id
@@ -273,7 +273,7 @@ describe('MemberController', () => {
       if (!member) {
         throw new Error();
       }
-      notStrictEqual(member.name, 'Member 2 (version 2)');
+      notStrictEqual(member.lastname, 'Member 2 (version 2)');
     });
 
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
@@ -304,7 +304,7 @@ describe('MemberController', () => {
     it('should update the member in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Member 2 (version 2)'
+          lastname: 'Member 2 (version 2)'
         },
         params: {
           memberId: memberWithAdditionalProps.id
@@ -326,16 +326,16 @@ describe('MemberController', () => {
         throw new Error();
       }
 
-      strictEqual(member.name, 'Member 2 (version 2)');
+      strictEqual(member.lastname, 'Member 2 (version 2)');
 
       strictEqual(response.body.id, member.id);
-      strictEqual(response.body.name, member.name);
+      strictEqual(response.body.lastname, member.lastname);
     });
 
     it('should not update the other members.', async () => {
       const ctx = new Context({
         body: {
-          name: 'Member 2 (version 2)'
+          lastname: 'Member 2 (version 2)'
         },
         params: {
           memberId: memberWithAdditionalProps.id
@@ -348,7 +348,7 @@ describe('MemberController', () => {
         throw new Error();
       }
 
-      notStrictEqual(member.name, 'Member 2 (version 2)');
+      notStrictEqual(member.lastname, 'Member 2 (version 2)');
     });
 
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {

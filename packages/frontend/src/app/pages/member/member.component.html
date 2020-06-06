@@ -1,5 +1,5 @@
-<div id="page-member">
-  <div id="page-member-header">
+<div id="member">
+  <div id="header">
     <h2 i18n="member|Header@@mem-listofallmember">List of all member</h2>
     <button
       mat-mini-fab
@@ -11,7 +11,7 @@
     </button>
   </div>
 
-  <div id="page-member-main-content">
+  <div class="content">
     <div>
       <mat-form-field>
         <mat-label i18n="member|Filter@@mem-filter">Filter</mat-label>
@@ -73,28 +73,28 @@
         <td mat-cell *matCellDef="let element">{{ element.id }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="firstname">
         <th
           mat-header-cell
           *matHeaderCellDef
           mat-sort-header
-          i18n="member|Name@@mem-name"
+          i18n="member|Firstname@@mem-firstname"
         >
-          Name
+          Firstname
         </th>
-        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.firstname }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="surname">
+      <ng-container matColumnDef="lastname">
         <th
           mat-header-cell
           *matHeaderCellDef
           mat-sort-header
-          i18n="member|Surname@@mem-surname"
+          i18n="member|Lastname@@mem-lastname"
         >
-          Surname
+          Lastname
         </th>
-        <td mat-cell *matCellDef="let element">{{ element.surname }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.lastname }}</td>
       </ng-container>
 
       <ng-container matColumnDef="sexe">
