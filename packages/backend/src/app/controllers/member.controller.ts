@@ -27,6 +27,7 @@ import { PermissionRequired } from '@foal/typeorm';
 const memberSchema = {
   additionalProperties: false,
   properties: {
+    id: { type: 'number'},
     name: { type: 'string', maxLength: 255 },
     surname: { type: 'string', maxLength: 255 },
     sexe: {
@@ -40,7 +41,7 @@ const memberSchema = {
       maxLength: 255
     },
     financialStatus: {
-      type: 'string',
+      type: 'number',
       enum: [
         FinancialStatus.ALERT,
         FinancialStatus.OK,
@@ -52,7 +53,6 @@ const memberSchema = {
     level: { type: 'number', minimum: 1, nullable: true },
     address: { type: 'number', minimum: 1, nullable: true }
   },
-  required: [ 'name', 'surname', 'email' ],
   type: 'object'
 };
 @ApiUseTag('member')
