@@ -2,7 +2,7 @@
   <mat-card>
     <form [formGroup]="memberForm" (ngSubmit)="save()">
       <mat-card-header>
-        <mat-card-title> 
+        <mat-card-title>
           {{memberForm.value.name}} {{memberForm.value.surname}}
         </mat-card-title>
       </mat-card-header>
@@ -77,7 +77,7 @@
         <br />
 
         <mat-form-field appearance="outline">
-          <mat-label>Club</mat-label>
+          <mat-label i18n="member-add|Club@@mem-club">Club</mat-label>
           <mat-select formControlName="club">
             <mat-option *ngFor="let clubItem of clubs" [value]="clubItem.id">
               {{ clubItem.designation }}
@@ -88,7 +88,7 @@
         <br />
 
         <mat-form-field appearance="outline">
-          <mat-label>Level</mat-label>
+          <mat-label i18n="member-add|Level@@mem-level">Level</mat-label>
           <mat-select formControlName="level">
             <mat-option *ngFor="let levelItem of levels" [value]="levelItem.id">
               {{ levelItem.name }}
@@ -96,6 +96,16 @@
           </mat-select>
         </mat-form-field>
       </mat-card-content>
+
+      <mat-form-field appearance="outline">
+        <mat-label i18n="member-add|Street@@mem-street">Street</mat-label>
+        <input
+            matInput
+            placeholder="street"
+            i18n-placeholder="member-add|Street@@mem-street"
+            formControlName="street"
+          />
+      </mat-form-field>
 
       <mat-card-actions>
         <button
