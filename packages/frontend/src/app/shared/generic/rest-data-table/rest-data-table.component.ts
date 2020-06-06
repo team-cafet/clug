@@ -9,32 +9,7 @@ import { RESTService } from 'src/app/core/services/rest.service';
 
 @Component({
   selector: 'app-rest-data-table',
-  template: `
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-      <ng-container [matColumnDef]="tableData" *ngFor="let tableData of objectKeys(resourceColumns)">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{resourceColumns[tableData]}} </th>
-          <td mat-cell *matCellDef="let element; let i=index;"> {{element[tableData]}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let element">
-          <button
-            mat-icon-button
-            [routerLink]="['/', 'app', resourceName, element.id]"
-            color="primary"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button (click)="deleteEle(element)" color="warn">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedCol"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedCol;"></tr>
-    </table>`,
+  templateUrl: './rest-data-table.component.html',
   styles: []
 })
 export class RestDataTableComponent implements OnInit {

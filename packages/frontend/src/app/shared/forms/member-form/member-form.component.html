@@ -1,82 +1,65 @@
-<div>
-  <mat-card>
-    <form [formGroup]="memberForm" (ngSubmit)="save()">
+<div class="memberform">
+  <form>
+    <mat-card>
       <mat-card-header>
-        <mat-card-title> 
-          {{memberForm.value.name}} {{memberForm.value.surname}}
+        <mat-card-title>
+          {{ memberForm.value.name }} {{ memberForm.value.surname }}
         </mat-card-title>
       </mat-card-header>
 
       <mat-card-content>
-        <mat-form-field appearance="outline">
-          <mat-label></mat-label>
-          <input
-            matInput
-            placeholder="name"
-            i18n-placeholder="member-add|Name@@mem-name"
-            formControlName="name"
-          />
-        </mat-form-field>
+        <p>
+          <mat-form-field>
+            <mat-label i18n="member-add|Sexe@@mem-sexe">Sexe</mat-label>
+            <mat-select [(value)]="member.sexe">
+              <mat-option *ngFor="let sexe of SEXE_LABEL" [value]="sexe">
+                {{ displaySexe(sexe) }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
 
-        <br />
+        <p>
+          <mat-form-field>
+            <mat-label i18n="member-add|Birthdate@@mem-birthdate"
+              >Birthdate</mat-label
+            >
+            <input
+              matInput
+              placeholder="Birthdate"
+              type="date"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="member.birthdate"
+            />
+          </mat-form-field>
+        </p>
 
-        <mat-form-field appearance="outline">
-          <mat-label></mat-label>
-          <input
-            matInput
-            placeholder="surname"
-            i18n-placeholder="member-add|Surname@@mem-surname"
-            formControlName="surname"
-          />
-        </mat-form-field>
+        <p>
+          <mat-form-field>
+            <mat-label i18n="member-add|Phone@@mem-phone">Phone</mat-label>
+            <input
+              matInput
+              placeholder="Phone"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="member.phone"
+            />
+          </mat-form-field>
+        </p>
 
-        <br>
+        <p>
+          <mat-form-field>
+            <mat-label i18n="member-add|Email@@mem-email">Email</mat-label>
+            <input
+              matInput
+              placeholder="Email"
+              type="email"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="member.email"
+            />
+          </mat-form-field>
+        </p>
 
-        <mat-form-field appearance="outline">
-          <mat-label i18n="member-add|Sexe@@mem-sexe">Sexe</mat-label>
-          <mat-select formControlName="sexe">
-            <mat-option *ngFor="let sexeItem of SEXE_LABEL" [value]="sexeItem">
-              {{ displaySexe(sexeItem) }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <br />
-
-        <mat-form-field appearance="outline">
-          <mat-label i18n="member-add|Birthdate@@mem-birthdate"
-            >Birthdate</mat-label
-          >
-          <input
-            matInput
-            placeholder="Birthdate"
-            type="date"
-            formControlName="birthdate"
-          />
-        </mat-form-field>
-
-        <br />
-
-        <mat-form-field appearance="outline">
-          <mat-label i18n="member-add|Phone@@mem-phone">Phone</mat-label>
-          <input matInput placeholder="Phone" formControlName="phone" />
-        </mat-form-field>
-
-        <br />
-
-        <mat-form-field appearance="outline">
-          <mat-label i18n="member-add|Email@@mem-email">Email</mat-label>
-          <input
-            matInput
-            placeholder="Email"
-            type="email"
-            formControlName="email"
-          />
-        </mat-form-field>
-
-        <br />
-
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Club</mat-label>
           <mat-select formControlName="club">
             <mat-option *ngFor="let clubItem of clubs" [value]="clubItem.id">
@@ -107,6 +90,6 @@
           Save
         </button>
       </mat-card-actions>
-    </form>
-  </mat-card>
+    </mat-card>
+  </form>
 </div>
