@@ -5,6 +5,6 @@ import { RESTService } from './rest.service';
 @Injectable()
 export class AddressService extends RESTService {
   constructor(apiService: ApiService) {
-    super('member/', apiService);
+    super('address/', apiService);
   }
 }

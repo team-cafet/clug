@@ -5,3 +5,4 @@ export { ClubController } from './club.controller';
 export { MembershipController } from './membership.controller';
 export { LevelController } from './level.controller';
 export { StatisticController } from './statistic.controller';
+export { AddressController } from './address.controller';

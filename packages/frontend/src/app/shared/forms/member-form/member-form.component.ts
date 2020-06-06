@@ -86,9 +86,9 @@ export class MemberFormComponent implements OnInit, OnChanges {
     const cleanedMember = cleanObjectForSending(this.memberForm.value);
     try {
       if (this.member.id) {
-        this.member.address = await this.memberSrv.saveOne({
-          id: this.member.id,
-          ...cleanedMember
+        this.member.address = await this.addressSrv.saveOne({
+          id: this.member.address.id,
+          ...this.addressForm.value
         });
         this.member = await this.memberSrv.saveOne({
           id: this.member.id,
