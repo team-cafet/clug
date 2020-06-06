@@ -5,36 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-level-form',
-  template: `
-  <div>
-    <mat-card>
-      <form [formGroup]="levelForm" (ngSubmit)="save()">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input
-            matInput
-            formControlName="name"
-          />
-        </mat-form-field>
-
-        <br>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Description</mat-label>
-          <textarea
-            matInput
-            formControlName="description"
-          ></textarea>
-        </mat-form-field>
-
-        <mat-card-actions>
-          <button mat-button type="submit" [disabled]="!levelForm.valid" color="primary">
-            Save
-          </button>
-        </mat-card-actions>
-      </form>
-    </mat-card>
-  </div>`,
+  templateUrl: './level-form.component.html',
   styleUrls: [ './level-form.component.scss' ]
 })
 export class LevelFormComponent implements OnInit {

@@ -48,9 +48,9 @@ const memberSchema = {
       ],
       maxLength: 255
     },
-    club: { type: 'number', minimum: 1, nullable: false },
-    level: { type: 'number', minimum: 1, nullable: false },
-    address: { type: 'number', minimum: 1, nullable: false }
+    club: { type: 'number', minimum: 1, nullable: true },
+    level: { type: 'number', minimum: 1, nullable: true },
+    address: { type: 'number', minimum: 1, nullable: true }
   },
   required: [ 'name', 'surname', 'email' ],
   type: 'object'

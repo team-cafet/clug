@@ -5,34 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-club-form',
-  template: ` <div>
-    <mat-card>
-      <form [formGroup]="clubForm" (ngSubmit)="save()">
-        <mat-form-field appearance="outline">
-          <mat-label>Designation</mat-label>
-          <input matInput formControlName="designation" />
-        </mat-form-field>
-
-        <br />
-
-        <mat-form-field appearance="outline">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description"></textarea>
-        </mat-form-field>
-
-        <mat-card-actions>
-          <button
-            mat-button
-            [disabled]="!clubForm.valid"
-            type="submit"
-            color="primary"
-          >
-            Save
-          </button>
-        </mat-card-actions>
-      </form>
-    </mat-card>
-  </div>`,
+  templateUrl: './club-form.component.html',
   styleUrls: [ './club-form.component.scss' ]
 })
 export class ClubFormComponent implements OnInit {
