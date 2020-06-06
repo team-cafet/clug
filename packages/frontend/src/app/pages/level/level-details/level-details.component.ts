@@ -41,10 +41,15 @@ export class LevelDetailsComponent implements OnInit {
   }
 
   onRestDataTableReady() {
-    this.restDataTableMembersComponent.filter(data => this.filterMemberByClub(data));
+    this.restDataTableMembersComponent.filter(data => this.filterMemberByLevel(data));
   }
 
-  private filterMemberByClub(members: any[]) {
+  /**
+   * Filter all member passed in param by current
+   * Level id
+   * @param members an array of members to filter
+   */
+  private filterMemberByLevel(members: any[]) {
     const filteredMembers = members.filter(
       member => member.level?.id === this.ID_LEVEL
     );

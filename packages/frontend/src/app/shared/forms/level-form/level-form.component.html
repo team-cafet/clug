@@ -1,27 +1,26 @@
 <div class="levelform">
-  <form>
-    <mat-card class="club-card">
-      <mat-form-field class="full-width">
+  <mat-card>
+    <form [formGroup]="levelForm" (ngSubmit)="save()">
+      <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
         <input
           matInput
-          [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="level.name"
+          formControlName="name"
         />
       </mat-form-field>
-      <mat-form-field class="full-width">
+      <br>
+      <mat-form-field appearance="outline">
         <mat-label>Description</mat-label>
         <textarea
           matInput
-          [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="level.description"
+          formControlName="description"
         ></textarea>
       </mat-form-field>
       <mat-card-actions>
-        <button mat-button type="button" color="primary" (click)="save()">
+        <button mat-button type="submit" [disabled]="!levelForm.valid" color="primary">
           Save
         </button>
       </mat-card-actions>
-    </mat-card>
-  </form>
+    </form>
+  </mat-card>
 </div>

@@ -1,7 +1,7 @@
 <div class="clubform">
-  <form>
+  <form [formGroup]="clubForm" (ngSubmit)="save()">
     <mat-card class="club-card">
-      <mat-form-field class="full-width">
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>Designation</mat-label>
         <input matInput formControlName="designation" />
       </mat-form-field>
