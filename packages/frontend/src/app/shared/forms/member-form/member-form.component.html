@@ -3,7 +3,7 @@
     <form [formGroup]="memberForm" (ngSubmit)="save()">
       <mat-card-header>
         <mat-card-title>
-          {{memberForm.value.firstname}} {{memberForm.value.lastname}}
+          {{ memberForm.value.firstname }} {{ memberForm.value.lastname }}
         </mat-card-title>
       </mat-card-header>
 
@@ -30,7 +30,7 @@
           />
         </mat-form-field>
 
-        <br>
+        <br />
 
         <mat-form-field appearance="outline">
           <mat-label i18n="member-add|Sexe@@mem-sexe">Sexe</mat-label>
@@ -97,15 +97,46 @@
         </mat-form-field>
       </mat-card-content>
 
-      <mat-form-field appearance="outline">
-        <mat-label i18n="member-add|Street@@mem-street">Street</mat-label>
-        <input
+      <form [formGroup]="addressForm">
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|Street@@mem-street">Street</mat-label>
+          <input
             matInput
             placeholder="street"
             i18n-placeholder="member-add|Street@@mem-street"
             formControlName="street"
           />
-      </mat-form-field>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|StreetNumber@@mem-streetNumber"
+            >Street Number</mat-label
+          >
+          <input
+            matInput
+            placeholder="street number"
+            i18n-placeholder="member-add|StreetNumber@@mem-streetNumber"
+            formControlName="streetNumber"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|City@@mem-city">City</mat-label>
+          <input
+            matInput
+            placeholder="city"
+            i18n-placeholder="member-add|City@@mem-city"
+            formControlName="city"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|Country@@mem-country">Country</mat-label>
+          <input
+            matInput
+            placeholder="country"
+            i18n-placeholder="member-add|Country@@mem-country"
+            formControlName="country"
+          />
+        </mat-form-field>
+      </form>
 
       <mat-card-actions>
         <button

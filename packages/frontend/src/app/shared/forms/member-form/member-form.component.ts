@@ -10,7 +10,8 @@ import { Member, Sexe, displaySexe, Club, Level } from 'src/app/core/models';
 import {
   MemberService,
   ClubService,
-  LevelService
+  LevelService,
+  AddressService
 } from 'src/app/core/services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { cleanObjectForSending } from 'src/app/core/functions';
@@ -25,6 +26,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
   @Output() saved = new EventEmitter<Member>();
 
   memberForm: FormGroup;
+  addressForm: FormGroup;
 
   SEXE_LABEL = [ Sexe.FEMALE, Sexe.MALE, Sexe.NON_BINARY ];
   displaySexe = displaySexe;
@@ -33,6 +35,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
 
   constructor(
     private readonly memberSrv: MemberService,
+    private readonly addressSrv: AddressService,
     private readonly clubSrv: ClubService,
     private readonly levelSrv: LevelService,
     private readonly fb: FormBuilder
@@ -51,8 +54,14 @@ export class MemberFormComponent implements OnInit, OnChanges {
       phone: [ this.member.phone ],
       email: [ this.member.email, [ Validators.required ] ],
       club: [ this.member.club.id ],
-      level: [ this.member.level.id ],
-      street: [ this.member.firstname ]
+      level: [ this.member.level.id ]
+    });
+    this.addressForm = this.fb.group({
+      street: [ this.member.address.street ],
+      streetNumber: [ this.member.address.streetNumber ],
+      city: [ this.member.address.city ],
+      postalCode: [ this.member.address.postalCode ],
+      country: [ this.member.address.country ]
     });
 
     [ this.clubs, this.levels ] = await Promise.all([
@@ -77,11 +86,17 @@ export class MemberFormComponent implements OnInit, OnChanges {
     const cleanedMember = cleanObjectForSending(this.memberForm.value);
     try {
       if (this.member.id) {
-        this.member = await this.memberSrv.saveOne({ id: this.member.id, ...cleanedMember });
+        this.member.address = await this.memberSrv.saveOne({
+          id: this.member.id,
+          ...cleanedMember
+        });
+        this.member = await this.memberSrv.saveOne({
+          id: this.member.id,
+          ...cleanedMember
+        });
       } else {
         this.member = await this.memberSrv.addOne(cleanedMember);
       }
-
       this.saved.emit(this.member);
     } catch (error) {
       console.error(error);
