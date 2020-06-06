@@ -4,8 +4,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
-  CreateDateColumn,,
-  UpdateDateColumn
+  CreateDateColumn,
+  UpdateDateColumn,
   DeleteDateColumn
 } from 'typeorm';
 import { Member } from './member.entity';
