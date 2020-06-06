@@ -3,7 +3,10 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  ManyToOne
+  ManyToOne,
+  CreateDateColumn,,
+  UpdateDateColumn
+  DeleteDateColumn
 } from 'typeorm';
 import { Member } from './member.entity';
 import { MembershipPlan } from './membership-plan.entity';
@@ -32,4 +35,13 @@ export class Membership {
     { nullable: false }
   )
   membershipPlan: MembershipPlan;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deletedAt' })
+  deletedAt: Date;
 }

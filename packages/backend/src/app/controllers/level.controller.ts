@@ -133,7 +133,7 @@ export class LevelController {
       return new HttpResponseNotFound();
     }
 
-    await getRepository(Level).delete(ctx.request.params.levelId);
+    await getRepository(Level).softDelete(ctx.request.params.levelId);
 
     return new HttpResponseNoContent();
   }

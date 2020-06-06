@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { Membership } from './membership.entity';
 
 export enum TypeOfFacturation {
@@ -12,7 +12,6 @@ export enum TypeOfFacturation {
 
 @Entity()
 export class MembershipPlan {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,10 +27,17 @@ export class MembershipPlan {
   @Column({ type: 'enum', enum: TypeOfFacturation })
   typeOfFacturation: TypeOfFacturation;
 
-  @OneToMany(
-    type => Membership,
-    membership => membership.member,
-    { nullable: true }
-  )
+  @OneToMany(type => Membership, membership => membership.member, {
+    nullable: true
+  })
   memberships: Membership;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deletedAt' })
+  deletedAt: Date;
 }
