@@ -1,9 +1,13 @@
 <div class="restview">
-  <div>
+  <div class="actionline">
+    <mat-form-field class="example-full-width" >
+      <mat-label>Filter</mat-label>
+      <input matInput placeholder="Filter..." value="">
+    </mat-form-field>
     <button
+      class="button button--action"
       mat-mini-fab
-      color="primary"
-      color="primary"
+      color="accent"
       [routerLink]="['/', 'app', resourceName, 'add']"
     >
       <mat-icon>add</mat-icon>
@@ -11,6 +15,7 @@
   </div>
   <div>
     <app-rest-data-table
+      class="datatable"
       [resourceColumns]="resourceColumns"
       [resourceName]="resourceName"
       [resourceAPI]="resourceName"
