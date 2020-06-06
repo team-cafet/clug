@@ -116,6 +116,7 @@
             required
             matInput
             placeholder="street number"
+            type="number"
             i18n-placeholder="member-add|StreetNumber@@mem-streetNumber"
             formControlName="streetNumber"
           />
@@ -128,6 +129,19 @@
             placeholder="city"
             i18n-placeholder="member-add|City@@mem-city"
             formControlName="city"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|PostalCode@@mem-postalCode"
+            >Postal Code</mat-label
+          >
+          <input
+            required
+            matInput
+            placeholder="postal code"
+            type="number"
+            i18n-placeholder="member-add|PostalCode@@mem-postalCode"
+            formControlName="postalCode"
           />
         </mat-form-field>
         <mat-form-field appearance="outline">

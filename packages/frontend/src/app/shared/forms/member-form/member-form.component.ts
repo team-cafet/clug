@@ -6,7 +6,7 @@ import {
   EventEmitter,
   OnChanges
 } from '@angular/core';
-import { Member, Sexe, displaySexe, Club, Level } from 'src/app/core/models';
+import { Member, Sexe, displaySexe, Club, Level, Address } from 'src/app/core/models';
 import {
   MemberService,
   ClubService,
@@ -80,21 +80,40 @@ export class MemberFormComponent implements OnInit, OnChanges {
     if (!currentMemberToCheck.level || !currentMemberToCheck.level.id) {
       this.member.level = { id: undefined, name: '' };
     }
+
+    if (!currentMemberToCheck.address || !currentMemberToCheck.address.id) {
+      this.member.address = {
+        id: undefined,
+        city: undefined,
+        postalCode: undefined,
+        street: undefined,
+        streetNumber: undefined,
+        country: undefined
+      };
+    }
   }
 
   async save() {
     const cleanedMember = cleanObjectForSending(this.memberForm.value);
+    const address: Address = this.addressForm.value; // object needs a clean function ?
+
+    // TODO: proper validation
+    if (!address.city || !address.country || !address.streetNumber || !address.street || !address.postalCode) {
+      return;
+    }
     try {
       if (this.member.id) {
         this.member.address = await this.addressSrv.saveOne({
           id: this.member.address.id,
-          ...this.addressForm.value
+          ...address
         });
         this.member = await this.memberSrv.saveOne({
           id: this.member.id,
           ...cleanedMember
         });
       } else {
+        this.member.address = await this.addressSrv.addOne(address);
+        cleanedMember.address = this.member.address.id;
         this.member = await this.memberSrv.addOne(cleanedMember);
       }
       this.saved.emit(this.member);

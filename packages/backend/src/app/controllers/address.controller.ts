@@ -29,6 +29,7 @@ const addressSchema = {
     street: { type: 'string', maxLength: 255 },
     streetNumber: { type: 'number', maxLength: 10000 },
     city: { type: 'string', maxLength: 255 },
+    postalCode: { type: 'number', maxLength: 10000 },
     country: { type: 'string', maxLength: 255 }
   },
   type: 'object'
