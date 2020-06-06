@@ -151,7 +151,7 @@ export class MembershipPlanController {
       return new HttpResponseNotFound();
     }
 
-    await getRepository(MembershipPlan).delete(ctx.request.params.membershipPlanId);
+    await getRepository(MembershipPlan).softDelete(ctx.request.params.membershipPlanId);
 
     return new HttpResponseNoContent();
   }

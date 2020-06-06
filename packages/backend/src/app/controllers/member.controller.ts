@@ -199,7 +199,7 @@ export class MemberController {
       return new HttpResponseNotFound();
     }
 
-    await getRepository(Member).delete(ctx.request.params.memberId);
+    await getRepository(Member).softDelete(ctx.request.params.memberId);
 
     return new HttpResponseNoContent();
   }
