@@ -36,8 +36,7 @@ const memberSchema = {
     email: { type: 'string', format: 'email', maxLength: 255 },
     phone: { type: 'string', maxLength: 50 },
     birthdate: {
-      type: 'string',
-      format: 'date',
+      type: [ 'string' ],
       maxLength: 255
     },
     financialStatus: {
@@ -49,9 +48,9 @@ const memberSchema = {
       ],
       maxLength: 255
     },
-    club: { type: 'object' },
-    level: { type: 'object' },
-    address: { type: 'object' }
+    club: { type: 'number', minimum: 1, nullable: true },
+    level: { type: 'number', minimum: 1, nullable: true },
+    address: { type: 'number', minimum: 1, nullable: true }
   },
   required: [ 'name', 'surname', 'email' ],
   type: 'object'
@@ -79,7 +78,7 @@ export class MemberController {
     const members = await getRepository(Member).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take,
-      relations: [ 'club' ]
+      relations: [ 'club', 'level' ]
     });
     return new HttpResponseOK(members);
   }

@@ -3,27 +3,7 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          <mat-form-field>
-            <mat-label></mat-label>
-            <input
-              matInput
-              placeholder="name"
-              [ngModelOptions]="{ standalone: true }"
-              i18n-placeholder="member-add|Name@@mem-name"
-              [(ngModel)]="member.name"
-            />
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label></mat-label>
-            <input
-              matInput
-              placeholder="surname"
-              i18n-placeholder="member-add|Surname@@mem-surname"
-              [ngModelOptions]="{ standalone: true }"
-              [(ngModel)]="member.surname"
-            />
-          </mat-form-field>
+          {{ memberForm.value.name }} {{ memberForm.value.surname }}
         </mat-card-title>
       </mat-card-header>
 
@@ -81,26 +61,32 @@
 
         <mat-form-field>
           <mat-label>Club</mat-label>
-          <mat-select [(ngModel)]="member.club.id" [ngModelOptions]="{ standalone: true }">
-            <mat-option *ngFor="let club of clubs" [value]="club.id">
-              {{ club.designation }}
+          <mat-select formControlName="club">
+            <mat-option *ngFor="let clubItem of clubs" [value]="clubItem.id">
+              {{ clubItem.designation }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <br />
+
+        <mat-form-field appearance="outline">
           <mat-label>Level</mat-label>
-          <mat-select [(ngModel)]="member.level.id" [ngModelOptions]="{ standalone: true }">
-            <mat-option *ngFor="let level of levels" [value]="level.id">
-              {{ level.name }}
+          <mat-select formControlName="level">
+            <mat-option *ngFor="let levelItem of levels" [value]="levelItem.id">
+              {{ levelItem.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-
       </mat-card-content>
 
       <mat-card-actions>
-        <button mat-button type="button" color="primary" (click)="save()">
+        <button
+          mat-button
+          type="submit"
+          [disabled]="!memberForm.valid"
+          color="primary"
+        >
           Save
         </button>
       </mat-card-actions>
