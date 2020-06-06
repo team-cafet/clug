@@ -1,12 +1,12 @@
-<div class="clubform">
+<div class="levelform">
   <form>
     <mat-card class="club-card">
       <mat-form-field class="full-width">
-        <mat-label>Designation</mat-label>
+        <mat-label>Name</mat-label>
         <input
           matInput
           [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="club.designation"
+          [(ngModel)]="level.name"
         />
       </mat-form-field>
       <mat-form-field class="full-width">
@@ -14,7 +14,7 @@
         <textarea
           matInput
           [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="club.description"
+          [(ngModel)]="level.description"
         ></textarea>
       </mat-form-field>
       <mat-card-actions>
