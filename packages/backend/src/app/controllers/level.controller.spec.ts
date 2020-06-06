@@ -28,7 +28,8 @@ describe('LevelController', () => {
     controller = createController(LevelController);
 
     const repository = getRepository(Level);
-    await repository.clear();
+    await repository.query(`TRUNCATE ${repository.metadata.tableName} CASCADE`);
+
     [ level1, level2 ] = await repository.save([
       {
         name: 'Level 1'

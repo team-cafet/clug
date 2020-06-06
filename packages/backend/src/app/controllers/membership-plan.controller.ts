@@ -52,6 +52,9 @@ export class MembershipPlanController {
     type: 'object'
   })
   async findMembershipPlans(ctx: Context) {
+    ctx.request.query.skip = ctx.request.query.skip || 0;
+    ctx.request.query.take = ctx.request.query.take || null;
+
     const membershipPlans = await getRepository(MembershipPlan).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take

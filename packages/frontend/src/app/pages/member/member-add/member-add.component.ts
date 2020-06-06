@@ -3,8 +3,8 @@ import { Member, Sexe, Club } from 'src/app/core/models';
 import { Router } from '@angular/router';
 
 class NewMember implements Member {
-  name: string;
-  surname: string;
+  firstname: string;
+  lastname: string;
   sexe: Sexe;
   email: string;
   phone: string;

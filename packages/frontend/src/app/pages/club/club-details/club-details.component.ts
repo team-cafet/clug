@@ -15,7 +15,7 @@ export class ClubDetailsComponent implements OnInit {
   private readonly restDataTableMembersComponent: RestDataTableComponent;
 
   club: Club;
-  columnsMember = { name: 'Name', surname: 'Surname' };
+  columnsMember = { firstname: 'Firstname', lastname: 'Lastname' };
 
   private readonly ID_CLUB: number;
 

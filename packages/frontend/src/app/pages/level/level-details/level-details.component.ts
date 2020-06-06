@@ -15,7 +15,7 @@ export class LevelDetailsComponent implements OnInit {
   private readonly restDataTableMembersComponent: RestDataTableComponent;
 
   level: Level;
-  columnsMember = { name: 'Name', surname: 'Surname' };
+  columnsMember = { firstname: 'Firstname', lastname: 'Lastname' };
 
   private readonly ID_LEVEL: number;
 
