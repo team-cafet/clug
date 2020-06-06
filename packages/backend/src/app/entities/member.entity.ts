@@ -9,7 +9,8 @@ import {
   ManyToOne,
   OneToOne,
   JoinColumn,
-  OneToMany
+  OneToMany,
+  DeleteDateColumn
 } from 'typeorm';
 import { Club } from './club.entity';
 import { Membership } from './membership.entity';
@@ -80,7 +81,7 @@ export class Member extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: 'date', nullable: true })
+  @DeleteDateColumn({ name: 'deletedAt' })
   deletedAt: Date;
 
   @ManyToOne(
