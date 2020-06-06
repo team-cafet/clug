@@ -27,7 +27,7 @@ import { PermissionRequired } from '@foal/typeorm';
 const memberSchema = {
   additionalProperties: false,
   properties: {
-    id: { type: 'number'},
+    id: { type: 'number' },
     name: { type: 'string', maxLength: 255 },
     surname: { type: 'string', maxLength: 255 },
     sexe: {
@@ -199,7 +199,7 @@ export class MemberController {
       return new HttpResponseNotFound();
     }
 
-    await getRepository(Member).delete(ctx.request.params.memberId);
+    await getRepository(Member).softDelete(ctx.request.params.memberId);
 
     return new HttpResponseNoContent();
   }

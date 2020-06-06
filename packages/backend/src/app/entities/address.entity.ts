@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Column, Entity, PrimaryGeneratedColumn, OneToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToOne, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { Member } from './member.entity';
 
 @Entity()
@@ -32,6 +32,6 @@ export class Address {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: 'date', nullable: true })
+  @DeleteDateColumn({ name: 'deletedAt' })
   deletedAt: Date;
 }
