@@ -34,11 +34,15 @@ $clug-theme: map_merge($clug-theme, (background: $background));
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($clug-theme);
-
+$test: #0000ff;
 /* You can add global styles to this file, and also import other style files */
-
+html {
+    --clug-primary: #{map-get($clug-custom-primary, 500)};
+    --clug-secondary: #{map-get($clug-custom-secondary, 500)};
+}
 html, body { height: 100%; }
 body { 
     margin: 0; 
     font-family: "Roboto", sans-serif;
-    color: $clug-dark-text; }
+    color: $clug-dark-text;
+     }
