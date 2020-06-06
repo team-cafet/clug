@@ -94,7 +94,14 @@ const createMemberMock = async () => {
     {
       firstname: 'Geralt',
       lastname: 'Of Rivia',
-      email: 'geralt@rivia.com'
+      email: 'geralt@rivia.com',
+      address: {
+        street: 'chemin de la chèvre bleue',
+        streetNumber: 1,
+        city: 'Vercorin',
+        postalCode: 888,
+        country: 'Switzerland'
+      }
     },
     {
       firstname: 'Yennefer',

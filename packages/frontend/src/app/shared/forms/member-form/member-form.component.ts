@@ -52,7 +52,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
       email: [ this.member.email, [ Validators.required ] ],
       club: [ this.member.club.id ],
       level: [ this.member.level.id ],
-      street: [ this.member.address.street ]
+      street: [ this.member.firstname ]
     });
 
     [ this.clubs, this.levels ] = await Promise.all([
