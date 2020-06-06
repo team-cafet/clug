@@ -1,4 +1,6 @@
 
+@import 'theme.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap');
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
@@ -12,21 +14,31 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$frontend-primary: mat-palette($mat-indigo);
-$frontend-accent: mat-palette($mat-pink, A200, A100, A400);
+$clug-primary: mat-palette($clug-custom-primary);
+$clug-accent: mat-palette($clug-custom-secondary);
 
 // The warn palette is optional (defaults to red).
-$frontend-warn: mat-palette($mat-red);
+$clug-warn: mat-palette($clug-custom-warn);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$frontend-theme: mat-light-theme($frontend-primary, $frontend-accent, $frontend-warn);
+$clug-theme: mat-light-theme($clug-primary, $clug-accent, $clug-warn);
+
+// Insert custom background color
+$background: map-get($clug-theme, background);
+$background: map_merge($background, (background: $clug-background-color));
+
+$clug-theme: map_merge($clug-theme, (foreground: $text));
+$clug-theme: map_merge($clug-theme, (background: $background));
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($frontend-theme);
+@include angular-material-theme($clug-theme);
 
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0; 
+    font-family: "Roboto", sans-serif;
+    color: $clug-dark-text; }
