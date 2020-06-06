@@ -40,8 +40,8 @@ describe('MembershipController', () => {
     await getRepository(MembershipPlan).query(`TRUNCATE ${getRepository(MembershipPlan).metadata.tableName} CASCADE`);
 
     simpleMember = await getRepository(Member).save({
-      name: 'David',
-      surname: 'Jones',
+      firstname: 'David',
+      lastname: 'Jones',
       email: 'david.jones@flyingdutchman.com'
     });
 

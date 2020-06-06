@@ -37,12 +37,12 @@ export class Member extends BaseEntity {
   @Column({
     length: 254
   })
-  name: string;
+  firstname: string;
 
   @Column({
     length: 254
   })
-  surname: string;
+  lastname: string;
 
   @Column({
     type: 'enum',

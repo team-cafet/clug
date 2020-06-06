@@ -26,8 +26,8 @@ export class MemberComponent implements OnInit {
   displayedColumns: string[] = [
     'select',
     'id',
-    'name',
-    'surname',
+    'firstname',
+    'lastname',
     'sexe',
     'financialStatus',
     'phone',

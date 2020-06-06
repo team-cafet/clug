@@ -27,9 +27,9 @@ import { PermissionRequired } from '@foal/typeorm';
 const memberSchema = {
   additionalProperties: false,
   properties: {
-    id: { type: 'number' },
-    name: { type: 'string', maxLength: 255 },
-    surname: { type: 'string', maxLength: 255 },
+    id: { type: 'number'},
+    firstname: { type: 'string', maxLength: 255 },
+    lastname: { type: 'string', maxLength: 255 },
     sexe: {
       type: 'number',
       enum: [ Sexe.MALE, Sexe.FEMALE, Sexe['NON-BINARY'] ]
