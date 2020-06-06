@@ -12,6 +12,7 @@ import {
   ClubService,
   LevelService
 } from 'src/app/core/services';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { cleanObjectForSending } from 'src/app/core/functions';
 
 @Component({
@@ -23,6 +24,8 @@ export class MemberFormComponent implements OnInit, OnChanges {
   @Input() member: Member;
   @Output() saved = new EventEmitter<Member>();
 
+  memberForm: FormGroup;
+
   SEXE_LABEL = [ Sexe.FEMALE, Sexe.MALE, Sexe.NON_BINARY ];
   displaySexe = displaySexe;
   clubs: Club[];
@@ -31,10 +34,26 @@ export class MemberFormComponent implements OnInit, OnChanges {
   constructor(
     private readonly memberSrv: MemberService,
     private readonly clubSrv: ClubService,
-    private readonly levelSrv: LevelService
+    private readonly levelSrv: LevelService,
+    private readonly fb: FormBuilder
   ) {}
 
   async ngOnInit() {
+    if (!this.member) {
+      throw new Error('MemberFormComponent: member undefined');
+    }
+
+    this.memberForm = this.fb.group({
+      name: [ this.member.name, [ Validators.required ] ],
+      surname: [ this.member.surname, [ Validators.required ] ],
+      sexe: [ this.member.sexe ],
+      birthdate: [ this.member.birthdate ],
+      phone: [ this.member.phone ],
+      email: [ this.member.email, [ Validators.required ] ],
+      club: [ this.member.club.id ],
+      level: [ this.member.level.id ]
+    });
+
     [ this.clubs, this.levels ] = await Promise.all([
       this.clubSrv.getAll(),
       this.levelSrv.getAll()
@@ -54,13 +73,10 @@ export class MemberFormComponent implements OnInit, OnChanges {
   }
 
   async save() {
-    const backupMember = this.member;
+    const cleanedMember = cleanObjectForSending(this.memberForm.value);
     try {
-      const cleanedMember = cleanObjectForSending(this.member);
-      delete this.member.financialStatus;
-
       if (this.member.id) {
-        this.member = await this.memberSrv.saveOne(cleanedMember);
+        this.member = await this.memberSrv.saveOne({ id: this.member.id, ...cleanedMember });
       } else {
         this.member = await this.memberSrv.addOne(cleanedMember);
       }
@@ -68,7 +84,6 @@ export class MemberFormComponent implements OnInit, OnChanges {
       this.saved.emit(this.member);
     } catch (error) {
       console.error(error);
-      this.member = backupMember;
     }
   }
 }
