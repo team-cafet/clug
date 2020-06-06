@@ -28,6 +28,8 @@ export class RestDataTableComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   displayedCol = [];
 
+  displayProgress = true;
+
   private restSrv: RESTService;
   private loadedData: [] | null;
 
@@ -87,6 +89,8 @@ export class RestDataTableComponent implements OnInit {
     if (this.action) {
       this.displayedCol.push('action');
     }
+
+    this.displayProgress = false;
   }
 
 }

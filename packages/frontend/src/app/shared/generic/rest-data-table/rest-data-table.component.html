@@ -1,4 +1,7 @@
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+<mat-spinner mode="indeterminate" *ngIf="displayProgress"></mat-spinner>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="!displayProgress">
+  
   <ng-container
     [matColumnDef]="tableData"
     *ngFor="let tableData of objectKeys(resourceColumns)"
