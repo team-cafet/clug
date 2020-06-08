@@ -1,5 +1,5 @@
 // std
-import { notStrictEqual, ok, strictEqual } from "assert";
+import { notStrictEqual, ok, strictEqual } from 'assert';
 
 // 3p
 import {
@@ -11,15 +11,16 @@ import {
   isHttpResponseNoContent,
   isHttpResponseNotFound,
   isHttpResponseOK
-} from "@foal/core";
-import { createConnection, getConnection, getRepository } from "typeorm";
+} from '@foal/core';
+import { createConnection, getConnection, getRepository } from 'typeorm';
 
 // App
-import { MemberController } from "./member.controller";
-import { Member, Sexe, FinancialStatus } from "../entities/member.entity";
-import { Club, Address } from "../entities";
+import { MemberController } from './member.controller';
+import { Member, Sexe, FinancialStatus } from '../entities/member.entity';
+import { Club, Address } from '../entities';
 
-describe("MemberController", () => {
+// eslint-disable-next-line max-lines-per-function
+describe('MemberController', () => {
   let controller: MemberController;
   let simpleMember: Member;
   let memberWithAdditionalProps: Member;
@@ -40,65 +41,71 @@ describe("MemberController", () => {
     await repository.query(`TRUNCATE ${clubRepo.metadata.tableName} CASCADE`);
     await repository.query(`TRUNCATE ${repository.metadata.tableName} CASCADE`);
 
-    [club] = await clubRepo.save([{ designation: "Club 1" }]);
-    [address] = await addressRepo.save([
-      { street: "chemin de montétan", streetNumber: 1, city: "Lausanne", postalCode:  1004, country: 'Switzerland'}
+    [ club ] = await clubRepo.save([ { designation: 'Club 1' } ]);
+    [ address ] = await addressRepo.save([
+      {
+        street: 'chemin de montétan',
+        streetNumber: 1,
+        city: 'Lausanne',
+        postalCode: 1004,
+        country: 'Switzerland'
+      }
     ]);
 
-    [simpleMember, memberWithAdditionalProps] = await repository.save([
+    [ simpleMember, memberWithAdditionalProps ] = await repository.save([
       {
-        surname: "Geralt",
-        name: "Of Rivia",
-        email: "geralt@rivia.com"
+        firstname: 'Geralt',
+        lastname: 'Of Rivia',
+        email: 'geralt@rivia.com'
       },
       {
-        surname: "Yennefer",
-        name: "Of Vanderberg",
-        email: "yen@vanderberg.com",
+        firstname: 'Yennefer',
+        lastname: 'Of Vanderberg',
+        email: 'yen@vanderberg.com',
         sexe: Sexe.FEMALE,
-        phone: "+01 12 123 45 67",
-        birthdate: "2019-01-12",
+        phone: '+01 12 123 45 67',
+        birthdate: '2019-01-12',
         financialStatus: FinancialStatus.WARNING,
-        club: club,
-        address: address
+        club,
+        address
       }
     ]);
   });
 
   describe('has a "findMembers" method that', () => {
-    it("should handle requests at GET /.", () => {
-      strictEqual(getHttpMethod(MemberController, "findMembers"), "GET");
-      strictEqual(getPath(MemberController, "findMembers"), undefined);
+    it('should handle requests at GET /.', () => {
+      strictEqual(getHttpMethod(MemberController, 'findMembers'), 'GET');
+      strictEqual(getPath(MemberController, 'findMembers'), undefined);
     });
 
-    it("should return an HttpResponseOK object with the member list.", async () => {
+    it('should return an HttpResponseOK object with the member list.', async () => {
       const ctx = new Context({ query: {} });
       const response = await controller.findMembers(ctx);
 
       if (!isHttpResponseOK(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseOK object."
+          'The returned value should be an HttpResponseOK object.'
         );
       }
 
       if (!Array.isArray(response.body)) {
-        throw new Error("The response body should be an array of members.");
+        throw new Error('The response body should be an array of members.');
       }
 
       strictEqual(response.body.length, 2);
-      ok(response.body.find(member => member.name === simpleMember.name));
+      ok(response.body.find(member => member.lastname === simpleMember.lastname));
       ok(
         response.body.find(
-          member => member.name === memberWithAdditionalProps.name
+          member => member.lastname === memberWithAdditionalProps.lastname
         )
       );
     });
 
-    it("should support pagination", async () => {
+    it('should support pagination', async () => {
       const newMemberForPagination = await getRepository(Member).save({
-        name: "Of Cyntra",
-        surname: "Cyrila",
-        email: "cirla@cyntra.com"
+        lastname: 'Of Cyntra',
+        firstname: 'Cyrila',
+        email: 'cirla@cyntra.com'
       });
 
       let ctx = new Context({
@@ -134,12 +141,12 @@ describe("MemberController", () => {
   });
 
   describe('has a "findMemberById" method that', () => {
-    it("should handle requests at GET /:memberId.", () => {
-      strictEqual(getHttpMethod(MemberController, "findMemberById"), "GET");
-      strictEqual(getPath(MemberController, "findMemberById"), "/:memberId");
+    it('should handle requests at GET /:memberId.', () => {
+      strictEqual(getHttpMethod(MemberController, 'findMemberById'), 'GET');
+      strictEqual(getPath(MemberController, 'findMemberById'), '/:memberId');
     });
 
-    it("should return an HttpResponseOK object if the member was found.", async () => {
+    it('should return an HttpResponseOK object if the member was found.', async () => {
       const ctx = new Context({
         params: {
           memberId: memberWithAdditionalProps.id
@@ -149,15 +156,15 @@ describe("MemberController", () => {
 
       if (!isHttpResponseOK(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseOK object."
+          'The returned value should be an HttpResponseOK object.'
         );
       }
 
       strictEqual(response.body.id, memberWithAdditionalProps.id);
-      strictEqual(response.body.name, memberWithAdditionalProps.name);
+      strictEqual(response.body.lastname, memberWithAdditionalProps.lastname);
     });
 
-    it("should return an HttpResponseNotFound object if the member was not found.", async () => {
+    it('should return an HttpResponseNotFound object if the member was not found.', async () => {
       const ctx = new Context({
         params: {
           memberId: -1
@@ -167,63 +174,63 @@ describe("MemberController", () => {
 
       if (!isHttpResponseNotFound(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseNotFound object."
+          'The returned value should be an HttpResponseNotFound object.'
         );
       }
     });
   });
 
   describe('has a "createMember" method that', () => {
-    it("should handle requests at POST /.", () => {
-      strictEqual(getHttpMethod(MemberController, "createMember"), "POST");
-      strictEqual(getPath(MemberController, "createMember"), undefined);
+    it('should handle requests at POST /.', () => {
+      strictEqual(getHttpMethod(MemberController, 'createMember'), 'POST');
+      strictEqual(getPath(MemberController, 'createMember'), undefined);
     });
 
     it(
-      "should create the member in the database and return it through " +
-        "an HttpResponseCreated object.",
+      'should create the member in the database and return it through ' +
+        'an HttpResponseCreated object.',
       async () => {
         const ctx = new Context({
           body: {
-            name: "Of Cyntra",
-            surname: "Cyrila",
-            email: "cirla@cyntra.com"
+            lastname: 'Of Cyntra',
+            firstname: 'Cyrila',
+            email: 'cirla@cyntra.com'
           }
         });
         const response = await controller.createMember(ctx);
 
         if (!isHttpResponseCreated(response)) {
           throw new Error(
-            "The returned value should be an HttpResponseCreated object."
+            'The returned value should be an HttpResponseCreated object.'
           );
         }
 
         const member = await getRepository(Member).findOne({
-          name: "Of Cyntra"
+          lastname: 'Of Cyntra'
         });
 
         if (!member) {
-          throw new Error("No Cyrila Of Cintra was found in the database.");
+          throw new Error('No Cyrila Of Cintra was found in the database.');
         }
 
-        strictEqual(member.name, "Of Cyntra");
+        strictEqual(member.lastname, 'Of Cyntra');
 
         strictEqual(response.body.id, member.id);
-        strictEqual(response.body.name, member.name);
+        strictEqual(response.body.lastname, member.lastname);
       }
     );
   });
 
   describe('has a "modifyMember" method that', () => {
-    it("should handle requests at PATCH /:memberId.", () => {
-      strictEqual(getHttpMethod(MemberController, "modifyMember"), "PATCH");
-      strictEqual(getPath(MemberController, "modifyMember"), "/:memberId");
+    it('should handle requests at PATCH /:memberId.', () => {
+      strictEqual(getHttpMethod(MemberController, 'modifyMember'), 'PATCH');
+      strictEqual(getPath(MemberController, 'modifyMember'), '/:memberId');
     });
 
-    it("should update the member in the database and return it through an HttpResponseOK object.", async () => {
+    it('should update the member in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          name: "Member 2 (version 2)"
+          lastname: 'Member 2 (version 2)'
         },
         params: {
           memberId: memberWithAdditionalProps.id
@@ -233,7 +240,7 @@ describe("MemberController", () => {
 
       if (!isHttpResponseOK(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseOK object."
+          'The returned value should be an HttpResponseOK object.'
         );
       }
 
@@ -245,16 +252,16 @@ describe("MemberController", () => {
         throw new Error();
       }
 
-      strictEqual(member.name, "Member 2 (version 2)");
+      strictEqual(member.lastname, 'Member 2 (version 2)');
 
       strictEqual(response.body.id, member.id);
-      strictEqual(response.body.name, member.name);
+      strictEqual(response.body.lastname, member.lastname);
     });
 
-    it("should not update the other members.", async () => {
+    it('should not update the other members.', async () => {
       const ctx = new Context({
         body: {
-          name: "Member 2 (version 2)"
+          lastname: 'Member 2 (version 2)'
         },
         params: {
           memberId: memberWithAdditionalProps.id
@@ -266,13 +273,13 @@ describe("MemberController", () => {
       if (!member) {
         throw new Error();
       }
-      notStrictEqual(member.name, "Member 2 (version 2)");
+      notStrictEqual(member.lastname, 'Member 2 (version 2)');
     });
 
-    it("should return an HttpResponseNotFound if the object does not exist.", async () => {
+    it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          text: ""
+          text: ''
         },
         params: {
           memberId: -1
@@ -282,22 +289,22 @@ describe("MemberController", () => {
 
       if (!isHttpResponseNotFound(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseNotFound object."
+          'The returned value should be an HttpResponseNotFound object.'
         );
       }
     });
   });
 
   describe('has a "replaceMember" method that', () => {
-    it("should handle requests at PUT /:memberId.", () => {
-      strictEqual(getHttpMethod(MemberController, "replaceMember"), "PUT");
-      strictEqual(getPath(MemberController, "replaceMember"), "/:memberId");
+    it('should handle requests at PUT /:memberId.', () => {
+      strictEqual(getHttpMethod(MemberController, 'replaceMember'), 'PUT');
+      strictEqual(getPath(MemberController, 'replaceMember'), '/:memberId');
     });
 
-    it("should update the member in the database and return it through an HttpResponseOK object.", async () => {
+    it('should update the member in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          name: "Member 2 (version 2)"
+          lastname: 'Member 2 (version 2)'
         },
         params: {
           memberId: memberWithAdditionalProps.id
@@ -307,7 +314,7 @@ describe("MemberController", () => {
 
       if (!isHttpResponseOK(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseOK object."
+          'The returned value should be an HttpResponseOK object.'
         );
       }
 
@@ -319,16 +326,16 @@ describe("MemberController", () => {
         throw new Error();
       }
 
-      strictEqual(member.name, "Member 2 (version 2)");
+      strictEqual(member.lastname, 'Member 2 (version 2)');
 
       strictEqual(response.body.id, member.id);
-      strictEqual(response.body.name, member.name);
+      strictEqual(response.body.lastname, member.lastname);
     });
 
-    it("should not update the other members.", async () => {
+    it('should not update the other members.', async () => {
       const ctx = new Context({
         body: {
-          name: "Member 2 (version 2)"
+          lastname: 'Member 2 (version 2)'
         },
         params: {
           memberId: memberWithAdditionalProps.id
@@ -341,13 +348,13 @@ describe("MemberController", () => {
         throw new Error();
       }
 
-      notStrictEqual(member.name, "Member 2 (version 2)");
+      notStrictEqual(member.lastname, 'Member 2 (version 2)');
     });
 
-    it("should return an HttpResponseNotFound if the object does not exist.", async () => {
+    it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          text: ""
+          text: ''
         },
         params: {
           memberId: -1
@@ -357,19 +364,19 @@ describe("MemberController", () => {
 
       if (!isHttpResponseNotFound(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseNotFound object."
+          'The returned value should be an HttpResponseNotFound object.'
         );
       }
     });
   });
 
   describe('has a "deleteMember" method that', () => {
-    it("should handle requests at DELETE /:memberId.", () => {
-      strictEqual(getHttpMethod(MemberController, "deleteMember"), "DELETE");
-      strictEqual(getPath(MemberController, "deleteMember"), "/:memberId");
+    it('should handle requests at DELETE /:memberId.', () => {
+      strictEqual(getHttpMethod(MemberController, 'deleteMember'), 'DELETE');
+      strictEqual(getPath(MemberController, 'deleteMember'), '/:memberId');
     });
 
-    it("should delete the member and return an HttpResponseNoContent object.", async () => {
+    it('should delete the member and return an HttpResponseNoContent object.', async () => {
       const ctx = new Context({
         params: {
           memberId: memberWithAdditionalProps.id
@@ -379,7 +386,7 @@ describe("MemberController", () => {
 
       if (!isHttpResponseNoContent(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseNoContent object."
+          'The returned value should be an HttpResponseNoContent object.'
         );
       }
 
@@ -390,7 +397,7 @@ describe("MemberController", () => {
       strictEqual(member, undefined);
     });
 
-    it("should not delete the other members.", async () => {
+    it('should not delete the other members.', async () => {
       const ctx = new Context({
         params: {
           memberId: memberWithAdditionalProps.id
@@ -400,7 +407,7 @@ describe("MemberController", () => {
 
       if (!isHttpResponseNoContent(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseNoContent object."
+          'The returned value should be an HttpResponseNoContent object.'
         );
       }
 
@@ -409,7 +416,7 @@ describe("MemberController", () => {
       notStrictEqual(member, undefined);
     });
 
-    it("should return an HttpResponseNotFound if the member was not fond.", async () => {
+    it('should return an HttpResponseNotFound if the member was not fond.', async () => {
       const ctx = new Context({
         params: {
           memberId: -1
@@ -419,7 +426,7 @@ describe("MemberController", () => {
 
       if (!isHttpResponseNotFound(response)) {
         throw new Error(
-          "The returned value should be an HttpResponseNotFound object."
+          'The returned value should be an HttpResponseNotFound object.'
         );
       }
     });

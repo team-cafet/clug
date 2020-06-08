@@ -1,0 +1,17 @@
+.login {
+  width: 40%;
+  margin: 0 auto;
+  .form {
+    min-width: 150px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  button{ //BEM friendly ??
+    margin-top: 5%;
+    width: 80%;
+    margin-left: 10%;
+  }
+}
+.full-width-input {
+  width: 100%;
+}

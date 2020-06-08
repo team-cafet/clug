@@ -1,0 +1,9 @@
+<div class="dashboard">
+  <div class="chart">
+    <canvas id="membersCountChart" responsive="true"></canvas>
+  </div>
+  <div class="statistics" *ngIf="this.statistics">
+    <mat-card>  <mat-card-title>Membre le plus âgé</mat-card-title>  {{ this.statistics.olderMember.lastname }}{{ this.statistics.olderMember.firstname }}</mat-card>
+    <mat-card><mat-card-title>Membre le plus jeune</mat-card-title>{{ this.statistics.youngestMember.lastname }}{{ this.statistics.youngestMember.firstname }}</mat-card>
+  </div>
+</div>

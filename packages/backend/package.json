@@ -32,20 +32,19 @@
     "node": ">=8"
   },
   "dependencies": {
-    "@foal/core": "^1.6.0",
-    "@foal/jwt": "^1.6.0",
-    "@foal/typeorm": "^1.6.0",
+    "@foal/core": "^1.8.1",
+    "@foal/jwt": "^1.8.1",
+    "@foal/typeorm": "^1.8.1",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^7.18.1",
-    "source-map-support": "^0.5.1",
-    "sqlite3": "^4.0.0",
-    "typeorm": "^0.2.6"
+    "pg": "^7.18.2",
+    "source-map-support": "^0.5.19",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.1",
-    "@types/node": "^8.0.47",
-    "@typescript-eslint/eslint-plugin": "^2.19.2",
-    "@typescript-eslint/parser": "^2.19.2",
+    "@types/node": "^8.10.61",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "concurrently": "^3.5.1",
     "copy": "^0.3.2",
     "eslint": "^6.7.0",

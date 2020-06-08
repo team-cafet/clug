@@ -1,0 +1,11 @@
+<div class="leveldetails">
+  <app-header-details resourceName='level'></app-header-details>
+  <app-level-form *ngIf="level" [level]='level'></app-level-form>
+
+  <app-rest-data-table
+  resourceName='member'
+  resourceAPI='member'
+  [resourceColumns]='columnsMember'
+  (ready)='onRestDataTableReady()'
+  ></app-rest-data-table>
+</div>

@@ -1,0 +1,8 @@
+e2e
+src/assets
+src/environments
+src/locale
+*.html
+*.json
+*.scss
+*.ico

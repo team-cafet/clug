@@ -1,0 +1,38 @@
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+  height: 100%;
+}
+
+.main-toolbar {
+  .btn-menu {
+    // ...
+  }
+}
+
+.main-sidenav-container {
+  .sidenav-menu {
+    display: none;
+
+    width: 100%;
+  }
+  .sidenav-menu.sidenav-menu-open {
+    display: block;
+    // position: absolute;
+  }
+}
+
+@media (min-width: 992px) {
+  .main-toolbar {
+    .btn-menu {
+      display: none;
+    }
+  }
+
+  .main-sidenav-container {
+    .sidenav-menu {
+      display: block;
+      width: 250px;
+    }
+  }
+}

@@ -27,22 +27,21 @@ import { PermissionRequired } from '@foal/typeorm';
 const memberSchema = {
   additionalProperties: false,
   properties: {
-    name: { type: 'string', maxLength: 255 },
-    surname: { type: 'string', maxLength: 255 },
+    id: { type: 'number' },
+    firstname: { type: 'string', maxLength: 255 },
+    lastname: { type: 'string', maxLength: 255 },
     sexe: {
-      type: 'string',
-      enum: [Sexe.MALE, Sexe.FEMALE, Sexe['NON-BINARY']],
-      maxLength: 255
+      type: 'number',
+      enum: [ Sexe.MALE, Sexe.FEMALE, Sexe['NON-BINARY'] ]
     },
     email: { type: 'string', format: 'email', maxLength: 255 },
     phone: { type: 'string', maxLength: 50 },
     birthdate: {
-      type: 'string',
-      format: 'date',
+      type: [ 'string' ],
       maxLength: 255
     },
     financialStatus: {
-      type: 'string',
+      type: 'number',
       enum: [
         FinancialStatus.ALERT,
         FinancialStatus.OK,
@@ -50,11 +49,10 @@ const memberSchema = {
       ],
       maxLength: 255
     },
-    club: { type: 'object' },
-
-    address: { type: 'object' }
+    club: { type: 'number', minimum: 1, nullable: true },
+    level: { type: 'number', minimum: 1, nullable: true },
+    address: { type: 'number', minimum: 1, nullable: true }
   },
-  required: ['name', 'surname', 'email'],
   type: 'object'
 };
 @ApiUseTag('member')
@@ -79,7 +77,8 @@ export class MemberController {
   async findMembers(ctx: Context) {
     const members = await getRepository(Member).find({
       skip: ctx.request.query.skip,
-      take: ctx.request.query.take
+      take: ctx.request.query.take,
+      relations: [ 'club', 'level', 'address' ]
     });
     return new HttpResponseOK(members);
   }
@@ -96,7 +95,8 @@ export class MemberController {
   })
   async findMemberById(ctx: Context) {
     const member = await getRepository(Member).findOne(
-      ctx.request.params.memberId
+      ctx.request.params.memberId,
+      { relations: [ 'club', 'level', 'address' ] }
     );
 
     if (!member) {
@@ -199,7 +199,7 @@ export class MemberController {
       return new HttpResponseNotFound();
     }
 
-    await getRepository(Member).delete(ctx.request.params.memberId);
+    await getRepository(Member).softDelete(ctx.request.params.memberId);
 
     return new HttpResponseNoContent();
   }

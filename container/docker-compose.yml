@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+
+  # Main Express.js application container
+  app:
+    image: teamcafet/clug-test
+    depends_on:
+      - db
+    environment:
+      DATABASE_NAME: clug-db
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: .Clug-123
+      DATABASE_SYNCHRONIZE: 0
+      DATABASE_DROPSCHEMA: 0
+      SETTINGS_JWT_SECRET_OR_PUBLIC_KEY: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
+      NODE_ENV: development 
+    #volumes: 
+    #  - ./test:/usr/src/app
+    ports:
+      - 3100:3100
+    #restart: always
+    
+  db:
+    image: postgres:12-alpine
+    environment:      
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: .Clug-123
+      POSTGRES_DB: clug-db
+    restart: always

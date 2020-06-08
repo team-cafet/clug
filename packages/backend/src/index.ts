@@ -18,9 +18,13 @@ async function main() {
   const httpServer = http.createServer(app);
   const port = Config.get('port', 3001);
   httpServer.listen(port, () => {
+    // eslint-disable-next-line no-console
     console.log(`Listening on port ${port}...`);
   });
 }
 
 main()
-  .catch(err => { console.error(err); process.exit(1); });
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });

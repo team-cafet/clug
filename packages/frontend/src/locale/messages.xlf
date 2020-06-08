@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="mem-name" datatype="html">
+        <source>name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-add/member-add.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-details/member-details.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <note priority="1" from="description">Name</note>
+        <note priority="1" from="meaning">member-add</note>
+      </trans-unit>
+      <trans-unit id="mem-surname" datatype="html">
+        <source>surname</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-add/member-add.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-details/member-details.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <note priority="1" from="description">Surname</note>
+        <note priority="1" from="meaning">member-add</note>
+      </trans-unit>
+      <trans-unit id="mem-sexe" datatype="html">
+        <source>Sexe</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-add/member-add.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-details/member-details.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <note priority="1" from="description">Sexe</note>
+        <note priority="1" from="meaning">member-add</note>
+      </trans-unit>
+      <trans-unit id="mem-birthdate" datatype="html">
+        <source>Birthdate</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-add/member-add.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-details/member-details.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <note priority="1" from="description">Birthdate</note>
+        <note priority="1" from="meaning">member-add</note>
+      </trans-unit>
+      <trans-unit id="mem-phone" datatype="html">
+        <source>Phone</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-add/member-add.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-details/member-details.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <note priority="1" from="description">Phone</note>
+        <note priority="1" from="meaning">member-add</note>
+      </trans-unit>
+      <trans-unit id="mem-email" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-add/member-add.component.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member-details/member-details.component.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <note priority="1" from="description">Email</note>
+        <note priority="1" from="meaning">member-add</note>
+      </trans-unit>
+      <trans-unit id="mem-listofallmember" datatype="html">
+        <source>List of all member</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="description">Header</note>
+        <note priority="1" from="meaning">member</note>
+      </trans-unit>
+      <trans-unit id="mem-filter" datatype="html">
+        <source>Filter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">Filter</note>
+        <note priority="1" from="meaning">member</note>
+      </trans-unit>
+      <trans-unit id="mem-num" datatype="html">
+        <source>Num.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <note priority="1" from="description">Num</note>
+        <note priority="1" from="meaning">member</note>
+      </trans-unit>
+      <trans-unit id="mem-financialstatus" datatype="html">
+        <source>
+          <x id="START_TABLE_HEADER_CELL" ctype="x-th" equiv-text="&lt;th&gt;"/>
+            Financial Status
+          <x id="CLOSE_TABLE_HEADER_CELL" ctype="x-th" equiv-text="&lt;/th&gt;"/>
+          <x id="START_TABLE_CELL" ctype="x-td" equiv-text="&lt;td&gt;"/>
+            <x id="INTERPOLATION" equiv-text="{{ displayFinancialStatus(element.financialStatus) }}"/>
+          <x id="CLOSE_TABLE_CELL" ctype="x-td" equiv-text="&lt;/td&gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <note priority="1" from="description">FinancialStatus</note>
+        <note priority="1" from="meaning">member</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
