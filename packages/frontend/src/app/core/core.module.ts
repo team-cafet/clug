@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from './services/api.service';
-import { UserService } from './services/user.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
-import { JwtService } from './services/jwt.service';
-import { MemberService } from './services/member.service';
-import { ClubService } from './services/club.service';
-import { LevelService } from './services/level.service';
-import { StatisticService } from './services';
+import {
+  StatisticService,
+  AddressService,
+  ApiService,
+  UserService,
+  JwtService,
+  MemberService,
+  ClubService,
+  LevelService
+} from './services';
 
 @NgModule({
   declarations: [],
@@ -21,7 +24,8 @@ import { StatisticService } from './services';
     MemberService,
     ClubService,
     LevelService,
-    StatisticService
+    StatisticService,
+    AddressService
   ]
 })
 export class CoreModule {}

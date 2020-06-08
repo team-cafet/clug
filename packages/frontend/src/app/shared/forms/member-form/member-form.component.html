@@ -2,8 +2,8 @@
   <mat-card>
     <form [formGroup]="memberForm" (ngSubmit)="save()">
       <mat-card-header>
-        <mat-card-title> 
-          {{memberForm.value.firstname}} {{memberForm.value.lastname}}
+        <mat-card-title>
+          {{ memberForm.value.firstname }} {{ memberForm.value.lastname }}
         </mat-card-title>
       </mat-card-header>
 
@@ -30,7 +30,7 @@
           />
         </mat-form-field>
 
-        <br>
+        <br />
 
         <mat-form-field appearance="outline">
           <mat-label i18n="member-add|Sexe@@mem-sexe">Sexe</mat-label>
@@ -77,7 +77,7 @@
         <br />
 
         <mat-form-field appearance="outline">
-          <mat-label>Club</mat-label>
+          <mat-label i18n="member-add|Club@@mem-club">Club</mat-label>
           <mat-select formControlName="club">
             <mat-option *ngFor="let clubItem of clubs" [value]="clubItem.id">
               {{ clubItem.designation }}
@@ -88,7 +88,7 @@
         <br />
 
         <mat-form-field appearance="outline">
-          <mat-label>Level</mat-label>
+          <mat-label i18n="member-add|Level@@mem-level">Level</mat-label>
           <mat-select formControlName="level">
             <mat-option *ngFor="let levelItem of levels" [value]="levelItem.id">
               {{ levelItem.name }}
@@ -96,6 +96,65 @@
           </mat-select>
         </mat-form-field>
       </mat-card-content>
+
+      <form [formGroup]="addressForm">
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|Street@@mem-street">Street</mat-label>
+          <input
+            required
+            matInput
+            placeholder="street"
+            i18n-placeholder="member-add|Street@@mem-street"
+            formControlName="street"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|StreetNumber@@mem-streetNumber"
+            >Street Number</mat-label
+          >
+          <input
+            required
+            matInput
+            placeholder="street number"
+            type="number"
+            i18n-placeholder="member-add|StreetNumber@@mem-streetNumber"
+            formControlName="streetNumber"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|City@@mem-city">City</mat-label>
+          <input
+            required
+            matInput
+            placeholder="city"
+            i18n-placeholder="member-add|City@@mem-city"
+            formControlName="city"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|PostalCode@@mem-postalCode"
+            >Postal Code</mat-label
+          >
+          <input
+            required
+            matInput
+            placeholder="postal code"
+            type="number"
+            i18n-placeholder="member-add|PostalCode@@mem-postalCode"
+            formControlName="postalCode"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label i18n="member-add|Country@@mem-country">Country</mat-label>
+          <input
+            required
+            matInput
+            placeholder="country"
+            i18n-placeholder="member-add|Country@@mem-country"
+            formControlName="country"
+          />
+        </mat-form-field>
+      </form>
 
       <mat-card-actions>
         <button

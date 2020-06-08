@@ -1,5 +1,5 @@
 import { controller, Get, Context, HttpResponseNotFound, createHttpResponseFile } from '@foal/core';
-import { ApiController, StatisticController } from './controllers';
+import { AddressController, ApiController, StatisticController } from './controllers';
 import { AuthController } from './controllers/auth.controller';
 
 

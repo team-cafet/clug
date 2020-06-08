@@ -1,5 +1,6 @@
 import { Club } from '.';
 import { Level } from './level.model';
+import { Address } from './address.model';
 
 export enum Sexe {
   'MALE',
@@ -27,6 +28,7 @@ export interface Member {
   deletedAt?: Date;
   club?: Club;
   level?: Level;
+  address?: Address;
 }
 
 export function displaySexe(sexe: Sexe): string {
