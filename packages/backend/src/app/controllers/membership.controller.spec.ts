@@ -18,6 +18,7 @@ import { createConnection, getConnection, getRepository } from 'typeorm';
 import { Membership, Member, MembershipPlan } from '../entities';
 import { MembershipController } from './membership.controller';
 
+// eslint-disable-next-line max-lines-per-function
 describe('MembershipController', () => {
   let controller: MembershipController;
   let membership1: Membership;
@@ -33,14 +34,14 @@ describe('MembershipController', () => {
     controller = createController(MembershipController);
 
     const repository = getRepository(Membership);
-    
+
     await repository.clear();
     await getRepository(Member).query(`TRUNCATE ${getRepository(Member).metadata.tableName} CASCADE`);
     await getRepository(MembershipPlan).query(`TRUNCATE ${getRepository(MembershipPlan).metadata.tableName} CASCADE`);
 
     simpleMember = await getRepository(Member).save({
-      name: 'David',
-      surname: 'Jones',
+      firstname: 'David',
+      lastname: 'Jones',
       email: 'david.jones@flyingdutchman.com'
     });
 
@@ -50,7 +51,7 @@ describe('MembershipController', () => {
       typeOfFacturation: 1
     });
 
-    [membership1, membership2] = await repository.save([
+    [ membership1, membership2 ] = await repository.save([
       {
         startDate: '2018-01-05',
         member: simpleMember,

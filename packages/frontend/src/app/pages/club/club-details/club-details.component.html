@@ -1,0 +1,11 @@
+<div class="clubdetails">
+  <app-header-details resourceName='club'></app-header-details>
+  <app-club-form *ngIf="club" [club]="club"></app-club-form>
+
+  <app-rest-data-table
+  resourceName='member'
+  resourceAPI='member'
+  [resourceColumns]='columnsMember'
+  (ready)='onRestDataTableReady()'
+  ></app-rest-data-table>
+</div>

@@ -1,0 +1,21 @@
+.login {
+  height: 100%;
+  background-color: lightgray;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 90%;
+  overflow-x: hidden;
+
+  .login-container {
+    margin: 0 auto;
+    position: relative;
+    max-height: 30%;
+    top: 25%;
+    transition: all .5s;
+  }
+}
+.home-container:hover .login-container,
+.home-container:focus .login-container {
+  transform: scale(1.2);
+}

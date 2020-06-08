@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Column,
   Entity,
@@ -8,11 +9,13 @@ import {
   ManyToOne,
   OneToOne,
   JoinColumn,
-  OneToMany
+  OneToMany,
+  DeleteDateColumn
 } from 'typeorm';
 import { Club } from './club.entity';
 import { Membership } from './membership.entity';
 import { Address } from './address.entity';
+import { Level } from './level.entity';
 
 export enum Sexe {
   'MALE',
@@ -34,12 +37,12 @@ export class Member extends BaseEntity {
   @Column({
     length: 254
   })
-  name: string;
+  firstname: string;
 
   @Column({
     length: 254
   })
-  surname: string;
+  lastname: string;
 
   @Column({
     type: 'enum',
@@ -78,7 +81,7 @@ export class Member extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: 'date', nullable: true })
+  @DeleteDateColumn({ name: 'deletedAt' })
   deletedAt: Date;
 
   @ManyToOne(
@@ -88,14 +91,21 @@ export class Member extends BaseEntity {
   )
   club: Club;
 
+  @ManyToOne(
+    type => Level,
+    level => level.members,
+    { onDelete: 'NO ACTION', nullable: true }
+  )
+  level: Level;
+
   @OneToMany(
     type => Membership,
     membership => membership.member,
-    { nullable: true, onDelete: 'NO ACTION' }
+    { nullable: true, onDelete: 'NO ACTION', cascade: [ 'insert' ] }
   )
   memberships: Membership;
 
-  @OneToOne(type => Address)
+  @OneToOne(type => Address, { cascade: true })
   @JoinColumn()
   address: Address;
 }

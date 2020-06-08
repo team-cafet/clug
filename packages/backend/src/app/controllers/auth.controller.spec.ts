@@ -20,8 +20,10 @@ describe('AuthController', () => {
 
   before(() => createConnection());
   after(() => getConnection().close());
-  
-  beforeEach(() => (controller = createController(AuthController)));
+
+  beforeEach(() => {
+    controller = createController(AuthController);
+  });
 
   describe('has a signup method that', () => {
     it('should handle request at POST /signup', () => {
@@ -32,12 +34,14 @@ describe('AuthController', () => {
     it('should generate a web token when params are ok', async () => {
       const ctx = new Context({});
 
-      ctx.request.body = { email: 'testuser@test.ch', password: 'MySecureP@ssword123' }
+      ctx.request.body = {
+        email: 'testuser@test.ch',
+        password: 'MySecureP@ssword123'
+      };
 
-      const response = await controller.signup(ctx)
-      ok(isHttpResponseOK(response))
-      ok(isString(response.body.token))
+      const response = await controller.signup(ctx);
+      ok(isHttpResponseOK(response));
+      ok(isString(response.body.token));
     });
-
   });
 });

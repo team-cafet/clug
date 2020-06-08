@@ -14,6 +14,7 @@ import { MembershipPlan } from '../entities';
 import { MembershipPlanController } from './membership-plan.controller';
 import { TypeOfFacturation } from '../entities/membership-plan.entity';
 
+// eslint-disable-next-line max-lines-per-function
 describe('MembershipPlanController', () => {
 
   let controller: MembershipPlanController;
@@ -28,20 +29,20 @@ describe('MembershipPlanController', () => {
     controller = createController(MembershipPlanController);
 
     const repository = getRepository(MembershipPlan);
-    
+
     await repository.query(`TRUNCATE ${repository.metadata.tableName} CASCADE`);
 
     [ membershipPlan1, membershipPlan2 ] = await repository.save([
       {
         designation: 'MembershipPlan 1',
-        amount:20,
-        typeOfFacturation:TypeOfFacturation.WEEKLY
+        amount: 20,
+        typeOfFacturation: TypeOfFacturation.WEEKLY
       },
       {
         designation: 'MembershipPlan 2',
-        amount:60,
-        typeOfFacturation:TypeOfFacturation.QUARTERLY
-      },
+        amount: 60,
+        typeOfFacturation: TypeOfFacturation.QUARTERLY
+      }
     ]);
   });
 
@@ -72,8 +73,8 @@ describe('MembershipPlanController', () => {
     it('should support pagination', async () => {
       const membershipPlan3 = await getRepository(MembershipPlan).save({
         designation: 'MembershipPlan 3',
-        amount:100,
-        typeOfFacturation:TypeOfFacturation.QUARTERLY
+        amount: 100,
+        typeOfFacturation: TypeOfFacturation.QUARTERLY
       });
 
       let ctx = new Context({
@@ -148,13 +149,13 @@ describe('MembershipPlanController', () => {
       strictEqual(getPath(MembershipPlanController, 'createMembershipPlan'), undefined);
     });
 
-    it('should create the membershipPlan in the database and return it through '
-        + 'an HttpResponseCreated object.', async () => {
+    it('should create the membershipPlan in the database and return it through ' +
+        'an HttpResponseCreated object.', async () => {
       const ctx = new Context({
         body: {
           designation: 'MembershipPlan 3',
-          amount:100,
-          typeOfFacturation:TypeOfFacturation.QUARTERLY
+          amount: 100,
+          typeOfFacturation: TypeOfFacturation.QUARTERLY
         }
       });
       const response = await controller.createMembershipPlan(ctx);
@@ -187,7 +188,7 @@ describe('MembershipPlanController', () => {
     it('should update the membershipPlan in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'MembershipPlan 2 (version 2)',
+          designation: 'MembershipPlan 2 (version 2)'
         },
         params: {
           membershipPlanId: membershipPlan2.id
@@ -214,7 +215,7 @@ describe('MembershipPlanController', () => {
     it('should not update the other membershipPlans.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'MembershipPlan 2 (version 2)',
+          designation: 'MembershipPlan 2 (version 2)'
         },
         params: {
           membershipPlanId: membershipPlan2.id
@@ -234,7 +235,7 @@ describe('MembershipPlanController', () => {
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          designation: '',
+          designation: ''
         },
         params: {
           membershipPlanId: -1
@@ -259,7 +260,7 @@ describe('MembershipPlanController', () => {
     it('should update the membershipPlan in the database and return it through an HttpResponseOK object.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'MembershipPlan 2 (version 2)',
+          designation: 'MembershipPlan 2 (version 2)'
         },
         params: {
           membershipPlanId: membershipPlan2.id
@@ -286,7 +287,7 @@ describe('MembershipPlanController', () => {
     it('should not update the other membershipPlans.', async () => {
       const ctx = new Context({
         body: {
-          designation: 'MembershipPlan 2 (version 2)',
+          designation: 'MembershipPlan 2 (version 2)'
         },
         params: {
           membershipPlanId: membershipPlan2.id
@@ -306,7 +307,7 @@ describe('MembershipPlanController', () => {
     it('should return an HttpResponseNotFound if the object does not exist.', async () => {
       const ctx = new Context({
         body: {
-          designation: '',
+          designation: ''
         },
         params: {
           membershipPlanId: -1

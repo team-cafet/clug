@@ -43,7 +43,7 @@ const membershipSchema = {
       }
     }
   },
-  required: ['startDate', 'member', 'membershipPlan'],
+  required: [ 'startDate', 'member', 'membershipPlan' ],
   type: 'object'
 };
 
@@ -67,6 +67,9 @@ export class MembershipController {
     type: 'object'
   })
   async findMemberships(ctx: Context) {
+    ctx.request.query.skip = ctx.request.query.skip || 0;
+    ctx.request.query.take = ctx.request.query.take || null;
+
     const memberships = await getRepository(Membership).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take
@@ -189,7 +192,7 @@ export class MembershipController {
       return new HttpResponseNotFound();
     }
 
-    await getRepository(Membership).delete(ctx.request.params.membershipId);
+    await getRepository(Membership).softDelete(ctx.request.params.membershipId);
 
     return new HttpResponseNoContent();
   }

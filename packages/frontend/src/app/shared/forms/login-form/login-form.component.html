@@ -1,0 +1,44 @@
+<mat-card class="login">
+  <form class="form">
+    <mat-form-field class="full-width-input">
+      <input
+        matInput
+        placeholder="Email"
+        [formControl]="emailFormControl"
+        [errorStateMatcher]="matcher"
+        [(ngModel)]="credentials.email"
+      />
+      <mat-error
+        *ngIf="
+          emailFormControl.hasError('email') &&
+          !emailFormControl.hasError('required')
+        "
+      >
+        Veuillez entrer un email conforme
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email est <strong>requis</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width-input">
+      <input
+        matInput
+        type="password"
+        placeholder="Mot de passe"
+        [formControl]="passwordFormControl"
+        [errorStateMatcher]="matcher"
+        [(ngModel)]="credentials.password"
+      />
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Mot de passe est <strong>requis</strong>
+      </mat-error>
+      <mat-error *ngIf="passwordFormControl.hasError('minlength')">
+        Veuillez rentrer au minimum 6 charactère
+      </mat-error>
+    </mat-form-field>
+    <mat-error *ngIf="invalidCredentials">
+      Email ou mot de passe incorrect
+    </mat-error>
+    <button mat-stroked-button color="accent" class="btn-block" (click)="login()">Log in</button>
+  </form>
+</mat-card>
