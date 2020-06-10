@@ -2,6 +2,7 @@ mat-sidenav-container,
 mat-sidenav-content,
 mat-sidenav {
   height: 100%;
+  overflow-y: hidden;
 }
 
 .main-toolbar {

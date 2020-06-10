@@ -17,7 +17,6 @@ export class DashboardComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.statistics = await this.statisticSrv.get('/');
     this.setupGraph();
-    console.log(this.statistics);
   }
 
   getAgeFromBirthdate(birthdateString: Date): number {
@@ -31,12 +30,12 @@ export class DashboardComponent implements OnInit {
     const ctx = document.getElementById('membersCountChart');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const membersCountChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data: {
         labels: [ 'Membres', 'Bad payer', 'Registered this month' ],
         datasets: [
           {
-            label: 'Number of members',
+            label: 'TODO',
             data: [
               this.statistics.membersCount,
               this.statistics.badPayersCount,
@@ -44,7 +43,9 @@ export class DashboardComponent implements OnInit {
             ],
             backgroundColor: [ '#3FBF3F', '#BF3F3F', '#3FBFBF' ],
             borderColor: [ '#3FBF3F', '#BF3F3F', '#3FBFBF' ],
-            borderWidth: 1
+            borderWidth: 1,
+            fill: false,
+            lineTension: 0
           }
         ]
       },

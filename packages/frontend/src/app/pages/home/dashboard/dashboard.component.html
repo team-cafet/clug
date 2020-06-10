@@ -1,14 +1,14 @@
 <div class="dashboard">
   <mat-grid-list
-    cols="3"
-    rowHeight="3:1"
+    cols="5"
+    rowHeight="30vh"
     class="header"
     *ngIf="this.statistics"
   >
     <mat-grid-tile>
       <mat-card>
-        <mat-icon class="icon" aria-hidden="false">people</mat-icon>
-        <mat-card-title>{{ this.statistics.membersCount }}</mat-card-title>
+        <mat-icon class="icon" aria-hidden="false" color="primary">people</mat-icon>
+        <mat-card-title color="primary">{{ this.statistics.membersCount }}</mat-card-title>
         <mat-card-content i18n="home-dashboard|TotalMembers@@totalMembers"
           >Total members</mat-card-content
         >
@@ -16,7 +16,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-card>
-        <mat-icon aria-hidden="false">money_off</mat-icon>
+        <mat-icon aria-hidden="false" color="accent">money_off</mat-icon>
         <mat-card-title>{{ this.statistics.membersCount }}</mat-card-title>
         <mat-card-content i18n="home-dashboard|BadPayers@@badPayers"
           >Bad payers</mat-card-content
@@ -25,42 +25,35 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-card>
-        <mat-icon aria-hidden="false">group_add</mat-icon>
+        <mat-icon aria-hidden="false" color="primary">group_add</mat-icon>
         <mat-card-title>{{ this.statistics.newMembersCount }}</mat-card-title>
         <mat-card-content i18n="home-dashboard|NewMembers@@newMembers"
           >New members</mat-card-content
         >
       </mat-card>
     </mat-grid-tile>
-  </mat-grid-list>
-  <mat-grid-list
-    cols="5"
-    rowHeight="3:1"
-    *ngIf="this.statistics"
-  >
-    <mat-grid-tile></mat-grid-tile>
     <mat-grid-tile>
       <mat-card>
-        <mat-icon class="icon" aria-hidden="false">history</mat-icon>
+        <mat-icon class="icon" aria-hidden="false" color="accent">history</mat-icon>
         <mat-card-title>{{ this.getAgeFromBirthdate(this.statistics.olderMember.birthdate)}}  <mat-label i18n="home-dashboard|YearsOld@@yearsOld"> years old</mat-label>  </mat-card-title>
         <mat-card-content i18n="home-dashboard|Oldest@@oldest">{{this.statistics.olderMember.firstname}}
           {{this.statistics.olderMember.lastname}}
         </mat-card-content >
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile></mat-grid-tile>
     <mat-grid-tile>
       <mat-card>
-        <mat-icon class="icon" aria-hidden="false">update</mat-icon>
+        <mat-icon class="icon" aria-hidden="false" color="primary">update</mat-icon>
         <mat-card-title>{{ this.getAgeFromBirthdate(this.statistics.youngestMember.birthdate)}}  <mat-label i18n="home-dashboard|YearsOld@@yearsOld"> years old</mat-label> </mat-card-title>
         <mat-card-content i18n="home-dashboard|Oldest@@oldest">{{this.statistics.youngestMember.firstname}}
           {{this.statistics.youngestMember.lastname}}
         </mat-card-content >
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile></mat-grid-tile>
   </mat-grid-list>
   <div class="chart">
-    <canvas id="membersCountChart" responsive="true" size=""></canvas>
+    <!-- Css not working from  -->
+    <canvas id="membersCountChart" responsive="true" style="height: 50vh;width: 80vw;">
+    </canvas>
   </div>
 </div>
