@@ -17,6 +17,14 @@ export class DashboardComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.statistics = await this.statisticSrv.get('/');
     this.setupGraph();
+    console.log(this.statistics);
+  }
+
+  getAgeFromBirthdate(birthdateString: Date): number {
+    const birthdate: Date = new Date(birthdateString);
+    const today: Date = new Date();
+
+    return today.getFullYear() - birthdate.getFullYear();
   }
 
   private setupGraph(): void {
@@ -53,4 +61,6 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+
 }

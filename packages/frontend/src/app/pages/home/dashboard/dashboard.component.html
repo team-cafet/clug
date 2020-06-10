@@ -1,9 +1,66 @@
 <div class="dashboard">
+  <mat-grid-list
+    cols="3"
+    rowHeight="3:1"
+    class="header"
+    *ngIf="this.statistics"
+  >
+    <mat-grid-tile>
+      <mat-card>
+        <mat-icon class="icon" aria-hidden="false">people</mat-icon>
+        <mat-card-title>{{ this.statistics.membersCount }}</mat-card-title>
+        <mat-card-content i18n="home-dashboard|TotalMembers@@totalMembers"
+          >Total members</mat-card-content
+        >
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card>
+        <mat-icon aria-hidden="false">money_off</mat-icon>
+        <mat-card-title>{{ this.statistics.membersCount }}</mat-card-title>
+        <mat-card-content i18n="home-dashboard|BadPayers@@badPayers"
+          >Bad payers</mat-card-content
+        >
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card>
+        <mat-icon aria-hidden="false">group_add</mat-icon>
+        <mat-card-title>{{ this.statistics.newMembersCount }}</mat-card-title>
+        <mat-card-content i18n="home-dashboard|NewMembers@@newMembers"
+          >New members</mat-card-content
+        >
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-grid-list
+    cols="5"
+    rowHeight="3:1"
+    *ngIf="this.statistics"
+  >
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card>
+        <mat-icon class="icon" aria-hidden="false">history</mat-icon>
+        <mat-card-title>{{ this.getAgeFromBirthdate(this.statistics.olderMember.birthdate)}}  <mat-label i18n="home-dashboard|YearsOld@@yearsOld"> years old</mat-label>  </mat-card-title>
+        <mat-card-content i18n="home-dashboard|Oldest@@oldest">{{this.statistics.olderMember.firstname}}
+          {{this.statistics.olderMember.lastname}}
+        </mat-card-content >
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+      <mat-card>
+        <mat-icon class="icon" aria-hidden="false">update</mat-icon>
+        <mat-card-title>{{ this.getAgeFromBirthdate(this.statistics.youngestMember.birthdate)}}  <mat-label i18n="home-dashboard|YearsOld@@yearsOld"> years old</mat-label> </mat-card-title>
+        <mat-card-content i18n="home-dashboard|Oldest@@oldest">{{this.statistics.youngestMember.firstname}}
+          {{this.statistics.youngestMember.lastname}}
+        </mat-card-content >
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+  </mat-grid-list>
   <div class="chart">
-    <canvas id="membersCountChart" responsive="true"></canvas>
-  </div>
-  <div class="statistics" *ngIf="this.statistics">
-    <mat-card>  <mat-card-title>Membre le plus âgé</mat-card-title>  {{ this.statistics.olderMember.lastname }}{{ this.statistics.olderMember.firstname }}</mat-card>
-    <mat-card><mat-card-title>Membre le plus jeune</mat-card-title>{{ this.statistics.youngestMember.lastname }}{{ this.statistics.youngestMember.firstname }}</mat-card>
+    <canvas id="membersCountChart" responsive="true" size=""></canvas>
   </div>
 </div>

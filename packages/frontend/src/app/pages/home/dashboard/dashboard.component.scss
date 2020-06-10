@@ -1,12 +1,18 @@
 .dashboard {
-  .chart {
-    position: relative;
-    height: 40vh;
-    width: 80vw;
+  text-align: center;
+  .header{
+    padding: 5px;
+  }
+  .icon{
+    margin-top: 5%;
     margin-bottom: 5%;
   }
+  .chart {
+    position: relative;
+    height: 70vh;
+    width: 80vw;
+  }
   .statistics { //TEMP
-    position: absolute;
-    bottom: 50px;
+
   }
 }
