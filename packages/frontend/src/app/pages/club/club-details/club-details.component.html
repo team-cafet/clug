@@ -1,11 +1,22 @@
 <div class="clubdetails">
-  <app-header-details resourceName='club'></app-header-details>
-  <app-club-form *ngIf="club" [club]="club"></app-club-form>
+  <div>
+    <app-header-details resourceName='club'></app-header-details>
+  </div>
 
-  <app-rest-data-table
-  resourceName='member'
-  resourceAPI='member'
-  [resourceColumns]='columnsMember'
-  (ready)='onRestDataTableReady()'
-  ></app-rest-data-table>
+  <div class="form">
+    <app-club-form *ngIf="club" [club]="club" ></app-club-form>
+  </div>
+  
+  <div>
+    <h3 i18n="club-add|MemberList@@club-add-memberslist">
+      Club's member list
+    </h3>
+    <app-rest-data-table
+    resourceName='member'
+    resourceAPI='member'
+    action="true"
+    [resourceColumns]='columnsMember'
+    (ready)='onRestDataTableReady()'
+    ></app-rest-data-table>
+  </div>
 </div>

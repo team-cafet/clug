@@ -1,4 +1,4 @@
 <div class="leveladd">
   <app-header-details resourceName='level'></app-header-details>
-  <app-level-form *ngIf="level" [level]='level'></app-level-form>
+  <app-level-form *ngIf="level" [level]='level' (saved)="saved($event)"></app-level-form>
 </div>

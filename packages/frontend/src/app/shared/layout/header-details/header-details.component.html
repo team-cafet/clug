@@ -1,5 +1,5 @@
 <div class="headerdetails">  
-  <button class="button" mat-button type="button" [routerLink]="['/', 'app', resourceName]">
+  <button class="button" mat-button type="button" (click)="goBack()">
     <mat-icon>arrow_back_ios</mat-icon>
     <span i18n="header-details|Back@@btn-goback">Back</span>
   </button>

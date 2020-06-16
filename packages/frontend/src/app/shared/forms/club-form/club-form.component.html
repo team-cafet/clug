@@ -14,11 +14,15 @@
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
-
-      <app-form-buttons 
-      [disableSave]="!clubForm.valid"
-      (save)="form.ngSubmit.emit()"
-      ></app-form-buttons>
+      
+      <mat-card-actions>
+        <app-form-buttons 
+        [disableSave]="!clubForm.valid"
+        [displayDelete]="this.club.id"
+        (saveEvent)="save()"
+        (deleteEvent)="delete()"
+        ></app-form-buttons>
+      </mat-card-actions>
 
     </mat-card>
   </form>

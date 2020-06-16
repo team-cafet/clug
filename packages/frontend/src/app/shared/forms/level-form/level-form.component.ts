@@ -2,6 +2,9 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Level } from 'src/app/core/models';
 import { LevelService } from 'src/app/core/services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from '../../generic/delete-dialog/delete-dialog.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-level-form',
@@ -16,7 +19,9 @@ export class LevelFormComponent implements OnInit {
 
   constructor(
     private readonly levelSrv: LevelService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog,
+    private readonly location: Location
   ) { }
 
   ngOnInit(): void {
@@ -43,5 +48,21 @@ export class LevelFormComponent implements OnInit {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  delete() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.levelSrv.delete(this.level)
+          .catch(err => console.error(err))
+          .finally(() => {
+            this.location.back();
+          });
+      }
+    });
   }
 }

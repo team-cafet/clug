@@ -2,6 +2,9 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Club } from 'src/app/core/models';
 import { ClubService } from 'src/app/core/services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DeleteDialogComponent } from '../../generic/delete-dialog/delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-club-form',
@@ -17,7 +20,9 @@ export class ClubFormComponent implements OnInit {
   constructor(
     private readonly memberSrv: ClubService,
     private readonly clubSrv: ClubService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog,
+    private readonly location: Location
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +50,23 @@ export class ClubFormComponent implements OnInit {
       this.saved.emit(this.club);
     } catch (error) {
       console.error(error);
+      // throw new Error('Error during save');
     }
+  }
+
+  delete() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.clubSrv.delete(this.club)
+          .catch(err => console.error(err))
+          .finally(() => {
+            this.location.back();
+          });
+      }
+    });
   }
 }
