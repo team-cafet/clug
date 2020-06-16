@@ -5,9 +5,18 @@
   display: flex;
   flex-flow: row;
   justify-content: space-between;
+  margin: 25px 15px 25px 15px;
+}
+
+.filter {
+  width: 70%;
 }
 
 .datatable {
-  width: 100%;
-  display: block;
+  // width: 100%;
+  // display: block;
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 992px) {
 }

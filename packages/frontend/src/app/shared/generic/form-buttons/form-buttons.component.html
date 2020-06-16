@@ -1,0 +1,20 @@
+<div class="formbuttons">
+  <button 
+    class="deletebutton"
+    *ngIf="displayDelete"
+    mat-mini-fab
+    color="warn"
+    (click)="delete()"
+    >
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button 
+    class="savebutton"
+    mat-mini-fab
+    [disabled]="disableSave"
+    color="primary"
+    (click)="save()"
+    >
+    <mat-icon>save</mat-icon>
+  </button>
+</div>

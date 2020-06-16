@@ -88,6 +88,7 @@ export class RestDataTableComponent implements OnInit {
     this.displayedCol = Object.keys(this.resourceColumns);
     if (this.action) {
       this.displayedCol.push('action');
+      this.displayedCol.push('action-mobile');
     }
 
     this.displayProgress = false;
