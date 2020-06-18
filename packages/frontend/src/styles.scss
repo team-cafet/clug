@@ -39,6 +39,10 @@ $test: #0000ff;
 html {
     --clug-primary: #{map-get($clug-custom-primary, 500)};
     --clug-secondary: #{map-get($clug-custom-secondary, 500)};
+    --clug-title:2rem;
+    --clug-subtitle:1.1rem;
+    --clug-text:0.8rem;
+    --clug-btn-radius: #{$btn-radius};
 }
 html, body { height: 100%; }
 body { 

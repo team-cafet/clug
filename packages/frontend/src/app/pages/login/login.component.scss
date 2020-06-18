@@ -5,12 +5,33 @@
   .login__container {
     margin: 0 auto;
     position: relative;
-    top: 25%; 
+    top: 15%; 
     transition: all .5s;
     width:80%;
+    text-align: center;
+  }
+
+  .login__img {
+    max-width: 50%;
+    margin: 1rem;
+  }
+
+  .login__slogan {
+    color: #fff;
+    font-size: var(--clug-subtitle);
   }
 }
 .home-container:hover .login-container,
 .home-container:focus .login-container {
   transform: scale(1.2);
+}
+@media screen and (min-width: 600px) {
+  .login {
+    .login__container {
+      width: 50%;
+    }
+    .login__img {
+      max-width: 25%;
+    }
+  }
 }

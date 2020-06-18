@@ -7,12 +7,19 @@
     max-width: 500px;
     margin: 0 auto;
   }
-  button{ //BEM friendly ??
+  .loginform__button {
     margin-top: 5%;
     width: 80%;
-    margin-left: 10%;
+    border-radius: var(--clug-btn-radius);
   }
 }
 .full-width-input {
   width: 100%;
+}
+@media screen and (min-width: 600px) {
+  .loginform {
+    .loginform__button {
+      width: 40%;
+    }
+  }
 }
