@@ -9,16 +9,33 @@ mat-sidenav {
   .btn-menu {
     // ...
   }
-}
-
-.main-sidenav-container {
-  .sidenav-menu {
-    display: none;
-
-    width: 100%;
+  .main__logo {
+    height:60%;
+    margin: calc(50% - 70px);
   }
-  .sidenav-menu.sidenav-menu-open {
-    display: block;
+}
+.menu__container {
+  .menu {
+    display: none;
+    width: 100%;
+    padding-top: 1rem;
+    .menu__item {
+      .mat-list-item {
+        margin: 0 2rem;
+        padding-left: 1rem;
+        &:hover {
+        border-radius: 30px;
+        background-color: var(--clug-background-color);
+        }
+      }
+    }
+    .menu__item.active .mat-list-item{
+      color: var(--clug-primary);
+      font-weight: 500;
+    }
+  }
+  .menu.menu-open {
+    display: block;  
     // position: absolute;
   }
 }
@@ -28,10 +45,13 @@ mat-sidenav {
     .btn-menu {
       display: none;
     }
+    .main__logo {
+      margin: auto;
+    }
   }
 
-  .main-sidenav-container {
-    .sidenav-menu {
+  .menu__container {
+    .menu {
       display: block;
       width: 250px;
     }
