@@ -27,7 +27,7 @@ import { PermissionRequired } from '@foal/typeorm';
 const memberSchema = {
   additionalProperties: false,
   properties: {
-    id: { type: 'number'},
+    id: { type: 'number' },
     firstname: { type: 'string', maxLength: 255 },
     lastname: { type: 'string', maxLength: 255 },
     sexe: {
@@ -78,7 +78,7 @@ export class MemberController {
     const members = await getRepository(Member).find({
       skip: ctx.request.query.skip,
       take: ctx.request.query.take,
-      relations: [ 'club', 'level' ]
+      relations: [ 'club', 'level', 'address' ]
     });
     return new HttpResponseOK(members);
   }
@@ -96,7 +96,7 @@ export class MemberController {
   async findMemberById(ctx: Context) {
     const member = await getRepository(Member).findOne(
       ctx.request.params.memberId,
-      { relations: [ 'club', 'level' ] }
+      { relations: [ 'club', 'level', 'address' ] }
     );
 
     if (!member) {

@@ -5,4 +5,5 @@ export * from './user.service';
 export * from './club.service';
 export * from './level.service';
 export * from './statistic.service';
+export * from './address.service';
 
