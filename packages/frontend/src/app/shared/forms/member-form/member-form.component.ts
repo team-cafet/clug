@@ -25,6 +25,8 @@ import { cleanObjectForSending } from 'src/app/core/functions';
 import { DeleteDialogComponent } from '../../generic/delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { NotificationComponent } from '../../generic/notification/notification.component';
 
 @Component({
   selector: 'app-member-form',
@@ -50,7 +52,8 @@ export class MemberFormComponent implements OnInit, OnChanges {
     private readonly levelSrv: LevelService,
     private readonly fb: FormBuilder,
     private readonly dialog: MatDialog,
-    private readonly location: Location
+    private readonly location: Location,
+    private readonly snackbar: MatSnackBar
   ) {}
 
   async ngOnInit() {
@@ -136,6 +139,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
       this.saved.emit(this.member);
     } catch (error) {
       console.error(error);
+      NotificationComponent.openNotification(this.snackbar, error, 5);
     }
   }
 

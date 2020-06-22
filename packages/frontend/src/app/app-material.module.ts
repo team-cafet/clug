@@ -18,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [],
@@ -41,6 +42,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatExpansionModule,
-  ],
+    MatSnackBarModule
+  ]
 })
 export class AppMaterialModule {}

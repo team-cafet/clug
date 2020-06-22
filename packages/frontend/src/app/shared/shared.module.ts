@@ -10,6 +10,7 @@ import { HeaderDetailsComponent } from './layout/header-details/header-details.c
 import { LevelFormComponent } from './forms/level-form/level-form.component';
 import { FormButtonsComponent } from './generic/form-buttons/form-buttons.component';
 import { DataTableComponent } from './generic/data-table/data-table.component';
+import { NotificationComponent } from './generic/notification/notification.component';
 
 @NgModule({
   imports: [ AppCommonModule ],
@@ -28,7 +29,9 @@ import { DataTableComponent } from './generic/data-table/data-table.component';
     LevelFormComponent,
 
     // LAYOUT
-    HeaderDetailsComponent
+    HeaderDetailsComponent,
+
+    NotificationComponent
   ],
   exports: [
     // GENERIC

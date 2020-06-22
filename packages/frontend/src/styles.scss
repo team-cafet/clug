@@ -53,6 +53,7 @@ $test: #0000ff;
 html {
   --clug-primary: #{map-get($clug-custom-primary, 500)};
   --clug-secondary: #{map-get($clug-custom-secondary, 500)};
+  --clug-warning: #{map-get($clug-warn, 500)};
   --clug-title: 2rem;
   --clug-subtitle: 1.1rem;
   --clug-text: 0.8rem;
@@ -62,4 +63,9 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   color: $clug-dark-text;
+}
+.snackbar__error {
+  background-color: var(--clug-warning);
+  font-weight: bolder;
+  font-size:  var(--clug-subtitle);
 }
