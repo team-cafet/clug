@@ -4,12 +4,17 @@
 .actionline {
   display: flex;
   flex-flow: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 25px 15px 25px 15px;
 }
 
-.filter {
+.actionline__filter {
   width: 70%;
+  margin-right:auto;
+}
+
+.actionline__menu {
+  margin-right: 10px;
 }
 
 .datatable {

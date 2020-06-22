@@ -1,9 +1,32 @@
 <div class="restview">
   <div class="actionline">
-    <mat-form-field class="filter" >
+    <mat-form-field class="actionline__filter">
       <mat-label>Filter</mat-label>
-      <input matInput placeholder="Filter..." value="">
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Filter..."
+        value=""
+      />
     </mat-form-field>
+
+    <ng-container *ngIf="actions.menu?.display">
+      <button
+        mat-mini-fab
+        [matMenuTriggerFor]="menu"
+        aria-label="Action menu"
+        class="actionline__menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button 
+        mat-menu-item 
+        *ngFor="let action of actions.menu.menuActions"
+        (click)="action.actFunc(dataSelection)">{{ action.title }}</button>
+      </mat-menu>
+    </ng-container>
+
     <button
       class="button button--action"
       mat-mini-fab
@@ -14,12 +37,11 @@
     </button>
   </div>
   <div>
-    <app-rest-data-table
-      class="datatable"
-      [resourceColumns]="resourceColumns"
-      [resourceName]="resourceName"
-      [resourceAPI]="resourceName"
-      action="true"
-    ></app-rest-data-table>
+    <app-data-table
+      [columns]="columns"
+      [data]="dataWithFilter"
+      [actions]="actions"
+      (changeSelectedElement)="changeSelection($event)"
+    ></app-data-table>
   </div>
 </div>

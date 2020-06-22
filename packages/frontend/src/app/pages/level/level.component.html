@@ -1,8 +1,10 @@
 <div class="level">
   <h1>List of all Level</h1>
   <app-rest-view
+    class="restview"
     resourceName='level'
     resourceAPI='level'
-    [resourceColumns]='resourceCols'
+    [columns]="columns"
+    [actions]="actions"
   ></app-rest-view>
 </div>

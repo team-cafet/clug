@@ -9,6 +9,7 @@ import {
 } from 'src/app/core/core.module';
 import { DeleteDialogComponent } from '../../shared/shared.module';
 import { DataTableColumn, Actions } from 'src/app/shared/generic/data-table/data-table.component';
+import { RestViewComponentAction } from 'src/app/shared/generic/rest-view/rest-view.component';
 
 @Component({
   selector: 'app-member',
@@ -19,7 +20,7 @@ export class MemberComponent implements OnInit {
 
   columns: DataTableColumn[];
 
-  actions: Actions;
+  actions: RestViewComponentAction;
 
   members: Member[];
 
@@ -33,12 +34,12 @@ export class MemberComponent implements OnInit {
   ) {
     this.actions = {
       details: {
-        accessorColID: 'id',
-        display: true,
-        resourceName: 'member'
+      //   accessorColID: 'id',
+        display: true
+      //   resourceName: 'member'
       },
       delete: {
-        deleteFunc: member => this.deleteMember(member),
+        // deleteFunc: member => this.deleteMember(member),
         display: true
       },
       select: {
@@ -46,6 +47,19 @@ export class MemberComponent implements OnInit {
       },
       paginator: {
         display: true
+      },
+      menu: {
+        display: true,
+        menuActions: [
+          {
+            title: 'Set all selected as OK',
+            actFunc: selection => this.updateSelectedMemberFinStatusTo(selection, 0)
+          },
+          {
+            title: 'Set all selected as ALERT',
+            actFunc: selection => this.updateSelectedMemberFinStatusTo(selection, 2)
+          }
+        ]
       }
     };
 
@@ -172,8 +186,8 @@ export class MemberComponent implements OnInit {
    * The selected one
    * @param financialStatus
    */
-  updateSelectedMemberFinStatusTo(financialStatus: FinancialStatus) {
-    const SELECTED_MEMBER = this.currentSelection;
+  updateSelectedMemberFinStatusTo(selection, financialStatus: FinancialStatus) {
+    const SELECTED_MEMBER = selection;
 
     for (const member of SELECTED_MEMBER) {
       member.financialStatus = financialStatus;

@@ -1,54 +1,10 @@
 <div id="member">
-  <div id="header">
-    <h2 i18n="member|Header@@mem-listofallmember">List of all member</h2>
-    <button
-      mat-mini-fab
-      color="accent"
-      [routerLink]="['/app/member/add']"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </div>
-
-  <div class="content">
-    <div>
-      <mat-form-field>
-        <mat-label i18n="member|Filter@@mem-filter">Filter</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Search member"
-        />
-      </mat-form-field>
-
-      <mat-menu #appMenu="matMenu">
-        <button mat-menu-item (click)="updateSelectedMemberFinStatusTo(0)">
-          Set all selected as OK
-        </button>
-        <button mat-menu-item (click)="updateSelectedMemberFinStatusTo(2)">
-          Set all selected as ALERT
-        </button>
-      </mat-menu>
-
-      <button mat-icon-button [matMenuTriggerFor]="appMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-    </div>
-
-    
-    <!-- <mat-paginator
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      [pageSize]="25"
-      showFirstLastButtons
-    >
-    </mat-paginator> -->
-  </div>
-  <div>
-    <app-data-table
-      [columns]="columns"
-      [data]="membersDataTable"
-      [actions]="actions"
-      (changeSelectedElement)="changeSelection($event)"
-    ></app-data-table>
-  </div>
+  <h1 i18n="member|Header@@mem-listofallmember">List of all Member</h1>
+  <app-rest-view
+    class="restview"
+    resourceName='member'
+    resourceAPI='member'
+    [columns]="columns"
+    [actions]="actions"
+  ></app-rest-view>
 </div>
