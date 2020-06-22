@@ -17,10 +17,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
-  imports: [
-  ],
+  imports: [],
   exports: [
     MatToolbarModule,
     MatSidenavModule,
@@ -39,7 +39,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatMenuModule,
     MatDividerModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
-  ]
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+  ],
 })
 export class AppMaterialModule {}

@@ -15,6 +15,8 @@ import {
 } from 'src/app/core/services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { cleanObjectForSending } from 'src/app/core/functions';
+import { DeleteDialogComponent } from '../../generic/delete-dialog/delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-member-form',
@@ -38,7 +40,8 @@ export class MemberFormComponent implements OnInit, OnChanges {
     private readonly addressSrv: AddressService,
     private readonly clubSrv: ClubService,
     private readonly levelSrv: LevelService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog
   ) {}
 
   async ngOnInit() {
@@ -120,5 +123,21 @@ export class MemberFormComponent implements OnInit, OnChanges {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  delete() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.levelSrv.delete(this.level)
+          .catch(err => console.error(err))
+          .finally(() => {
+            this.location.back();
+          });
+      }
+    });
   }
 }
