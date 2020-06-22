@@ -56,11 +56,11 @@ export class RestViewComponent implements OnInit {
       ...this.actions,
       details: {
         accessorColID: 'id',
-        display: true,
+        display: this.actions.details?.display,
         resourceName: this.resourceName
       },
       delete: {
-        display: this.actions.delete.display,
+        display: true,
         deleteFunc: element => this.deleteElement(element)
       }
     };

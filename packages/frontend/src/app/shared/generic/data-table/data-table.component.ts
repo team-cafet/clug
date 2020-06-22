@@ -1,9 +1,17 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
-
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface DataTableColumn {
   headerName: string;
@@ -37,8 +45,6 @@ export interface Actions {
   styleUrls: [ './data-table.component.scss' ]
 })
 export class DataTableComponent implements OnInit, OnChanges {
-
-
   @Input() columns: DataTableColumn[];
   @Input() data: any[];
   @Input() actions: Actions;
@@ -63,7 +69,9 @@ export class DataTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.data = changes.data.currentValue ? changes.data.currentValue : this.data;
+    this.data = changes.data.currentValue ?
+      changes.data.currentValue :
+      this.data;
     this.init();
   }
 
@@ -109,7 +117,8 @@ export class DataTableComponent implements OnInit, OnChanges {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
 
-    this.displayedCol = this.columns.map(col => col.display ? col.accessorName : undefined);
+    this.displayedCol = this.columns.map(col =>
+      col.display ? col.accessorName : undefined);
 
     if (this.actions) {
       this.displayedCol.push('action');
@@ -120,8 +129,6 @@ export class DataTableComponent implements OnInit, OnChanges {
       }
     }
 
-
     this.displayProgress = false;
   }
-
 }
