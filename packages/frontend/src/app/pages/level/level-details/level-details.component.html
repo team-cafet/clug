@@ -1,11 +1,20 @@
 <div class="leveldetails">
-  <app-header-details resourceName='level'></app-header-details>
-  <app-level-form *ngIf="level" [level]='level'></app-level-form>
-
-  <app-rest-data-table
-  resourceName='member'
-  resourceAPI='member'
-  [resourceColumns]='columnsMember'
-  (ready)='onRestDataTableReady()'
-  ></app-rest-data-table>
+  <div>
+    <app-header-details resourceName="level"></app-header-details>
+  </div>
+  <div class="form">
+    <app-level-form *ngIf="level" [level]="level" ></app-level-form>
+  </div>
+  <div>
+    <h3 i18n="club-add|MemberList@@club-add-memberslist">
+      Level's member list
+    </h3>
+    <app-rest-data-table
+      resourceName="member"
+      resourceAPI="member"
+      action="true"
+      [resourceColumns]="columnsMember"
+      (ready)="onRestDataTableReady()"
+    ></app-rest-data-table>
+  </div>
 </div>

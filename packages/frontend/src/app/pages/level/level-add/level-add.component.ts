@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Level } from 'src/app/core/models';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-level-add',
@@ -9,13 +10,13 @@ import { Router } from '@angular/router';
 })
 export class LevelAddComponent implements OnInit {
   level: Level;
-  constructor(private readonly router: Router) {}
+  constructor(private readonly location: Location) {}
 
   ngOnInit(): void {
     this.level = { name: null, description: null };
   }
 
-  async saved(savedLevel) {
-    await this.router.navigate([ '/level', savedLevel.id ]);
+  saved(savedLevel) {
+    this.location.back();
   }
 }

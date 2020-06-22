@@ -1,4 +1,12 @@
-<div class='clubadd'>
-  <app-header-details resourceName='club'></app-header-details>
-  <app-club-form [club]='club' (saved)='saved($event)'></app-club-form>
+<div class="clubadd">
+  <div>
+    <app-header-details resourceName="club"></app-header-details>
+  </div>
+  <div>
+    <app-club-form
+      [club]="club"
+      (saved)="saved($event)"
+      class="form"
+    ></app-club-form>
+  </div>
 </div>

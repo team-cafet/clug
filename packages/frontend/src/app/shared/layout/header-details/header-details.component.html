@@ -1,10 +1,6 @@
-<div class="headerdetails">
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <button mat-icon-button type="button" [routerLink]="['/', 'app', resourceName]">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <span>{{resourceName}}</span>
-    </mat-toolbar-row>
-  </mat-toolbar>
+<div class="headerdetails">  
+  <button class="button" mat-button type="button" (click)="goBack()">
+    <mat-icon>arrow_back_ios</mat-icon>
+    <span i18n="header-details|Back@@btn-goback">Back</span>
+  </button>
 </div>

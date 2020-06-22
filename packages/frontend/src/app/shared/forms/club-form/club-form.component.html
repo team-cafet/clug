@@ -1,28 +1,29 @@
 <div class="clubform">
-  <form [formGroup]="clubForm" (ngSubmit)="save()">
+  <form #form [formGroup]="clubForm" (ngSubmit)="save()">
+
     <mat-card class="club-card">
-      <mat-form-field appearance="outline" class="full-width">
+
+      <mat-form-field appearance="outline" class="input">
         <mat-label>Designation</mat-label>
         <input matInput formControlName="designation" />
       </mat-form-field>
 
       <br />
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="input">
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
-
+      
       <mat-card-actions>
-        <button
-          mat-button
-          [disabled]="!clubForm.valid"
-          type="submit"
-          color="primary"
-        >
-          Save
-        </button>
+        <app-form-buttons 
+        [disableSave]="!clubForm.valid"
+        [displayDelete]="this.club.id"
+        (saveEvent)="save()"
+        (deleteEvent)="delete()"
+        ></app-form-buttons>
       </mat-card-actions>
+
     </mat-card>
   </form>
 </div>

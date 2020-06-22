@@ -22,6 +22,10 @@ mat-sidenav {
   }
 }
 
+.content {    
+  padding-top: 15px;
+}
+
 @media (min-width: 992px) {
   .main-toolbar {
     .btn-menu {
@@ -33,6 +37,10 @@ mat-sidenav {
     .sidenav-menu {
       display: block;
       width: 250px;
-    }
+    }    
+  }
+
+  .content {    
+    padding: 30px 10% 0 10%;
   }
 }

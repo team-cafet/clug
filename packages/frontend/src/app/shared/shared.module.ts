@@ -8,6 +8,7 @@ import { RestDataTableComponent } from './generic/rest-data-table/rest-data-tabl
 import { RestViewComponent } from './generic/rest-view/rest-view.component';
 import { HeaderDetailsComponent } from './layout/header-details/header-details.component';
 import { LevelFormComponent } from './forms/level-form/level-form.component';
+import { FormButtonsComponent } from './generic/form-buttons/form-buttons.component';
 
 @NgModule({
   imports: [ AppCommonModule ],
@@ -16,6 +17,7 @@ import { LevelFormComponent } from './forms/level-form/level-form.component';
     DeleteDialogComponent,
     RestDataTableComponent,
     RestViewComponent,
+    FormButtonsComponent,
 
     // FORMS
     MemberFormComponent,
@@ -31,6 +33,7 @@ import { LevelFormComponent } from './forms/level-form/level-form.component';
     DeleteDialogComponent,
     RestDataTableComponent,
     RestViewComponent,
+    FormButtonsComponent,
 
     // FORMS
     MemberFormComponent,
@@ -49,5 +52,6 @@ export {
   ClubFormComponent,
   RestDataTableComponent,
   RestViewComponent,
-  LevelFormComponent
+  LevelFormComponent,
+  FormButtonsComponent
 };
