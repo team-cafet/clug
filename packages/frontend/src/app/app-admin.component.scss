@@ -1,7 +1,5 @@
-mat-sidenav-container,
-mat-sidenav-content,
-mat-sidenav {
-  height: 100%;
+mat-sidenav-container {
+  min-height: calc(100vh - 64px);
 }
 
 .main-toolbar {
