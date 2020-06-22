@@ -1,4 +1,11 @@
 <div class="memberadd">
-  <app-header-details resourceName="member"></app-header-details>
-  <app-member-form [member]="member" (saved)="saved($event)"></app-member-form>
+  <div>
+    <app-header-details resourceName="member"></app-header-details>
+  </div>
+  <div>
+    <app-member-form
+      [member]="member"
+      (saved)="saved($event)"
+    ></app-member-form>
+  </div>
 </div>

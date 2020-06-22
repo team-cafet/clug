@@ -5,6 +5,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DeleteDialogComponent } from '../../generic/delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
+import { NotificationComponent } from '../../generic/notification/notification.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-club-form',
@@ -22,7 +24,8 @@ export class ClubFormComponent implements OnInit {
     private readonly clubSrv: ClubService,
     private readonly fb: FormBuilder,
     private readonly dialog: MatDialog,
-    private readonly location: Location
+    private readonly location: Location,
+    private readonly snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +53,7 @@ export class ClubFormComponent implements OnInit {
       this.saved.emit(this.club);
     } catch (error) {
       console.error(error);
-      // throw new Error('Error during save');
+      NotificationComponent.openNotification(this.snackbar, error, 5);
     }
   }
 

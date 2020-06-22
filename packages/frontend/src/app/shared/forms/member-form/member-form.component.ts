@@ -6,7 +6,14 @@ import {
   EventEmitter,
   OnChanges
 } from '@angular/core';
-import { Member, Sexe, displaySexe, Club, Level, Address } from 'src/app/core/models';
+import {
+  Member,
+  Sexe,
+  displaySexe,
+  Club,
+  Level,
+  Address
+} from 'src/app/core/models';
 import {
   MemberService,
   ClubService,
@@ -15,6 +22,11 @@ import {
 } from 'src/app/core/services';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { cleanObjectForSending } from 'src/app/core/functions';
+import { DeleteDialogComponent } from '../../generic/delete-dialog/delete-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { NotificationComponent } from '../../generic/notification/notification.component';
 
 @Component({
   selector: 'app-member-form',
@@ -38,7 +50,10 @@ export class MemberFormComponent implements OnInit, OnChanges {
     private readonly addressSrv: AddressService,
     private readonly clubSrv: ClubService,
     private readonly levelSrv: LevelService,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly dialog: MatDialog,
+    private readonly location: Location,
+    private readonly snackbar: MatSnackBar
   ) {}
 
   async ngOnInit() {
@@ -95,30 +110,53 @@ export class MemberFormComponent implements OnInit, OnChanges {
 
   async save() {
     const cleanedMember = cleanObjectForSending(this.memberForm.value);
-    const address: Address = this.addressForm.value; // object needs a clean function ?
+    const address: Address = this.addressForm.value;
+    let memberResult;
+    let addressResult;
 
-    // TODO: proper validation
-    if (!address.city || !address.country || !address.streetNumber || !address.street || !address.postalCode) {
-      return;
-    }
     try {
       if (this.member.id) {
-        this.member.address = await this.addressSrv.saveOne({
-          id: this.member.address.id,
-          ...address
-        });
-        this.member = await this.memberSrv.saveOne({
+        memberResult = await this.memberSrv.saveOne({
           id: this.member.id,
           ...cleanedMember
         });
+
+        if (address) {
+          addressResult = await this.addressSrv.saveOne({
+            id: this.member.address.id,
+            ...address
+          });
+        }
+
+        this.member = { ...this.member, ...memberResult, address: { ...addressResult } };
+
       } else {
-        this.member.address = await this.addressSrv.addOne(address);
+        addressResult = await this.addressSrv.addOne(address);
         cleanedMember.address = this.member.address.id;
-        this.member = await this.memberSrv.addOne(cleanedMember);
+        memberResult = await this.memberSrv.addOne(cleanedMember);
+        this.member = { ...this.member, ...memberResult, address: { ...addressResult } };
       }
       this.saved.emit(this.member);
     } catch (error) {
       console.error(error);
+      NotificationComponent.openNotification(this.snackbar, error, 5);
     }
+  }
+
+  delete() {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.memberSrv
+          .delete(this.member)
+          .catch(err => console.error(err))
+          .finally(() => {
+            this.location.back();
+          });
+      }
+    });
   }
 }
