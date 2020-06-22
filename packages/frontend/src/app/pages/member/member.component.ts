@@ -1,8 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import {
   displayFinancialStatus,
   displaySexe,
@@ -11,7 +8,7 @@ import {
   FinancialStatus
 } from 'src/app/core/core.module';
 import { DeleteDialogComponent } from '../../shared/shared.module';
-import { SelectionModel } from '@angular/cdk/collections';
+import { DataTableColumn, Actions } from 'src/app/shared/generic/data-table/data-table.component';
 
 @Component({
   selector: 'app-member',
@@ -19,34 +16,79 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: [ './member.component.scss' ]
 })
 export class MemberComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) tableSort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) tablePaginator: MatPaginator;
+
+  columns: DataTableColumn[];
+
+  actions: Actions;
 
   members: Member[];
-  displayedColumns: string[] = [
-    'select',
-    'id',
-    'firstname',
-    'lastname',
-    'sexe',
-    'financialStatus',
-    'phone',
-    'club',
-    'action'
-  ];
 
-  tableDataSource = new MatTableDataSource([]);
+  membersDataTable: Member[];
 
-  tableSelection = new SelectionModel<Member>(true, []);
+  currentSelection: Member[] = [];
 
-  constructor(private readonly memberSrv: MemberService, private readonly dialog: MatDialog) {}
+  constructor(
+    private readonly memberSrv: MemberService,
+    private readonly dialog: MatDialog
+  ) {
+    this.actions = {
+      details: {
+        accessorColID: 'id',
+        display: true,
+        resourceName: 'member'
+      },
+      delete: {
+        deleteFunc: member => this.deleteMember(member),
+        display: true
+      },
+      select: {
+        display: true
+      },
+      paginator: {
+        display: true
+      }
+    };
+
+    this.columns = [
+      {
+        headerName: 'Last Name',
+        accessorName: 'lastname',
+        display: true
+      },
+      {
+        headerName: 'First Name',
+        accessorName: 'firstname',
+        display: true
+      },
+      {
+        headerName: 'Phone',
+        accessorName: 'phone',
+        display: true
+      },
+      {
+        headerName: 'Financial Status',
+        accessorName: 'financialStatus',
+        display: true,
+        customDisplayFunc: element => displayFinancialStatus(element.financialStatus),
+        customCellCSS: element => {
+          switch (element.financialStatus) {
+            case 2:
+              return 'color: red';
+            case 1:
+              return 'color: orange';
+            default:
+              return 'color: green';
+          }
+        }
+      }
+    ];
+
+  }
 
 
   ngOnInit(): void {
-    this.tableDataSource.sort = this.tableSort;
-    this.tableDataSource.paginator = this.tablePaginator;
     this.fetchMembersList().finally(() => {
-      // TODO
+      this.membersDataTable = this.members;
     });
   }
 
@@ -72,7 +114,17 @@ export class MemberComponent implements OnInit {
    */
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.tableDataSource.filter = filterValue.trim().toLowerCase();
+    const STRING_TO_SEARCH = filterValue.trim().toLowerCase();
+    this.membersDataTable = this.members.filter(
+      member => {
+        for (const col in member) {
+          if (member[col] && `${member[col]}`.includes(STRING_TO_SEARCH)) {
+            return true;
+          }
+        }
+        return false;
+      }
+    );
   }
 
   /**
@@ -105,33 +157,14 @@ export class MemberComponent implements OnInit {
       .getAll()
       .then(reqMembers => {
         this.members = reqMembers;
-        this.tableDataSource.data = this.members;
       })
       .catch(err => {
         console.error(err);
       });
   }
 
-  /**
-   * Whether the number of selected elements matches the total
-   * number of rows.
-   */
-  isAllSelected() {
-    const numSelected = this.tableSelection.selected.length;
-    const numRows = this.tableDataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /**
-   * Selects all rows if they are not all selected;
-   * otherwise clear selection.
-   */
-  masterToggle() {
-    if (this.isAllSelected()) {
-      this.tableSelection.clear();
-    } else {
-      this.tableDataSource.data.forEach(row => this.tableSelection.select(row));
-    }
+  changeSelection(selection) {
+    this.currentSelection = selection;
   }
 
   /**
@@ -140,7 +173,7 @@ export class MemberComponent implements OnInit {
    * @param financialStatus
    */
   updateSelectedMemberFinStatusTo(financialStatus: FinancialStatus) {
-    const SELECTED_MEMBER = this.tableSelection.selected;
+    const SELECTED_MEMBER = this.currentSelection;
 
     for (const member of SELECTED_MEMBER) {
       member.financialStatus = financialStatus;
