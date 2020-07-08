@@ -16,10 +16,12 @@ import { LevelAddComponent } from './pages/level/level-add/level-add.component';
 import { LevelDetailsComponent } from './pages/level/level-details/level-details.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'app', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'app',
     component: AppAdminComponent,
+    canActivate: [ AuthGuard ],
     children: [
       { path: '', component: HomeComponent },
       {

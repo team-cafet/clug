@@ -10,7 +10,7 @@ import { RESTService } from 'src/app/core/services/rest.service';
 @Component({
   selector: 'app-rest-data-table',
   templateUrl: './rest-data-table.component.html',
-  styles: []
+  styleUrls: [ './rest-data-table.component.scss' ]
 })
 export class RestDataTableComponent implements OnInit {
 
@@ -88,6 +88,7 @@ export class RestDataTableComponent implements OnInit {
     this.displayedCol = Object.keys(this.resourceColumns);
     if (this.action) {
       this.displayedCol.push('action');
+      this.displayedCol.push('action-mobile');
     }
 
     this.displayProgress = false;
