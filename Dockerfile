@@ -71,11 +71,6 @@ LABEL maintainer="team-cafet"
 
 RUN apk add --no-cache openssl
 
-# ENV DOCKERIZE_VERSION v0.6.1
-# RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-#     && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
-#     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-
 ENV NODE_ENV=production \
     PORT=3100 \
     DATABASE_NAME=clug-db \
@@ -105,11 +100,6 @@ COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/b
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/ormconfig.js /usr/src/app/ormconfig.js
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/public /usr/src/app/public
 
-
-# RUN dockerize -wait tcp://${DATABASE_HOST}:${DATABASE_PORT}
-# RUN npm run migration:run
-
 EXPOSE 3100
 
-# CMD [ "npm run start" ]
 CMD npm run migration:run && npm run start

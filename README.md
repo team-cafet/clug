@@ -19,6 +19,9 @@ See the [Backend Readme](./packages/backend/README.md)
 ### Frontend
 See the [Frontend Readme](./packages/frontend/README.md)
 
+### Sysadmin
+To create your own docker image, just execute ```npm run docker:build```
+
 ## Authors
 - Audrey Huguenin
 - Sebastien Aubert
