@@ -2,37 +2,26 @@
   <button mat-icon-button class="btn-menu" (click)='openMenu()'>
     <mat-icon>menu</mat-icon>
   </button>
-
-  <div class="spacer"></div>
-
-  <button mat-icon-button class="btn-user" [matMenuTriggerFor]="menu" aria-label="Menu for user management">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>exit_to_app</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>  
+  <img class="main__logo" src="/assets/logo/clug-logo-w.svg" alt="logo Clug">
 </mat-toolbar>
 
-<mat-sidenav-container class="main-sidenav-container">
-  <mat-sidenav mode="side" opened class="sidenav-menu" [ngClass]='isMobileMenuOpen ? "sidenav-menu-open" : ""'>
+<mat-sidenav-container class="menu__container">
+  <mat-sidenav mode="side" opened class="menu" [ngClass]='isMobileMenuOpen ? "menu-open" : ""'>
     <mat-nav-list>
       
-      <a routerLink="/app/" routerLinkActive="active">
+      <a routerLink="/app/" routerLinkActive="active" class="menu__item">
         <mat-list-item>Home</mat-list-item>
       </a>
 
-      <a routerLink="/app/member" routerLinkActive="active">
+      <a routerLink="/app/member" routerLinkActive="active" class="menu__item">
         <mat-list-item>Members</mat-list-item>
       </a>
 
-      <a routerLink="/app/club" routerLinkActive="active">
+      <a routerLink="/app/club" routerLinkActive="active" class="menu__item">
         <mat-list-item>Clubs</mat-list-item>
       </a>
 
-      <a routerLink="/app/level" routerLinkActive="active">
+      <a routerLink="/app/level" routerLinkActive="active" class="menu__item">
         <mat-list-item>Levels</mat-list-item>
       </a>
 

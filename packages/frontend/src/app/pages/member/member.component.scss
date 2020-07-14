@@ -6,6 +6,7 @@
   grid-template-areas:
     '. header .'
     '. main .';
+  padding: 2rem;
 
     .header {
       grid-area: header;
@@ -42,5 +43,6 @@
     grid-template-areas:
       '. header .'
       '. main .';
+    padding: 4rem 5rem;
   }
 }

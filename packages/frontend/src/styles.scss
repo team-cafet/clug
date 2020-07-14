@@ -48,24 +48,19 @@ $clug-theme: map_merge(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($clug-theme);
-$test: #0000ff;
 /* You can add global styles to this file, and also import other style files */
 html {
-  --clug-primary: #{map-get($clug-custom-primary, 500)};
-  --clug-secondary: #{map-get($clug-custom-secondary, 500)};
-  --clug-warning: #{map-get($clug-warn, 500)};
-  --clug-title: 2rem;
-  --clug-subtitle: 1.1rem;
-  --clug-text: 0.8rem;
-  --clug-btn-radius: #{$btn-radius};
+    --clug-primary: #{map-get($clug-custom-primary, 500)};
+    --clug-background-color: #{$clug-background-color};
+    --clug-secondary: #{map-get($clug-custom-secondary, 500)};
+    --clug-title:2rem;
+    --clug-subtitle:1.1rem;
+    --clug-text:0.8rem;
+    --clug-btn-radius: #{$btn-radius};
 }
-body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  color: $clug-dark-text;
-}
-.snackbar__error {
-  background-color: var(--clug-warning);
-  font-weight: bolder;
-  font-size:  var(--clug-subtitle);
-}
+html, body {  }
+body { 
+    margin: 0; 
+    font-family: "Roboto", sans-serif;
+    color: $clug-dark-text;
+     }
