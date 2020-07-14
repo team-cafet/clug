@@ -4,9 +4,11 @@ services:
 
   # Main Express.js application container
   app:
-    image: teamcafet/clug-test
+    build: .
+
     depends_on:
       - db
+
     environment:
       DATABASE_NAME: clug-db
       DATABASE_HOST: db
@@ -16,11 +18,12 @@ services:
       DATABASE_SYNCHRONIZE: 0
       DATABASE_DROPSCHEMA: 0
       SETTINGS_JWT_SECRET_OR_PUBLIC_KEY: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
-      NODE_ENV: development 
-    #volumes: 
-    #  - ./test:/usr/src/app
+      NODE_ENV: production 
+      
     ports:
       - 3100:3100
+
+    command: npm start
     #restart: always
     
   db:

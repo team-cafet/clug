@@ -1,0 +1,7 @@
+/docker-compose.yml
+/Dockerfile
+/.env*
+/node_modules
+/README.md
+/packages/frontend/node_modules
+/packages/backend/node_modules

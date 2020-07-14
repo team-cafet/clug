@@ -2,9 +2,9 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "docker:up": "docker-compose -f ./container/docker-compose.yml up -d",
-    "docker:down": "docker-compose -f ./container/docker-compose.yml down",
-    "docker:build": "docker image build -t teamcafet/clug-test -f ./container/app/Dockerfile ."
+    "docker:up": "docker-compose -f docker-compose.yml up -d",
+    "docker:down": "docker-compose -f docker-compose.yml down",
+    "docker:build": "docker image build -t teamcafet/clug-test -f Dockerfile ."
   },
   "devDependencies": {
     "lerna": "^3.20.2"

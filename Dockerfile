@@ -14,7 +14,7 @@
 
 # ------------------------------- BUILDER CONTAINER
 # Node alpine is the smallest build for node js
-FROM node:13-alpine as builder
+FROM node:12-alpine as builder
 
 ENV NODE_ENV=production
 
@@ -29,36 +29,36 @@ RUN addgroup -S clug && \
     mkdir -p /usr/src/app && \
     chown -R clug:clug /usr/src/app
 
-USER clug:clug
-
 WORKDIR /usr/src/app
 
+USER clug:clug
 
 
 ## --------------------- DEPENDENCIES FRONTEND APP
 ## Install dependencies.
 COPY --chown=clug:clug ./packages/frontend/package.json ./packages/frontend/package-lock.json /usr/src/app/frontend/
 WORKDIR /usr/src/app/frontend
-RUN npm ci
+RUN npm ci --dev
+
 
 ## --------------------- DEPENDENCIES BACKEND APP
 ## Install dependencies.
 COPY --chown=clug:clug ./packages/backend/package.json ./packages/backend/package-lock.json /usr/src/app/backend/
 WORKDIR /usr/src/app/backend
-RUN npm ci
+RUN npm ci --dev
 
 
 ## Copy source code into builder container
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/
 COPY --chown=clug:clug ./packages/backend/ /usr/src/app/backend/
 COPY --chown=clug:clug ./packages/frontend/ /usr/src/app/frontend/
 
 ## --------------------- BUILD FRONTEND APP
-WORKDIR /usr/src/app/frontend
+WORKDIR /usr/src/app/frontend/
 RUN npm run build
 
 ## --------------------- BUILD BACKEND APP
-WORKDIR /usr/src/app/backend
+WORKDIR /usr/src/app/backend/
 RUN npm run build:app && \ 
     # npm run build:migrations && \ we have no migration for now so it is desactivated
     npm run build:scripts
@@ -66,7 +66,7 @@ RUN npm run build:app && \
 
 # ------------------------------- APP CONTAINER
 
-FROM node:13-alpine as app
+FROM node:12-alpine as app
 
 LABEL maintainer="team-cafet"
 
@@ -94,6 +94,8 @@ WORKDIR /usr/src/app
 
 
 # Copy the application's compiled files from the builder image.
+COPY --chown=clug:clug --from=builder /usr/src/app/backend/package.json /usr/src/app/package.json
+COPY --chown=clug:clug --from=builder /usr/src/app/backend/package-lock.json /usr/src/app/package-lock.json
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/node_modules /usr/src/app/node_modules
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/build
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/ormconfig.js /usr/src/app/ormconfig.js
