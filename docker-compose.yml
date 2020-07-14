@@ -20,8 +20,6 @@ services:
       
     ports:
       - 3100:3100
-
-    command: npm start
     #restart: always
     
   db:

@@ -21,7 +21,7 @@ ENV NODE_ENV=production
 
 ## Install build toolchain, install node deps and compile native add-ons
 ## (needed for node-gyp --> bcrypt)
-RUN apk add --no-cache python make g++
+RUN apk add --no-cache python make g++ curl
 
 ## Create special user (good practise)
 RUN addgroup -S clug && \
@@ -63,12 +63,18 @@ RUN npm run build:app && \
     npm run build:migrations && \
     npm run build:scripts
 
-
 # ------------------------------- APP CONTAINER
 
 FROM node:12-alpine as app
 
 LABEL maintainer="team-cafet"
+
+RUN apk add --no-cache openssl
+
+# ENV DOCKERIZE_VERSION v0.6.1
+# RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+#     && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+#     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 ENV NODE_ENV=production \
     PORT=3100 \
@@ -99,10 +105,11 @@ COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/b
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/ormconfig.js /usr/src/app/ormconfig.js
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/public /usr/src/app/public
 
-RUN npm run migration:run
+
+# RUN dockerize -wait tcp://${DATABASE_HOST}:${DATABASE_PORT}
+# RUN npm run migration:run
 
 EXPOSE 3100
 
-# Copy the application's compiled files to the build directory when the
-# container runs.
-CMD [ "node", "build/index.js" ]
+# CMD [ "npm run start" ]
+CMD npm run migration:run && npm run start
