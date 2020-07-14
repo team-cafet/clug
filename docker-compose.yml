@@ -15,8 +15,6 @@ services:
       DATABASE_PORT: 5432
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: .Clug-123
-      DATABASE_SYNCHRONIZE: 0
-      DATABASE_DROPSCHEMA: 0
       SETTINGS_JWT_SECRET_OR_PUBLIC_KEY: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
       NODE_ENV: production 
       

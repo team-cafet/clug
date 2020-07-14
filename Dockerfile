@@ -60,7 +60,7 @@ RUN npm run build
 ## --------------------- BUILD BACKEND APP
 WORKDIR /usr/src/app/backend/
 RUN npm run build:app && \ 
-    # npm run build:migrations && \ we have no migration for now so it is desactivated
+    npm run build:migrations && \
     npm run build:scripts
 
 
@@ -77,8 +77,6 @@ ENV NODE_ENV=production \
     DATABASE_PORT=5432 \
     DATABASE_USERNAME=user \
     DATABASE_PASSWORD=password \
-    DATABASE_SYNCHRONIZE=0 \
-    DATABASE_DROPSCHEMA=0 \
     SETTINGS_JWT_SECRET_OR_PUBLIC_KEY=secret
 
 # * Create build && app directory.
@@ -100,6 +98,8 @@ COPY --chown=clug:clug --from=builder /usr/src/app/backend/node_modules /usr/src
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/build
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/ormconfig.js /usr/src/app/ormconfig.js
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/public /usr/src/app/public
+
+RUN npm run migration:run
 
 EXPOSE 3100
 
