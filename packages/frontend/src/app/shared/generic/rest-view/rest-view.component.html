@@ -1,11 +1,11 @@
 <div class="restview">
   <div class="actionline">
     <mat-form-field class="actionline__filter">
-      <mat-label>Filter</mat-label>
+      <mat-label i18n="filter label@@filterLabel">Filter</mat-label>
       <input
         matInput
         (keyup)="applyFilter($event)"
-        placeholder="Filter..."
+        placeholder="Filter..." i18n-placeholder="filter placeholder@@filerPlaceholder"
         value=""
       />
     </mat-form-field>
@@ -20,8 +20,8 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button 
-        mat-menu-item 
+        <button
+        mat-menu-item
         *ngFor="let action of actions.menu.menuActions"
         (click)="action.actFunc(dataSelection)">{{ action.title }}</button>
       </mat-menu>

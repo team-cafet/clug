@@ -46,6 +46,32 @@
         <note priority="1" from="description">confirm</note>
         <note priority="1" from="meaning">generic</note>
       </trans-unit>
+      <trans-unit id="[colDef.headerName]" datatype="html">
+        <source>
+      <x id="INTERPOLATION" equiv-text="{{ colDef.headerName }}"/>
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/generic/data-table/data-table.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="description">data table component header for [colDef.headerName]</note>
+      </trans-unit>
+      <trans-unit id="filterLabel" datatype="html">
+        <source>Filter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/generic/rest-view/rest-view.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="description">filter label</note>
+      </trans-unit>
+      <trans-unit id="filerPlaceholder" datatype="html">
+        <source>Filter...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/generic/rest-view/rest-view.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">filter placeholder</note>
+      </trans-unit>
       <trans-unit id="mem-firstname" datatype="html">
         <source>firstname</source>
         <context-group purpose="location">
@@ -183,13 +209,13 @@
         <note priority="1" from="description">Country</note>
         <note priority="1" from="meaning">member-form</note>
       </trans-unit>
-      <trans-unit id="emailPlaceholder" datatype="html">
-        <source>Email</source>
+      <trans-unit id="passwordPlaceholder" datatype="html">
+        <source>Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/login-form/login-form.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">27</context>
         </context-group>
-        <note priority="1" from="description">login email placeholder</note>
+        <note priority="1" from="description">login password placeholder</note>
       </trans-unit>
       <trans-unit id="btn-goback" datatype="html">
         <source>Back</source>
