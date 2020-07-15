@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
+    "build-fr": "ng build --aot --i18n-file=src/i18n/messages.fr.xlf --i18n-locale=fr",
     "test": "ng test",
     "e2e": "ng e2e",
     "lint": "eslint src/**/*",

@@ -51,4 +51,4 @@ Then a new file from the one above must be created. like message.fr.xlf and all 
 ´´
 <source>Warning !</source><target>Attention!</target>
 ´´
-To build the app in another language: ´´ng build --aot --i18n-file=src/i18n/messages.fr.xlf --i18n-locale=fr --i18n-format=xlf
+To build the app in another language: ´´ng build --aot --i18n-file=src/i18n/messages.fr.xlf --i18n-locale=fr --i18n-format=xlf´´

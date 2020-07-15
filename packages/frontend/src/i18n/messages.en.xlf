@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xliff version="1.2"
-  xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en-US" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="gen-msgdeletetitle" datatype="html">
         <source>
     Warning !
-        </source>
-        <target>
+  </source>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/generic/delete-dialog/delete-dialog.component.html</context>
           <context context-type="linenumber">2</context>
@@ -20,10 +19,10 @@
       <trans-unit id="gen-msgconfirmdelete" datatype="html">
         <source>
       Are you sure to delete this element ?
-        </source>
-        <target>
+    </source>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/generic/delete-dialog/delete-dialog.component.html</context>
           <context context-type="linenumber">6</context>
@@ -34,10 +33,10 @@
       <trans-unit id="gen-cancel" datatype="html">
         <source>
       Cancel
-        </source>
-        <target>
+    </source>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/generic/delete-dialog/delete-dialog.component.html</context>
           <context context-type="linenumber">11</context>
@@ -48,10 +47,10 @@
       <trans-unit id="gen-filter" datatype="html">
         <source>
       Delete
-        </source>
-        <target>
+    </source>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/generic/delete-dialog/delete-dialog.component.html</context>
           <context context-type="linenumber">19</context>
@@ -61,9 +60,9 @@
       </trans-unit>
       <trans-unit id="mem-firstname" datatype="html">
         <source>firstname</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">32</context>
@@ -73,9 +72,9 @@
       </trans-unit>
       <trans-unit id="mem-lastname" datatype="html">
         <source>lastname</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">43</context>
@@ -85,9 +84,9 @@
       </trans-unit>
       <trans-unit id="mem-sexe" datatype="html">
         <source>Sexe</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">51</context>
@@ -97,9 +96,9 @@
       </trans-unit>
       <trans-unit id="mem-birthdate" datatype="html">
         <source>Birthdate</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">64</context>
@@ -109,9 +108,9 @@
       </trans-unit>
       <trans-unit id="mem-phone" datatype="html">
         <source>Phone</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">75</context>
@@ -121,9 +120,9 @@
       </trans-unit>
       <trans-unit id="mem-email" datatype="html">
         <source>Email</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">80</context>
@@ -133,9 +132,9 @@
       </trans-unit>
       <trans-unit id="mem-club" datatype="html">
         <source>Club</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">107</context>
@@ -145,9 +144,9 @@
       </trans-unit>
       <trans-unit id="mem-level" datatype="html">
         <source>Level</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">119</context>
@@ -157,9 +156,9 @@
       </trans-unit>
       <trans-unit id="mem-street" datatype="html">
         <source>Street</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">150</context>
@@ -173,9 +172,9 @@
       </trans-unit>
       <trans-unit id="mem-streetNumber" datatype="html">
         <source>Street Number</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">161</context>
@@ -189,9 +188,9 @@
       </trans-unit>
       <trans-unit id="mem-city" datatype="html">
         <source>City</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">172</context>
@@ -205,9 +204,9 @@
       </trans-unit>
       <trans-unit id="mem-postalCode" datatype="html">
         <source>Postal Code</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">182</context>
@@ -221,9 +220,9 @@
       </trans-unit>
       <trans-unit id="mem-country" datatype="html">
         <source>Country</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
           <context context-type="linenumber">194</context>
@@ -237,9 +236,9 @@
       </trans-unit>
       <trans-unit id="btn-goback" datatype="html">
         <source>Back</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/layout/header-details/header-details.component.html</context>
           <context context-type="linenumber">4</context>
@@ -249,9 +248,9 @@
       </trans-unit>
       <trans-unit id="loginSlogan" datatype="html">
         <source>Log in and manage your club!</source>
-        <target>
-   Connectes toi et gères ton club!
-        </target>
+<target>
+   Traduction
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/login/login.component.html</context>
           <context context-type="linenumber">4</context>
@@ -260,9 +259,9 @@
       </trans-unit>
       <trans-unit id="mem-listofallmember" datatype="html">
         <source>List of all Member</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/member/member.component.html</context>
           <context context-type="linenumber">2</context>
@@ -272,9 +271,9 @@
       </trans-unit>
       <trans-unit id="club-title" datatype="html">
         <source>List of all clubs</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/club/club.component.html</context>
           <context context-type="linenumber">2</context>
@@ -285,10 +284,10 @@
       <trans-unit id="club-add-memberslist" datatype="html">
         <source>
       Club&apos;s member list
-        </source>
-        <target>
+    </source>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/club/club-details/club-details.component.html</context>
           <context context-type="linenumber">11</context>
@@ -302,9 +301,9 @@
       </trans-unit>
       <trans-unit id="totalMembers" datatype="html">
         <source>Total members</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">9</context>
@@ -314,9 +313,9 @@
       </trans-unit>
       <trans-unit id="badPayers" datatype="html">
         <source>Bad payers</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">13</context>
@@ -326,9 +325,9 @@
       </trans-unit>
       <trans-unit id="newMembers" datatype="html">
         <source>New members</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">18</context>
@@ -338,9 +337,9 @@
       </trans-unit>
       <trans-unit id="oldest" datatype="html">
         <source>Youngest member</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">23</context>
@@ -354,9 +353,9 @@
       </trans-unit>
       <trans-unit id="yearsOld" datatype="html">
         <source> years old</source>
-        <target>
+<target>
    Traduction
-        </target>
+  </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">26</context>
