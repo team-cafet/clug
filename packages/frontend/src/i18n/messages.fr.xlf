@@ -8,7 +8,7 @@
     Warning !
         </source>
         <target>
-   Traduction
+   Attention !
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/generic/delete-dialog/delete-dialog.component.html</context>
@@ -22,7 +22,7 @@
       Are you sure to delete this element ?
         </source>
         <target>
-   Traduction
+   Êtes-vous sûr de vouloir supprimer cet élément
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/generic/delete-dialog/delete-dialog.component.html</context>
@@ -36,7 +36,7 @@
       Cancel
         </source>
         <target>
-   Traduction
+   Annuler
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/generic/delete-dialog/delete-dialog.component.html</context>
@@ -50,7 +50,7 @@
       Delete
         </source>
         <target>
-   Traduction
+   Supprimer
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/generic/delete-dialog/delete-dialog.component.html</context>
@@ -62,7 +62,7 @@
       <trans-unit id="mem-firstname" datatype="html">
         <source>firstname</source>
         <target>
-   Traduction
+   prénom
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -74,7 +74,7 @@
       <trans-unit id="mem-lastname" datatype="html">
         <source>lastname</source>
         <target>
-   Traduction
+   nom
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -86,7 +86,7 @@
       <trans-unit id="mem-sexe" datatype="html">
         <source>Sexe</source>
         <target>
-   Traduction
+   Sexe
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -98,7 +98,7 @@
       <trans-unit id="mem-birthdate" datatype="html">
         <source>Birthdate</source>
         <target>
-   Traduction
+   Date de naissance
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -110,7 +110,7 @@
       <trans-unit id="mem-phone" datatype="html">
         <source>Phone</source>
         <target>
-   Traduction
+   Tél.
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -122,7 +122,7 @@
       <trans-unit id="mem-email" datatype="html">
         <source>Email</source>
         <target>
-   Traduction
+   Email
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -134,7 +134,7 @@
       <trans-unit id="mem-club" datatype="html">
         <source>Club</source>
         <target>
-   Traduction
+   Club
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -146,7 +146,7 @@
       <trans-unit id="mem-level" datatype="html">
         <source>Level</source>
         <target>
-   Traduction
+   Niveau
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -158,7 +158,7 @@
       <trans-unit id="mem-street" datatype="html">
         <source>Street</source>
         <target>
-   Traduction
+   Rue
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -174,7 +174,7 @@
       <trans-unit id="mem-streetNumber" datatype="html">
         <source>Street Number</source>
         <target>
-   Traduction
+   N° de rue
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -190,7 +190,7 @@
       <trans-unit id="mem-city" datatype="html">
         <source>City</source>
         <target>
-   Traduction
+   Ville
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -206,7 +206,7 @@
       <trans-unit id="mem-postalCode" datatype="html">
         <source>Postal Code</source>
         <target>
-   Traduction
+   Code Postal
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -222,7 +222,7 @@
       <trans-unit id="mem-country" datatype="html">
         <source>Country</source>
         <target>
-   Traduction
+   Pays
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/forms/member-form/member-form.component.html</context>
@@ -238,7 +238,7 @@
       <trans-unit id="btn-goback" datatype="html">
         <source>Back</source>
         <target>
-   Traduction
+   Retour
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/layout/header-details/header-details.component.html</context>
@@ -261,7 +261,7 @@
       <trans-unit id="mem-listofallmember" datatype="html">
         <source>List of all Member</source>
         <target>
-   Traduction
+   Liste de tous les membres
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/member/member.component.html</context>

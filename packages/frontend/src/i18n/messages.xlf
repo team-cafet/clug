@@ -183,6 +183,14 @@
         <note priority="1" from="description">Country</note>
         <note priority="1" from="meaning">member-form</note>
       </trans-unit>
+      <trans-unit id="emailPlaceholder" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/forms/login-form/login-form.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">login email placeholder</note>
+      </trans-unit>
       <trans-unit id="btn-goback" datatype="html">
         <source>Back</source>
         <context-group purpose="location">
