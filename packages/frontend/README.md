@@ -39,3 +39,16 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ### Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+### i18n
+In the HTML, all the texts that need to be translated must look like this : ``<p class="login__slogan" i18n="login slogan@@loginSlogan">Log in and manage your club!</p>``
+
+The syntax is i18n="Description@@ID"
+
+To generate the file containing all the translable text: ´´ng xi18n --output-path src/i18n´´
+
+Then a new file from the one above must be created. like message.fr.xlf and all `source` tag have to be follow by a `target` tag with the translation. Exemple:
+´´
+<source>Warning !</source><target>Attention!</target>
+´´
+To build the app in another language: ´´ng build --aot --i18n-file=src/i18n/messages.fr.xlf --i18n-locale=fr --i18n-format=xlf
