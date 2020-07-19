@@ -74,11 +74,11 @@ export class MemberComponent implements OnInit {
         accessorName: 'firstname',
         display: true
       },
-      {
-        headerName: 'Phone',
-        accessorName: 'phone',
-        display: true
-      },
+      // {
+      //   headerName: 'Phone',
+      //   accessorName: 'phone',
+      //   display: false
+      // },
       {
         headerName: 'Financial Status',
         accessorName: 'financialStatus',

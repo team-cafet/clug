@@ -23,7 +23,8 @@ const routes: Routes = [
     component: AppAdminComponent,
     canActivate: [ AuthGuard ],
     children: [
-      { path: '', component: HomeComponent },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
       {
         path: 'member',
         component: MemberComponent,

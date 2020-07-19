@@ -8,7 +8,7 @@ export class UserService {
 
   async login(email: string, password: string) {
     try {
-      const req = await this.apiService.post('/auth/login', {
+      const req = await this.apiService.post('auth/login', {
         email,
         password
       });
