@@ -46,16 +46,6 @@
         <note priority="1" from="description">confirm</note>
         <note priority="1" from="meaning">generic</note>
       </trans-unit>
-      <trans-unit id="[colDef.headerName]" datatype="html">
-        <source>
-      <x id="INTERPOLATION" equiv-text="{{ colDef.headerName }}"/>
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/shared/generic/data-table/data-table.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-        <note priority="1" from="description">data table component header for [colDef.headerName]</note>
-      </trans-unit>
       <trans-unit id="filterLabel" datatype="html">
         <source>Filter</source>
         <context-group purpose="location">
@@ -294,17 +284,13 @@
         <note priority="1" from="description">NewMembers</note>
         <note priority="1" from="meaning">home-dashboard</note>
       </trans-unit>
-      <trans-unit id="oldest" datatype="html">
+      <trans-unit id="youngest" datatype="html">
         <source>Youngest member</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-        <note priority="1" from="description">Oldest</note>
+        <note priority="1" from="description">Youngest</note>
         <note priority="1" from="meaning">home-dashboard</note>
       </trans-unit>
       <trans-unit id="yearsOld" datatype="html">
@@ -318,6 +304,15 @@
           <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="description">YearsOld</note>
+        <note priority="1" from="meaning">home-dashboard</note>
+      </trans-unit>
+      <trans-unit id="oldest" datatype="html">
+        <source>Oldest member</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="description">Oldest</note>
         <note priority="1" from="meaning">home-dashboard</note>
       </trans-unit>
     </body>

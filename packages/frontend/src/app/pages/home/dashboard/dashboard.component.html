@@ -1,10 +1,10 @@
 <div class="dashboard">
   <h2>Dashboard</h2>
-  <div 
+  <div
     class="dashboard__container"
     *ngIf="this.statistics"
   >
-    <div class="card totalMembers">  
+    <div class="card totalMembers">
       <mat-icon class="card__icon" aria-hidden="false" color="primary">people</mat-icon>
       <mat-card-content class="card__title" i18n="home-dashboard|TotalMembers@@totalMembers">Total members</mat-card-content>
       <mat-card-title class="card__info"color="primary">{{ this.statistics.membersCount }}</mat-card-title>
@@ -15,18 +15,18 @@
       <mat-card-title class="card__info">{{ this.statistics.membersCount }}</mat-card-title>
     </div>
     <div class="card newMembers">
-      <mat-card-content class="card__title" i18n="home-dashboard|NewMembers@@newMembers">New members</mat-card-content>  
+      <mat-card-content class="card__title" i18n="home-dashboard|NewMembers@@newMembers">New members</mat-card-content>
       <mat-icon class="card__icon" aria-hidden="false" color="primary">group_add</mat-icon>
       <mat-card-title class="card__info" >{{ this.statistics.newMembersCount }}</mat-card-title>
     </div>
     <div class="card youngestMember">
-      <mat-card-content class="card__title" i18n="home-dashboard|Oldest@@oldest">Youngest member</mat-card-content >
+      <mat-card-content class="card__title" i18n="home-dashboard|Youngest@@youngest">Youngest member</mat-card-content >
       <mat-icon class="card__icon" aria-hidden="false" color="primary">update</mat-icon>
       <mat-card-title class="card__info">{{this.statistics.youngestMember.firstname}} {{this.statistics.youngestMember.lastname}}</mat-card-title>
       <mat-card-content class="card__label">{{ this.getAgeFromBirthdate(this.statistics.youngestMember.birthdate)}}  <mat-label i18n="home-dashboard|YearsOld@@yearsOld"> years old</mat-label></mat-card-content >
     </div>
     <div class="card card--accent oldestMember">
-      <mat-card-content class="card__title" i18n="home-dashboard|Oldest@@oldest">Oldest member</mat-card-content >  
+      <mat-card-content class="card__title" i18n="home-dashboard|Oldest@@oldest">Oldest member</mat-card-content >
       <mat-icon class="card__icon" aria-hidden="false" color="accent">history</mat-icon>
       <mat-card-title class="card__info">{{this.statistics.olderMember.firstname}} {{this.statistics.olderMember.lastname}}</mat-card-title>
       <mat-card-content class="card__label">{{this.getAgeFromBirthdate(this.statistics.olderMember.birthdate)}} <mat-label i18n="home-dashboard|YearsOld@@yearsOld"> years old</mat-label></mat-card-content >
