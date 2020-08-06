@@ -1,13 +1,15 @@
 import { ConnectionOptions } from 'typeorm';
 
-export const connectionOptions = ():ConnectionOptions => {
-  
+export const connectionOptions = (): ConnectionOptions => {
   const defaultConnectionOption: ConnectionOptions = {
     type: 'postgres',
-    url:
-      process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost/db',
-    synchronize: true,
-    logging: true
+    host: process.env.TYPEORM_HOST,
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
+    port: Number.parseInt(process.env.DATABASE_PORT, 10),
+    synchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
+    logging: Boolean(process.env.DATABASE_DROPSCHEMA)
   };
 
   switch (process.env.NODE_ENV) {
