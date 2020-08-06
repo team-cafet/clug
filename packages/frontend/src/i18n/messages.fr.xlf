@@ -268,6 +268,17 @@ Mot de passe
           </context-group>
           <note priority="1" from="description">login password placeholder</note>
         </trans-unit>
+        <trans-unit id="loginBtn" datatype="html">
+        <source>Log in</source>
+        <target>
+Se connecter
+          </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/shared/forms/login-form/login-form.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <note priority="1" from="description">login button text</note>
+      </trans-unit>
         <trans-unit id="btn-goback" datatype="html">
           <source>Back</source>
           <target>
@@ -283,7 +294,7 @@ Retour
         <trans-unit id="loginSlogan" datatype="html">
           <source>Log in and manage your club!</source>
           <target>
-Connectes toi et gère ton club!
+Connecte-toi et gère ton club!
           </target>
           <context-group purpose="location">
             <context context-type="sourcefile">src/app/pages/login/login.component.html</context>

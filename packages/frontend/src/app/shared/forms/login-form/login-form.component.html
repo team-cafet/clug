@@ -39,6 +39,7 @@
     <mat-error *ngIf="invalidCredentials">
       Email ou mot de passe incorrect
     </mat-error>
-    <button mat-raised-button color="accent" class="loginform__button" (click)="login()">Log in</button>
+    <button mat-raised-button color="accent" class="loginform__button" (click)="login()">
+      <span i18n="login button text@@loginBtn">Log in</span></button>
   </form>
 </mat-card>

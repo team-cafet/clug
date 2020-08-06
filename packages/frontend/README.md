@@ -54,9 +54,6 @@ Then a new file from the one above must be created. like message.fr.xlf and all 
 ´´
 For placeholder text : ´´i18n-placeholder="login email placeholder@@emailPlaceholder"´´
 
-
-
-
 ## run and config
 The development server can only run one language by instance. For the french version, the command is ´npm run start-fr´.
 
