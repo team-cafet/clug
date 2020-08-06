@@ -16,7 +16,8 @@
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
-          "fr": "src/i18n/messages.fr.xlf"
+          "fr": "src/i18n/messages.fr.xlf",
+
         }
       },
       "architect": {
@@ -67,6 +68,9 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "fr": {
+              "localize": ["fr"]
             }
           }
         },
@@ -79,6 +83,10 @@
           "configurations": {
             "production": {
               "browserTarget": "frontend:build:production"
+            },
+            "fr": {
+              "browserTarget": "frontend:build:fr",
+              "baseHref": ""
             }
           }
         },

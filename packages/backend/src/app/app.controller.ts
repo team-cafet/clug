@@ -9,6 +9,17 @@ export class AppController {
     controller('/api/v1/auth', AuthController)
   ];
 
+  @Get('/fr/*')
+  renderAppFr(ctx: Context) {
+    if (!ctx.request.accepts('html')) {
+      return new HttpResponseNotFound();
+    }
+
+    return createHttpResponseFile({
+      directory: './public/fr',
+      file: 'index.html'
+    });
+  }
   @Get('*')
   renderApp(ctx: Context) {
     if (!ctx.request.accepts('html')) {
@@ -16,7 +27,7 @@ export class AppController {
     }
 
     return createHttpResponseFile({
-      directory: './public',
+      directory: './public/en-US',
       file: 'index.html'
     });
   }

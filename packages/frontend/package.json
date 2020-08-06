@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-fr": "ng serve --configuration=fr",
     "build": "ng build --prod",
     "build-fr": "ng build --i18n-file=src/i18n/messages.fr.xlf --i18n-locale=fr",
     "test": "ng test",
