@@ -82,7 +82,6 @@
           "configurations": {
             "production": {
               "browserTarget": "frontend:build:production",
-              "baseHref": "en"
             },
             "fr": {
               "browserTarget": "frontend:build:fr",
