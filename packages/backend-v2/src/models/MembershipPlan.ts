@@ -9,17 +9,24 @@ import {
   DeleteDateColumn
 } from 'typeorm';
 import { Member } from './Member';
+export enum PlanType {
+  'WEEKLY',
+  'MONTHLY',
+  'QUARTERLY',
+  'BIANNUALY',
+  'YEARLY'
+}
 
 @Entity()
-export class Membership {
+export class MembershipPlan {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'date' })
-  startDate: Date;
+  @Column({ type: 'real', nullable: false })
+  amount: number;
 
-  @Column({ type: 'date', nullable: true })
-  endDate: Date;
+  @Column({ type: 'varchar', nullable: true })
+  description: string;
 
 // ----------------------------- Timestamps
 
@@ -40,4 +47,12 @@ export class Membership {
     { nullable: false }
   )
   member: Member;
+
+  @ManyToOne(
+    type => MembershipPlan,
+    member => member.memberships,
+    { nullable: false }
+  )
+  member: Member;
+
 }
