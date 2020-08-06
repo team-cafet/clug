@@ -369,22 +369,30 @@ Nouveau membre
           <note priority="1" from="description">NewMembers</note>
           <note priority="1" from="meaning">home-dashboard</note>
         </trans-unit>
-        <trans-unit id="oldest" datatype="html">
-          <source>Youngest member</source>
-          <target>
-cadet
+        <trans-unit id="youngest" datatype="html">
+        <source>Youngest member</source>
+        <target>
+Cadet
           </target>
-          <context-group purpose="location">
-            <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
-            <context context-type="linenumber">23</context>
-          </context-group>
-          <context-group purpose="location">
-            <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
-            <context context-type="linenumber">29</context>
-          </context-group>
-          <note priority="1" from="description">Oldest</note>
-          <note priority="1" from="meaning">home-dashboard</note>
-        </trans-unit>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="description">Youngest</note>
+        <note priority="1" from="meaning">home-dashboard</note>
+      </trans-unit>
+        <trans-unit id="oldest" datatype="html">
+        <source>Oldest member</source>
+        <target>
+Aîné
+          </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="description">Oldest</note>
+        <note priority="1" from="meaning">home-dashboard</note>
+      </trans-unit>
         <trans-unit id="yearsOld" datatype="html">
           <source> years old</source>
           <target>
