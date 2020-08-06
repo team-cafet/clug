@@ -16,8 +16,7 @@
       "i18n": {
         "sourceLocale": "en-US",
         "locales": {
-          "fr": "src/i18n/messages.fr.xlf",
-
+          "fr": "src/i18n/messages.fr.xlf"
         }
       },
       "architect": {
@@ -30,7 +29,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "localize": true,
+            "localize": false,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -82,11 +81,12 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "frontend:build:production"
+              "browserTarget": "frontend:build:production",
+              "baseHref": "en"
             },
             "fr": {
               "browserTarget": "frontend:build:fr",
-              "baseHref": ""
+              "baseHref": "fr"
             }
           }
         },
