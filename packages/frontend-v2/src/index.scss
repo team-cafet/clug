@@ -1,0 +1,28 @@
+/*! Clug Bootstrap 4 theme */
+@import url('https://fonts.googleapis.com/css?family=Nunito:200,300,400,700');
+$font-family-base: Nunito;
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:200,300,400,700');
+$headings-font-family: Comfortaa;
+
+$enable-grid-classes: false;
+$primary: #ff304f;
+$secondary: #cacaca;
+$success: #015668;
+$danger: #06648c;
+$info: #0f81c7;
+$warning: #0de2ea;
+$light: #ececec;
+$dark: #222222;
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+
+header {
+  // min-height: 10vh;
+}
+
+main {
+}
+
+footer {
+}
