@@ -8,6 +8,7 @@ import { Connection } from 'typeorm';
 import { loadEnv } from '../src/util/loadenv';
 import { AuthCtrl } from '../src/controllers/auth';
 import { executeTestSeeder } from '../src/seeds';
+import { PlanType } from '../src/models/MembershipPlan';
 
 const API_ENDPOINT = '/api/memberships';
 
@@ -32,14 +33,12 @@ describe('Functionnal Membership endpoint testing', () => {
       // managerUser = await authCtrl.login('manager@test.ch', '1234');
       // staffUser = await authCtrl.login('staff@test.ch', '1234');
       // memberUser = await authCtrl.login('user@test.ch', '1234');
-      
     } catch (err) {
       throw err;
     }
   });
 
   describe('Basic Testing with admin', () => {
-
     it('GET ALL', async (done) => {
       request(app)
         .get(API_ENDPOINT)
@@ -54,27 +53,27 @@ describe('Functionnal Membership endpoint testing', () => {
         .expect(200, done);
     });
 
-    // it('PUT', async (done) => {
-    //   request(app)
-    //     .put(`${API_ENDPOINT}/1`)
-    //     .auth(adminUser.token, { type: 'bearer' })
-    //     .send({
-    //       user: { email: 'test-updated@test.ch', password: '12346' }
-    //     })
-    //     .expect(200, done);
-    // });
+    it('PUT', async (done) => {
+      request(app)
+        .put(`${API_ENDPOINT}/1`)
+        .auth(adminUser.token, { type: 'bearer' })
+        .send({
+          endDate: '2020-02-01'
+        })
+        .expect(200, done);
+    });
 
-    // it('POST', async (done) => {
-    //   request(app)
-    //     .post(API_ENDPOINT)
-    //     .auth(adminUser.token, { type: 'bearer' })
-    //     .send({
-    //       organisation: { id: 1 },
-    //       user: { email: 'test@test.ch', password: '1234' }
-    //     })
-    //     .expect(200, done);
-    // });
-
+    it('POST', async (done) => {
+      request(app)
+        .post(API_ENDPOINT)
+        .auth(adminUser.token, { type: 'bearer' })
+        .send({
+          member: { id: 2 },
+          startDate: '2020-08-01',
+          plan: { id: 2 }
+        })
+        .expect(200, done);
+    });
   });
 
   describe('Testing with staff', () => {
