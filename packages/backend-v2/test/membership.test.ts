@@ -70,6 +70,7 @@ describe('Functionnal Membership endpoint testing', () => {
         .send({
           member: { id: 2 },
           startDate: '2020-08-01',
+          endDate: '2020-09-01',
           plan: { id: 2 }
         })
         .expect(200, done);

@@ -136,12 +136,14 @@ export const executeTestSeeder = async () => {
     membershipRepo.create([
       {
         member: member1,
-        startDate: '2000-01-01',
+        startDate: '2020-01-01',
+        endDate: '2020-02-01',
         plan : plan1
       },
       {
         member: member2,
-        startDate: '2005-01-01',
+        startDate: '2020-01-01',
+        endDate: '2021-01-01',
         plan : plan2
       }
     ])
