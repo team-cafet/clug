@@ -37,15 +37,19 @@ export class Organisation {
 
   // ----------------------------- Relations
 
-  @OneToMany((type) => Member, (member) => member.club)
-  members: Member[];
+  @OneToMany((type) => Member, (member) => member.club, { nullable: true })
+  members?: Member[];
 
   @OneToMany((type) => Club, (club) => club.organisation)
-  clubs: Club[];
+  clubs?: Club[];
 
   @OneToMany((type) => MemberLabel, (label) => label.organisation)
   memberLabels: MemberLabel[];
 
-  @OneToMany((type) => MembershipPlan, (MembershipPlan) => MembershipPlan.club)
-  membershipPlans: MembershipPlan[];
+  @OneToMany(
+    (type) => MembershipPlan,
+    (MembershipPlan) => MembershipPlan.club,
+    { nullable: true }
+  )
+  membershipPlans?: MembershipPlan[];
 }
