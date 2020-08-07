@@ -6,9 +6,11 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn
+  DeleteDateColumn,
+  OneToMany
 } from 'typeorm';
 import { Member } from './Member';
+import { MembershipPlan } from './MembershipPlan';
 
 @Entity()
 export class Membership {
@@ -40,4 +42,11 @@ export class Membership {
     { nullable: false }
   )
   member: Member;
+
+  @ManyToOne(
+    type => MembershipPlan,
+    membershipPlan => membershipPlan.memberships,
+    { nullable: false }
+  )
+  plan: MembershipPlan;
 }

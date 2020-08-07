@@ -9,6 +9,7 @@ import {
   DeleteDateColumn
 } from 'typeorm';
 import { Member } from './Member';
+import { Membership } from './Membership';
 export enum PlanType {
   'WEEKLY',
   'MONTHLY',
@@ -28,7 +29,15 @@ export class MembershipPlan {
   @Column({ type: 'varchar', nullable: true })
   description: string;
 
-// ----------------------------- Timestamps
+  @Column({
+    type: 'enum',
+    enum: PlanType,
+    default: PlanType.MONTHLY,
+    nullable: false
+  })
+  name: PlanType;
+
+  // ----------------------------- Timestamps
 
   @CreateDateColumn()
   createdAt: Date;
@@ -40,19 +49,10 @@ export class MembershipPlan {
   deletedAt: Date;
 
   // ----------------------------- Relations
-  
-  @ManyToOne(
-    type => Member,
-    member => member.memberships,
-    { nullable: false }
-  )
-  member: Member;
 
-  @ManyToOne(
-    type => MembershipPlan,
-    member => member.memberships,
-    { nullable: false }
-  )
-  member: Member;
-
+  @ManyToOne((type) => Membership, (membership) => membership.plan, {
+    nullable: true,
+    onDelete: 'NO ACTION'
+  })
+  memberships: Membership;
 }

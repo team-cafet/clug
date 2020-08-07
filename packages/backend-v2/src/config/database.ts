@@ -9,7 +9,7 @@ export const connectionOptions = (): ConnectionOptions => {
     database: process.env.DATABASE_NAME,
     port: Number.parseInt(process.env.DATABASE_PORT, 10),
     synchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
-    logging: Boolean(process.env.DATABASE_DROPSCHEMA)
+    dropSchema: Boolean(process.env.DATABASE_DROPSCHEMA)
   };
 
   switch (process.env.NODE_ENV) {
