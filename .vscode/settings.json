@@ -2,7 +2,8 @@
   "eslint.workingDirectories": [
     "./packages/backend",
     "./packages/backend-v2",
-    "./packages/frontend"
+    "./packages/frontend",
+    "./packages/frontend-v2"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
