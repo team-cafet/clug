@@ -75,6 +75,25 @@ describe('Functionnal Membership endpoint testing', () => {
         })
         .expect(200, done);
     });
+    it('DELETE', async (done) => {
+      request(app)
+        .delete(`${API_ENDPOINT}/3`)
+        .auth(adminUser.token, { type: 'bearer' })
+        .expect(200, done);
+    });
+
+    it('SHOULD NOT HAVE THE ENDDATE BEFORE THE STARTDATE', async (done) => {
+      request(app)
+        .post(API_ENDPOINT)
+        .auth(adminUser.token, { type: 'bearer' })
+        .send({
+          member: { id: 2 },
+          startDate: '2020-08-01',
+          endDate: '2020-07-01',
+          plan: { id: 2 }
+        })
+        .expect(400, done);
+    });
   });
 
   describe('Testing with staff', () => {

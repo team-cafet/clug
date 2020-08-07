@@ -14,7 +14,7 @@ import { JWT_SECRET } from './config/auth';
 import { apiErrorHandler } from './middlewares/api-error-handler';
 import { paymentRouter } from './routes/payment';
 import { paymentRequestRouter } from './routes/payment-request';
-import { membershipRouter } from './routes/membership';
+import { membershipRouter } from './routes/membership.route';
 import { memberLabelRouter } from './routes/member-label';
 
 export const initApp = (): express.Express => {
