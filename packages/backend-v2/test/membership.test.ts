@@ -88,8 +88,21 @@ describe('Functionnal Membership endpoint testing', () => {
         .auth(adminUser.token, { type: 'bearer' })
         .send({
           member: { id: 2 },
-          startDate: '2020-08-01',
-          endDate: '2020-07-01',
+          startDate: '2020-09-01',
+          endDate: '2020-06-01',
+          plan: { id: 2 }
+        })
+        .expect(400, done);
+    });
+
+    it('SHOULD NOT HAVE MULTIPLE MEMBERSHIP ACTIVE FOR THE SAME MEMBER', async (done) => {
+      request(app)
+        .post(API_ENDPOINT)
+        .auth(adminUser.token, { type: 'bearer' })
+        .send({
+          member: { id: 2 },
+          startDate: '2020-07-01',
+          endDate: '2020-10-01',
           plan: { id: 2 }
         })
         .expect(400, done);
