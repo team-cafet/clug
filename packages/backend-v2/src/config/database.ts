@@ -8,10 +8,9 @@ export const connectionOptions = (): ConnectionOptions => {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     port: Number.parseInt(process.env.DATABASE_PORT, 10),
-    synchronize: Boolean(process.env.DATABASE_SYNCHRONIZE),
-    dropSchema: Boolean(process.env.DATABASE_DROPSCHEMA)
+    synchronize: (process.env.DATABASE_SYNCHRONIZE) == 'true',
+    dropSchema: (process.env.DATABASE_DROPSCHEMA) == 'true'
   };
-
   switch (process.env.NODE_ENV) {
     case 'production':
       return { ...defaultConnectionOption, logging: false, synchronize: false };
@@ -21,6 +20,7 @@ export const connectionOptions = (): ConnectionOptions => {
         ...defaultConnectionOption,
         logging: false,
         dropSchema: true,
+        synchronize: true,
         entities: [__dirname + '/../models/*.{js,ts}']
       };
 
