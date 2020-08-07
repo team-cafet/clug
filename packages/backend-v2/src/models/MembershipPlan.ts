@@ -10,12 +10,14 @@ import {
 } from 'typeorm';
 import { Member } from './Member';
 import { Membership } from './Membership';
+import { Club } from './Club';
+import { Organisation } from './Organisation';
 export enum PlanType {
-  'WEEKLY',
-  'MONTHLY',
-  'QUARTERLY',
-  'BIANNUALY',
-  'YEARLY'
+  'hebdomadaire',
+  'mensuel',
+  'trimestriel',
+  'semestriel',
+  'annuel',
 }
 
 @Entity()
@@ -24,7 +26,7 @@ export class MembershipPlan {
   id: number;
 
   @Column({ type: 'real', nullable: false })
-  amount: number;
+  price: number;
 
   @Column({ type: 'varchar', nullable: true })
   description: string;
@@ -32,10 +34,13 @@ export class MembershipPlan {
   @Column({
     type: 'enum',
     enum: PlanType,
-    default: PlanType.MONTHLY,
+    default: PlanType.mensuel,
     nullable: false
   })
-  name: PlanType;
+  type: PlanType;
+
+  @Column({ type: 'boolean', nullable: false })
+  tacit: boolean;
 
   // ----------------------------- Timestamps
 
@@ -55,4 +60,18 @@ export class MembershipPlan {
     onDelete: 'NO ACTION'
   })
   memberships: Membership;
+
+  @ManyToOne((type) => Club, (club) => club.membershipPlans, {
+    onDelete: 'NO ACTION',
+    nullable: true
+  })
+  club?: Club;
+
+  @ManyToOne((type) => Organisation, (organisation) => organisation.membershipPlans, {
+    onDelete: 'NO ACTION',
+    nullable: false,
+    eager: true
+  })
+  organisation: Organisation;
+
 }

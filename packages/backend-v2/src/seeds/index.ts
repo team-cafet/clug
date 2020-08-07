@@ -119,11 +119,11 @@ export const executeTestSeeder = async () => {
   const [plan1, plan2] = await membershipPlanRepo.save(
     membershipPlanRepo.create([
       {
-        name: PlanType.MONTHLY,
+        name: PlanType.mensuel,
         amount: 100
       },
       {
-        name: PlanType.YEARLY,
+        name: PlanType.annuel,
         amount: 800
       }
     ])

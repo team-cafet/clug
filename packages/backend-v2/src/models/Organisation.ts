@@ -11,6 +11,7 @@ import {
 import { Member } from './Member';
 import { Club } from './Club';
 import { MemberLabel } from './MemberLabel';
+import { MembershipPlan } from './MembershipPlan';
 
 @Entity()
 export class Organisation {
@@ -44,4 +45,7 @@ export class Organisation {
 
   @OneToMany((type) => MemberLabel, (label) => label.organisation)
   memberLabels: MemberLabel[];
+
+  @OneToMany((type) => MembershipPlan, (MembershipPlan) => MembershipPlan.club)
+  membershipPlans: MembershipPlan[];
 }
