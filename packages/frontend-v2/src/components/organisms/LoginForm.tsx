@@ -10,7 +10,6 @@ import { Button } from '../atoms/Button';
 import { Alert } from '../atoms/Alert';
 
 export const LoginForm = () => {
-  const [hasLogin, setHasLogin] = useState(false);
   const [error, setError] = useState<null | { message: string }>(null);
 
   const usernameInp = useRef<HTMLInputElement>(null);
@@ -22,7 +21,7 @@ export const LoginForm = () => {
     return <></>;
   }
 
-  if (hasLogin || globalContext.state.userConfig) {
+  if (globalContext.state.isAuthentified) {
     return <Redirect to="/admin/dashboard" />;
   }
 
@@ -35,9 +34,12 @@ export const LoginForm = () => {
       const password = passwordInp.current?.value
         ? passwordInp.current.value
         : '';
+
       await login(username, password);
-      globalContext.dispatch({ type: GlobalContextActions.LOAD_USER_CONFIG });
-      setHasLogin(true);
+
+      globalContext.dispatch({ type: GlobalContextActions.HAS_LOGIN });
+
+      // setHasLogin(true);
     } catch (err) {
       console.error(err);
       if (err.message) {

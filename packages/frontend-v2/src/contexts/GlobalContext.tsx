@@ -1,12 +1,13 @@
-import React, { useReducer } from 'react';
-import { getUserConfig } from '../services/auth.service';
+import React, { useReducer, useEffect } from 'react';
+import { getUserConfig, getToken } from '../services/auth.service';
+import { logout } from '../services/auth.service';
 
 interface IProps {
   children: any;
 }
 
 interface IGlobalContextState {
-  userConfig: any;
+  isAuthentified: boolean;
 }
 
 interface IGlobalContextAction {
@@ -15,19 +16,13 @@ interface IGlobalContextAction {
 }
 
 export enum GlobalContextActions {
-  LOAD_USER_CONFIG,
+  INIT_APP,
+  HAS_LOGIN,
+  LOGOUT,
 }
 
-export const loadUserConfig = (
-  state: IGlobalContextState
-): IGlobalContextState => {
-  const userConfig = getUserConfig();
-
-  return { ...state, userConfig };
-};
-
 const INITIAL_STATE: IGlobalContextState = {
-  userConfig: null,
+  isAuthentified: false,
 };
 
 export const GlobalContext = React.createContext<{
@@ -38,16 +33,26 @@ export const GlobalContext = React.createContext<{
 export const GlobalContextProvider = (props: IProps) => {
   const [state, dispatch] = useReducer(
     (state: IGlobalContextState, action: IGlobalContextAction) => {
+      console.log(state, action);
       switch (action.type) {
-        case GlobalContextActions.LOAD_USER_CONFIG:
-          loadUserConfig(state);
-          return state;
+        case GlobalContextActions.INIT_APP:
+          return { ...state, isAuthentified: getToken() !== null };
+
+        case GlobalContextActions.HAS_LOGIN:
+          return { ...state, isAuthentified: true };
+
+        case GlobalContextActions.LOGOUT:
+          logout();
+          return INITIAL_STATE;
+
         default:
           return state;
       }
     },
     INITIAL_STATE
   );
+
+  useEffect(() => dispatch({ type: GlobalContextActions.INIT_APP }), []);
 
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>

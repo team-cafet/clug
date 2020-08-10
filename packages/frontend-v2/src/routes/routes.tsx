@@ -7,6 +7,7 @@ import { AdminLayout } from '../components/template/AdminLayout';
 import { BasicLayout } from '../components/template/BasicLayout';
 import { Login } from '../components/pages/Login';
 import { Home } from '../components/pages/Home';
+import { Logout } from '../components/pages/Logout';
 
 export const Routes = () => (
   <Switch>
@@ -25,6 +26,12 @@ export const Routes = () => (
     <Route path="/login">
       <BasicLayout>
         <Login />
+      </BasicLayout>
+    </Route>
+
+    <Route path="/logout">
+      <BasicLayout>
+        <Logout />
       </BasicLayout>
     </Route>
   </Switch>

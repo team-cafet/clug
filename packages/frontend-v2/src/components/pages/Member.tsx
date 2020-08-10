@@ -23,7 +23,7 @@ export const Member = () => {
         {members.map((member) => (
           <div key={member.id}>
             <div>{member.id}</div>
-            <div>{member?.user?.email}</div>
+            <div>{member.user?.email}</div>
           </div>
         ))}
       </div>

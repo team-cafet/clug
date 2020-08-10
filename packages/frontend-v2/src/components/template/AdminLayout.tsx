@@ -26,15 +26,37 @@ export const AdminLayout = (props: IProps) => {
   return (
     <>
       <div id="adminlayout">
-        <div className="navbar navbar-dark bg-primary">
-          <Link to="/admin/dashboard" className="navbar-brand">
+        <div className="navbar navbar-dark bg-primary flex-md-nowrap p-0">
+          <Link
+            to="/admin/dashboard"
+            className="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+          >
             Clug
           </Link>
+          <button
+            className="navbar-toggler position-absolute d-md-none collapsed"
+            type="button"
+            data-toggle="collapse"
+            data-target="#sidebarMenu"
+            aria-controls="sidebarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <ul className="navbar-nav px-3">
+            <li className="nav-item text-nowrap">
+              <Link className="nav-link" to="/logout">
+                Sign out
+              </Link>
+            </li>
+          </ul>
         </div>
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-3 d-none d-md-block">
-              <ul className="nav flex-column">
+            <div className="col-md-3 col-lg-2 d-md-block sidebar collapse">
+              <ul id="sidebarMenu" className="nav flex-column">
                 {adminLinks.map((link) => (
                   <li className="nav-item" key={link.to}>
                     <Link to={link.to} className="nav-link">
@@ -44,7 +66,9 @@ export const AdminLayout = (props: IProps) => {
                 ))}
               </ul>
             </div>
-            <div className="col main">{props.children}</div>
+            <div className="col-md-9 ml-sm-auto col-lg-10 main">
+              {props.children}
+            </div>
           </div>
         </div>
       </div>

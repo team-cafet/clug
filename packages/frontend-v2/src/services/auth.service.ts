@@ -83,5 +83,6 @@ export function getToken() {
  *
  */
 export function logout() {
+  console.log('tes');
   localStorage.clear();
 }
