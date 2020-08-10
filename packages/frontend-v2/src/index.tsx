@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { App } from './components';
 import * as serviceWorker from './serviceWorker';
 
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.scss';
 
 ReactDOM.render(

@@ -9,14 +9,10 @@ const LS_TOKEN = 'LS_TOKEN';
  * @param {*} password
  */
 export async function login(username: string, password: string) {
-  try {
-    const result: any = await POST('auth/login', { email: username, password });
-    setToken(result.data.token.token);
+    const result: any = await POST('auth/login', { username, password });
+    setToken(result.data.token);
     setUserConfig(UserConfig(result.data.groups, result.data.user));
-    return result;
-  } catch (error) {
-    throw new Error('Password incorrect');
-  }
+    return result;  
 }
 
 /**
@@ -71,7 +67,7 @@ export function getUserConfig() {
  */
 function setToken(token: string) {
   if (!token) {
-    return;
+    throw Error('no_token_defined');
   }
   localStorage.setItem(LS_TOKEN, token);
 }

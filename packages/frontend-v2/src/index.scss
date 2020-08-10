@@ -17,9 +17,14 @@ $dark: #222222;
 @import '~bootstrap/scss/bootstrap.scss';
 
 html {
-  --clug-primary: $primary;
+  /*
+   * CSS variables must be defined with a special scss synthax:
+   * https://sass-lang.com/documentation/breaking-changes/css-vars
+  */
+
+  --clug-primary: #{$primary};
   --clug-background-color: #f5faf9;
-  --clug-secondary: $secondary;
+  --clug-secondary: #{$secondary};
   --clug-title: 2rem;
   --clug-subtitle: 1.1rem;
   --clug-text: 0.8rem;
