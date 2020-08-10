@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react';
-import { getUserConfig, getToken } from '../services/auth.service';
+import { getToken } from '../services/auth.service';
 import { logout } from '../services/auth.service';
 
 interface IProps {

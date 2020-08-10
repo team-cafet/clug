@@ -1,9 +1,9 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { MemberRoutes } from './member.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { Dashboard } from '../components/pages/Dashboard';
-import { Member } from '../components/pages/Member';
 
 const ADMIN_PREFIX = '/admin';
 
@@ -18,7 +18,9 @@ export const AdminRoutes = () => (
     </Route>
 
     <Route path={`${ADMIN_PREFIX}/members`}>
-      <Member />
+      <MemberRoutes />
     </Route>
+
+    <Redirect to={`${ADMIN_PREFIX}/`} />
   </Switch>
 );

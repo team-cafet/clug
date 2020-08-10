@@ -34,5 +34,11 @@ export const Routes = () => (
         <Logout />
       </BasicLayout>
     </Route>
+
+    <Route>
+      <BasicLayout>
+        <h1>404: Nothing to see here....</h1>
+      </BasicLayout>
+    </Route>
   </Switch>
 );

@@ -33,17 +33,6 @@ export const AdminLayout = (props: IProps) => {
           >
             Clug
           </Link>
-          <button
-            className="navbar-toggler position-absolute d-md-none collapsed"
-            type="button"
-            data-toggle="collapse"
-            data-target="#sidebarMenu"
-            aria-controls="sidebarMenu"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
 
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap">
