@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 
 interface IProps {
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'success' | 'danger';
   className?: string;
   id?: string;
   children: ReactNode;

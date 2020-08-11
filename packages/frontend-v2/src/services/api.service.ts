@@ -132,7 +132,7 @@ export class APIResource {
    * @param {*} body
    */
   update(id: number, body: any) {
-    return PATCH(`${this.resourceURL}/${id}`, body);
+    return PUT(`${this.resourceURL}/${id}`, body);
   }
 
   /**

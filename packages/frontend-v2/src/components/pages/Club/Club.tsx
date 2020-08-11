@@ -24,7 +24,7 @@ export const Club = () => {
       <h1>Club</h1>
       <div className="container">
         <div className="row">
-          <Link to="/admin/members/add" className="btn btn-primary">
+          <Link to="/admin/clubs/add" className="btn btn-primary">
             Ajouter
           </Link>
         </div>
@@ -50,7 +50,7 @@ const ClubRow = (props: { club: IClub }) => {
       <td>{club.id}</td>
       <td>{club.name}</td>
       <td>
-        <Link to={`/admin/members/${club.id}`}>...</Link>
+        <Link to={`/admin/clubs/${club.id}`}>...</Link>
       </td>
     </tr>
   );

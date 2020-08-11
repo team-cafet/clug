@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { Member } from '../components/pages/Member/Member';
@@ -8,20 +8,24 @@ import { MemberAdd } from '../components/pages/Member/MemberAdd';
 
 const MEMBER_PREFIX = '/admin/members';
 
-export const MemberRoutes = () => (
-  <Switch>
-    <Route path={`${MEMBER_PREFIX}/`} exact>
-      <Member />
-    </Route>
+export const MemberRoutes = () => {
+  const { path, url } = useRouteMatch();
 
-    <Route path={`${MEMBER_PREFIX}/add`}>
-      <MemberAdd />
-    </Route>
+  return (
+    <Switch>
+      <Route path={`${path}`} exact>
+        <Member />
+      </Route>
 
-    <Route path={`${MEMBER_PREFIX}/:id`}>
-      <MemberDetails />
-    </Route>
+      <Route path={`${path}/add`}>
+        <MemberAdd />
+      </Route>
 
-    <Redirect to={`${MEMBER_PREFIX}/`} />
-  </Switch>
-);
+      <Route path={`${path}/:id`}>
+        <MemberDetails />
+      </Route>
+
+      <Redirect to={`${path}`} />
+    </Switch>
+  );
+};

@@ -7,10 +7,10 @@ export const ClubAdd = (props: IProps) => {
   // useEffect(() => {
 
   // }, []);
-
+  console.log('ici');
   return (
     <>
-      <ClubForm />
+      <ClubForm organisationID={1} />
     </>
   );
 };
