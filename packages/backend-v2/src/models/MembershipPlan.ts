@@ -6,7 +6,8 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn
+  DeleteDateColumn,
+  OneToMany
 } from 'typeorm';
 import { Member } from './Member';
 import { Membership } from './Membership';
@@ -55,11 +56,12 @@ export class MembershipPlan {
 
   // ----------------------------- Relations
 
-  @ManyToOne((type) => Membership, (membership) => membership.plan, {
+  @OneToMany((type) => Membership, (membership) => membership.plan, {
     nullable: true,
-    onDelete: 'NO ACTION'
+    onDelete: 'NO ACTION',
+    eager: false
   })
-  memberships: Membership;
+  memberships: Membership[];
 
   @ManyToOne((type) => Club, (club) => club.membershipPlans, {
     onDelete: 'NO ACTION',
