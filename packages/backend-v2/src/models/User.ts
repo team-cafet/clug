@@ -10,7 +10,8 @@ import {
   OneToMany,
   OneToOne,
   BeforeInsert,
-  BeforeUpdate
+  BeforeUpdate,
+  getRepository
 } from 'typeorm';
 import { hash } from 'bcrypt';
 import { BCRYPT_SALT_ROUND } from '../config/auth';
@@ -19,6 +20,7 @@ import { Group } from './Group';
 import { PaymentRequest } from './PaymentRequest';
 import { Staff } from './Staff';
 import { Member } from './Member';
+import { Organisation } from './Organisation';
 
 export enum Sexe {
   'MALE',
@@ -115,19 +117,19 @@ export class User extends BaseEntity {
   group: Group;
 
   @OneToMany((type) => PaymentRequest, (payReq) => payReq.user)
-  paymentRequests: PaymentRequest[];
+  paymentRequests: Promise<PaymentRequest[]>;
 
   @OneToMany((type) => Staff, (staff) => staff.user, {
     onDelete: 'NO ACTION',
     nullable: true
   })
-  staffs: Staff;
+  staffs: Promise<Staff[]>;
 
   @OneToMany((type) => Member, (member) => member.user, {
     onDelete: 'NO ACTION',
     nullable: true
   })
-  members: Member;
+  members: Promise<Member[]>;
 
   // ----------------------------- Getter and Setter
 
@@ -141,6 +143,28 @@ export class User extends BaseEntity {
     } catch (err) {
       logger.error(err);
     }
+  }
+
+  /**
+   * Get the organisation from a user
+   * @returns the organisation or null if the user is not in an organisation
+   */
+  async getUserOrganisation():Promise<Organisation | null> {
+    const staffs = await this.staffs;
+
+    if(!staffs || staffs.length < 1){
+      return null;
+    }
+
+    const loadedStaff = await getRepository(Staff).findOneOrFail(staffs[0].id);
+   
+    const organisation = loadedStaff.organisation;
+
+    if(!organisation){
+      return null;
+    }
+
+    return organisation;
   }
 
   // ----------------------------- Hooks
