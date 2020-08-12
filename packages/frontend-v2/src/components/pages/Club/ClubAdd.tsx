@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ClubForm } from '../../organisms/ClubForm';
+import { getUserInfo } from '../../../services/auth.service';
 
 interface IProps {}
 
 export const ClubAdd = (props: IProps) => {
-  // useEffect(() => {
+  const [orgID, setOrgID] = useState(0);
 
-  // }, []);
-  console.log('ici');
+  useEffect(() => {
+    const userInfo = getUserInfo();
+    if (userInfo?.organisation?.id) {
+      setOrgID(userInfo?.organisation.id);
+    }
+  }, []);
+
   return (
     <>
-      <ClubForm organisationID={1} />
+      <ClubForm organisationID={orgID} />
     </>
   );
 };

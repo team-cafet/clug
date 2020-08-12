@@ -19,6 +19,20 @@ interface ITokenContent {
   permissions: string | string[];
 }
 
+/**
+ * Following inteface must be the same as IUserInfo in backend
+ */
+interface IUserInfo {
+  id: number;
+  username: string;
+  organisation: {
+    id: number;
+  } | null;
+  group: {
+    id: number;
+  };
+}
+
 export class AuthCtrl {
   private userRepository = getRepository(User);
 
@@ -77,8 +91,9 @@ export class AuthCtrl {
   public async login(
     username: string,
     password: string
-  ): Promise<{ user: User; token: string }> {
+  ): Promise<{ user: IUserInfo; token: string }> {
     const user = await this.userRepository.findOne({ username });
+    const organisation = await user.getUserOrganisation();
 
     if (!user) {
       throw new APIError(403, `No user found for username ${username}`);
@@ -94,7 +109,16 @@ export class AuthCtrl {
       user: { username: user.username, group: user.group.name, id: user.id },
       permissions
     });
+    
 
-    return { user, token };
+    return {
+      user: {
+        id: user.id,
+        username: user.username,
+        organisation: !organisation ? null : { id: organisation.id },
+        group: { id: user.group.id }
+      },
+      token
+    };
   }
 }

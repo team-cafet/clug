@@ -1,7 +1,22 @@
 import { POST } from './api.service';
+import { IUser } from '../libs/interfaces/user.interface';
 
-const LS_USER_CONFIG = 'LS_USER_CONFIG';
+const LS_USER_INFO = 'LS_USER_INFO';
 const LS_TOKEN = 'LS_TOKEN';
+
+/**
+ * Following inteface must be the same as IUserInfo in backend
+ */
+interface IUserInfo {
+  id: number;
+  username:string;
+  organisation: {
+    id: number;
+  } | null;
+  group: {
+    id: number
+  };
+}
 
 /**
  *
@@ -9,50 +24,30 @@ const LS_TOKEN = 'LS_TOKEN';
  * @param {*} password
  */
 export async function login(username: string, password: string) {
-    const result: any = await POST('auth/login', { username, password });
-    setToken(result.data.token);
-    setUserConfig(UserConfig(result.data.groups, result.data.user));
-    return result;  
+  const result = await POST('auth/login', { username, password });
+  const data: {user:IUserInfo, token:string} = result?.data;
+  setToken(data.token);
+  setUserInfo(data.user);
+  return result;
 }
 
 /**
  *
- * @param {*} group
- * @param {*} user
+ * @param {*} info
  */
-const UserConfig = (group: any, user: any) => {
-  return { groups: group, user };
-};
-
-/**
- *
- * @param {*} config
- */
-function setUserConfig(config: any) {
-  if (!config) {
+function setUserInfo(info: IUserInfo) {
+  if (!info) {
     return;
   }
 
-  localStorage.setItem(LS_USER_CONFIG, JSON.stringify(config));
+  localStorage.setItem(LS_USER_INFO, JSON.stringify(info));
 }
 
 /**
  *
- * @param {*} key
- * @param {*} value
  */
-export const updateUserConfig = (key: string, value: any) => {
-  const currConfig = getUserConfig();
-  currConfig[key] = value;
-
-  setUserConfig(currConfig);
-};
-
-/**
- *
- */
-export function getUserConfig() {
-  const userConfig = localStorage.getItem(LS_USER_CONFIG);
+export function getUserInfo(): IUserInfo | null {
+  const userConfig = localStorage.getItem(LS_USER_INFO);
 
   if (!userConfig) {
     return null;

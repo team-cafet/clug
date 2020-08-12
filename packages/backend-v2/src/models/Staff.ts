@@ -38,7 +38,7 @@ export class Staff extends BaseEntity {
   @ManyToOne((type) => Organisation, (organisation) => organisation.members, {
     onDelete: 'NO ACTION',
     nullable: true,
-    eager:true
+    eager: true
   })
   organisation: Organisation;
 
