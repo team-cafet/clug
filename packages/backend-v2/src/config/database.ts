@@ -13,7 +13,8 @@ export const connectionOptions = (): ConnectionOptions => {
   };
   switch (process.env.NODE_ENV) {
     case 'production':
-      return { ...defaultConnectionOption, logging: false, synchronize: false };
+      return { ...defaultConnectionOption, logging: false, synchronize: false,
+       };
 
     case 'test':
       return {

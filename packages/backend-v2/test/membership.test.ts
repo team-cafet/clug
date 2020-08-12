@@ -16,7 +16,7 @@ describe('Functionnal Membership endpoint testing', () => {
   let app: express.Express;
   let connection: Connection;
   let adminUser;
-  // let managerUser;
+  let managerUser;
   // let staffUser;
   // let memberUser;
 
@@ -25,19 +25,16 @@ describe('Functionnal Membership endpoint testing', () => {
       loadEnv();
       connection = await loadORM();
       app = initApp();
-
       await executeTestSeeder();
-
       const authCtrl = new AuthCtrl();
       adminUser = await authCtrl.login('admin', '1234');
-      // managerUser = await authCtrl.login('manager@test.ch', '1234');
+      //managerUser = await authCtrl.login('manager@test.ch', '1234');
       // staffUser = await authCtrl.login('staff@test.ch', '1234');
       // memberUser = await authCtrl.login('user@test.ch', '1234');
     } catch (err) {
       throw err;
     }
   });
-
   describe('Basic Testing with admin', () => {
     it('GET ALL', async (done) => {
       request(app)
@@ -109,7 +106,7 @@ describe('Functionnal Membership endpoint testing', () => {
     });
   });
 
-  describe('Testing with staff', () => {
+  describe('Testing with manager', () => {
     //
   });
 
