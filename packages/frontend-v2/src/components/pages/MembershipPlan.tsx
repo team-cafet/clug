@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membershipPlan.service';
@@ -11,7 +11,10 @@ export const MembershipPlan = () => {
     const plans = await membershipPlanService.getAll();
     setPlans(plans?.data);
   }
-  getAllPlans()
+  useEffect(() => {
+    getAllPlans()
+  }, []);
+  
   return (
     <>
       <h1>Gestion des abonnements</h1>

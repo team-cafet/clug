@@ -8,30 +8,23 @@ export const membershipPlanRouter = (): IRouter => {
   const membershipPlanCtrl = new MembershipPlanCtrl();
   const guard = ExpressJWTPermissions();
 
-  const writePermission = guard.check([
-    ['admin'],
-    ['MembershipPlan:write']
-  ]);
+  const writePermission = guard.check([['admin'], ['MembershipPlan:write']]);
 
-  const readPermission = guard.check([
-    ['admin'],
-    ['MembershipPlan:read']
-  ]);
+  const readPermission = guard.check([['admin'], ['MembershipPlan:read']]);
 
-  app.get('/', readPermission ,async (req, res) => {
+  app.get('/', readPermission, async (req, res) => {
     const data = await membershipPlanCtrl.findAll();
     res.send(data);
-    
   });
 
-  app.get('/:id', readPermission , async (req, res) => {
+  app.get('/:id', readPermission, async (req, res) => {
     const id = Number.parseInt(req.params.id);
 
     const data = await membershipPlanCtrl.findOneByID(id);
     res.send(data);
   });
 
-  app.post('/', writePermission,async (req, res) => {
+  app.post('/', writePermission, async (req, res) => {
     const data = await membershipPlanCtrl.store(req.body);
     res.send(data);
   });

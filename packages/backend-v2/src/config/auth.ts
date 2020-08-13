@@ -20,7 +20,9 @@ export const PERMISSIONS = {
     'payment:read',
     'payment:write',
     'paymentRequest:read',
-    'paymentRequest:write'
+    'paymentRequest:write',
+    'membershipPlan:read',
+    'membershipPlan:write',
   ],
   user: [
     'member:read',
