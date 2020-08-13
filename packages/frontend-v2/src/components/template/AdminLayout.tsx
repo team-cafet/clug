@@ -23,7 +23,7 @@ export const AdminLayout = (props: IProps) => {
     },
     {
       displayName: 'Abonnements',
-      to: '/admin/membershipplan',
+      to: '/admin/membershipPlan',
     },
   ];
 

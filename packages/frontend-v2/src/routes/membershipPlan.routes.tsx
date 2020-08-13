@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { MembershipPlan } from '../components/pages/MembershipPlan/MembershipPlan';
 import { MembershipPlanAdd } from '../components/pages/MembershipPlan/MembershipPlanAdd';
 
-const PLAN_PREFIX = '/admin/membershipplan';
+const PLAN_PREFIX = '/admin/membershipPlan';
 
 export const MembershipPlanRoute = () => {
   const { path, url } = useRouteMatch();
@@ -15,6 +15,10 @@ export const MembershipPlanRoute = () => {
       </Route>
 
       <Route path={`${path}/add`}>
+        <MembershipPlanAdd />
+      </Route>
+
+      <Route path={`${path}/update/:id`}>
         <MembershipPlanAdd />
       </Route>
 

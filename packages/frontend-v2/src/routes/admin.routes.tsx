@@ -29,7 +29,7 @@ export const AdminRoutes = () => {
         <Dashboard />
       </Route>
 
-      <Route path={`${path}/membershipplan`}>
+      <Route path={`${path}/membershipPlan`}>
         <MembershipPlanRoute />
       </Route>
 

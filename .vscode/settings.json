@@ -9,7 +9,7 @@
     "source.fixAll.eslint": true
   },
   "eslint.validate": ["javascript", "typescript"],
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "[javascript]": {
     "editor.formatOnSave": false
   },
