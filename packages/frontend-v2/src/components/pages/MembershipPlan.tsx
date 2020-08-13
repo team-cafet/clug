@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
+import { IMembershipPlan, PlanType } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membershipPlan.service';
 
 export const MembershipPlan = () => {
@@ -38,6 +38,9 @@ const MembershipPlanRow = (props: { plan: IMembershipPlan }) => {
     <tr>
       <td>{plan.id}</td>
       <td>{plan.price}</td>
+      <td>{plan.description}</td>
+      <td>{plan.type}</td>
+      <td>{plan.tacit? 'oui': 'non'}</td>
     </tr>
   );
 };

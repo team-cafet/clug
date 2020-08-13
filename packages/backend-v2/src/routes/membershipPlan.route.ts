@@ -8,9 +8,9 @@ export const membershipPlanRouter = (): IRouter => {
   const membershipPlanCtrl = new MembershipPlanCtrl();
   const guard = ExpressJWTPermissions();
 
-  const writePermission = guard.check([['admin'], ['MembershipPlan:write']]);
+  const writePermission = guard.check([['admin', 'manager'], ['membershipPlan:write']]);
 
-  const readPermission = guard.check([['admin'], ['MembershipPlan:read']]);
+  const readPermission = guard.check([['admin', 'manager'], ['membershipPlan:read']]);
 
   app.get('/', readPermission, async (req, res) => {
     const data = await membershipPlanCtrl.findAll();
