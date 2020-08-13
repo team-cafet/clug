@@ -2,10 +2,11 @@ import React from 'react';
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { MemberRoutes } from './member.routes';
 import { ClubRoutes } from './club.routes';
+import { MembershipPlanRoute } from './membershipPlan.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { Dashboard } from '../components/pages/Dashboard';
-import { MembershipPlan } from '../components/pages/MembershipPlan';
+import { MembershipPlan } from '../components/pages/MembershipPlan/MembershipPlan';
 
 export const AdminRoutes = () => {
   const { path, url } = useRouteMatch();
@@ -29,7 +30,7 @@ export const AdminRoutes = () => {
       </Route>
 
       <Route path={`${path}/membershipplan`}>
-        <MembershipPlan />
+        <MembershipPlanRoute />
       </Route>
 
       {/* <Redirect to={`${ADMIN_PREFIX}/`} /> */}

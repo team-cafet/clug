@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { IMembershipPlan, PlanType } from '../../libs/interfaces/membershipPlan.interface';
-import { membershipPlanService } from '../../services/membershipPlan.service';
-import { planTypeMapper } from '../../services/dataMapping.service';
+import { IMembershipPlan, PlanType } from '../../../libs/interfaces/membershipPlan.interface';
+import { membershipPlanService } from '../../../services/membershipPlan.service';
+import { planTypeMapper } from '../../../services/dataMapping.service';
 
 export const MembershipPlan = () => {
   const [plans, setPlans] = useState<IMembershipPlan[]>([])
@@ -10,6 +10,7 @@ export const MembershipPlan = () => {
 
   const getAllPlans = async (): Promise<void> =>{
     const plans = await membershipPlanService.getAll();
+  
     setPlans(plans?.data);
   }
   useEffect(() => {
@@ -20,6 +21,9 @@ export const MembershipPlan = () => {
     <>
       <h1>Gestion des abonnements</h1>
       <div className="row">
+      <Link to="/admin/membershipPlan/add" className="btn btn-primary">
+            Ajouter
+          </Link>
           <table className="table">
           <tbody>
           <tr>
