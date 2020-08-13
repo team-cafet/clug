@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { IMembershipPlan, PlanType } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membershipPlan.service';
+import { planTypeMapper } from '../../services/dataMapping.service';
 
 export const MembershipPlan = () => {
   const [plans, setPlans] = useState<IMembershipPlan[]>([])
@@ -20,7 +21,14 @@ export const MembershipPlan = () => {
       <h1>Gestion des abonnements</h1>
       <div className="row">
           <table className="table">
-            <tbody>
+          <tbody>
+          <tr>
+    <th>prix</th>
+    <th>description</th>
+    <th>type</th>
+    <th>tacit</th>
+  </tr>
+            
 {
 plans.map((plan) =><MembershipPlanRow plan={plan} key={plan.id} />)
 }
@@ -36,10 +44,9 @@ const MembershipPlanRow = (props: { plan: IMembershipPlan }) => {
 
   return (
     <tr>
-      <td>{plan.id}</td>
       <td>{plan.price}</td>
       <td>{plan.description}</td>
-      <td>{plan.type}</td>
+      <td>{planTypeMapper(plan.type)}</td>
       <td>{plan.tacit? 'oui': 'non'}</td>
     </tr>
   );
