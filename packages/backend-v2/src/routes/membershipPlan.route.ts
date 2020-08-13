@@ -10,12 +10,12 @@ export const membershipPlanRouter = (): IRouter => {
 
   const writePermission = guard.check([
     ['admin'],
-    ['Membership:write']
+    ['MembershipPlan:write']
   ]);
 
   const readPermission = guard.check([
     ['admin'],
-    ['Membership:read']
+    ['MembershipPlan:read']
   ]);
 
   app.get('/', readPermission ,async (req, res) => {
@@ -31,7 +31,7 @@ export const membershipPlanRouter = (): IRouter => {
     res.send(data);
   });
 
-  app.post('/', writePermission, membershipPlanCtrl.businessValidation,async (req, res) => {
+  app.post('/', writePermission,async (req, res) => {
     const data = await membershipPlanCtrl.store(req.body);
     res.send(data);
   });
