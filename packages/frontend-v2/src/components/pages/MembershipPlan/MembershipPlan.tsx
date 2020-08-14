@@ -21,7 +21,7 @@ export const MembershipPlan = () => {
     <>
       <h1>Gestion des abonnements</h1>
       <div className="row">
-      <Link to="/admin/membershipPlan/add" className="btn btn-primary">
+      <Link to="/admin/membershipPlans/add" className="btn btn-primary">
             Ajouter
           </Link>
           <table className="table">

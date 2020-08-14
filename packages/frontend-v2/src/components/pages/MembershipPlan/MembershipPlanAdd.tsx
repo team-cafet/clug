@@ -12,10 +12,11 @@ interface IProps {
 export const MembershipPlanAdd = (props: IProps) => {
   const [orgID, setOrgID] = useState(0);
   const [planToUpdate, setPlanToUpdate] = useState<IMembershipPlan>();
-  const {id} = useParams()
+  const {id} = useParams();
   
   useEffect( () => {
     const userInfo = getUserInfo();
+    console.log(userInfo)
     if (userInfo?.organisation?.id) setOrgID(userInfo?.organisation.id);
     const fetchData = async () => {
       const membershipPlan = await membershipPlanService.getByID(id)

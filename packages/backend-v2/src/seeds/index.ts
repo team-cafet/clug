@@ -87,6 +87,10 @@ export const executeTestSeeder = async () => {
       {
         user: { email: 'user-org2@test.ch', password: '1234', group: userGrp },
         organisation: org2
+      },
+      {
+        user: manager,
+        organisation: org1
       }
     ])
   );
