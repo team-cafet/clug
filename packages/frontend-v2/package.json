@@ -47,6 +47,7 @@
   },
   "proxy": "http://localhost:3001",
   "devDependencies": {
+    "@types/react-burger-menu": "^2.6.1",
     "prettier": "^2.0.5"
   }
 }
