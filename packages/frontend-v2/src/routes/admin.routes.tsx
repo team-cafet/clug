@@ -6,7 +6,6 @@ import { MembershipPlanRoute } from './membershipPlan.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { Dashboard } from '../components/pages/Dashboard';
-import { MembershipPlan } from '../components/pages/MembershipPlan/MembershipPlan';
 
 export const AdminRoutes = () => {
   const { path, url } = useRouteMatch();
@@ -29,7 +28,7 @@ export const AdminRoutes = () => {
         <Dashboard />
       </Route>
 
-      <Route path={`${path}/membershipPlan`}>
+      <Route path={`${path}/membershipPlans`}>
         <MembershipPlanRoute />
       </Route>
 

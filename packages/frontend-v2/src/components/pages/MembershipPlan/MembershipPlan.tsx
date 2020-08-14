@@ -53,7 +53,7 @@ const MembershipPlanRow = (props: { plan: IMembershipPlan }) => {
       <td>{plan.description}</td>
       <td>{planTypeMapper(plan.type)}</td>
       <td>{plan.tacit? 'oui': 'non'}</td>
-      <td><Link to={`/admin/membershipPlan/update/${plan.id}`} className="btn btn-primary">
+      <td><Link to={`/admin/membershipPlans/update/${plan.id}`} className="btn btn-primary">
             Modifier
           </Link></td>
     </tr>

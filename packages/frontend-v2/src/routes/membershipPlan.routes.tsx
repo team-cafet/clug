@@ -3,7 +3,7 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { MembershipPlan } from '../components/pages/MembershipPlan/MembershipPlan';
 import { MembershipPlanAdd } from '../components/pages/MembershipPlan/MembershipPlanAdd';
 
-const PLAN_PREFIX = '/admin/membershipPlan';
+const PLAN_PREFIX = '/admin/membershipPlans';
 
 export const MembershipPlanRoute = () => {
   const { path, url } = useRouteMatch();

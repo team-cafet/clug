@@ -8,6 +8,9 @@ import { membershipPlanService } from '../../services/membershipPlan.service';
 
 interface IFormValue {
   price?: number;
+  description?: string;
+  type?: number;
+  tacit?: boolean;
 }
 
 interface IProps {
@@ -15,12 +18,13 @@ interface IProps {
   organisationID: number;
   clubID?: number;
 }
+let setAll = (obj: any, val: any) => Object.keys(obj).forEach(k => obj[k] = val);
+let setNull = (obj: any) => setAll(obj, null);
 
 export const MembershipPlanForm = (props: IProps) => {
-  console.log(props.membershipPlan)
   const initialValues: IFormValue = props.membershipPlan
-    ? {price: props.membershipPlan.price}
-    : {price: 0};
+    ? Object.assign({}, props.membershipPlan)
+    : {price: 0, description: '', type : 1, tacit: false};
 
   const validate = (values: IFormValue) => {
     const errors: any = {};
@@ -62,9 +66,20 @@ export const MembershipPlanForm = (props: IProps) => {
     <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
       {({ isSubmitting, errors }) => (
         <Form>
+          <label htmlFor="price">Prix</label>
           <Field
             className={`form-control ${errors.price ? 'is-invalid' : ''}`}
-            name="price" id="price"
+            name="price"
+          />
+          <label htmlFor="type">Type</label>
+          <Field
+            className={`form-control ${errors.type ? 'is-invalid' : ''}`}
+            name="type"
+          />
+          <label htmlFor="tacit">Tacite</label>
+          <Field
+            className={`form-control ${errors.type ? 'is-invalid' : ''}`}
+            name="tacit" value={initialValues.tacit? 'oui': 'non'}
           />
 
           <Button variant="primary" type="submit" disabled={isSubmitting}>
