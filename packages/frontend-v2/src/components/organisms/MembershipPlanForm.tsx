@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { Alert } from '../atoms/Alert';
@@ -11,6 +11,7 @@ interface IFormValue {
   description?: string;
   type?: number;
   tacit?: boolean;
+  organisation?: {}
 }
 
 interface IProps {
@@ -29,9 +30,7 @@ export const MembershipPlanForm = (props: IProps) => {
   const validate = (values: IFormValue) => {
     const errors: any = {};
 
-    if (!values.price) {
-      errors.name = 'Required';
-    }
+    if (!values.price) errors.price = 'Required'
 
     return errors;
   };
@@ -46,7 +45,8 @@ export const MembershipPlanForm = (props: IProps) => {
       if (props.membershipPlan?.id) {
         await membershipPlanService.update(props.membershipPlan.id, values);
       } else {
-        await membershipPlanService.add({
+        values.organisation = {id: props.organisationID}
+        const newPlan = await membershipPlanService.add({
           ...values,
         });
       }
@@ -57,9 +57,8 @@ export const MembershipPlanForm = (props: IProps) => {
       } else {
         setFieldError('global', 'Erreur serveur...');
       }
-    }
-
-    setSubmitting(false);
+      setSubmitting(false);
+    }    
   };
 
   return (
