@@ -7,8 +7,7 @@ import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface'
 import { membershipPlanService } from '../../services/membershipPlan.service';
 
 interface IFormValue {
-  global: string;
-  name?: string;
+  price?: number;
 }
 
 interface IProps {
@@ -18,17 +17,15 @@ interface IProps {
 }
 
 export const MembershipPlanForm = (props: IProps) => {
+  console.log(props.membershipPlan)
   const initialValues: IFormValue = props.membershipPlan
-    ? {
-        name: props.membershipPlan.description,
-        global: '',
-      }
-    : { name: '', global: '' };
+    ? {price: props.membershipPlan.price}
+    : {price: 0};
 
   const validate = (values: IFormValue) => {
     const errors: any = {};
 
-    if (!values.name) {
+    if (!values.price) {
       errors.name = 'Required';
     }
 
@@ -65,25 +62,10 @@ export const MembershipPlanForm = (props: IProps) => {
     <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
       {({ isSubmitting, errors }) => (
         <Form>
-          <ErrorMessage
-            name="global"
-            component={(props) => (
-              <Alert variant="danger">{props.children}</Alert>
-            )}
+          <Field
+            className={`form-control ${errors.price ? 'is-invalid' : ''}`}
+            name="price" id="price"
           />
-
-          <div className={`form-group`}>
-            <label>Prix</label>
-            <Field
-              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-              name="price"
-            />
-            <ErrorMessage
-              name="price"
-              component="div"
-              className="invalid-feedback"
-            />
-          </div>
 
           <Button variant="primary" type="submit" disabled={isSubmitting}>
             Sauver
