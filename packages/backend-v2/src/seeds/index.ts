@@ -59,7 +59,7 @@ export const executeTestSeeder = async () => {
     ])
   );
 
-  const [staff1] = await staffRepo.save(
+  const [staff1, staff2] = await staffRepo.save(
     staffRepo.create([
       {
         user: {
@@ -68,6 +68,10 @@ export const executeTestSeeder = async () => {
           password: '1234',
           group: userGrp
         },
+        organisation: org1
+      },
+      {
+        user: manager,
         organisation: org1
       }
     ])
@@ -87,10 +91,6 @@ export const executeTestSeeder = async () => {
       {
         user: { email: 'user-org2@test.ch', password: '1234', group: userGrp },
         organisation: org2
-      },
-      {
-        user: manager,
-        organisation: org1
       }
     ])
   );

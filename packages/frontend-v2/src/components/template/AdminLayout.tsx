@@ -40,7 +40,7 @@ export const AdminLayout = (props: IProps) => {
 
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap">
-              <Link className="nav-link" to="/login">
+              <Link className="nav-link" to="/logout">
                 Sign out
               </Link>
             </li>
