@@ -35,7 +35,7 @@ export const MembershipPlan = () => {
   </tr>
             
 {
-plans.map((plan) =><MembershipPlanRow plan={plan} key={plan.id} />)
+plans.map((plan) =><MembershipPlanRow plan={plan} key={plan.id} updateList={getAllPlans}/>)
 }
 </tbody>
               </table>
@@ -44,8 +44,13 @@ plans.map((plan) =><MembershipPlanRow plan={plan} key={plan.id} />)
   );
 };
 
-const MembershipPlanRow = (props: { plan: IMembershipPlan }) => {
-  const { plan } = props;
+const MembershipPlanRow = (props: { plan: IMembershipPlan, updateList: CallableFunction }) => {
+  const { plan, updateList } = props;
+  const deletePlan = async(plan: IMembershipPlan) => {
+    if(!plan) return
+    const deleteResult = await membershipPlanService.delete(plan.id)
+    if(deleteResult) updateList()
+  }
 
   return (
     <tr>
@@ -55,7 +60,8 @@ const MembershipPlanRow = (props: { plan: IMembershipPlan }) => {
       <td>{plan.tacit? 'oui': 'non'}</td>
       <td><Link to={`/admin/membershipPlans/update/${plan.id}`} className="btn btn-primary">
             Modifier
-          </Link></td>
+          </Link>
+          <button  className="btn" onClick={(e) => deletePlan(plan)}>Supprimer</button></td>
     </tr>
   );
 };
