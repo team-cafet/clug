@@ -48,7 +48,7 @@ export const AdminLayout = (props: IProps) => {
           </ul>
       </div>
         <Sidebar links= {adminLinks} pageWrapId={"mainContent"} outerContainerId={"adminLayout"}/>
-        <div className="col-md-9 ml-sm-auto col-lg-10 main" id="mainContent">
+        <div className="container" id="mainContent">
               {props.children}
             </div>
       </div>

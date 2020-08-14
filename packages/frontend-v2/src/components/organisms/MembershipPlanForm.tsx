@@ -62,7 +62,8 @@ export const MembershipPlanForm = (props: IProps) => {
   };
 
   return (
-    <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
+    <div className="responsiveTableContainer">
+      <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
       {({ isSubmitting, errors }) => (
         <Form>
           <label htmlFor="price">Prix</label>
@@ -90,5 +91,6 @@ export const MembershipPlanForm = (props: IProps) => {
         </Form>
       )}
     </Formik>
+    </div>
   );
 };

@@ -20,7 +20,6 @@ export const MembershipPlan = () => {
   return (
     <>
       <h1>Gestion des abonnements</h1>
-      <div className="row">
       <Link to="/admin/membershipPlans/add" className="btn btn-primary">
             Ajouter
           </Link>
@@ -39,7 +38,6 @@ plans.map((plan) =><MembershipPlanRow plan={plan} key={plan.id} updateList={getA
 }
 </tbody>
               </table>
-              </div>
     </>
   );
 };

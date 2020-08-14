@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { slide as Menu } from "react-burger-menu";
+//DOC: https://github.com/negomi/react-burger-menu
+import { slide as Menu } from "react-burger-menu"; 
 import './Sidebar.scss';
 interface IProps {
   links: {displayName: string, to: string}[];
@@ -20,16 +21,5 @@ export const Sidebar = (props: IProps) => {
         ))}
     </Menu>
     </div>
-      
-              /* <ul id="sidebarMenu" className="nav flex-column">
-                {props.links.map((link) => (
-                  <li className="nav-item" key={link.to}>
-                    <Link to={link.to} className="nav-link">
-                      {link.displayName}
-                    </Link>
-                  </li>
-                ))}
-              </ul> */
-
   );
 };
