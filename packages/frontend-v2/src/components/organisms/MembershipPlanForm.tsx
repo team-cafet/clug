@@ -62,7 +62,7 @@ export const MembershipPlanForm = (props: IProps) => {
   };
 
   return (
-    <div className="responsiveTableContainer">
+    <div id="membershipPlanForm">
       <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
       {({ isSubmitting, errors }) => (
         <Form>

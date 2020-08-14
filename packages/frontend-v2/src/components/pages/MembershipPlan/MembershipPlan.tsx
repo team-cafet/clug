@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { IMembershipPlan, PlanType } from '../../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../../services/membershipPlan.service';
 import { planTypeMapper } from '../../../services/dataMapping.service';
+import { MdModeEdit, MdDelete } from "react-icons/md";
 
 export const MembershipPlan = () => {
   const [plans, setPlans] = useState<IMembershipPlan[]>([])
@@ -23,11 +24,11 @@ export const MembershipPlan = () => {
       <Link to="/admin/membershipPlans/add" className="btn btn-primary">
             Ajouter
           </Link>
+          <div  className="responsiveTableContainer">
           <table className="table">
           <tbody>
           <tr>
     <th>prix</th>
-    <th>description</th>
     <th>type</th>
     <th>tacite</th>
     <th>action</th>
@@ -38,6 +39,7 @@ plans.map((plan) =><MembershipPlanRow plan={plan} key={plan.id} updateList={getA
 }
 </tbody>
               </table>
+              </div>
     </>
   );
 };
@@ -53,13 +55,16 @@ const MembershipPlanRow = (props: { plan: IMembershipPlan, updateList: CallableF
   return (
     <tr>
       <td>{plan.price}</td>
-      <td>{plan.description}</td>
       <td>{planTypeMapper(plan.type)}</td>
       <td>{plan.tacit? 'oui': 'non'}</td>
-      <td><Link to={`/admin/membershipPlans/update/${plan.id}`} className="btn btn-primary">
-            Modifier
-          </Link>
-          <button  className="btn" onClick={(e) => deletePlan(plan)}>Supprimer</button></td>
+      <td>
+         <Link to={`/admin/membershipPlans/update/${plan.id}`} className="btn btn-primary btn-sm">
+            <MdModeEdit />
+        </Link>
+          <button className="btn btn-secondary btn-sm" onClick={(e) => deletePlan(plan)}>
+            <MdDelete />
+          </button>
+      </td>
     </tr>
   );
 };
