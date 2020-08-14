@@ -23,7 +23,7 @@ export const Sidebar = (props: IProps) => {
 
   return (
     <div id="sidebar">
-    <Menu {...props} width={'40%'} isOpen={isOpen} onStateChange={(state) => handleStateChange(state)}>
+    <Menu {...props} width={'40%'} isOpen={isOpen} onStateChange={(state) => handleStateChange(state)} disableAutoFocus >
       {props.links.map((link) => (
         <Link className="menu-item" to={link.to} key={link.to}>
           {link.displayName}
