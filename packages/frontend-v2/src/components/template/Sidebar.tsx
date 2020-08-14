@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 //DOC: https://github.com/negomi/react-burger-menu
 import { slide as Menu } from "react-burger-menu"; 
 import './Sidebar.scss';
@@ -10,10 +10,20 @@ interface IProps {
 }
 
 export const Sidebar = (props: IProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsOpen(false) //close sidebar when we change the route
+  }, [location]);
+
+  const handleStateChange = (state: any) => {
+    setIsOpen(state.isOpen)  
+  }
 
   return (
     <div id="sidebar">
-    <Menu {...props} width={'40%'}>
+    <Menu {...props} width={'40%'} isOpen={isOpen} onStateChange={(state) => handleStateChange(state)}>
       {props.links.map((link) => (
         <Link className="menu-item" to={link.to} key={link.to}>
           {link.displayName}
