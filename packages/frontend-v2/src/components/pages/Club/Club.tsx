@@ -21,7 +21,7 @@ export const Club = () => {
 
   return (
     <>
-      <h1>Club</h1>
+      <h1>Clubs</h1>
       <div className="container">
         <div className="row">
           <Link to="/admin/clubs/add" className="btn btn-primary">
