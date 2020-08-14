@@ -15,9 +15,9 @@ export const Sidebar = (props: IProps) => {
     <div id="sidebar">
     <Menu {...props} width={'40%'}>
       {props.links.map((link) => (
-        <a className="menu-item" href={link.to} key={link.to}>
+        <Link className="menu-item" to={link.to} key={link.to}>
           {link.displayName}
-        </a>
+        </Link>
         ))}
     </Menu>
     </div>
