@@ -10,16 +10,20 @@ interface IProps {
 export const AdminLayout = (props: IProps) => {
   const adminLinks = [
     {
-      displayName: 'Dashboard',
+      displayName: 'Tableau de bord',
       to: '/admin/dashboard',
     },
     {
-      displayName: 'Members',
+      displayName: 'Membres',
       to: '/admin/members',
     },
     {
       displayName: 'Clubs',
       to: '/admin/clubs',
+    },
+    {
+      displayName: 'Abonnements',
+      to: '/admin/membershipPlans',
     },
   ];
 

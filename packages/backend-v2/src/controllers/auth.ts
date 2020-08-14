@@ -93,24 +93,17 @@ export class AuthCtrl {
     password: string
   ): Promise<{ user: IUserInfo; token: string }> {
     const user = await this.userRepository.findOne({ username });
+
+    if (!user) throw new APIError(403, `No user found for username ${username}`);
+    if (!user.group) throw new APIError(403, 'This user has no group');
+
     const organisation = await user.getUserOrganisation();
-
-    if (!user) {
-      throw new APIError(403, `No user found for username ${username}`);
-    }
-
-    if (!user.group) {
-      throw new APIError(403, 'This user has no group');
-    }
-
     const permissions = this.getGroupPermission(user.group.name);
-
     const token = await this.getToken(password, user.password, {
       user: { username: user.username, group: user.group.name, id: user.id },
       permissions
     });
     
-
     return {
       user: {
         id: user.id,

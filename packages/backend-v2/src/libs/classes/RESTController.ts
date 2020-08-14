@@ -2,9 +2,11 @@ import {
   Repository,
   FindManyOptions,
   getRepository,
-  UpdateResult
+  UpdateResult,
+  DeleteResult
 } from 'typeorm';
 import { APIError } from './APIError';
+import { MembershipPlan } from 'src/models/MembershipPlan';
 
 export class RESTController<T> {
   constructor(protected repository: Repository<T>) {}
@@ -40,10 +42,11 @@ export class RESTController<T> {
     }
   }
 
-  public async delete(id: number): Promise<UpdateResult> {
-    const entity = await this.findOneByID(id);
+  public async delete(id: number): Promise<DeleteResult> {
+    
+    const entity: MembershipPlan = await this.findOneByID(id);
     try {
-      return this.repository.softDelete(entity);
+      return await this.repository.softDelete(entity.id);
     } catch (err) {
       throw new APIError(500, `Unexpected error: ${err}`);
     }

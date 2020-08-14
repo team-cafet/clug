@@ -14,8 +14,9 @@ import { JWT_SECRET } from './config/auth';
 import { apiErrorHandler } from './middlewares/api-error-handler';
 import { paymentRouter } from './routes/payment';
 import { paymentRequestRouter } from './routes/payment-request';
-import { membershipRouter } from './routes/membership';
+import { membershipRouter } from './routes/membership.route';
 import { memberLabelRouter } from './routes/member-label';
+import { membershipPlanRouter } from './routes/membershipPlan.route';
 
 export const initApp = (): express.Express => {
   const app = express();
@@ -62,6 +63,7 @@ export const initApp = (): express.Express => {
   app.use('/api/memberships', membershipRouter());
   app.use('/api/memberlabels', memberLabelRouter());
   app.use('/api/auth', authRouter());
+  app.use('/api/membershipPlan', membershipPlanRouter());
 
   // 404
   app.use((req, res) => {

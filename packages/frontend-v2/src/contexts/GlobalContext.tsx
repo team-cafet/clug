@@ -33,7 +33,6 @@ export const GlobalContext = React.createContext<{
 export const GlobalContextProvider = (props: IProps) => {
   const [state, dispatch] = useReducer(
     (state: IGlobalContextState, action: IGlobalContextAction) => {
-      console.log(state, action);
       switch (action.type) {
         case GlobalContextActions.INIT_APP:
           return { ...state, isAuthentified: getToken() !== null };

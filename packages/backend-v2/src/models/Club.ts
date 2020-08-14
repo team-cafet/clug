@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { Member } from './Member';
 import { Organisation } from './Organisation';
+import { MembershipPlan } from './MembershipPlan';
 
 @Entity()
 export class Club {
@@ -41,4 +42,7 @@ export class Club {
 
   @ManyToOne((type) => Organisation, (organisation) => organisation.clubs)
   organisation: Organisation;
+
+  @OneToMany((type) => MembershipPlan, (MembershipPlan) => MembershipPlan.club)
+  membershipPlans: MembershipPlan[];
 }

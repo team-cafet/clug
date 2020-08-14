@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 import { MemberRoutes } from './member.routes';
 import { ClubRoutes } from './club.routes';
+import { MembershipPlanRoute } from './membershipPlan.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { Dashboard } from '../components/pages/Dashboard';
@@ -25,6 +26,10 @@ export const AdminRoutes = () => {
 
       <Route path={`${path}/dashboard`}>
         <Dashboard />
+      </Route>
+
+      <Route path={`${path}/membershipPlans`}>
+        <MembershipPlanRoute />
       </Route>
 
       {/* <Redirect to={`${ADMIN_PREFIX}/`} /> */}

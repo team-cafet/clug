@@ -6,9 +6,11 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn
+  DeleteDateColumn,
+  OneToMany
 } from 'typeorm';
 import { Member } from './Member';
+import { MembershipPlan } from './MembershipPlan';
 
 @Entity()
 export class Membership {
@@ -18,10 +20,10 @@ export class Membership {
   @Column({ type: 'date' })
   startDate: Date;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ type: 'date' })
   endDate: Date;
 
-// ----------------------------- Timestamps
+  // ----------------------------- Timestamps
 
   @CreateDateColumn()
   createdAt: Date;
@@ -33,12 +35,16 @@ export class Membership {
   deletedAt: Date;
 
   // ----------------------------- Relations
-  
-  @ManyToOne(
-    type => Member,
-    member => member.memberships,
-    { nullable: false }
-  )
+
+  @ManyToOne((type) => Member, (member) => member.memberships, {
+    nullable: false
+  })
   member: Member;
 
+  @ManyToOne(
+    (type) => MembershipPlan,
+    (membershipPlan) => membershipPlan.memberships,
+    { nullable: false }
+  )
+  plan: MembershipPlan;
 }

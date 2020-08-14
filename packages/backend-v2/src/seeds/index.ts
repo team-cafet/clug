@@ -10,6 +10,7 @@ import { Payment } from '../models/Payment';
 import { PaymentRequest } from '../models/PaymentRequest';
 import { Membership } from '../models/Membership';
 import { MemberLabel } from '../models/MemberLabel';
+import { MembershipPlan, PlanType } from '../models/MembershipPlan';
 
 /**
  * Seeder for testing the app
@@ -24,6 +25,7 @@ export const executeTestSeeder = async () => {
   const paymentRequestRepo = getRepository(PaymentRequest);
   const membershipRepo = getRepository(Membership);
   const memberLabelRepo = getRepository(MemberLabel);
+  const membershipPlanRepo = getRepository(MembershipPlan);
 
   const [adminGrp, managerGrp, userGrp] = await getRepository(Group).save([
     { name: EXISTING_GROUPS.ADMIN },
@@ -57,7 +59,7 @@ export const executeTestSeeder = async () => {
     ])
   );
 
-  const [staff1] = await staffRepo.save(
+  const [staff1, staff2] = await staffRepo.save(
     staffRepo.create([
       {
         user: {
@@ -66,6 +68,10 @@ export const executeTestSeeder = async () => {
           password: '1234',
           group: userGrp
         },
+        organisation: org1
+      },
+      {
+        user: manager,
         organisation: org1
       }
     ])
@@ -114,16 +120,35 @@ export const executeTestSeeder = async () => {
       }
     ])
   );
-
+  const [plan1, plan2] = await membershipPlanRepo.save(
+    membershipPlanRepo.create([
+      {
+        type: PlanType.mensuel,
+        price: 100,
+        organisation: org1,
+        tacit: false
+      },
+      {
+        type: PlanType.annuel,
+        price: 800,
+        organisation: org2,
+        tacit: false
+      }
+    ])
+  );
   await membershipRepo.save(
     membershipRepo.create([
       {
         member: member1,
-        startDate: '2000-01-01'
+        startDate: '2020-01-01',
+        endDate: '2020-02-01',
+        plan : plan1
       },
       {
         member: member2,
-        startDate: '2005-01-01'
+        startDate: '2020-01-01',
+        endDate: '2021-01-01',
+        plan : plan2
       }
     ])
   );

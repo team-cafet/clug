@@ -1,5 +1,5 @@
 import { IRouter } from 'express';
-import { MembershipCtrl } from '../controllers/membership';
+import { MembershipCtrl } from '../controllers/membership.controller';
 import PromiseRouter from 'express-promise-router';
 import ExpressJWTPermissions from 'express-jwt-permissions';
 
@@ -24,14 +24,14 @@ export const membershipRouter = (): IRouter => {
     
   });
 
-  app.get('/:id', readPermission ,async (req, res) => {
+  app.get('/:id', readPermission , async (req, res) => {
     const id = Number.parseInt(req.params.id);
 
     const data = await membershipCtrl.findOneByID(id);
     res.send(data);
   });
 
-  app.post('/', writePermission, async (req, res) => {
+  app.post('/', writePermission, membershipCtrl.businessValidation,async (req, res) => {
     const data = await membershipCtrl.store(req.body);
     res.send(data);
   });
