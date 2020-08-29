@@ -21,6 +21,7 @@ import { Organisation } from './Organisation';
 import { PaymentRequest } from './PaymentRequest';
 import { User } from './User';
 import { MemberLabel } from './MemberLabel';
+import { APIError } from 'src/libs/classes/APIError';
 
 @Entity()
 export class Member extends BaseEntity {
@@ -101,4 +102,5 @@ export class Member extends BaseEntity {
     eager: true
   })
   user: User;
+  
 }

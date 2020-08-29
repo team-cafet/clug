@@ -5,6 +5,7 @@ import ExpressJWTPermissions from 'express-jwt-permissions';
 import { OrganisationCtrl } from '../controllers/organisation';
 import { check } from 'express-validator';
 import { Member } from '../models/Member';
+import { Permissions } from '../config/auth';
 
 export const memberRouter = (): IRouter => {
   const app = PromiseRouter();
@@ -12,8 +13,14 @@ export const memberRouter = (): IRouter => {
   const organisationCtrl = new OrganisationCtrl();
   const guard = ExpressJWTPermissions();
 
-  const readPermission = guard.check([['admin'], ['member:read']]);
-  const writePermission = guard.check([['admin'], ['member:write']]);
+  const readPermission = guard.check([
+    [Permissions.admin],
+    [Permissions.memberR]
+  ]);
+  const writePermission = guard.check([
+    [Permissions.admin],
+    [Permissions.memberLabelW]
+  ]);
 
   app.get('/', readPermission, memberCtrl.getAll);
 

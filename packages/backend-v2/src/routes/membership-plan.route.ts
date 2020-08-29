@@ -2,6 +2,7 @@ import { IRouter } from 'express';
 import PromiseRouter from 'express-promise-router';
 import ExpressJWTPermissions from 'express-jwt-permissions';
 import { MembershipPlanCtrl } from '../controllers/membership-plan';
+import { Permissions } from '../config/auth';
 
 export const membershipPlanRouter = (): IRouter => {
   const app = PromiseRouter();
@@ -9,15 +10,13 @@ export const membershipPlanRouter = (): IRouter => {
   const guard = ExpressJWTPermissions();
 
   const writePermission = guard.check([
-    ['admin'],
-    ['manager']
-    ['membership-plan:write']
+    [Permissions.admin],
+    [Permissions.membershipPlanW]
   ]);
 
   const readPermission = guard.check([
-    ['admin'],
-    ['manager']
-    ['membership-plan:read']
+    [Permissions.admin],
+    [Permissions.membershipPlanW]
   ]);
 
   app.get('/', readPermission, membershipPlanCtrl.getAll);
