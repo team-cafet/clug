@@ -1,5 +1,5 @@
 import { IRouter } from 'express';
-import { MembershipCtrl } from '../controllers/membership.controller';
+import { MembershipCtrl } from '../controllers/membership';
 import PromiseRouter from 'express-promise-router';
 import ExpressJWTPermissions from 'express-jwt-permissions';
 

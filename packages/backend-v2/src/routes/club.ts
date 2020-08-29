@@ -8,23 +8,16 @@ export const clubRouter = (): IRouter => {
   const clubCtrl = new ClubCtrl();
   const guard = ExpressJWTPermissions();
 
-  const writePermission = guard.check([
-    ['admin'],
-    ['club:write']
-  ]);
+  const writePermission = guard.check([['admin'], ['club:write']]);
 
-  const readPermission = guard.check([
-    ['admin'],
-    ['club:read']
-  ]);
+  const readPermission = guard.check([['admin'], ['club:read']]);
 
-  app.get('/', readPermission ,async (req, res) => {
+  app.get('/', readPermission, async (req, res) => {
     const data = await clubCtrl.findAll();
     res.send(data);
-    
   });
 
-  app.get('/:id', readPermission ,async (req, res) => {
+  app.get('/:id', readPermission, async (req, res) => {
     const id = Number.parseInt(req.params.id);
 
     const data = await clubCtrl.findOneByID(id);

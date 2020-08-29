@@ -79,7 +79,7 @@ describe('Functionnal Membership endpoint testing', () => {
         .expect(200, done);
     });
 
-    it('SHOULD NOT HAVE THE ENDDATE BEFORE THE STARTDATE', async (done) => {
+    it('Should not have the endate before the startdate', async (done) => {
       request(app)
         .post(API_ENDPOINT)
         .auth(adminUser.token, { type: 'bearer' })
@@ -92,7 +92,7 @@ describe('Functionnal Membership endpoint testing', () => {
         .expect(400, done);
     });
 
-    it('SHOULD NOT HAVE MULTIPLE MEMBERSHIP ACTIVE FOR THE SAME MEMBER', async (done) => {
+    it('should not have multiple memership active for the same member', async (done) => {
       request(app)
         .post(API_ENDPOINT)
         .auth(adminUser.token, { type: 'bearer' })

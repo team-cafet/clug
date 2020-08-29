@@ -6,10 +6,9 @@ import { Member } from '../components/pages/Member/Member';
 import { MemberDetails } from '../components/pages/Member/MemberDetails';
 import { MemberAdd } from '../components/pages/Member/MemberAdd';
 
-const MEMBER_PREFIX = '/admin/members';
 
 export const MemberRoutes = () => {
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
 
   return (
     <Switch>

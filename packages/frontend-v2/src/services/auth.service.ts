@@ -1,5 +1,4 @@
 import { POST } from './api.service';
-import { IUser } from '../libs/interfaces/user.interface';
 
 const LS_USER_INFO = 'LS_USER_INFO';
 const LS_TOKEN = 'LS_TOKEN';

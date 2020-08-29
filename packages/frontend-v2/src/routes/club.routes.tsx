@@ -7,7 +7,7 @@ import { ClubAdd } from '../components/pages/Club/ClubAdd';
 import { ClubDetails } from '../components/pages/Club/ClubDetails';
 
 export const ClubRoutes = () => {
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
 
   return (
     <Switch>
