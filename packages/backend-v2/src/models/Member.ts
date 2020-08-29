@@ -10,8 +10,6 @@ import {
   ManyToOne,
   OneToMany,
   ManyToMany,
-  OneToOne,
-  JoinColumn,
   JoinTable
 } from 'typeorm';
 import { Club } from './Club';
@@ -21,7 +19,6 @@ import { Organisation } from './Organisation';
 import { PaymentRequest } from './PaymentRequest';
 import { User } from './User';
 import { MemberLabel } from './MemberLabel';
-import { APIError } from 'src/libs/classes/APIError';
 
 @Entity()
 export class Member extends BaseEntity {
