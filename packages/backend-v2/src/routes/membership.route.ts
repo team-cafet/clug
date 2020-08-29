@@ -46,7 +46,7 @@ export const membershipRouter = (): IRouter => {
   app.delete('/:id', writePermission, async (req, res) => {
     const id = Number.parseInt(req.params.id);
 
-    const data = await membershipCtrl.delete(id);
+    const data = await membershipCtrl.remove(id);
     res.send(data);
   });
 

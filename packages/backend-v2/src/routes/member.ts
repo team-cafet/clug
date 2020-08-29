@@ -15,17 +15,9 @@ export const memberRouter = (): IRouter => {
   const readPermission = guard.check([['admin'], ['member:read']]);
   const writePermission = guard.check([['admin'], ['member:write']]);
 
-  app.get('/', readPermission, async (req, res, next) => {
-    const data = await memberCtrl.findAll();
-    res.send(data);
-  });
+  app.get('/', readPermission, memberCtrl.getAll);
 
-  app.get('/:id', readPermission, async (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await memberCtrl.findOneByID(id);
-    res.send(data);
-  });
+  app.get('/:id', readPermission, memberCtrl.getOne);
 
   app.post(
     '/',
@@ -91,7 +83,7 @@ export const memberRouter = (): IRouter => {
       return;
     }
 
-    const data = await memberCtrl.delete(id);
+    const data = await memberCtrl.remove(id);
     res.send(data);
   });
 

@@ -6,6 +6,7 @@ import {
   DeleteResult
 } from 'typeorm';
 import { APIError } from './APIError';
+import { Request, Response } from 'express';
 
 export class RESTController<T> {
   constructor(protected repository: Repository<T>) {}
@@ -41,13 +42,35 @@ export class RESTController<T> {
     }
   }
 
-  public async delete(id: number): Promise<DeleteResult> {
-    
+  public async remove(id: number): Promise<DeleteResult> {
     const entity: any = await this.findOneByID(id);
     try {
       return this.repository.softDelete(entity.id);
     } catch (err) {
       throw new APIError(500, `Unexpected error: ${err}`);
     }
+  }
+
+  public async getAll(req: Request, res: Response): Promise<Response> {
+    return res.send(await this.findAll());
+  }
+
+  public async getOne(req: Request, res: Response): Promise<Response> {
+    const id = Number.parseInt(req.params.id);
+    return res.send(await this.findOneByID(id));
+  }
+
+  public async post(req: Request, res: Response): Promise<Response> {
+    return res.send(await this.store(req.body));
+  }
+
+  public async put(req: Request, res: Response): Promise<Response> {
+    const id = Number.parseInt(req.params.id);
+    return res.send(await this.update(id, req.body));
+  }
+
+  public async delete(req: Request, res: Response): Promise<Response> {
+    const id = Number.parseInt(req.params.id);
+    return res.send(await this.remove(id));
   }
 }

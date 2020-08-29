@@ -12,36 +12,11 @@ export const clubRouter = (): IRouter => {
 
   const readPermission = guard.check([['admin'], ['club:read']]);
 
-  app.get('/', readPermission, async (req, res) => {
-    const data = await clubCtrl.findAll();
-    res.send(data);
-  });
-
-  app.get('/:id', readPermission, async (req, res) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await clubCtrl.findOneByID(id);
-    res.send(data);
-  });
-
-  app.post('/', writePermission, async (req, res) => {
-    const data = await clubCtrl.store(req.body);
-    res.send(data);
-  });
-
-  app.put('/:id', writePermission, async (req, res) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await clubCtrl.update(id, req.body);
-    res.send(data);
-  });
-
-  app.delete('/:id', writePermission, async (req, res) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await clubCtrl.delete(id);
-    res.send(data);
-  });
+  app.get('/', readPermission, clubCtrl.getAll);
+  app.get('/:id', readPermission, clubCtrl.getOne);
+  app.post('/', writePermission, clubCtrl.post);
+  app.put('/:id', writePermission, clubCtrl.put);
+  app.delete('/:id', writePermission, clubCtrl.delete);
 
   return app;
 };

@@ -7,47 +7,16 @@ export const staffRouter = (): IRouter => {
   const app = PromiseRouter();
   const staffCtrl = new StaffCtrl();
   const guard = ExpressJWTPermissions();
-  
-  const writePermission = guard.check([
-    ['admin'],
-    ['staff:write']
-  ]);
 
-  const readPermission = guard.check([
-    ['admin'],
-    ['staff:read']
-  ]);
+  const writePermission = guard.check([['admin'], ['staff:write']]);
 
-  app.get('/', readPermission, async (req, res, next) => {
-    const data = await staffCtrl.findAll();
-    res.send(data);
-  });
+  const readPermission = guard.check([['admin'], ['staff:read']]);
 
-  app.get('/:id', readPermission, async (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await staffCtrl.findOneByID(id);
-    res.send(data);
-  });
-
-  app.post('/', writePermission, async (req, res, next) => {
-    const data = await staffCtrl.store(req.body);
-    res.send(data);
-  });
-
-  app.put('/:id', writePermission, async (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await staffCtrl.update(id, req.body);
-    res.send(data);
-  });
-
-  app.delete('/:id', writePermission, async (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await staffCtrl.delete(id);
-    res.send(data);
-  });
+  app.get('/', readPermission, staffCtrl.getAll);
+  app.get('/:id', readPermission, staffCtrl.getOne);
+  app.post('/', writePermission, staffCtrl.post);
+  app.put('/:id', writePermission, staffCtrl.put);
+  app.delete('/:id', writePermission, staffCtrl.delete);
 
   return app;
 };

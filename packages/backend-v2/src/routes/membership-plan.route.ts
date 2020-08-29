@@ -20,36 +20,11 @@ export const membershipPlanRouter = (): IRouter => {
     ['membership-plan:read']
   ]);
 
-  app.get('/', readPermission, async (req, res) => {
-    const data = await membershipPlanCtrl.findAll();
-    res.send(data);
-  });
-
-  app.get('/:id', readPermission, async (req, res) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await membershipPlanCtrl.findOneByID(id);
-    res.send(data);
-  });
-
-  app.post('/', writePermission, async (req, res) => {
-    const data = await membershipPlanCtrl.store(req.body);
-    res.send(data);
-  });
-
-  app.put('/:id', writePermission, async (req, res) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await membershipPlanCtrl.update(id, req.body);
-    res.send(data);
-  });
-
-  app.delete('/:id', writePermission, async (req, res) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await membershipPlanCtrl.delete(id);
-    res.send(data);
-  });
+  app.get('/', readPermission, membershipPlanCtrl.getAll);
+  app.get('/:id', readPermission, membershipPlanCtrl.getOne);
+  app.post('/', writePermission, membershipPlanCtrl.post);
+  app.put('/:id', writePermission, membershipPlanCtrl.put);
+  app.delete('/:id', writePermission, membershipPlanCtrl.delete);
 
   return app;
 };
