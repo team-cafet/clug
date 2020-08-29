@@ -120,22 +120,24 @@ export const executeTestSeeder = async () => {
       }
     ])
   );
+
   const [plan1, plan2] = await membershipPlanRepo.save(
     membershipPlanRepo.create([
       {
-        type: PlanType.mensuel,
+        type: PlanType.monthly,
         price: 100,
         organisation: org1,
         tacit: false
       },
       {
-        type: PlanType.annuel,
+        type: PlanType.annual,
         price: 800,
         organisation: org2,
         tacit: false
       }
     ])
   );
+
   await membershipRepo.save(
     membershipRepo.create([
       {

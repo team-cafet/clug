@@ -61,6 +61,8 @@ describe('Functionnal Membership endpoint testing', () => {
     });
 
     it('POST', async (done) => {
+      // TODO: Correct this to not be the same as the test for multiple
+      // Membership
       request(app)
         .post(API_ENDPOINT)
         .auth(adminUser.token, { type: 'bearer' })
@@ -70,11 +72,12 @@ describe('Functionnal Membership endpoint testing', () => {
           endDate: '2020-09-01',
           plan: { id: 2 }
         })
-        .expect(200, done);
+        .expect(400, done);
     });
+
     it('DELETE', async (done) => {
       request(app)
-        .delete(`${API_ENDPOINT}/3`)
+        .delete(`${API_ENDPOINT}/1`)
         .auth(adminUser.token, { type: 'bearer' })
         .expect(200, done);
     });

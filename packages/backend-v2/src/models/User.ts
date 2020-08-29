@@ -117,19 +117,19 @@ export class User extends BaseEntity {
   group: Group;
 
   @OneToMany((type) => PaymentRequest, (payReq) => payReq.user)
-  paymentRequests: Promise<PaymentRequest[]>;
+  paymentRequests: PaymentRequest[];
 
   @OneToMany((type) => Staff, (staff) => staff.user, {
     onDelete: 'NO ACTION',
     nullable: true
   })
-  staffs: Promise<Staff[]>;
+  staffs: Staff[];
 
   @OneToMany((type) => Member, (member) => member.user, {
     onDelete: 'NO ACTION',
     nullable: true
   })
-  members: Promise<Member[]>;
+  members: Member[];
 
   // ----------------------------- Getter and Setter
 

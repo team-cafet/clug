@@ -51,25 +51,25 @@ export class RESTController<T> {
     }
   }
 
-  public async getAll(req: Request, res: Response): Promise<Response> {
+  public getAll = async (req: Request, res: Response): Promise<Response> => {
     return res.send(await this.findAll());
   }
 
-  public async getOne(req: Request, res: Response): Promise<Response> {
+  public getOne = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
     return res.send(await this.findOneByID(id));
   }
 
-  public async post(req: Request, res: Response): Promise<Response> {
+  public post = async (req: Request, res: Response): Promise<Response> => {
     return res.send(await this.store(req.body));
   }
 
-  public async put(req: Request, res: Response): Promise<Response> {
+  public put = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
     return res.send(await this.update(id, req.body));
   }
 
-  public async delete(req: Request, res: Response): Promise<Response> {
+  public delete = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
     return res.send(await this.remove(id));
   }

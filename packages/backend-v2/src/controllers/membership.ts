@@ -16,7 +16,7 @@ export class MembershipCtrl extends RESTController<Membership> {
     const data: Membership = req.body;
 
     const validationResult = await Membership.validate(data);
-
+    
     if(validationResult){
       return res.status(validationResult.status).send(validationResult.msg);
     }
