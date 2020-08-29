@@ -30,13 +30,15 @@ export const ClubDetails = (props: IProps) => {
     getAClub();
   }, [id]);
 
+  const onSubmit= ()=>{}
+
   if (!club) {
     return <>loading...</>;
   }
 
   return (
     <>
-      <ClubForm club={club} organisationID={orgID} />
+      <ClubForm club={club} organisationID={orgID} onSubmit={onSubmit}/>
     </>
   );
 };

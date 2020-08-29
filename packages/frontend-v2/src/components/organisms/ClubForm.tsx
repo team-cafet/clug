@@ -14,6 +14,7 @@ interface IFormValue {
 interface IProps {
   club?: IClub;
   organisationID: number;
+  onSubmit: ()=>void;
 }
 
 export const ClubForm = (props: IProps) => {
@@ -49,6 +50,8 @@ export const ClubForm = (props: IProps) => {
           organisation: { id: props.organisationID },
         });
       }
+
+      props.onSubmit();
     } catch (err) {
       console.error(err);
       if (err.message) {

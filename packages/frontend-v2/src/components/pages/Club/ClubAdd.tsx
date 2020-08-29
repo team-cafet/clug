@@ -14,9 +14,13 @@ export const ClubAdd = (props: IProps) => {
     }
   }, []);
 
+  const onSubmit = ()=>{
+    window.history.back();
+  }
+
   return (
     <>
-      <ClubForm organisationID={orgID} />
+      <ClubForm organisationID={orgID} onSubmit={onSubmit}/>
     </>
   );
 };

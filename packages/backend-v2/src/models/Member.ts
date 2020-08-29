@@ -32,14 +32,14 @@ export class Member extends BaseEntity {
 
   // ----------------------------- Financial informations
 
-  @Column({ type: 'real', nullable: true })
+  @Column({ type: 'real', nullable: false, default:0 })
   balance: number;
 
   // ----------------------------- Special information
 
   @Column({ type: 'json', nullable: true })
   customInformations: any;
-
+  
   // ----------------------------- Timestamps
 
   @CreateDateColumn()

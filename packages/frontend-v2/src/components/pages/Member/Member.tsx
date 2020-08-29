@@ -3,6 +3,8 @@ import { memberService } from '../../../services/member.service';
 import { IMember } from '../../../libs/interfaces/member.interface';
 import { Link } from 'react-router-dom';
 
+import './style.scss';
+
 export const Member = () => {
   const [members, setMembers] = useState<IMember[]>([]);
 
@@ -28,6 +30,14 @@ export const Member = () => {
         </div>
         <div className="row">
           <table className="table">
+            <thead>
+              <tr>
+                <th>
+                  Nom
+                </th>
+                <th></th>
+              </tr>
+            </thead>
             <tbody>
               {members.map((member) => (
                 <MemberRow member={member} key={member.id} />
@@ -43,10 +53,13 @@ export const Member = () => {
 const MemberRow = (props: { member: IMember }) => {
   const { member } = props;
 
+  const negativeBalance = member.balance < 0;
+
   return (
-    <tr>
-      <td>{member.id}</td>
-      <td>{member.user?.email}</td>
+    <tr className={negativeBalance ? 'member-table__row--negative-balance' : ''}>
+      <td>
+        {member.user?.firstname} {member.user?.lastname}
+      </td>
       <td>
         <Link to={`/admin/members/${member.id}`}>...</Link>
       </td>

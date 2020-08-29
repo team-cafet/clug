@@ -12,6 +12,7 @@ interface IFormValue {
     email: string;
     firstname: string;
     lastname: string;
+    birthdate: Date | string;
   };
 }
 
@@ -27,6 +28,7 @@ export const MemberForm = (props: IProps) => {
           email: '',
           firstname: '',
           lastname: '',
+          birthdate: '',
           ...props.member.user,
         },
         global: '',
@@ -36,14 +38,16 @@ export const MemberForm = (props: IProps) => {
           email: '',
           firstname: '',
           lastname: '',
+          birthdate: ''
         },
         global: '',
       };
 
   const validate = (values: IFormValue) => {
-    const errors: any = {user:{}};
+    const errors: any = {};
 
     if (!values.user.email) {
+      errors.user = {};
       errors.user.email = 'Requis';
     }
 
@@ -88,49 +92,70 @@ export const MemberForm = (props: IProps) => {
             )}
           />
 
-          <div className={`form-group`}>
-            <label>Email</label>
-            <Field
-              className={`form-control ${
-                errors.user?.email ? 'is-invalid' : ''
-              }`}
-              name="user.email"
-            />
-            <ErrorMessage
-              name="user.email"
-              component="div"
-              className="invalid-feedback"
-            />
-          </div>
+          {/* General member information */}
+          <div>
+            <h2>Informations générales</h2>
+            <div className={`form-group`}>
+              <label>Email</label>
+              <Field
+                className={`form-control ${
+                  errors.user?.email ? 'is-invalid' : ''
+                }`}
+                type="email"
+                name="user.email"
+              />
+              <ErrorMessage
+                name="user.email"
+                component="div"
+                className="invalid-feedback"
+              />
+            </div>
 
-          <div className={`form-group`}>
-            <label>Nom</label>
-            <Field
-              className={`form-control ${
-                errors.user?.lastname ? 'is-invalid' : ''
-              }`}
-              name="user.lastname"
-            />
-            <ErrorMessage
-              name="user.lastname"
-              component="div"
-              className="invalid-feedback"
-            />
-          </div>
+            <div className={`form-group`}>
+              <label>Nom</label>
+              <Field
+                className={`form-control ${
+                  errors.user?.lastname ? 'is-invalid' : ''
+                }`}
+                name="user.lastname"
+              />
+              <ErrorMessage
+                name="user.lastname"
+                component="div"
+                className="invalid-feedback"
+              />
+            </div>
 
-          <div className={`form-group`}>
-            <label>Prénom</label>
-            <Field
-              className={`form-control ${
-                errors.user?.firstname ? 'is-invalid' : ''
-              }`}
-              name="user.firstname"
-            />
-            <ErrorMessage
-              name="user.firstname"
-              component="div"
-              className="invalid-feedback"
-            />
+            <div className={`form-group`}>
+              <label>Prénom</label>
+              <Field
+                className={`form-control ${
+                  errors.user?.firstname ? 'is-invalid' : ''
+                }`}
+                name="user.firstname"
+              />
+              <ErrorMessage
+                name="user.firstname"
+                component="div"
+                className="invalid-feedback"
+              />
+            </div>
+
+            <div className={`form-group`}>
+              <label>Date de naissance</label>
+              <Field
+                className={`form-control ${
+                  errors.user?.birthdate ? 'is-invalid' : ''
+                }`}
+                name="user.birthdate"
+                type='date'
+              />
+              <ErrorMessage
+                name="user.firstname"
+                component="div"
+                className="invalid-feedback"
+              />
+            </div>
           </div>
 
           <Button variant="primary" type="submit" disabled={isSubmitting}>
