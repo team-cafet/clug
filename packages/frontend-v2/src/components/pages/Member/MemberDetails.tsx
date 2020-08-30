@@ -3,7 +3,7 @@ import { IMember } from '../../../libs/interfaces/member.interface';
 import { memberService } from '../../../services/member.service';
 import { useParams } from 'react-router-dom';
 import { MemberForm } from '../../organisms/MemberForm';
-import { useUserOrganisation } from '../../../hooks/userUserOrganisation';
+import { useUserOrganisation } from '../../../hooks/useUserOrganisation';
 
 interface IProps {}
 

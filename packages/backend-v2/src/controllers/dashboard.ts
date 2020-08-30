@@ -20,10 +20,24 @@ export class DashboardCtrl {
       .leftJoinAndSelect('member.user', 'user')
       .leftJoinAndSelect('member.organisation', 'organisation')
       .where('organisation.id = :id', { id: orgID })
-      .andWhere('user.birthdate >= CURRENT_DATE')
+      .andWhere('DATE_PART(\'doy\', user.birthdate) >= DATE_PART(\'doy\', CURRENT_DATE)')
       .andWhere(
-        `user.birthdate <= CURRENT_DATE + INTERVAL '${NBR_MIN_DAY_TO_INCLUDE_MEMBER} day'`
+        `DATE_PART(\'doy\', user.birthdate) <= DATE_PART('doy', CURRENT_DATE + INTERVAL '${NBR_MIN_DAY_TO_INCLUDE_MEMBER} day')`
       )
+      .getMany();
+  }
+
+  private async getAllMemberWithNegativeBalanceInOrg(
+    orgID: number
+  ): Promise<Member[]> {
+    const memberRepo = getRepository(Member);
+
+    return memberRepo
+      .createQueryBuilder('member')
+      .leftJoinAndSelect('member.user', 'user')
+      .leftJoinAndSelect('member.organisation', 'organisation')
+      .where('organisation.id = :id', { id: orgID })
+      .andWhere('member.balance < 0')
       .getMany();
   }
 
@@ -37,11 +51,16 @@ export class DashboardCtrl {
     const currentUser = await userRepo.findOne(req.user.user.id);
     const currentOrg = await currentUser.getUserOrganisation();
 
-    if(!currentOrg){
+    if (!currentOrg) {
       return res.send(allStats);
     }
 
-    allStats.birthdays = await this.getAllUpcomingMemberBirthdayInOrg(currentOrg.id);
+    allStats.birthdays = await this.getAllUpcomingMemberBirthdayInOrg(
+      currentOrg.id
+    );
+    allStats.negativeBalanceUsers = await this.getAllMemberWithNegativeBalanceInOrg(
+      currentOrg.id
+    );
 
     return res.send(allStats);
   };
