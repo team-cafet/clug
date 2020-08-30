@@ -11,6 +11,12 @@ export class MemberCtrl extends RESTController<Member> {
     super(getRepository(Member));
   }
 
+  /**
+   * Custom getAll is needed here as we need to give only the member which
+   * are related to the current user.
+   * @param req 
+   * @param res 
+   */
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     if (req.user.user.group === 'admin') {
       return res.send(await this.findAll());
@@ -28,6 +34,12 @@ export class MemberCtrl extends RESTController<Member> {
     );
   };
 
+  /**
+   * Check if the current user can create a member in the organisation
+   * and if he has the right to do that
+   * @param memberBody 
+   * @param userID 
+   */
   public async isUserCanCreateMember(
     memberBody: Member,
     userID: number
@@ -54,6 +66,12 @@ export class MemberCtrl extends RESTController<Member> {
     return false;
   }
 
+  /**
+   * Check if the current user can update a member in the organisation
+   * and if he has the right to do that
+   * @param memberID 
+   * @param userID 
+   */
   public async isUserCanUpdateMember(
     memberID: number,
     userID: number

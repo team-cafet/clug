@@ -5,7 +5,7 @@ import { ClubRoutes } from './club.routes';
 import { MembershipPlanRoute } from './membershipPlan.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
-import { Dashboard } from '../components/pages/Dashboard';
+import { Dashboard } from '../components/pages/Dashboard/Dashboard';
 
 export const AdminRoutes = () => {
   const { path } = useRouteMatch();
