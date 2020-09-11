@@ -37,7 +37,7 @@ export class Organisation {
 
   // ----------------------------- Relations
 
-  @OneToMany((type) => Member, (member) => member.club, { nullable: true })
+  @OneToMany((type) => Member, (member) => member.organisation, { nullable: true })
   members?: Member[];
 
   @OneToMany((type) => Club, (club) => club.organisation)
@@ -48,7 +48,7 @@ export class Organisation {
 
   @OneToMany(
     (type) => MembershipPlan,
-    (MembershipPlan) => MembershipPlan.club,
+    (MembershipPlan) => MembershipPlan.organisation,
     { nullable: true }
   )
   membershipPlans?: MembershipPlan[];

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { memberService } from '../../../services/member.service';
-import { IMember } from '../../../libs/interfaces/member.interface';
 import { Link } from 'react-router-dom';
 import { IClub } from '../../../libs/interfaces/club.interface';
 import { clubService } from '../../../services/club.service';

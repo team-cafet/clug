@@ -10,8 +10,6 @@ import {
   ManyToOne,
   OneToMany,
   ManyToMany,
-  OneToOne,
-  JoinColumn,
   JoinTable
 } from 'typeorm';
 import { Club } from './Club';
@@ -66,7 +64,7 @@ export class Member extends BaseEntity {
     onDelete: 'NO ACTION',
     nullable: true
   })
-  club: Club;
+  club: Promise<Club>;
 
   @OneToMany((type) => Membership, (membership) => membership.member, {
     nullable: false,
@@ -79,7 +77,7 @@ export class Member extends BaseEntity {
     nullable: true,
     onDelete: 'NO ACTION'
   })
-  payments: Payment;
+  payments: Payment[];
 
   @ManyToMany((type) => PaymentRequest, (payReq) => payReq.members, {
     nullable: true,
@@ -101,4 +99,5 @@ export class Member extends BaseEntity {
     eager: true
   })
   user: User;
+  
 }

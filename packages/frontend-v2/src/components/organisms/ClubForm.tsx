@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { GlobalContext } from '../../contexts/GlobalContext';
-import { Redirect, Link } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { Alert } from '../atoms/Alert';

@@ -18,36 +18,11 @@ export const organisationRouter = (): IRouter => {
     ['organisation:read']
   ]);
 
-  app.get('/', readPermission, async (req, res, next) => {
-    const data = await orgCtrl.findAll();
-    res.send(data);
-  });
-
-  app.get('/:id', readPermission, async (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await orgCtrl.findOneByID(id);
-    res.send(data);
-  });
-
-  app.post('/', writePermission, async (req, res, next) => {
-    const data = await orgCtrl.store(req.body);
-    res.send(data);
-  });
-
-  app.put('/:id', writePermission, async (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await orgCtrl.update(id, req.body);
-    res.send(data);
-  });
-
-  app.delete('/:id', writePermission, async (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await orgCtrl.delete(id);
-    res.send(data);
-  });
+  app.get('/', readPermission, orgCtrl.getAll);
+  app.get('/:id', readPermission, orgCtrl.getOne);
+  app.post('/', writePermission, orgCtrl.post);
+  app.put('/:id', writePermission, orgCtrl.put);
+  app.delete('/:id', writePermission, orgCtrl.delete);
 
   return app;
 };

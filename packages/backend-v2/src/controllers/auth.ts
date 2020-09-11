@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import {
   JWT_SECRET,
   TOKEN_EXPIRE_IN,
-  PERMISSIONS,
+  GROUP_PERMISSIONS,
   EXISTING_GROUPS
 } from '../config/auth';
 import { APIError } from '../libs/classes/APIError';
@@ -78,11 +78,11 @@ export class AuthCtrl {
   private getGroupPermission(grpName: string): string | string[] {
     switch (grpName) {
       case EXISTING_GROUPS.ADMIN:
-        return PERMISSIONS.admin;
+        return GROUP_PERMISSIONS.admin;
       case EXISTING_GROUPS.MANAGER:
-        return PERMISSIONS.manager;
+        return GROUP_PERMISSIONS.manager;
       case EXISTING_GROUPS.USER:
-        return PERMISSIONS.user;
+        return GROUP_PERMISSIONS.user;
       default:
         throw new APIError(403, 'This group has no permission set');
     }

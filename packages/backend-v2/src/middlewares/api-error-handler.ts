@@ -1,7 +1,7 @@
 import logger from '../util/logger';
 
 export const apiErrorHandler = (err, req, res, next) => {
-  logger.warn(err);
+  logger.warn(JSON.stringify(err));
 
   res.status(err.status || 500);
   

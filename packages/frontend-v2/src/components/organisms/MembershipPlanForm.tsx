@@ -1,17 +1,16 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import { Link } from 'react-router-dom';
+import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
-import { Alert } from '../atoms/Alert';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
-import { membershipPlanService } from '../../services/membershipPlan.service';
+import { membershipPlanService } from '../../services/membership-plan.service';
 
 interface IFormValue {
   price?: number;
   description?: string;
   type?: number;
   tacit?: boolean;
-  organisation?: {}
+  organisation?: {};
 }
 
 interface IProps {
@@ -19,18 +18,16 @@ interface IProps {
   organisationID: number;
   clubID?: number;
 }
-let setAll = (obj: any, val: any) => Object.keys(obj).forEach(k => obj[k] = val);
-let setNull = (obj: any) => setAll(obj, null);
 
 export const MembershipPlanForm = (props: IProps) => {
   const initialValues: IFormValue = props.membershipPlan
-    ? Object.assign({}, props.membershipPlan)
-    : {price: 0, description: '', type : 1, tacit: false};
+    ? { ...props.membershipPlan }
+    : { price: 0, description: '', type: 1, tacit: false };
 
   const validate = (values: IFormValue) => {
     const errors: any = {};
 
-    if (!values.price) errors.price = 'Required'
+    if (!values.price) errors.price = 'Required';
 
     return errors;
   };
@@ -45,8 +42,8 @@ export const MembershipPlanForm = (props: IProps) => {
       if (props.membershipPlan?.id) {
         await membershipPlanService.update(props.membershipPlan.id, values);
       } else {
-        values.organisation = {id: props.organisationID}
-        const newPlan = await membershipPlanService.add({
+        values.organisation = { id: props.organisationID };
+        await membershipPlanService.add({
           ...values,
         });
       }
@@ -58,7 +55,7 @@ export const MembershipPlanForm = (props: IProps) => {
         setFieldError('global', 'Erreur serveur...');
       }
       setSubmitting(false);
-    }    
+    }
   };
 
   return (
@@ -78,7 +75,8 @@ export const MembershipPlanForm = (props: IProps) => {
           <label htmlFor="tacit">Tacite</label>
           <Field
             className={`form-control ${errors.type ? 'is-invalid' : ''}`}
-            name="tacit" value={initialValues.tacit? 'oui': 'non'}
+            name="tacit"
+            value={initialValues.tacit ? 'oui' : 'non'}
           />
 
           <Button variant="primary" type="submit" disabled={isSubmitting}>

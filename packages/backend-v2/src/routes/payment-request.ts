@@ -8,33 +8,13 @@ export const paymentRequestRouter = (): IRouter => {
   const paymentRequestCtrl = new PaymentRequestCtrl();
   const guard = ExpressJWTPermissions();
 
-  const writePermission = guard.check([
-    ['admin'],
-    ['paymentRequest:write']
-  ]);
+  const writePermission = guard.check([['admin'], ['paymentRequest:write']]);
 
-  const readPermission = guard.check([
-    ['admin'],
-    ['paymentRequest:read']
-  ]);
+  const readPermission = guard.check([['admin'], ['paymentRequest:read']]);
 
-  app.get('/', readPermission ,async (req, res) => {
-    const data = await paymentRequestCtrl.findAll();
-    res.send(data);
-    
-  });
-
-  app.get('/:id', readPermission ,async (req, res) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await paymentRequestCtrl.findOneByID(id);
-    res.send(data);
-  });
-
-  app.post('/', writePermission, async (req, res) => {
-    const data = await paymentRequestCtrl.store(req.body);
-    res.send(data);
-  });
-
+  app.get('/', readPermission, paymentRequestCtrl.getAll);
+  app.get('/:id', readPermission, paymentRequestCtrl.getOne);
+  app.post('/', writePermission, paymentRequestCtrl.post);
+  
   return app;
 };

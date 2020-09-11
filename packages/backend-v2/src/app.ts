@@ -16,7 +16,7 @@ import { paymentRouter } from './routes/payment';
 import { paymentRequestRouter } from './routes/payment-request';
 import { membershipRouter } from './routes/membership.route';
 import { memberLabelRouter } from './routes/member-label';
-import { membershipPlanRouter } from './routes/membershipPlan.route';
+import { membershipPlanRouter } from './routes/membership-plan.route';
 
 export const initApp = (): express.Express => {
   const app = express();
@@ -63,7 +63,7 @@ export const initApp = (): express.Express => {
   app.use('/api/memberships', membershipRouter());
   app.use('/api/memberlabels', memberLabelRouter());
   app.use('/api/auth', authRouter());
-  app.use('/api/membershipPlan', membershipPlanRouter());
+  app.use('/api/membership-plans', membershipPlanRouter());
 
   // 404
   app.use((req, res) => {

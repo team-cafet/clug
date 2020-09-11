@@ -7,8 +7,14 @@ import { getConnection } from 'typeorm';
 
 (async () => {
   loadEnv();
-  await loadORM(connectionOptions());
+  try {
+    await loadORM({...connectionOptions(), dropSchema: true});
 
-  await executeTestSeeder();
+    await executeTestSeeder();
+
+  } catch (error) {
+    console.error(error);
+  }
+
   getConnection().close();
 })();

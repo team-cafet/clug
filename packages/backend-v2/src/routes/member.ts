@@ -5,6 +5,7 @@ import ExpressJWTPermissions from 'express-jwt-permissions';
 import { OrganisationCtrl } from '../controllers/organisation';
 import { check } from 'express-validator';
 import { Member } from '../models/Member';
+import { Permissions } from '../config/auth';
 
 export const memberRouter = (): IRouter => {
   const app = PromiseRouter();
@@ -12,20 +13,18 @@ export const memberRouter = (): IRouter => {
   const organisationCtrl = new OrganisationCtrl();
   const guard = ExpressJWTPermissions();
 
-  const readPermission = guard.check([['admin'], ['member:read']]);
-  const writePermission = guard.check([['admin'], ['member:write']]);
+  const readPermission = guard.check([
+    [Permissions.admin],
+    [Permissions.memberR]
+  ]);
+  const writePermission = guard.check([
+    [Permissions.admin],
+    [Permissions.memberLabelW]
+  ]);
 
-  app.get('/', readPermission, async (req, res, next) => {
-    const data = await memberCtrl.findAll();
-    res.send(data);
-  });
+  app.get('/', readPermission, memberCtrl.getAll);
 
-  app.get('/:id', readPermission, async (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    const data = await memberCtrl.findOneByID(id);
-    res.send(data);
-  });
+  app.get('/:id', readPermission, memberCtrl.getOne);
 
   app.post(
     '/',
@@ -91,7 +90,7 @@ export const memberRouter = (): IRouter => {
       return;
     }
 
-    const data = await memberCtrl.delete(id);
+    const data = await memberCtrl.remove(id);
     res.send(data);
   });
 

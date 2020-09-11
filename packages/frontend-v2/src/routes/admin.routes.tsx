@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { MemberRoutes } from './member.routes';
 import { ClubRoutes } from './club.routes';
 import { MembershipPlanRoute } from './membershipPlan.routes';
@@ -8,7 +8,7 @@ import { MembershipPlanRoute } from './membershipPlan.routes';
 import { Dashboard } from '../components/pages/Dashboard';
 
 export const AdminRoutes = () => {
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
 
   return (
     <Switch>

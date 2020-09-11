@@ -9,16 +9,16 @@ import {
   DeleteDateColumn,
   OneToMany
 } from 'typeorm';
-import { Member } from './Member';
 import { Membership } from './Membership';
 import { Club } from './Club';
 import { Organisation } from './Organisation';
+
 export enum PlanType {
-  'hebdomadaire',
-  'mensuel',
-  'trimestriel',
-  'semestriel',
-  'annuel',
+  weekly,
+  monthly,
+  quarterly,
+  biannual,
+  annual,
 }
 
 @Entity()
@@ -35,7 +35,7 @@ export class MembershipPlan {
   @Column({
     type: 'enum',
     enum: PlanType,
-    default: PlanType.mensuel,
+    default: PlanType.monthly,
     nullable: false
   })
   type: PlanType;
@@ -75,5 +75,9 @@ export class MembershipPlan {
     eager: true
   })
   organisation: Organisation;
+
+  // ----------------------------- Business Rules
+
+
 
 }
