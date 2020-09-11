@@ -36,7 +36,7 @@ export class User extends BaseEntity {
   @Column({ unique: true, nullable: true })
   username: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   password: string;
 
   // ----------------------------- Personal information
@@ -149,18 +149,24 @@ export class User extends BaseEntity {
    * Get the organisation from a user
    * @returns the organisation or null if the user is not in an organisation
    */
-  async getUserOrganisation():Promise<Organisation | null> {
-    const staffs = await this.staffs;
+  async getUserOrganisation(): Promise<Organisation | null> {
+    const userRepo = getRepository(User);
+    const currentUser = await userRepo.findOne(this.id, {
+      relations: ['staffs']
+    });
+    const staffs = currentUser.staffs;
 
-    if(!staffs || staffs.length < 1){
+    if (!staffs || staffs.length < 1) {
       return null;
     }
 
-    const loadedStaff = await getRepository(Staff).findOneOrFail(staffs[0].id);
-   
+    const loadedStaff = await getRepository(Staff).findOneOrFail(staffs[0].id, {
+      relations: ['organisation']
+    });
+
     const organisation = loadedStaff.organisation;
 
-    if(!organisation){
+    if (!organisation) {
       return null;
     }
 
