@@ -1,17 +1,22 @@
 import { RESTController } from '../libs/classes/RESTController';
 import { Membership } from '../models/Membership';
-import { getRepository, LessThanOrEqual } from 'typeorm';
+import { getRepository, IsNull, LessThanOrEqual } from 'typeorm';
 import { Request, Response, NextFunction } from 'express';
 
 export class MembershipCtrl extends RESTController<Membership> {
   constructor() {
     super(getRepository(Membership));
   }
-  public getNotPaid(): Promise<Membership[]> {
+  public async getNotPaid(req: Request, res: Response): Promise<Response> {
     const today: Date = new Date();
-    return this.repository.find({
-      relations: ['paymentRequest', 'paymentRequest.Payment'],
-    });
+    return res.send(
+      await getRepository(Membership).find({
+        relations: ['paymentRequest', 'paymentRequest.payment'],
+        where: {
+          endDate: LessThanOrEqual(today.toDateString()),
+        }
+      })
+    );
   }
   public async businessValidation(
     req: Request,
@@ -28,5 +33,4 @@ export class MembershipCtrl extends RESTController<Membership> {
 
     next();
   }
-
 }

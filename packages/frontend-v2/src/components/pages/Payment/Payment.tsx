@@ -8,11 +8,18 @@ export const Payment = () => {
 
   const getNotPaidMemberships = async (): Promise<void> => {
     const memberships = await membershipService.getNotPaid();
-
     setMemberships(memberships?.data);
   };
   useEffect(() => {
     getNotPaidMemberships();
   }, []);
-  return <h1>Payment page</h1>;
+  return (
+    <div>
+      <h1>Payment page</h1>
+      {memberships.map((membership) => (
+        <li key={membership.id}>{membership.endDate}</li>
+      ))}
+      <h2>SALUT</h2>
+    </div>
+  );
 };
