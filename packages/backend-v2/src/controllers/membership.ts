@@ -23,7 +23,7 @@ export class MembershipCtrl extends RESTController<Membership> {
 
     next();
   }
-  public findNotPaid(): Promise<Membership[]> {
+  public getNotPaid(): Promise<Membership[]> {
     const today: Date = new Date();
     return this.repository.find({
       relations: ['paymentRequest', 'paymentRequest.Payment'],
