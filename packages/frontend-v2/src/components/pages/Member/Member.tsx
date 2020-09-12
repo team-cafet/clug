@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { memberService } from '../../../services/member.service';
 import { IMember } from '../../../libs/interfaces/member.interface';
 import { Link } from 'react-router-dom';
 
 import './style.scss';
+import { DataTable } from '../../molecules/DataTable/DataTable';
+import { Column } from 'react-table';
 
 export const Member = () => {
   const [members, setMembers] = useState<IMember[]>([]);
@@ -19,6 +21,27 @@ export const Member = () => {
     getAllMembers();
   }, []);
 
+  const COLUMNS: Column[] = [
+    {
+      Header: 'Nom',
+      accessor: 'name',
+    },
+    {
+      Header: '',
+      accessor: 'id',
+      Cell: (cell)=><GoToMemberBtn id={cell.value}/>
+    }
+  ];
+
+  const DATA = useMemo(
+    () =>
+      members.map((member) => ({
+        id: member.id,
+        name: `${member.user?.firstname} ${member.user?.lastname}`,
+      })),
+    [members]
+  );
+
   return (
     <>
       <h1>Member</h1>
@@ -29,7 +52,8 @@ export const Member = () => {
           </Link>
         </div>
         <div className="row">
-          <table className="table">
+          <DataTable data={DATA} columns={COLUMNS} />
+          {/* <table className="table">
             <thead>
               <tr>
                 <th>
@@ -43,11 +67,15 @@ export const Member = () => {
                 <MemberRow member={member} key={member.id} />
               ))}
             </tbody>
-          </table>
+          </table> */}
         </div>
       </div>
     </>
   );
+};
+
+const GoToMemberBtn = (props: { id: number }) => {
+  return <Link to={`/admin/members/${props.id}`}>...</Link>;
 };
 
 const MemberRow = (props: { member: IMember }) => {
@@ -56,7 +84,9 @@ const MemberRow = (props: { member: IMember }) => {
   const negativeBalance = member.balance < 0;
 
   return (
-    <tr className={negativeBalance ? 'member-table__row--negative-balance' : ''}>
+    <tr
+      className={negativeBalance ? 'member-table__row--negative-balance' : ''}
+    >
       <td>
         {member.user?.firstname} {member.user?.lastname}
       </td>
