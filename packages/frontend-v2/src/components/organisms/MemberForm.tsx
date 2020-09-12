@@ -5,6 +5,7 @@ import { Button } from '../atoms/Button';
 import { Alert } from 'react-bootstrap';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { memberService } from '../../services/member.service';
+import { FormGroup } from '../molecules/FormGroup';
 
 interface IFormValue {
   global: string;
@@ -13,6 +14,11 @@ interface IFormValue {
     firstname: string;
     lastname: string;
     birthdate: Date | string;
+    phone: string;
+    street: string;
+    streetNumber: null | number;
+    city: string;
+    postalCode: null | number;
   };
 }
 
@@ -24,26 +30,24 @@ interface IProps {
 export const MemberForm = (props: IProps) => {
   const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
 
-  const initialValues: IFormValue = props.member
-    ? {
-        user: {
-          email: '',
-          firstname: '',
-          lastname: '',
-          birthdate: '',
-          ...props.member.user,
-        },
-        global: '',
-      }
-    : {
-        user: {
-          email: '',
-          firstname: '',
-          lastname: '',
-          birthdate: ''
-        },
-        global: '',
-      };
+  let initialValues: IFormValue = {
+    user: {
+      email: '',
+      firstname: '',
+      lastname: '',
+      birthdate: '',
+      phone: '',
+      street: '',
+      streetNumber: null,
+      city: '',
+      postalCode: null,
+    },
+    global: '',
+  };
+
+  if (props.member) {
+    initialValues.user = { ...initialValues.user, ...props.member.user };
+  }
 
   const validate = (values: IFormValue) => {
     const errors: any = {};
@@ -88,10 +92,15 @@ export const MemberForm = (props: IProps) => {
     <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
       {({ isSubmitting, errors }) => (
         <Form>
-          {displayAlertMemberSaved && 
-          <Alert variant='success' 
-          onClose={() => setDisplayAlertMemberSaved(false)} 
-          dismissible>Le membre a bien été sauvé !</Alert>}
+          {displayAlertMemberSaved && (
+            <Alert
+              variant="success"
+              onClose={() => setDisplayAlertMemberSaved(false)}
+              dismissible
+            >
+              Le membre a bien été sauvé !
+            </Alert>
+          )}
 
           <ErrorMessage
             name="global"
@@ -103,67 +112,75 @@ export const MemberForm = (props: IProps) => {
           {/* General member information */}
           <div>
             <h2>Informations générales</h2>
-            <div className={`form-group`}>
-              <label>Email</label>
-              <Field
-                className={`form-control ${
-                  errors.user?.email ? 'is-invalid' : ''
-                }`}
-                type="email"
-                name="user.email"
+
+            <FormGroup
+              label="Email"
+              type="text"
+              formnikError={errors.user?.email}
+              name="user.email"
+            />
+
+            <FormGroup
+              label="Nom"
+              type="text"
+              formnikError={errors.user?.lastname}
+              name="user.lastname"
+            />
+            <FormGroup
+              label="Prénom"
+              type="text"
+              formnikError={errors.user?.firstname}
+              name="user.firstname"
+            />
+
+            <FormGroup
+              label="Date de naissance"
+              type="date"
+              formnikError={errors.user?.birthdate}
+              name="user.birthdate"
+            />
+
+            <FormGroup
+              label="Téléphone"
+              type="text"
+              formnikError={errors.user?.phone}
+              name="user.phone"
+            />
+
+            <div className='form-row'>
+              <FormGroup
+                className='col-8'
+                label="Rue"
+                type="text"
+                formnikError={errors.user?.street}
+                name="user.street"
               />
-              <ErrorMessage
-                name="user.email"
-                component="div"
-                className="invalid-feedback"
+              <FormGroup
+                className='col'
+                label="Numéro"
+                type="number"
+                formnikError={errors.user?.streetNumber}
+                name="user.streetNumber"
               />
             </div>
 
-            <div className={`form-group`}>
-              <label>Nom</label>
-              <Field
-                className={`form-control ${
-                  errors.user?.lastname ? 'is-invalid' : ''
-                }`}
-                name="user.lastname"
+            <div className='form-row'>
+              <FormGroup
+                className='col-4'
+                label="NPA"
+                type="number"
+                formnikError={errors.user?.postalCode}
+                name="user.postalCode"
               />
-              <ErrorMessage
-                name="user.lastname"
-                component="div"
-                className="invalid-feedback"
-              />
-            </div>
-
-            <div className={`form-group`}>
-              <label>Prénom</label>
-              <Field
-                className={`form-control ${
-                  errors.user?.firstname ? 'is-invalid' : ''
-                }`}
-                name="user.firstname"
-              />
-              <ErrorMessage
-                name="user.firstname"
-                component="div"
-                className="invalid-feedback"
+              <FormGroup
+                className='col'
+                label="Ville"
+                type="text"
+                formnikError={errors.user?.city}
+                name="user.city"
               />
             </div>
 
-            <div className={`form-group`}>
-              <label>Date de naissance</label>
-              <Field
-                className={`form-control ${
-                  errors.user?.birthdate ? 'is-invalid' : ''
-                }`}
-                name="user.birthdate"
-                type='date'
-              />
-              <ErrorMessage
-                name="user.firstname"
-                component="div"
-                className="invalid-feedback"
-              />
-            </div>
           </div>
 
           <Button variant="primary" type="submit" disabled={isSubmitting}>
