@@ -147,16 +147,18 @@ export const MemberForm = (props: IProps) => {
               name="user.phone"
             />
 
-            <div className='form-row'>
+            <h2>Adresse</h2>
+
+            <div className="form-row">
               <FormGroup
-                className='col-8'
+                className="col-8"
                 label="Rue"
                 type="text"
                 formnikError={errors.user?.street}
                 name="user.street"
               />
               <FormGroup
-                className='col'
+                className="col"
                 label="Numéro"
                 type="number"
                 formnikError={errors.user?.streetNumber}
@@ -164,23 +166,22 @@ export const MemberForm = (props: IProps) => {
               />
             </div>
 
-            <div className='form-row'>
+            <div className="form-row">
               <FormGroup
-                className='col-4'
+                className="col-4"
                 label="NPA"
                 type="number"
                 formnikError={errors.user?.postalCode}
                 name="user.postalCode"
               />
               <FormGroup
-                className='col'
+                className="col"
                 label="Ville"
                 type="text"
                 formnikError={errors.user?.city}
                 name="user.city"
               />
             </div>
-
           </div>
 
           <Button variant="primary" type="submit" disabled={isSubmitting}>
