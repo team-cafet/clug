@@ -1,13 +1,29 @@
 import React from 'react';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { planTypeMapper } from '../../services/data-mapping.service';
+import { paymentRequestService } from '../../services/paymentRequest.service';
 
 interface IProps {
   memberShip: IMembership;
 }
-
+// TODO: how to correctly check non nullity of some fields ?
 export const PaymentCard = (props: IProps) => {
   const { memberShip } = props;
+  const createPaymentRequest = async (
+    amount: number | undefined
+  ): Promise<void> => {
+    if (!amount) return;
+
+    try {
+      await paymentRequestService.add({
+        amount: amount,
+        date: new Date(),
+        description: 'demandé manuellement',
+      });
+    } catch (e) {
+      console.error('error on createPaymentRequest()', e);
+    }
+  };
 
   return (
     <div className="card">
@@ -21,7 +37,11 @@ export const PaymentCard = (props: IProps) => {
         </h5>
         prix : {memberShip.plan?.price}.-
         <div className="float-right">
-          <a href="#!" className="btn btn-secondary">
+          <a
+            href="#!"
+            className="btn btn-secondary"
+            onClick={async () => createPaymentRequest(memberShip.plan?.price)}
+          >
             Paiment demandé
           </a>
           <a href="#!" className="btn btn-primary">

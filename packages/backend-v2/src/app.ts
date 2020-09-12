@@ -60,7 +60,7 @@ export const initApp = (): express.Express => {
   app.use('/api/clubs', clubRouter());
   app.use('/api/staffs', staffRouter());
   app.use('/api/payments', paymentRouter());
-  app.use('/api/paymentrequests', paymentRequestRouter());
+  app.use('/api/payment-requests', paymentRequestRouter());
   app.use('/api/memberships', membershipRouter());
   app.use('/api/memberlabels', memberLabelRouter());
   app.use('/api/auth', authRouter());
