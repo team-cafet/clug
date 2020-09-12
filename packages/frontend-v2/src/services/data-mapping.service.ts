@@ -1,6 +1,6 @@
 import { PlanType } from '../libs/interfaces/membershipPlan.interface';
 
-export const planTypeMapper = (id: number): string => {
+export const planTypeMapper = (id: number | undefined): string => {
   switch (id) {
     case PlanType.weekly:
       return 'hebdomadaire';
@@ -13,6 +13,6 @@ export const planTypeMapper = (id: number): string => {
     case PlanType.annual:
       return 'annuel';
     default:
-      return '-';
+      return 'spécial';
   }
 };

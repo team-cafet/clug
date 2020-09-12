@@ -16,7 +16,8 @@ export class MembershipCtrl extends RESTController<Membership> {
           'paymentRequest',
           'paymentRequest.payment',
           'member',
-          'member.user'
+          'member.user',
+          'plan'
         ],
         where: {
           endDate: LessThanOrEqual(today.toDateString())

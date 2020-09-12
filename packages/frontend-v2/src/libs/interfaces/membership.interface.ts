@@ -1,4 +1,5 @@
 import { IMember } from "./member.interface";
+import { IMembershipPlan } from "./membershipPlan.interface";
 import { IPaymentRequest } from "./paymentRequest.interface";
 
 export interface IMembership {
@@ -7,5 +8,6 @@ export interface IMembership {
   endDate: Date;
   note: string;
   paymentRequest?: IPaymentRequest;
-  member: IMember;
+  member?: IMember;
+  plan?: IMembershipPlan;
 }
