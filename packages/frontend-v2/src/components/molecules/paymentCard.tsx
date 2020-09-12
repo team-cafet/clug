@@ -16,8 +16,18 @@ export const PaymentCard = (props: IProps) => {
       </div>
       <div className="card-body">
         <h5 className="card-title">
-          Abonnement {planTypeMapper(memberShip.plan?.type)}, échu le {memberShip.endDate}
+          Abonnement {planTypeMapper(memberShip.plan?.type)}, échu le{' '}
+          {memberShip.endDate}
         </h5>
+        prix : {memberShip.plan?.price}.-
+        <div className="float-right">
+          <a href="#!" className="btn btn-secondary">
+            Paiment demandé
+          </a>
+          <a href="#!" className="btn btn-primary">
+            Paiment reçu
+          </a>
+        </div>
       </div>
     </div>
   );
