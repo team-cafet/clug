@@ -7,7 +7,12 @@ export class MembershipCtrl extends RESTController<Membership> {
   constructor() {
     super(getRepository(Membership));
   }
-
+  public getNotPaid(): Promise<Membership[]> {
+    const today: Date = new Date();
+    return this.repository.find({
+      relations: ['paymentRequest', 'paymentRequest.Payment'],
+    });
+  }
   public async businessValidation(
     req: Request,
     res: Response,
@@ -23,13 +28,5 @@ export class MembershipCtrl extends RESTController<Membership> {
 
     next();
   }
-  public getNotPaid(): Promise<Membership[]> {
-    const today: Date = new Date();
-    return this.repository.find({
-      relations: ['paymentRequest', 'paymentRequest.Payment'],
-      where: {
-        endDate: LessThanOrEqual(today.getUTCDate),
-      }
-    });
-  }
+
 }

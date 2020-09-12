@@ -9,6 +9,7 @@ import {
   DeleteDateColumn, OneToOne, JoinColumn
 } from 'typeorm';
 import { Member } from './Member';
+import { PaymentRequest } from './PaymentRequest';
 
 @Entity()
 export class Payment {
@@ -40,7 +41,7 @@ export class Payment {
   @ManyToOne((type) => Member, (member) => member.payments, { nullable: false })
   member: Member;
 
-  @OneToOne((type) => PaymentRequest, (paymentRequest) => paymentRequest.payment)
+  @OneToOne((type) => PaymentRequest, (paymentRequest) => paymentRequest.membership)
   @JoinColumn()
   paymentRequest: PaymentRequest;
 }

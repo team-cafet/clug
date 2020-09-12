@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { IMembershipPlan } from '../../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../../services/membership-plan.service';
 import { planTypeMapper } from '../../../services/data-mapping.service';
+import { membershipService } from '../../../services/membership.service';
 
 export const MembershipPlan = () => {
   const [plans, setPlans] = useState<IMembershipPlan[]>([]);
 
   const getAllPlans = async (): Promise<void> => {
-    const plans = await membershipPlanService.getAll();
+    const plans = await membershipService.getAll();
 
     setPlans(plans?.data);
   };
