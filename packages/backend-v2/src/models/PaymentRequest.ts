@@ -9,10 +9,12 @@ import {
   DeleteDateColumn,
   ManyToOne,
   ManyToMany,
-  JoinTable
+  JoinTable,
+  OneToOne
 } from 'typeorm';
 import { User } from './User';
 import { Member } from './Member';
+import { Membership } from './Membership';
 
 @Entity()
 export class PaymentRequest {
@@ -50,4 +52,7 @@ export class PaymentRequest {
 
   @OneToMany((type) => User, (user) => user.paymentRequests)
   user: User;
+
+  @OneToOne((type) => Membership, (membership) => membership.paymentRequest)
+  membership: Membership;
 }

@@ -8,7 +8,9 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
-  getRepository
+  getRepository,
+  OneToOne,
+  JoinColumn
 } from 'typeorm';
 import {
   ValidatorConstraint,
@@ -18,6 +20,7 @@ import {
 import { Member } from './Member';
 import { MembershipPlan } from './MembershipPlan';
 import { APIError } from '../libs/classes/APIError';
+import { PaymentRequest } from './PaymentRequest';
 
 @Entity()
 export class Membership {
@@ -54,6 +57,13 @@ export class Membership {
     { nullable: false }
   )
   plan: MembershipPlan;
+
+  @OneToOne(
+    (type) => PaymentRequest,
+    (paymentRequest) => paymentRequest.membership
+  )
+  @JoinColumn()
+  paymentRequest: PaymentRequest;
 
   // ----------------------------- Business Rules
 
@@ -99,7 +109,7 @@ export class Membership {
 
   public static async validate(data: Membership): Promise<APIError | void> {
     if (await Membership.endDateAfterStartDate(data))
-      return new APIError(400, 'Start date mustn\'t be after end date');
+      return new APIError(400, "Start date mustn't be after end date");
 
     if (await Membership.onlyOneMembershipByMember(data))
       return new APIError(400, 'Only one membership authorized by member');
