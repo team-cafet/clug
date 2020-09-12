@@ -3,8 +3,10 @@ import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { MemberLabel } from '../components/pages/MemberLabel/MemberLabel';
+import { MemberLabelAdd } from '../components/pages/MemberLabel/MemberLabelAdd';
+import { MemberLabelDetails } from '../components/pages/MemberLabel/MemberLabelDetails';
 // import { MemberDetails } from '../components/pages/Member/MemberDetails';
-// import { MemberAdd } from '../components/pages/Member/MemberAdd';
+
 
 
 export const MemberLabelRoutes = () => {
@@ -17,11 +19,11 @@ export const MemberLabelRoutes = () => {
       </Route>
 
       <Route path={`${path}/add`}>
-        {/* <MemberAdd /> */}
+        <MemberLabelAdd />
       </Route>
 
       <Route path={`${path}/:id`}>
-        {/* <MemberDetails /> */}
+        <MemberLabelDetails />
       </Route>
 
       <Redirect to={`${path}`} />
