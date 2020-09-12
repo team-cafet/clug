@@ -6,6 +6,7 @@ import { MembershipPlanRoute } from './membershipPlan.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { Dashboard } from '../components/pages/Dashboard/Dashboard';
+import { PaymentRoute } from './payment.routes';
 
 export const AdminRoutes = () => {
   const { path } = useRouteMatch();
@@ -30,6 +31,10 @@ export const AdminRoutes = () => {
 
       <Route path={`${path}/membershipPlans`}>
         <MembershipPlanRoute />
+      </Route>
+
+      <Route path={`${path}/payments`}>
+        <PaymentRoute />
       </Route>
 
       {/* <Redirect to={`${ADMIN_PREFIX}/`} /> */}
