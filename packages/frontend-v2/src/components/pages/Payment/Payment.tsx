@@ -20,7 +20,6 @@ export const Payment = () => {
       {memberships.map((membership) => (
         <PaymentCard key={membership.id} memberShip={membership}></PaymentCard>
       ))}
-      <h2>SALUT</h2>
     </div>
   );
 };

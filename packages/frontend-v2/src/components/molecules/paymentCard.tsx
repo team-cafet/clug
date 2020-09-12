@@ -11,7 +11,10 @@ export const PaymentCard = (props: IProps) => {
   return (
     <div className="card">
       <div className="card-body">
-        <h5 className="card-title">{memberShip.member?.user?.email}</h5>
+        <h5 className="card-title">
+          {memberShip.member?.user?.firstname}{' '}
+          {memberShip.member?.user?.lastname}
+        </h5>
       </div>
     </div>
   );
