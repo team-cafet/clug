@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
-import { Alert } from '../atoms/Alert';
+import { Alert } from 'react-bootstrap';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { memberService } from '../../services/member.service';
 
@@ -22,6 +22,8 @@ interface IProps {
 }
 
 export const MemberForm = (props: IProps) => {
+  const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
+
   const initialValues: IFormValue = props.member
     ? {
         user: {
@@ -69,6 +71,7 @@ export const MemberForm = (props: IProps) => {
           organisation: { id: props.organisationID },
         });
       }
+      setDisplayAlertMemberSaved(true);
     } catch (err) {
       console.error(err);
       if (err.message) {
@@ -85,6 +88,11 @@ export const MemberForm = (props: IProps) => {
     <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
       {({ isSubmitting, errors }) => (
         <Form>
+          {displayAlertMemberSaved && 
+          <Alert variant='success' 
+          onClose={() => setDisplayAlertMemberSaved(false)} 
+          dismissible>Le membre a bien été sauvé !</Alert>}
+
           <ErrorMessage
             name="global"
             component={(props) => (
