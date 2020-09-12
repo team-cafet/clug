@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { planTypeMapper } from '../../services/data-mapping.service';
-import { memberService } from '../../services/member.service';
 import { membershipService } from '../../services/membership.service';
 import { paymentRequestService } from '../../services/paymentRequest.service';
 
@@ -11,6 +10,10 @@ interface IProps {
 // TODO: how to correctly check non nullity of some fields ?
 export const PaymentCard = (props: IProps) => {
   const { memberShip } = props;
+  const [alreadyRequested, setAlreadyRequested] = useState<boolean>(false);
+  useEffect(() => {
+    if(memberShip.paymentRequest) setAlreadyRequested(true);
+  }, [memberShip.paymentRequest]);
   const createPaymentRequest = async (
     membership: IMembership
   ): Promise<void> => {
@@ -25,6 +28,7 @@ export const PaymentCard = (props: IProps) => {
       await membershipService.update(membership.id, {
         paymentRequest: newPaymentRequest?.data,
       });
+      setAlreadyRequested(true)
     } catch (e) {
       console.error('error on createPaymentRequest()', e);
     }
@@ -42,13 +46,14 @@ export const PaymentCard = (props: IProps) => {
         </h5>
         prix : {memberShip.plan?.price}.-
         <div className="float-right">
-          <a
-            href="#!"
+          <button
+            type="button"
             className="btn btn-secondary"
             onClick={async () => createPaymentRequest(memberShip)}
+            disabled={alreadyRequested}
           >
             Paiment demandé
-          </a>
+          </button>
           <a href="#!" className="btn btn-primary">
             Paiment reçu
           </a>
