@@ -1,6 +1,8 @@
 import React from 'react';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { planTypeMapper } from '../../services/data-mapping.service';
+import { memberService } from '../../services/member.service';
+import { membershipService } from '../../services/membership.service';
 import { paymentRequestService } from '../../services/paymentRequest.service';
 
 interface IProps {
@@ -10,15 +12,18 @@ interface IProps {
 export const PaymentCard = (props: IProps) => {
   const { memberShip } = props;
   const createPaymentRequest = async (
-    amount: number | undefined
+    membership: IMembership
   ): Promise<void> => {
-    if (!amount) return;
+    if (!membership.plan) return;
 
     try {
-      await paymentRequestService.add({
-        amount: amount,
+      const newPaymentRequest = await paymentRequestService.add({
+        amount: membership.plan.price,
         date: new Date(),
         description: 'demandé manuellement',
+      });
+      await membershipService.update(membership.id, {
+        paymentRequest: newPaymentRequest?.data,
       });
     } catch (e) {
       console.error('error on createPaymentRequest()', e);
@@ -40,7 +45,7 @@ export const PaymentCard = (props: IProps) => {
           <a
             href="#!"
             className="btn btn-secondary"
-            onClick={async () => createPaymentRequest(memberShip.plan?.price)}
+            onClick={async () => createPaymentRequest(memberShip)}
           >
             Paiment demandé
           </a>
