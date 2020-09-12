@@ -6,7 +6,7 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn
+  DeleteDateColumn, OneToOne, JoinColumn
 } from 'typeorm';
 import { Member } from './Member';
 
@@ -39,4 +39,8 @@ export class Payment {
 
   @ManyToOne((type) => Member, (member) => member.payments, { nullable: false })
   member: Member;
+
+  @OneToOne((type) => PaymentRequest, (paymentRequest) => paymentRequest.payment)
+  @JoinColumn()
+  paymentRequest: PaymentRequest;
 }
