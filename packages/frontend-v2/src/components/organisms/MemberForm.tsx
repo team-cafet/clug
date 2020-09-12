@@ -1,14 +1,15 @@
+import { ErrorMessage, Form, Formik, FormikHelpers, Field } from 'formik';
 import React, { useState } from 'react';
+import { Alert, Button, Form as BootstrapForm } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
-import { Button } from '../atoms/Button';
-import { Alert } from 'react-bootstrap';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { memberService } from '../../services/member.service';
 import { FormGroup } from '../molecules/FormGroup';
+import { useMemberLabels } from '../../hooks/useMemberLabels';
 
 interface IFormValue {
   global: string;
+  memberLabels: number[];
   user: {
     email: string;
     firstname: string;
@@ -29,8 +30,10 @@ interface IProps {
 
 export const MemberForm = (props: IProps) => {
   const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
+  const availableMemberLabels = useMemberLabels();
 
   let initialValues: IFormValue = {
+    memberLabels: [],
     user: {
       email: '',
       firstname: '',
@@ -46,6 +49,8 @@ export const MemberForm = (props: IProps) => {
   };
 
   if (props.member) {
+    initialValues.memberLabels =
+      props.member.memberLabels?.map((label) => label.id) || [];
     initialValues.user = { ...initialValues.user, ...props.member.user };
   }
 
@@ -67,6 +72,15 @@ export const MemberForm = (props: IProps) => {
     const { setSubmitting, setFieldError } = formHelper;
 
     try {
+      (values as any) = {
+        ...values,
+        // tag send to the server must be at least have id and name
+        memberLabels: values.memberLabels.map((label:any) =>
+          availableMemberLabels.find(
+            (availabelLabel) => availabelLabel.id === Number.parseInt(label)
+          )
+        ),
+      };
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
@@ -90,7 +104,7 @@ export const MemberForm = (props: IProps) => {
 
   return (
     <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
-      {({ isSubmitting, errors }) => (
+      {({ isSubmitting, errors, setFieldValue, values }) => (
         <Form>
           {displayAlertMemberSaved && (
             <Alert
@@ -111,6 +125,19 @@ export const MemberForm = (props: IProps) => {
 
           {/* General member information */}
           <div>
+            <h2>Tag</h2>
+            <Field
+              component="select"
+              multiple={true}
+              name="memberLabels"
+              className="form-control"
+            >
+              {availableMemberLabels.map((label) => (
+                <option key={label.id} value={label.id}>
+                  {label.name}
+                </option>
+              ))}
+            </Field>
             <h2>Informations générales</h2>
 
             <FormGroup

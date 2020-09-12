@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { ClubForm } from '../../organisms/ClubForm';
-import { useUserOrganisation } from '../../../hooks/useUserOrganisation';
-import { MemberLabelForm } from '../../organisms/MemberLabelForm';
-import { IMemberLabel } from '../../../libs/interfaces/memberLabel.interface';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useUserOrganisation } from '../../../hooks/useUserOrganisation';
+import { IMemberLabel } from '../../../libs/interfaces/memberLabel.interface';
 import { memberLabelService } from '../../../services/memberlabel.service';
+import { MemberLabelForm } from '../../organisms/MemberLabelForm';
 
 interface IProps {}
 
 export const MemberLabelDetails = (props: IProps) => {
-  const [orgID, setOrgID] = useUserOrganisation();
+  const [orgID] = useUserOrganisation();
   let { id } = useParams();
   const [label, setLabel] = useState<null | IMemberLabel>(null);
 
