@@ -8,12 +8,18 @@ export class MembershipCtrl extends RESTController<Membership> {
     super(getRepository(Membership));
   }
   public async getNotPaid(req: Request, res: Response): Promise<Response> {
+    // TODO: not return password damm 
     const today: Date = new Date();
     return res.send(
       await getRepository(Membership).find({
-        relations: ['paymentRequest', 'paymentRequest.payment'],
+        relations: [
+          'paymentRequest',
+          'paymentRequest.payment',
+          'member',
+          'member.user'
+        ],
         where: {
-          endDate: LessThanOrEqual(today.toDateString()),
+          endDate: LessThanOrEqual(today.toDateString())
         }
       })
     );

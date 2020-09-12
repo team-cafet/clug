@@ -1,9 +1,11 @@
+import { IMembership } from "./membership.interface";
 import { IUser } from "./user.interface";
 
 export interface IMember {
   id: number;
-  user?: IUser;
   balance: number;
   customInformations: any;
   note: string;
+  user?: IUser;
+  memberships?: IMembership[];
 }
