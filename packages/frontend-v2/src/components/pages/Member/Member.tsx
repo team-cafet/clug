@@ -7,6 +7,7 @@ import './style.scss';
 import { DataTable } from '../../molecules/DataTable/DataTable';
 import { Column, UseFiltersColumnProps, UseFiltersColumnOptions } from 'react-table';
 import { BasicFilter } from '../../molecules/DataTable/BasicFilter';
+import { Button } from 'react-bootstrap';
 
 export const Member = () => {
   const [members, setMembers] = useState<IMember[]>([]);
@@ -41,6 +42,7 @@ export const Member = () => {
       members.map((member) => ({
         id: member.id,
         name: `${member.user?.firstname} ${member.user?.lastname}`,
+        negativeBalance: member.balance < 0
       })),
     [members]
   );
@@ -55,22 +57,9 @@ export const Member = () => {
           </Link>
         </div>
         <div className="row">
-          <DataTable data={DATA} columns={COLUMNS} />
-          {/* <table className="table">
-            <thead>
-              <tr>
-                <th>
-                  Nom
-                </th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {members.map((member) => (
-                <MemberRow member={member} key={member.id} />
-              ))}
-            </tbody>
-          </table> */}
+          <DataTable data={DATA} columns={COLUMNS} customRowProps={(row:any)=>({
+            className: DATA[row.index].negativeBalance ? 'member-table__row--negative-balance' : ''
+          })}/>
         </div>
       </div>
     </>
@@ -78,24 +67,5 @@ export const Member = () => {
 };
 
 const GoToMemberBtn = (props: { id: number }) => {
-  return <Link to={`/admin/members/${props.id}`}>...</Link>;
-};
-
-const MemberRow = (props: { member: IMember }) => {
-  const { member } = props;
-
-  const negativeBalance = member.balance < 0;
-
-  return (
-    <tr
-      className={negativeBalance ? 'member-table__row--negative-balance' : ''}
-    >
-      <td>
-        {member.user?.firstname} {member.user?.lastname}
-      </td>
-      <td>
-        <Link to={`/admin/members/${member.id}`}>...</Link>
-      </td>
-    </tr>
-  );
+  return <Link component={Button} to={`/admin/members/${props.id}`}>...</Link>;
 };

@@ -8,10 +8,15 @@ import {
 } from 'react-table';
 import { Table, Pagination } from 'react-bootstrap';
 import { BasicFilter } from './BasicFilter';
+import { UseFilterTypes } from './UseFilterTypes';
 
 interface IProps {
+  id?: string;
+  className?: string;
+  pageSize?: number;
   data: any[];
   columns: Column[];
+  customRowProps?: (row: any) => any;
 }
 
 export interface IDataTableColumns {}
@@ -20,25 +25,11 @@ export const DataTable = (props: IProps) => {
   const data = useMemo(() => props.data, [props.data]);
   const columns = useMemo(() => props.columns, [props.columns]);
 
-  const filterTypes = React.useMemo(
-    () => ({
-      text: (rows: any, id: any, filterValue: any) => {
-        return rows.filter((row: any) => {
-          const rowValue = row.values[id];
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true;
-        });
-      },
-    }),
-    []
-  );
+  const filterTypes = UseFilterTypes();
 
   const defaultColumn = React.useMemo(
     () => ({
-      // Let's set up our default Filter UI
+      // Add a basic text filter to all column that haven't disable filtering
       Filter: BasicFilter,
     }),
     []
@@ -50,7 +41,7 @@ export const DataTable = (props: IProps) => {
       data,
       defaultColumn,
       filterTypes,
-      initialState: { pageIndex: 0, pageSize: 20 },
+      initialState: { pageIndex: 0, pageSize: props.pageSize || 20 },
     } as any,
     useFilters,
     useSortBy,
@@ -60,33 +51,23 @@ export const DataTable = (props: IProps) => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    // rows,
     page,
     pageCount,
     gotoPage,
     prepareRow,
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = tableInstance as any;
 
   return (
     <>
-      <Table striped bordered hover size="sm" {...getTableProps()}>
+      <Table id={props.id} className={props.className} {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup: any) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column: any) => (
                 <th {...column.getHeaderProps()}>
-                  <div {...column.getSortByToggleProps()}>
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
-                    </span>
-                  </div>
-                  <div>{column.canFilter ? column.render('Filter') : null}</div>
+                  <SortingHeader column={column} />
+                  <FilterHeader column={column}/>
                 </th>
               ))}
             </tr>
@@ -97,9 +78,12 @@ export const DataTable = (props: IProps) => {
         <tbody {...getTableBodyProps()}>
           {page.map((row: any) => {
             prepareRow(row);
+            const customRowProps = props.customRowProps
+              ? props.customRowProps(row)
+              : {};
 
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps(customRowProps)}>
                 {row.cells.map((cell: any) => {
                   return (
                     <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
@@ -150,3 +134,14 @@ const DataTablePagination = (props: {
     </Pagination>
   );
 };
+
+const SortingHeader = ({ column }: { column: any }) => (
+  <div {...column.getSortByToggleProps()}>
+    {column.render('Header')}
+    <span>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}</span>
+  </div>
+);
+
+const FilterHeader = ({ column }: { column: any }) => (
+  <div>{column.canFilter ? column.render('Filter') : null}</div>
+);

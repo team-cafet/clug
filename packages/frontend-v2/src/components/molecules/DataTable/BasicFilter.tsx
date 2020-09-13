@@ -1,4 +1,5 @@
-import React, { } from 'react';
+import React from 'react';
+import { InputGroup, FormControl } from 'react-bootstrap';
 
 export const BasicFilter = ({
   column: { filterValue, preFilteredRows, setFilter },
@@ -6,13 +7,18 @@ export const BasicFilter = ({
   const count = preFilteredRows.length;
 
   return (
-    <input
-      value={filterValue || ''}
-      onChange={(e) => {
-        // Set undefined to remove the filter entirely
-        setFilter(e.target.value || undefined); 
-      }}
-      placeholder={`Search ${count} records...`}
-    />
+    <InputGroup className="mb-3">
+    <InputGroup.Append>
+      <InputGroup.Text>🔎</InputGroup.Text>
+    </InputGroup.Append>
+      <FormControl
+        value={filterValue || ''}
+        onChange={(e) => {
+          // Set undefined to remove the filter entirely
+          setFilter(e.target.value || undefined);
+        }}
+        placeholder={`Search ${count} records...`}
+      />
+    </InputGroup>
   );
 };
