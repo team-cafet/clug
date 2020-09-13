@@ -1,33 +1,18 @@
-import React, { useState } from 'react';
-import { FilterProps, useAsyncDebounce } from 'react-table';
+import React, { } from 'react';
 
-// Define a default UI for filtering
 export const BasicFilter = ({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
+  column: { filterValue, preFilteredRows, setFilter },
 }: any) => {
-  const count = preGlobalFilteredRows.length;
-  const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce((value) => {
-    setGlobalFilter(value || undefined);
-  }, 200);
+  const count = preFilteredRows.length;
 
   return (
-    <span>
-      Search:
-      <input
-        value={value || ''}
-        onChange={(e) => {
-          setValue(e.target.value);
-          onChange(e.target.value);
-        }}
-        placeholder={`${count} records...`}
-        style={{
-          fontSize: '1.1rem',
-          border: '0',
-        }}
-      />
-    </span>
+    <input
+      value={filterValue || ''}
+      onChange={(e) => {
+        // Set undefined to remove the filter entirely
+        setFilter(e.target.value || undefined); 
+      }}
+      placeholder={`Search ${count} records...`}
+    />
   );
 };

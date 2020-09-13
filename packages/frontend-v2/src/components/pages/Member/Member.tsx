@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 import './style.scss';
 import { DataTable } from '../../molecules/DataTable/DataTable';
-import { Column } from 'react-table';
+import { Column, UseFiltersColumnProps, UseFiltersColumnOptions } from 'react-table';
+import { BasicFilter } from '../../molecules/DataTable/BasicFilter';
 
 export const Member = () => {
   const [members, setMembers] = useState<IMember[]>([]);
@@ -21,15 +22,17 @@ export const Member = () => {
     getAllMembers();
   }, []);
 
-  const COLUMNS: Column[] = [
+  const COLUMNS: any[] = [
     {
       Header: 'Nom',
-      accessor: 'name',
+      accessor: 'name'
     },
     {
       Header: '',
       accessor: 'id',
-      Cell: (cell)=><GoToMemberBtn id={cell.value}/>
+      disableFilters: true,
+      disableSortBy: true,
+      Cell: (cell: any)=><GoToMemberBtn id={cell.value}/>
     }
   ];
 
