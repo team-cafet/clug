@@ -1,11 +1,11 @@
-import { ErrorMessage, Form, Formik, FormikHelpers, Field } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
-import { Alert, Button, Form as BootstrapForm } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useMemberLabels } from '../../hooks/useMemberLabels';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { memberService } from '../../services/member.service';
 import { FormGroup } from '../molecules/FormGroup';
-import { useMemberLabels } from '../../hooks/useMemberLabels';
 
 interface IFormValue {
   global: string;

@@ -8,7 +8,7 @@ import {
 } from 'react-table';
 import { Table, Pagination } from 'react-bootstrap';
 import { BasicFilter } from './BasicFilter';
-import { UseFilterTypes } from './UseFilterTypes';
+import { useFilterTypes } from './useFilterTypes';
 
 interface IProps {
   id?: string;
@@ -25,7 +25,7 @@ export const DataTable = (props: IProps) => {
   const data = useMemo(() => props.data, [props.data]);
   const columns = useMemo(() => props.columns, [props.columns]);
 
-  const filterTypes = UseFilterTypes();
+  const filterTypes = useFilterTypes();
 
   const defaultColumn = React.useMemo(
     () => ({

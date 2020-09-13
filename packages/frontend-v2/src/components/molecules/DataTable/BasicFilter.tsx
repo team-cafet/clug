@@ -8,9 +8,10 @@ export const BasicFilter = ({
 
   return (
     <InputGroup className="mb-3">
-    <InputGroup.Append>
-      <InputGroup.Text>🔎</InputGroup.Text>
-    </InputGroup.Append>
+      <InputGroup.Append>
+        {/* eslint-disable-next-line jsx-a11y/accessible-emoji*/}
+        <InputGroup.Text>🔎</InputGroup.Text>
+      </InputGroup.Append>
       <FormControl
         value={filterValue || ''}
         onChange={(e) => {

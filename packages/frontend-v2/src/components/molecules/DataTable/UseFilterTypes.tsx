@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const UseFilterTypes = () => {
+export const useFilterTypes = () => {
   return React.useMemo(
     () => ({
       text: (rows: any, id: any, filterValue: any) => {

@@ -1,40 +1,28 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { memberService } from '../../../services/member.service';
-import { IMember } from '../../../libs/interfaces/member.interface';
-import { Link } from 'react-router-dom';
-
-import './style.scss';
-import { DataTable } from '../../molecules/DataTable/DataTable';
-import { Column, UseFiltersColumnProps, UseFiltersColumnOptions } from 'react-table';
-import { BasicFilter } from '../../molecules/DataTable/BasicFilter';
+import React, { useMemo } from 'react';
 import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
+import { IMember } from '../../../libs/interfaces/member.interface';
+import { memberService } from '../../../services/member.service';
+import { DataTable } from '../../molecules/DataTable';
+import './style.scss';
+
 
 export const Member = () => {
-  const [members, setMembers] = useState<IMember[]>([]);
-
-  useEffect(() => {
-    const getAllMembers = async () => {
-      const members = await memberService.getAll();
-      if (members) {
-        setMembers(members.data);
-      }
-    };
-
-    getAllMembers();
-  }, []);
+  const [members] = useGetAllFromService<IMember>({service: memberService});
 
   const COLUMNS: any[] = [
     {
       Header: 'Nom',
-      accessor: 'name'
+      accessor: 'name',
     },
     {
       Header: '',
       accessor: 'id',
       disableFilters: true,
       disableSortBy: true,
-      Cell: (cell: any)=><GoToMemberBtn id={cell.value}/>
-    }
+      Cell: (cell: any) => <GoToMemberBtn id={cell.value} />,
+    },
   ];
 
   const DATA = useMemo(
@@ -42,7 +30,7 @@ export const Member = () => {
       members.map((member) => ({
         id: member.id,
         name: `${member.user?.firstname} ${member.user?.lastname}`,
-        negativeBalance: member.balance < 0
+        negativeBalance: member.balance < 0,
       })),
     [members]
   );
@@ -57,9 +45,15 @@ export const Member = () => {
           </Link>
         </div>
         <div className="row">
-          <DataTable data={DATA} columns={COLUMNS} customRowProps={(row:any)=>({
-            className: DATA[row.index].negativeBalance ? 'member-table__row--negative-balance' : ''
-          })}/>
+          <DataTable
+            data={DATA}
+            columns={COLUMNS}
+            customRowProps={(row: any) => ({
+              className: DATA[row.index].negativeBalance
+                ? 'member-table__row--negative-balance'
+                : '',
+            })}
+          />
         </div>
       </div>
     </>
@@ -67,5 +61,9 @@ export const Member = () => {
 };
 
 const GoToMemberBtn = (props: { id: number }) => {
-  return <Link component={Button} to={`/admin/members/${props.id}`}>...</Link>;
+  return (
+    <Link component={Button} to={`/admin/members/${props.id}`}>
+      ...
+    </Link>
+  );
 };
