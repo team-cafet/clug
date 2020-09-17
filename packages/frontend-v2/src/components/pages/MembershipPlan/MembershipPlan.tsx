@@ -62,7 +62,6 @@ const MembershipPlanRow = (props: {
   return (
     <tr>
       <td>{plan.price}</td>
-      <td>{plan.description}</td>
       <td>{planTypeMapper(plan.type)}</td>
       <td>{plan.tacit ? 'oui' : 'non'}</td>
       <td>
