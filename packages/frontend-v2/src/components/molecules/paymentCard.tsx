@@ -19,7 +19,7 @@ export const PaymentCard = (props: IProps) => {
   ): Promise<void> => {
     if (!membership.plan) return;// TODO: how to correctly check non nullity of some fields more globally ?
 
-    try {
+    try {// TODO: do it in backend in a transaction ?
       const newPaymentRequest = await paymentRequestService.add({
         amount: membership.plan.price,
         date: new Date(),
