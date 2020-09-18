@@ -37,9 +37,9 @@ export const PaymentCard = (props: IProps) => {
     }
   };
   const createPayment = async (memberShip: IMembership): Promise<void> => {
-    if (memberShip.plan) return;
+    console.log('create payment', memberShip);
+    if (!memberShip.plan) return;
     const payment = {
-      //@ts-ignore
       amount: memberShip.plan.price,
       date: new Date(),
       hasBeenCanceled: false,
@@ -53,9 +53,10 @@ export const PaymentCard = (props: IProps) => {
           payment,
           memberShip,
         });
+        console.log(newPayment);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
