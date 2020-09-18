@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { planTypeMapper } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
+import { paymentService } from '../../services/payment.service';
 import { paymentRequestService } from '../../services/paymentRequest.service';
 
 interface IProps {
@@ -36,7 +37,13 @@ export const PaymentCard = (props: IProps) => {
   const createPayment = async (
     membership: IMembership
   ): Promise<void> => {
-
+try {
+  const newPayment = await paymentService.add({
+    
+  })
+} catch (error) {
+  
+}
   }
 
   return (
