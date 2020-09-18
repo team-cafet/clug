@@ -14,6 +14,7 @@ export const paymentRouter = (): IRouter => {
 
   app.get('/', readPermission, paymentCtrl.getAll);
   app.get('/:id', readPermission, paymentCtrl.getOne);
+  app.post('/payment-without-request', writePermission, paymentCtrl.createPaymentWithoutRequest);
   app.post('/', writePermission, paymentCtrl.post);
   
   return app;

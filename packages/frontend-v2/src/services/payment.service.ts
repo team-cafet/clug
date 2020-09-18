@@ -14,4 +14,4 @@ class APIPayments extends APIResource {
   }
 }
 
-export const paymentService = new APIResource('payments');
+export const paymentService = new APIPayments();

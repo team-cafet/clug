@@ -2,7 +2,7 @@ import { IMember } from "./member.interface";
 import { IPaymentRequest } from "./paymentRequest.interface";
 
 export interface IPayment {
-  id: number;
+  id?: number;
   amount: number;
   date: Date;
   hasBeenCanceled: boolean;

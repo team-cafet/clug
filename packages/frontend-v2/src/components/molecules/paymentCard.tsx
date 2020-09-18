@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IMembership } from '../../libs/interfaces/membership.interface';
+import { IPayment } from '../../libs/interfaces/payment.interface';
 import { planTypeMapper } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { paymentService } from '../../services/payment.service';
@@ -18,9 +19,10 @@ export const PaymentCard = (props: IProps) => {
   const createPaymentRequest = async (
     membership: IMembership
   ): Promise<void> => {
-    if (!membership.plan) return;// TODO: how to correctly check non nullity of some fields more globally ?
+    if (!membership.plan) return; // TODO: how to correctly check non nullity of some fields more globally ?
 
-    try {// TODO: do it in backend in a transaction ?
+    try {
+      // TODO: do it in backend in a transaction ?
       const newPaymentRequest = await paymentRequestService.add({
         amount: membership.plan.price,
         date: new Date(),
@@ -34,17 +36,28 @@ export const PaymentCard = (props: IProps) => {
       console.error('error on createPaymentRequest()', e);
     }
   };
-  const createPayment = async (
-    membership: IMembership
-  ): Promise<void> => {
-try {
-  const newPayment = await paymentService.add({
-    
-  })
-} catch (error) {
-  
-}
-  }
+  const createPayment = async (memberShip: IMembership): Promise<void> => {
+    if (memberShip.plan) return;
+    const payment = {
+      //@ts-ignore
+      amount: memberShip.plan.price,
+      date: new Date(),
+      hasBeenCanceled: false,
+    };
+
+    try {
+      let newPayment;
+      if (alreadyRequested) {
+      } else {
+        newPayment = await paymentService.createPaymentWithoutRequest({
+          payment,
+          memberShip,
+        });
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  };
 
   return (
     <div className="card">
