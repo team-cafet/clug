@@ -20,7 +20,6 @@ export const PaymentCard = (props: IProps) => {
     membership: IMembership
   ): Promise<void> => {
     if (!membership.plan) return; // TODO: how to correctly check non nullity of some fields more globally ?
-
     try {
       // TODO: do it in backend in a transaction ?
       const newPaymentRequest = await paymentRequestService.add({
@@ -37,9 +36,8 @@ export const PaymentCard = (props: IProps) => {
     }
   };
   const createPayment = async (memberShip: IMembership): Promise<void> => {
-    console.log('create payment', memberShip);
     if (!memberShip.plan) return;
-    const payment = {
+    let paymentData: IPayment = {
       amount: memberShip.plan.price,
       date: new Date(),
       hasBeenCanceled: false,
@@ -48,13 +46,16 @@ export const PaymentCard = (props: IProps) => {
     try {
       let newPayment;
       if (alreadyRequested) {
+        paymentData.paymentRequest = memberShip.paymentRequest;
+        paymentData.member = memberShip.member;
+        newPayment = await paymentService.add(paymentData);
       } else {
         newPayment = await paymentService.createPaymentWithoutRequest({
-          payment,
+          payment: paymentData,
           memberShip,
         });
-        console.log(newPayment);
       }
+      if(newPayment) memberShips
     } catch (error) {
       console.error(error);
     }
