@@ -25,7 +25,8 @@ export class PaymentCtrl extends RESTController<Payment> {
               {
                 amount: memberShip.plan.price,
                 date: new Date(),
-                description: 'demande crée automatiquement'
+                description: 'demande crée automatiquement',
+                membership: memberShip
               }
             ]);
           const newRequest = (
