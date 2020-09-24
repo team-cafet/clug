@@ -55,7 +55,6 @@ export const PaymentCard = (props: IProps) => {
           memberShip,
         });
       }
-      if(newPayment) memberShips
     } catch (error) {
       console.error(error);
     }
