@@ -23,9 +23,9 @@ export class PaymentCtrl extends RESTController<Payment> {
           description: 'demande crée automatiquement'
         }
       ]);
-      const newRequest = await getRepository(PaymentRequest).save(
+      const newRequest = (await getRepository(PaymentRequest).save(
         requestEntity
-      )[0];
+      ))[0];
       if(!newRequest) throw new Error();
       const paymentEntity = getRepository(Payment).create([
         {
@@ -35,7 +35,7 @@ export class PaymentCtrl extends RESTController<Payment> {
           paymentRequest: {id: newRequest.id}
         }
       ]);
-      const newPayment = await getRepository(Payment).save(paymentEntity)[0];
+      const newPayment = (await getRepository(Payment).save(paymentEntity))[0];
       if(!newPayment) throw new Error();
       return res.status(201).send(newPayment);
     } catch (error) {
