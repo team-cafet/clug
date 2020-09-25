@@ -23,7 +23,7 @@ export class MembershipCtrl extends RESTController<Membership> {
       }
     });
     const withoutPayment = memberShips.filter(
-      (memberShip) => (!memberShip.paymentRequest?.payment)
+      (memberShip) => !memberShip.paymentRequest?.payment
     );
     return res.send(withoutPayment);
   }

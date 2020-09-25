@@ -14,11 +14,20 @@ export const Payment = () => {
   useEffect(() => {
     getNotPaidMemberships();
   }, []);
+  const paymentReceived = async () => {
+    await getNotPaidMemberships();
+  };
   return (
     <div>
       <h1>Gestion de paiements</h1>
       {memberships.map((membership) => (
-        <PaymentCard key={membership.id} memberShip={membership}></PaymentCard>
+        <PaymentCard
+          key={membership.id}
+          memberShip={membership}
+          onPaymentReceivedFunction={() => {
+            paymentReceived();
+          }}
+        ></PaymentCard>
       ))}
     </div>
   );

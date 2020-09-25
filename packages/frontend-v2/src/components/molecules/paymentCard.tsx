@@ -8,10 +8,11 @@ import { paymentRequestService } from '../../services/paymentRequest.service';
 
 interface IProps {
   memberShip: IMembership;
+  onPaymentReceivedFunction: CallableFunction;
 }
 
 export const PaymentCard = (props: IProps) => {
-  const { memberShip } = props;
+  const { memberShip, onPaymentReceivedFunction } = props;
   const [alreadyRequested, setAlreadyRequested] = useState<boolean>(false);
   useEffect(() => {
     if (memberShip.paymentRequest) setAlreadyRequested(true);
@@ -21,7 +22,6 @@ export const PaymentCard = (props: IProps) => {
   ): Promise<void> => {
     if (!membership.plan) return; // TODO: how to correctly check non nullity of some fields more globally ?
     try {
-      // TODO: do it in backend in a transaction ?
       const newPaymentRequest = await paymentRequestService.add({
         amount: membership.plan.price,
         date: new Date(),
@@ -55,10 +55,14 @@ export const PaymentCard = (props: IProps) => {
           memberShip,
         });
       }
+      if(newPayment) {
+        onPaymentReceivedFunction()
+      }
     } catch (error) {
       console.error(error);
     }
   };
+
 
   return (
     <div className="card">
