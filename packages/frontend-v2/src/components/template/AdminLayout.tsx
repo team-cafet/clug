@@ -25,6 +25,10 @@ export const AdminLayout = (props: IProps) => {
       displayName: 'Abonnements',
       to: '/admin/membershipPlans',
     },
+    {
+      displayName: 'Tag de membre',
+      to: '/admin/memberlabels',
+    },
   ];
 
   return (

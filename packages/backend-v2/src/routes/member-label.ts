@@ -2,6 +2,7 @@ import { IRouter } from 'express';
 import { MemberLabelCtrl } from '../controllers/member-label';
 import PromiseRouter from 'express-promise-router';
 import ExpressJWTPermissions from 'express-jwt-permissions';
+import { Permissions } from '../config/auth';
 
 export const memberLabelRouter = (): IRouter => {
   const app = PromiseRouter();
@@ -9,13 +10,13 @@ export const memberLabelRouter = (): IRouter => {
   const guard = ExpressJWTPermissions();
   
   const writePermission = guard.check([
-    ['admin'],
-    ['memberLabel:write']
+    [Permissions.admin],
+    [Permissions.memberLabelW]
   ]);
 
   const readPermission = guard.check([
-    ['admin'],
-    ['memberLabel:read']
+    [Permissions.admin],
+    [Permissions.memberLabelR]
   ]);
 
   app.get('/', readPermission, memberLabelCtrl.getAll);

@@ -87,7 +87,8 @@ export class Member extends BaseEntity {
 
   @ManyToMany((type) => MemberLabel, (label) => label.members, {
     nullable: true,
-    onDelete: 'NO ACTION'
+    onDelete: 'NO ACTION',
+    cascade: true
   })
   @JoinTable({ name: 'members_labels' })
   memberLabels: MemberLabel[];

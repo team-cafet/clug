@@ -1,4 +1,5 @@
 import { IUser } from "./user.interface";
+import { IMemberLabel } from "./memberLabel.interface";
 
 export interface IMember {
   id: number;
@@ -6,4 +7,5 @@ export interface IMember {
   balance: number;
   customInformations: any;
   note: string;
+  memberLabels?: IMemberLabel[];
 }
