@@ -109,7 +109,7 @@ export class Membership {
 
   public static async validate(data: Membership): Promise<APIError | void> {
     if (await Membership.endDateAfterStartDate(data))
-      return new APIError(400, "Start date mustn't be after end date");
+      return new APIError(400, 'Start date mustn\'t be after end date');
 
     if (await Membership.onlyOneMembershipByMember(data))
       return new APIError(400, 'Only one membership authorized by member');

@@ -1,6 +1,6 @@
-import { IMember } from "./member.interface";
-import { IMembershipPlan } from "./membershipPlan.interface";
-import { IPaymentRequest } from "./paymentRequest.interface";
+import { IMember } from './member.interface';
+import { IMembershipPlan } from './membershipPlan.interface';
+import { IPaymentRequest } from './paymentRequest.interface';
 
 export interface IMembership {
   id: number;

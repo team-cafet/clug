@@ -1,5 +1,5 @@
-import { IMember } from "./member.interface";
-import { IPaymentRequest } from "./paymentRequest.interface";
+import { IMember } from './member.interface';
+import { IPaymentRequest } from './paymentRequest.interface';
 
 export interface IPayment {
   id?: number;
