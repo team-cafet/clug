@@ -7,6 +7,7 @@ import { MemberLabelRoutes } from './memberLabel.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { Dashboard } from '../components/pages/Dashboard/Dashboard';
+import { PaymentRoute } from './payment.routes';
 
 export const AdminRoutes = () => {
   const { path } = useRouteMatch();
@@ -33,6 +34,9 @@ export const AdminRoutes = () => {
         <MembershipPlanRoute />
       </Route>
 
+      <Route path={`${path}/payments`}>
+        <PaymentRoute />
+        
       <Route path={`${path}/memberlabels`}>
         <MemberLabelRoutes />
       </Route>

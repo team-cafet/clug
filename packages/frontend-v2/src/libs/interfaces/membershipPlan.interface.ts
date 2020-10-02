@@ -1,9 +1,12 @@
+import { IMembership } from "./membership.interface";
+
 export interface IMembershipPlan {
   id: number;
   price: number;
   description?: string;
-  type: PlanType;
+  type: number;
   tacit: boolean;
+  memberships: IMembership[];
 }
 
 export enum PlanType {

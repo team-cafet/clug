@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMembershipPlan } from '../../../libs/interfaces/membershipPlan.interface';
 import { planTypeMapper } from '../../../services/data-mapping.service';
+import { membershipService } from '../../../services/membership.service';
 import { membershipPlanService } from '../../../services/membership-plan.service';
 import { DataTable } from '../../molecules/DataTable';
 
@@ -11,11 +12,14 @@ export const MembershipPlan = () => {
     service: membershipPlanService,
   });
 
-  const DATA = plans.map((plan) => ({
+  const getAllPlans = async (): Promise<void> => {
+    const plans = await membershipService.getAll();
+      const DATA = plans.map((plan) => ({
     ...plan,
     tacit: plan.tacit ? 'oui' : 'non',
     type: planTypeMapper(plan.type),
   }));
+
 
   const COLUMNS = [
     {
@@ -69,16 +73,21 @@ const MembershipPlanAction = ({ plan, refreshList }: any) => {
   };
 
   return (
-    <>
-      <Link
-        to={`/admin/membershipPlans/update/${plan.id}`}
-        className="btn btn-primary"
-      >
-        Modifier
-      </Link>
-      <button className="btn" onClick={(e) => deletePlan(plan)}>
-        Supprimer
-      </button>
-    </>
+    <tr>
+      <td>{plan.price}</td>
+      <td>{planTypeMapper(plan.type)}</td>
+      <td>{plan.tacit ? 'oui' : 'non'}</td>
+      <td>
+        <Link
+          to={`/admin/membershipPlans/update/${plan.id}`}
+          className="btn btn-primary"
+        >
+          Modifier
+        </Link>
+        <button className="btn" onClick={(e) => deletePlan(plan)}>
+          Supprimer
+        </button>
+      </td>
+    </tr>
   );
 };

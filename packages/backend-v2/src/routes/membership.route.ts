@@ -13,6 +13,7 @@ export const membershipRouter = (): IRouter => {
 
   const readPermission = guard.check([['admin'], ['Membership:read']]);
 
+  app.get('/notPaid', readPermission, membershipCtrl.getNotPaid);
   app.get('/', readPermission, membershipCtrl.getAll);
   app.get('/:id', readPermission, membershipCtrl.getOne);
   app.post(

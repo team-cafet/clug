@@ -37,7 +37,7 @@ export const Member = () => {
 
   return (
     <>
-      <h1>Member</h1>
+      <h1>Membres</h1>
       <div className="container">
         <div className="row">
           <Link to="/admin/members/add" className="btn btn-primary">

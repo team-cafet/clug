@@ -8,7 +8,9 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   OneToMany,
-  getRepository
+  getRepository,
+  OneToOne,
+  JoinColumn
 } from 'typeorm';
 import {
   ValidatorConstraint,
@@ -18,6 +20,7 @@ import {
 import { Member } from './Member';
 import { MembershipPlan } from './MembershipPlan';
 import { APIError } from '../libs/classes/APIError';
+import { PaymentRequest } from './PaymentRequest';
 
 @Entity()
 export class Membership {
@@ -54,6 +57,13 @@ export class Membership {
     { nullable: false }
   )
   plan: MembershipPlan;
+
+  @OneToOne(
+    (type) => PaymentRequest,
+    (paymentRequest) => paymentRequest.membership
+  )
+  @JoinColumn()
+  paymentRequest: PaymentRequest;
 
   // ----------------------------- Business Rules
 
