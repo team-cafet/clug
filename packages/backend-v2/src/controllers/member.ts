@@ -21,9 +21,9 @@ export class MemberCtrl extends RESTController<Member> {
     if (req.user.user.group === 'admin') {
       return res.send(await this.findAll());
     }
+
     const userRepo = getRepository(User);
     const currentUser = await userRepo.findOne(req.user.user.id);
-
     const currentOrg = await currentUser.getUserOrganisation();
 
     return res.send(
@@ -33,6 +33,31 @@ export class MemberCtrl extends RESTController<Member> {
       })
     );
   };
+
+  /**
+   * Custom getOne is needed here as we need to give only member which are in the
+   * user organisation and with more information like tag
+   * @param req 
+   * @param res 
+   */
+  public getOne = async (req: Request, res: Response): Promise<Response> => {
+    const id = Number.parseInt(req.params.id);
+
+    if (req.user.user.group === 'admin') {
+      return res.send(await this.repository.findOneOrFail(id, {
+        relations: ['user', 'memberLabels']
+      }));
+    }
+
+    const userRepo = getRepository(User);
+    const currentUser = await userRepo.findOne(req.user.user.id);
+    const currentOrg = await currentUser.getUserOrganisation();
+
+    return res.send(await this.repository.findOneOrFail(id, {
+        relations: ['user', 'memberLabels'],
+        where: { organisation: currentOrg.id }
+      }));
+  }
 
   /**
    * Check if the current user can create a member in the organisation

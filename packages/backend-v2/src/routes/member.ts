@@ -76,6 +76,7 @@ export const memberRouter = (): IRouter => {
       member.user = req.body.user;
       member.note = req.body.note;
       member.organisation = req.body.organisation;
+      member.memberLabels = req.body.memberLabels;
 
       const data = await memberCtrl.update(id, member);
       res.send(data);

@@ -1,21 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMembershipPlan } from '../../../libs/interfaces/membershipPlan.interface';
-import { membershipPlanService } from '../../../services/membership-plan.service';
 import { planTypeMapper } from '../../../services/data-mapping.service';
 import { membershipService } from '../../../services/membership.service';
+import { membershipPlanService } from '../../../services/membership-plan.service';
+import { DataTable } from '../../molecules/DataTable';
 
 export const MembershipPlan = () => {
-  const [plans, setPlans] = useState<IMembershipPlan[]>([]);
+  const [plans, getAllPlans] = useGetAllFromService<IMembershipPlan>({
+    service: membershipPlanService,
+  });
 
   const getAllPlans = async (): Promise<void> => {
     const plans = await membershipService.getAll();
+      const DATA = plans.map((plan) => ({
+    ...plan,
+    tacit: plan.tacit ? 'oui' : 'non',
+    type: planTypeMapper(plan.type),
+  }));
 
-    setPlans(plans?.data);
-  };
-  useEffect(() => {
-    getAllPlans();
-  }, []);
+
+  const COLUMNS = [
+    {
+      Header: 'Prix',
+      accessor: 'price',
+    },
+    {
+      Header: 'Description',
+      accessor: 'description',
+    },
+    {
+      Header: 'Type',
+      accessor: 'type',
+    },
+    {
+      Header: 'Tacite',
+      accessor: 'tacit',
+    },
+    {
+      Header: 'Action',
+      accessor: 'id',
+      disableFilters: true,
+      disableSortBy: true,
+      Cell: (cell: any) => (
+        <MembershipPlanAction
+          plan={cell.row.values}
+          refreshList={getAllPlans}
+        />
+      ),
+    },
+  ];
 
   return (
     <>
@@ -24,39 +59,17 @@ export const MembershipPlan = () => {
         <Link to="/admin/membershipPlans/add" className="btn btn-primary">
           Ajouter
         </Link>
-        <table className="table">
-          <tbody>
-            <tr>
-              <th>prix</th>
-              <th>description</th>
-              <th>type</th>
-              <th>tacite</th>
-              <th>action</th>
-            </tr>
-
-            {plans.map((plan) => (
-              <MembershipPlanRow
-                plan={plan}
-                key={plan.id}
-                updateList={getAllPlans}
-              />
-            ))}
-          </tbody>
-        </table>
+        <DataTable data={DATA} columns={COLUMNS} />
       </div>
     </>
   );
 };
 
-const MembershipPlanRow = (props: {
-  plan: IMembershipPlan;
-  updateList: CallableFunction;
-}) => {
-  const { plan, updateList } = props;
+const MembershipPlanAction = ({ plan, refreshList }: any) => {
   const deletePlan = async (plan: IMembershipPlan) => {
     if (!plan) return;
     const deleteResult = await membershipPlanService.delete(plan.id);
-    if (deleteResult) updateList();
+    if (deleteResult) refreshList();
   };
 
   return (
