@@ -10,7 +10,7 @@ export class MembershipCtrl extends RESTController<Membership> {
   public async getNotPaid(req: Request, res: Response): Promise<Response> {
     // TODO: not return password damm
     const today: Date = new Date();
-    const memberShips = await getRepository(Membership).find({
+    const memberships = await getRepository(Membership).find({
       relations: [
         'paymentRequest',
         'paymentRequest.payment',
@@ -22,8 +22,8 @@ export class MembershipCtrl extends RESTController<Membership> {
         endDate: LessThanOrEqual(today.toDateString())
       }
     });
-    const withoutPayment = memberShips.filter(
-      (memberShip) => !memberShip.paymentRequest?.payment
+    const withoutPayment = memberships.filter(
+      (membership) => !membership.paymentRequest?.payment
     );
     return res.send(withoutPayment);
   }
