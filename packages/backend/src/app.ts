@@ -48,9 +48,9 @@ export const initApp = (): express.Express => {
       algorithms: ['HS256']
     })
   );
-
+    console.log(__dirname);
   // static
-  app.use(
+  app.use('/',
     express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 })
   );
 

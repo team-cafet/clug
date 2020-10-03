@@ -36,12 +36,11 @@ export const AdminRoutes = () => {
 
       <Route path={`${path}/payments`}>
         <PaymentRoute />
-        
+      </Route>
+
       <Route path={`${path}/memberlabels`}>
         <MemberLabelRoutes />
       </Route>
-
-      {/* <Redirect to={`${ADMIN_PREFIX}/`} /> */}
     </Switch>
   );
 };

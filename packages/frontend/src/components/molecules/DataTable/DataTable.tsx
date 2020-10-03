@@ -8,7 +8,7 @@ import {
 } from 'react-table';
 import { Table, Pagination } from 'react-bootstrap';
 import { BasicFilter } from './BasicFilter';
-import { useFilterTypes } from './useFilterTypes';
+import { useFilterTypes } from './UseFilterTypes';
 
 interface IProps {
   id?: string;
