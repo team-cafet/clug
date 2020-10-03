@@ -48,11 +48,6 @@ export const initApp = (): express.Express => {
       algorithms: ['HS256']
     })
   );
-    console.log(__dirname);
-  // static
-  app.use('/',
-    express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 })
-  );
 
   // main api routes
   app.use('/api/members', memberRouter());
@@ -66,6 +61,14 @@ export const initApp = (): express.Express => {
   app.use('/api/auth', authRouter());
   app.use('/api/membership-plans', membershipPlanRouter());
   app.use('/api/dashboard', dashboardRouter());
+
+  // static
+  app.use(
+    express.static(path.join(process.cwd(), 'public'), { maxAge: 31557600000 })
+  );
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
+  });
 
   // 404
   app.use((req, res) => {

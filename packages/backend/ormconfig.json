@@ -1,7 +1,7 @@
 {
-  "entities": ["dist/models/*.js"],
-  "subscribers": ["dist/subscribers/*.js"],
-  "migrations": ["dist/migrations/*.js"],
+  "entities": ["build/models/*.js"],
+  "subscribers": ["build/subscribers/*.js"],
+  "migrations": ["build/migrations/*.js"],
   "cli": {
     "entitiesDir": "src/models",
     "migrationsDir": "src/migrations",
