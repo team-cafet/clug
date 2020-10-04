@@ -33,14 +33,6 @@ WORKDIR /usr/src/app
 
 USER clug:clug
 
-
-## --------------------- DEPENDENCIES FRONTEND APP
-## Install dependencies.
-COPY --chown=clug:clug ./packages/frontend/package.json ./packages/frontend/package-lock.json /usr/src/app/frontend/
-WORKDIR /usr/src/app/frontend
-RUN npm ci --dev
-
-
 ## --------------------- DEPENDENCIES BACKEND APP
 ## Install dependencies.
 COPY --chown=clug:clug ./packages/backend/package.json ./packages/backend/package-lock.json /usr/src/app/backend/
@@ -51,17 +43,10 @@ RUN npm ci --dev
 ## Copy source code into builder container
 WORKDIR /usr/src/app/
 COPY --chown=clug:clug ./packages/backend/ /usr/src/app/backend/
-COPY --chown=clug:clug ./packages/frontend/ /usr/src/app/frontend/
-
-## --------------------- BUILD FRONTEND APP
-WORKDIR /usr/src/app/frontend/
-RUN npm run build
 
 ## --------------------- BUILD BACKEND APP
 WORKDIR /usr/src/app/backend/
-RUN npm run build:app && \ 
-    npm run build:migrations && \
-    npm run build:scripts
+RUN npm run build
 
 # ------------------------------- APP CONTAINER
 
@@ -75,10 +60,12 @@ ENV NODE_ENV=production \
     PORT=3100 \
     DATABASE_NAME=clug-db \
     DATABASE_HOST=db \
-    DATABASE_PORT=5432 \
+    DATABASE_PORT=5433 \
     DATABASE_USERNAME=user \
     DATABASE_PASSWORD=password \
-    SETTINGS_JWT_SECRET_OR_PUBLIC_KEY=secret
+    JWT_SECRET=mysecretkey\    
+    DATABASE_SYNCHRONIZE=false\
+    DATABASE_DROPSCHEMA=false
 
 # * Create build && app directory.
 # * Create clug user & group.
@@ -97,8 +84,7 @@ COPY --chown=clug:clug --from=builder /usr/src/app/backend/package.json /usr/src
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/package-lock.json /usr/src/app/package-lock.json
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/node_modules /usr/src/app/node_modules
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/build
-COPY --chown=clug:clug --from=builder /usr/src/app/backend/ormconfig.js /usr/src/app/ormconfig.js
-COPY --chown=clug:clug --from=builder /usr/src/app/backend/public /usr/src/app/public
+COPY --chown=clug:clug ./packages/backend/public /usr/src/app/public
 
 EXPOSE 3100
 

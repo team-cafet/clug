@@ -1,9 +1,0 @@
-{
-  "settings": {
-    "loggerFormat": "none"
-  },
-  "database": {
-    "dropSchema": true,
-    "synchronize": true
-  }
-}

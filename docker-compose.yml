@@ -1,7 +1,6 @@
 version: '3.7'
 
 services:
-
   # Main Express.js application container
   app:
     build: .
@@ -15,16 +14,16 @@ services:
       DATABASE_PORT: 5432
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: .Clug-123
-      SETTINGS_JWT_SECRET_OR_PUBLIC_KEY: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
-      NODE_ENV: production 
-      
+      JWT_SECRET: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
+      NODE_ENV: production
+
     ports:
       - 3100:3100
     #restart: always
-    
+
   db:
     image: postgres:12-alpine
-    environment:      
+    environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: .Clug-123
       POSTGRES_DB: clug-db

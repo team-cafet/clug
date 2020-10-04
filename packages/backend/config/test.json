@@ -1,6 +1,0 @@
-{
-  "database": {
-    "dropSchema": true,
-    "synchronize": true
-  }
-}
