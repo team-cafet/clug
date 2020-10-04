@@ -63,7 +63,9 @@ ENV NODE_ENV=production \
     DATABASE_PORT=5433 \
     DATABASE_USERNAME=user \
     DATABASE_PASSWORD=password \
-    JWT_SECRET=mysecretkey
+    JWT_SECRET=mysecretkey\    
+    DATABASE_SYNCHRONIZE=false\
+    DATABASE_DROPSCHEMA=false
 
 # * Create build && app directory.
 # * Create clug user & group.
@@ -82,7 +84,8 @@ COPY --chown=clug:clug --from=builder /usr/src/app/backend/package.json /usr/src
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/package-lock.json /usr/src/app/package-lock.json
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/node_modules /usr/src/app/node_modules
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/build
-COPY --chown=clug:clug --from=builder /usr/src/app/backend/ormconfig.js /usr/src/app/ormconfig.js
+COPY --chown=clug:clug ./packages/backend/ormconfig.json /usr/src/app/ormconfig.json
+COPY --chown=clug:clug ./packages/backend/public /usr/src/app/public
 
 EXPOSE 3100
 
