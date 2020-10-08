@@ -1,10 +1,12 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMemberLabels } from '../../hooks/useMemberLabels';
 import { IMember } from '../../libs/interfaces/member.interface';
+import { IMembershipPlan, PlanType } from '../../libs/interfaces/membershipPlan.interface';
 import { memberService } from '../../services/member.service';
+import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 
 interface IFormValue {
@@ -30,8 +32,19 @@ interface IProps {
 
 export const MemberForm = (props: IProps) => {
   const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
+  const [membershipPlanList, setMembershipPlanList] = useState([]);
   const availableMemberLabels = useMemberLabels();
+  useEffect(() => {
+    const getAllPlans = async () => {
+      const membershiPlans = await membershipPlanService.getAll();
+      console.table(membershiPlans?.data);
+      if (membershiPlans) {
+        setMembershipPlanList(membershiPlans.data);
+      }
+    };
 
+    getAllPlans();
+  }, []);
   let initialValues: IFormValue = {
     memberLabels: [],
     user: {
@@ -75,7 +88,7 @@ export const MemberForm = (props: IProps) => {
       (values as any) = {
         ...values,
         // tag send to the server must be at least have id and name
-        memberLabels: values.memberLabels.map((label:any) =>
+        memberLabels: values.memberLabels.map((label: any) =>
           availableMemberLabels.find(
             (availabelLabel) => availabelLabel.id === Number.parseInt(label)
           )
@@ -208,6 +221,17 @@ export const MemberForm = (props: IProps) => {
                 formnikError={errors.user?.city}
                 name="user.city"
               />
+            </div>
+            <h2>Abonnement</h2>
+
+            <div className="form-row">
+              <Field as="select" name="membership" value="">
+                {
+                  membershipPlanList.forEach(plan => {
+                    <option value={}></option>
+                  })
+                }
+              </Field>
             </div>
           </div>
 
