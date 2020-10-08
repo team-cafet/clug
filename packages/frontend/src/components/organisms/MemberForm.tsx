@@ -4,12 +4,11 @@ import { Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMemberLabels } from '../../hooks/useMemberLabels';
 import { IMember } from '../../libs/interfaces/member.interface';
-import {
-  IMembershipPlan,
-  PlanType,
-} from '../../libs/interfaces/membershipPlan.interface';
+import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
+import { getPlanName } from '../../services/data-mapping.service';
 import { memberService } from '../../services/member.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
+import { membershipService } from '../../services/membership.service';
 import { FormGroup } from '../molecules/FormGroup';
 
 interface IFormValue {
@@ -38,6 +37,7 @@ export const MemberForm = (props: IProps) => {
   const [membershipPlanList, setMembershipPlanList] = useState<
     IMembershipPlan[]
   >([]);
+  const [planSelected, setPlanSelected] = useState(0);
   const availableMemberLabels = useMemberLabels();
   useEffect(() => {
     const getAllPlans = async () => {
@@ -102,10 +102,18 @@ export const MemberForm = (props: IProps) => {
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
-        await memberService.add({
+        console.log(planSelected)
+        /* const newMember = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
         });
+TODO: How to retrieve the plan ID and NOT the key of options. See in onChange method and stuff.
+Then complete this function
+        if(newMember)
+          await membershipService.add({
+            startDate: new Date(),
+            endDate: new Date + 
+          }) */
       }
       setDisplayAlertMemberSaved(true);
     } catch (err) {
@@ -229,10 +237,17 @@ export const MemberForm = (props: IProps) => {
             </div>
             <h2>Abonnement</h2>
             <div className="form-row">
-              <Field as="select" name="membership" value="">
-                {membershipPlanList.forEach((plan) => 
-                  <option value="BAHHH">bahh</option>
-              )}
+              <Field
+                as="select"
+                name="membershipSelect"
+                onChange={(event: { target: any }) => setPlanSelected(event.target.value)}
+              >
+                <option value="undefined">aucun</option>
+                {membershipPlanList.map((plan) => (
+                  <option key={plan.id} value={plan.id}>
+                    {`${getPlanName(plan.type)}, ${plan.price}.-`}
+                  </option>
+                ))}
               </Field>
             </div>
           </div>
