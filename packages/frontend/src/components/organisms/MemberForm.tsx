@@ -4,7 +4,10 @@ import { Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMemberLabels } from '../../hooks/useMemberLabels';
 import { IMember } from '../../libs/interfaces/member.interface';
-import { IMembershipPlan, PlanType } from '../../libs/interfaces/membershipPlan.interface';
+import {
+  IMembershipPlan,
+  PlanType,
+} from '../../libs/interfaces/membershipPlan.interface';
 import { memberService } from '../../services/member.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
@@ -32,7 +35,9 @@ interface IProps {
 
 export const MemberForm = (props: IProps) => {
   const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
-  const [membershipPlanList, setMembershipPlanList] = useState([]);
+  const [membershipPlanList, setMembershipPlanList] = useState<
+    IMembershipPlan[]
+  >([]);
   const availableMemberLabels = useMemberLabels();
   useEffect(() => {
     const getAllPlans = async () => {
@@ -223,14 +228,11 @@ export const MemberForm = (props: IProps) => {
               />
             </div>
             <h2>Abonnement</h2>
-
             <div className="form-row">
               <Field as="select" name="membership" value="">
-                {
-                  membershipPlanList.forEach(plan => {
-                    <option value={}></option>
-                  })
-                }
+                {membershipPlanList.forEach((plan) => 
+                  <option value="BAHHH">bahh</option>
+              )}
               </Field>
             </div>
           </div>
