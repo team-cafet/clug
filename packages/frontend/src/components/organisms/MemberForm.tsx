@@ -17,9 +17,9 @@ interface IFormValue {
     birthdate: Date | string;
     phone: string;
     street: string;
-    streetNumber: null | number;
+    streetNumber: string | number;
     city: string;
-    postalCode: null | number;
+    postalCode: string | number;
   };
 }
 
@@ -41,9 +41,9 @@ export const MemberForm = (props: IProps) => {
       birthdate: '',
       phone: '',
       street: '',
-      streetNumber: null,
+      streetNumber: Number.parseInt(''),
       city: '',
-      postalCode: null,
+      postalCode: Number.parseInt(''),
     },
     global: '',
   };
@@ -58,8 +58,13 @@ export const MemberForm = (props: IProps) => {
     const errors: any = {};
 
     if (!values.user.email) {
-      errors.user = {};
+      errors.user = { ...errors.user };
       errors.user.email = 'Requis';
+    }
+
+    if (!values.user.birthdate) {
+      errors.user = { ...errors.user };
+      errors.user.birthdate = 'Requis';
     }
 
     return errors;
@@ -75,7 +80,7 @@ export const MemberForm = (props: IProps) => {
       (values as any) = {
         ...values,
         // tag send to the server must be at least have id and name
-        memberLabels: values.memberLabels.map((label:any) =>
+        memberLabels: values.memberLabels.map((label: any) =>
           availableMemberLabels.find(
             (availabelLabel) => availabelLabel.id === Number.parseInt(label)
           )
