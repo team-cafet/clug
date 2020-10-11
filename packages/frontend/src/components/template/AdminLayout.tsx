@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Button, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 
 import './AdminLayout.scss';
 
@@ -9,7 +10,11 @@ interface IProps {
 }
 
 export const AdminLayout = (props: IProps) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isDesktopOrLaptop = useMediaQuery({
+    query: '(min-device-width: 992px)',
+  });
+
+  const [isMenuOpen, setIsMenuOpen] = useState(isDesktopOrLaptop);
 
   const adminLinks = [
     {
@@ -49,7 +54,7 @@ export const AdminLayout = (props: IProps) => {
               }}
             >
               <span aria-label="button" role="img">
-                { !isMenuOpen ? '⬛' : '✖'}
+                {!isMenuOpen ? '⬛' : '✖'}
               </span>
             </Button>
 
@@ -81,7 +86,9 @@ export const AdminLayout = (props: IProps) => {
                 as={Link}
                 to={link.to}
                 onClick={() => {
-                  setIsMenuOpen(!isMenuOpen);
+                  if (!isDesktopOrLaptop) {
+                    setIsMenuOpen(!isMenuOpen);
+                  }
                 }}
               >
                 {link.displayName}
