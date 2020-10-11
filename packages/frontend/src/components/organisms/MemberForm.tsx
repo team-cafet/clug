@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useMemberLabels } from '../../hooks/useMemberLabels';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
-import { getPlanName } from '../../services/data-mapping.service';
+import { generatePlanEndDate, getPlanName } from '../../services/data-mapping.service';
 import { memberService } from '../../services/member.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { membershipService } from '../../services/membership.service';
@@ -37,7 +37,7 @@ export const MemberForm = (props: IProps) => {
   const [membershipPlanList, setMembershipPlanList] = useState<
     IMembershipPlan[]
   >([]);
-  const [planSelectedId, setPlanSelectedId] = useState(0);
+  const [planSelectedId, setPlanSelectedId] = useState('0');
   const availableMemberLabels = useMemberLabels();
   useEffect(() => {
     const getAllPlans = async () => {
@@ -101,9 +101,9 @@ export const MemberForm = (props: IProps) => {
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
-        /* const planSelected = membershipPlanList.find(
-          (plan) => plan.id == planSelectedId
-        );
+        const planSelected = membershipPlanList.find(
+          (plan) => plan.id === parseInt(planSelectedId)
+        );/* 
         const newMember = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
@@ -113,6 +113,7 @@ export const MemberForm = (props: IProps) => {
             startDate: new Date(),
             endDate: new Date + 
           })   */
+          console.log(generatePlanEndDate(new Date(), planSelected?.type))
       }
       setDisplayAlertMemberSaved(true);
     } catch (err) {
@@ -128,7 +129,7 @@ export const MemberForm = (props: IProps) => {
   };
 
   //TODO: why it doesn't work to call setPlanSelected directly in the jsx ?
-  const changePlanSelected = (id: number) => {
+  const changePlanSelected = (id: string) => {
     setPlanSelectedId(id);
   };
 

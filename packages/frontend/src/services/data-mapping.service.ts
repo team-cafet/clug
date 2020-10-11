@@ -18,20 +18,26 @@ export const getPlanName = (id: number | undefined): string => {
   }
 };
 
-export const generatePlanEndDate = (startDate: Date, planType: number): Date => {
+export const generatePlanEndDate = (startDate: Date, planType?: number): Date => {
   let endDate = moment();
-
+  console.log(planType, typeof planType)
   switch (planType) {
     case PlanType.weekly:
       endDate.add(1, 'weeks');
+      break;
     case PlanType.monthly:
       endDate.add(1, 'months');
+      break;
     case PlanType.quarterly:
       endDate.add(3, 'months');
+      break;
     case PlanType.biannual:
       endDate.add(6, 'months');
+      break;
     case PlanType.annual:
       endDate.add(1, 'years');
+      break;
+      default: console.log('not a valid type')
   }
 
   return endDate.toDate()
