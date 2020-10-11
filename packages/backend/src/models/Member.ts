@@ -62,9 +62,10 @@ export class Member extends BaseEntity {
 
   @ManyToOne((type) => Club, (club) => club.members, {
     onDelete: 'NO ACTION',
-    nullable: true
+    nullable: true,
+    cascade: true
   })
-  club: Promise<Club>;
+  club: Club;
 
   @OneToMany((type) => Membership, (membership) => membership.member, {
     nullable: false,
