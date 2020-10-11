@@ -1,15 +1,19 @@
-# beta-team-cafet
+# Clug
 ## Description
-This is the beta for a manager for association (like a sport club). 
+Clug is an application to manage multiple club/association on one unified web platform.
+The platform is separated in three kind of user:
+- Adminstrator have all permissions on the platform
+- Manager are can manages organisation
+- User are the associations
 
 ## Technologies
 This project will use Lerna for managing in one repo the backend and the frontend of the application.
 
 ### Backend
-The backend is created with [Foalts](https://foalts.gitbook.io/)
+The backend is created with Express
 
 ### Frontend
-The frontend is created with [Angular](https://angular.io)
+The frontend is created with React
 
 ## How to use the ...
 
@@ -20,7 +24,8 @@ See the [Backend Readme](./packages/backend/README.md)
 See the [Frontend Readme](./packages/frontend/README.md)
 
 ### Sysadmin
-To create your own docker image, just execute ```npm run docker:build```
+To create your own docker image, just execute ```npm run docker:build```.
+You can also run ```npm run docker:up``` to have a complete test environment.
 
 ## Authors
 - Audrey Huguenin

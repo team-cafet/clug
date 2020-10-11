@@ -1,4 +1,13 @@
+# Clug Frontend
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Installation
+```bash
+# just install dependencies
+npm ci
+
+```
 
 ## Available Scripts
 
@@ -42,3 +51,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Publish the frontend on the app
+To publish the app, you must build the app and copy it in the public folder of the backend.
