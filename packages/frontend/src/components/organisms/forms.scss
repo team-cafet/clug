@@ -1,3 +1,13 @@
 .responsiveTableContainer{
   overflow-x:auto;
 }
+.login{
+  background-color: #fff;
+  padding: 2rem;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
+  box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
+  input {
+    margin: .5rem 0 .5rem 0;
+  }
+}
