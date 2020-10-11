@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 import { useMemberLabels } from '../../hooks/useMemberLabels';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
-import { generatePlanEndDate, getPlanName } from '../../services/data-mapping.service';
+import {
+  generatePlanEndDate,
+  getPlanName,
+} from '../../services/data-mapping.service';
 import { memberService } from '../../services/member.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { membershipService } from '../../services/membership.service';
@@ -98,22 +101,24 @@ export const MemberForm = (props: IProps) => {
           )
         ),
       };
+      const planSelected = membershipPlanList.find(
+        (plan) => plan.id === parseInt(planSelectedId)
+      );
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
-        const planSelected = membershipPlanList.find(
-          (plan) => plan.id === parseInt(planSelectedId)
-        );/* 
         const newMember = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
         });
-        if(newMember)
-          await membershipService.add({
+        if (newMember) {
+          const newMembership = await membershipService.add({
             startDate: new Date(),
-            endDate: new Date + 
-          })   */
-          console.log(generatePlanEndDate(new Date(), planSelected?.type))
+            endDate: generatePlanEndDate(new Date(), planSelected?.type),
+            plan: planSelected,
+          });
+          console.log(newMembership);
+        } 
       }
       setDisplayAlertMemberSaved(true);
     } catch (err) {

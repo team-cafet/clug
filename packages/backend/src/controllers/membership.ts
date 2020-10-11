@@ -1,6 +1,6 @@
 import { RESTController } from '../libs/classes/RESTController';
 import { Membership } from '../models/Membership';
-import { getRepository, IsNull, LessThanOrEqual } from 'typeorm';
+import { getRepository, LessThanOrEqual } from 'typeorm';
 import { Request, Response, NextFunction } from 'express';
 
 export class MembershipCtrl extends RESTController<Membership> {
@@ -32,6 +32,7 @@ export class MembershipCtrl extends RESTController<Membership> {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
+    console.log('BUSINESS VALIDATION');
     const data: Membership = req.body;
 
     const validationResult = await Membership.validate(data);

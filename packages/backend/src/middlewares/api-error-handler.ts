@@ -7,7 +7,7 @@ export const apiErrorHandler = (err, req, res, next) => {
   
   if (err.code === 'permission_denied') {
     res.status(403);
-    err.message = 'Permision denied';
+    err.message = 'Permission denied';
   }
 
   if(err.code === 'user_object_not_found'){
