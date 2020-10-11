@@ -1,4 +1,5 @@
 import { PlanType } from '../libs/interfaces/membershipPlan.interface';
+import moment from 'moment';
 
 export const getPlanName = (id: number | undefined): string => {
   switch (id) {
@@ -17,19 +18,21 @@ export const getPlanName = (id: number | undefined): string => {
   }
 };
 
-export const getPlanDurationInMonth = (id: number | undefined): string => {
-  switch (id) {
+export const generatePlanEndDate = (startDate: Date, planType: number): Date => {
+  let endDate = moment();
+
+  switch (planType) {
     case PlanType.weekly:
-      return 'hebdomadaire';
+      endDate.add(1, 'weeks');
     case PlanType.monthly:
-      return 'mensuel';
+      endDate.add(1, 'months');
     case PlanType.quarterly:
-      return 'trimestriel';
+      endDate.add(3, 'months');
     case PlanType.biannual:
-      return 'semestriel';
+      endDate.add(6, 'months');
     case PlanType.annual:
-      return 'annuel';
-    default:
-      return 'spécial';
+      endDate.add(1, 'years');
   }
+
+  return endDate.toDate()
 };

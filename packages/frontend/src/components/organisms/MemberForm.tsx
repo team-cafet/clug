@@ -37,12 +37,11 @@ export const MemberForm = (props: IProps) => {
   const [membershipPlanList, setMembershipPlanList] = useState<
     IMembershipPlan[]
   >([]);
-  const [planSelected, setPlanSelected] = useState(0);
+  const [planSelectedId, setPlanSelectedId] = useState(0);
   const availableMemberLabels = useMemberLabels();
   useEffect(() => {
     const getAllPlans = async () => {
       const membershiPlans = await membershipPlanService.getAll();
-      console.table(membershiPlans?.data);
       if (membershiPlans) {
         setMembershipPlanList(membershiPlans.data);
       }
@@ -102,18 +101,18 @@ export const MemberForm = (props: IProps) => {
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
-        console.log(planSelected)
-        /* const newMember = await memberService.add({
+        /* const planSelected = membershipPlanList.find(
+          (plan) => plan.id == planSelectedId
+        );
+        const newMember = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
         });
-TODO: How to retrieve the plan ID and NOT the key of options. See in onChange method and stuff.
-Then complete this function
         if(newMember)
           await membershipService.add({
             startDate: new Date(),
             endDate: new Date + 
-          }) */
+          })   */
       }
       setDisplayAlertMemberSaved(true);
     } catch (err) {
@@ -126,6 +125,11 @@ Then complete this function
     }
 
     setSubmitting(false);
+  };
+
+  //TODO: why it doesn't work to call setPlanSelected directly in the jsx ?
+  const changePlanSelected = (id: number) => {
+    setPlanSelectedId(id);
   };
 
   return (
@@ -240,9 +244,11 @@ Then complete this function
               <Field
                 as="select"
                 name="membershipSelect"
-                onChange={(event: { target: any }) => setPlanSelected(event.target.value)}
+                onChange={(event: { target: any }) => {
+                  changePlanSelected(event.target.value);
+                }}
               >
-                <option value="undefined">aucun</option>
+                <option value="0">aucun</option>
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
                     {`${getPlanName(plan.type)}, ${plan.price}.-`}
