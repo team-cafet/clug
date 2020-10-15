@@ -1,7 +1,7 @@
 import { RESTController } from '../libs/classes/RESTController';
 import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
-import { MembershipPlan } from '../models/MembershipPlan';
+import { MembershipPlan, PlanType } from '../models/MembershipPlan';
 
 export class MembershipPlanCtrl extends RESTController<MembershipPlan> {
   constructor() {
@@ -12,7 +12,6 @@ export class MembershipPlanCtrl extends RESTController<MembershipPlan> {
     req: Request,
     res: Response
   ): Promise<Response> => {
-    console.log(req.body);
-    return res.status(201).send('yooo');
+    return res.status(201).send(Object.values(PlanType));
   };
 }

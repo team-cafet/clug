@@ -24,16 +24,16 @@ export const MembershipPlanForm = (props: IProps) => {
   const initialValues: IFormValue = props.membershipPlan
     ? { ...props.membershipPlan }
     : { price: 0, description: '', type: 1, tacit: false };
-  const [membershipPlanList, setMembershipPlanList] = useState<
-    IMembershipPlan[]
+  const [typeList, setTypeList] = useState<
+    any[]
   >([]);
   const [planSelectedId, setPlanSelectedId] = useState('0');
   useEffect(() => {
     const getAllPlans = async () => {
       const membershiPlans = await membershipPlanService.getAllTypes();
-      console.log('plans', membershiPlans)
+      console.log('plans', membershiPlans?.data)
       if (membershiPlans) {
-        setMembershipPlanList(membershiPlans.data);
+        setTypeList(membershiPlans.data);
       }
     };
     getAllPlans();
@@ -99,7 +99,7 @@ export const MembershipPlanForm = (props: IProps) => {
                 changePlanSelected(event.target.value);
               }}
             >
-              {membershipPlanList.map((plan) => (
+              {typeList.map((plan) => (
                 <option key={plan.id} value={plan.id}>
                   {`${getPlanName(plan.type)}, ${plan.price}.-`}
                 </option>

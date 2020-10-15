@@ -53,7 +53,6 @@ export const MemberForm = (props: IProps) => {
       }
     };
     getAllPlans();
-    
   }, []);
   let initialValues: IFormValue = {
     memberLabels: [],
@@ -110,16 +109,22 @@ export const MemberForm = (props: IProps) => {
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
-        console.log(values)
         const newMember = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
-          memberships: planSelected? [{
-            startDate: new Date(startDate),
-            endDate: generatePlanEndDate(new Date(startDate), planSelected?.type),
-            plan: planSelected
-          }] : []
-        }); 
+          memberships: planSelected
+            ? [
+                {
+                  startDate: new Date(startDate),
+                  endDate: generatePlanEndDate(
+                    new Date(startDate),
+                    planSelected?.type
+                  ),
+                  plan: planSelected,
+                },
+              ]
+            : [],
+        });
       }
       backToMemberPage();
     } catch (err) {
@@ -134,11 +139,19 @@ export const MemberForm = (props: IProps) => {
   };
   const backToMemberPage = () => {
     history.push('/admin/members');
-  }
+  };
 
   const changePlanSelected = (id: string) => {
     setPlanSelectedId(id);
   };
+
+  const updateMode = () => {
+    if(props.member?.id){
+      return true
+    }else{
+      return false
+    }
+  }
 
   return (
     <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
@@ -248,7 +261,8 @@ export const MemberForm = (props: IProps) => {
               />
             </div>
             <h2>Abonnement</h2>
-            <div className="form-row">
+
+            <div className="form-row" hidden={updateMode()}>
               <Field
                 as="select"
                 name="membershipSelect"
@@ -269,8 +283,7 @@ export const MemberForm = (props: IProps) => {
                   setStartDate(event.target.value);
                 }}
                 value={startDate}
-              >
-                </Field>
+              ></Field>
             </div>
           </div>
 
