@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './AdminLayout.scss';
 import { Sidebar } from './Sidebar';
-//import { Logo } from '../atoms/Logo';
+import { Logo } from '../atoms/Logo';
 
 interface IProps {
   children: any;
@@ -45,8 +45,7 @@ export const AdminLayout = (props: IProps) => {
               to="/admin/dashboard"
               className="navbar-brand"
             >
-              hello
-              {/* <Logo className="header"/> */}
+              <Logo className="header"/>
             </Link>
 
             <ul className="navbar-nav px-3">
