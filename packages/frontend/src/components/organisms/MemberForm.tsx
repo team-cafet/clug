@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useMemberLabels } from '../../hooks/useMemberLabels';
 import { IMember } from '../../libs/interfaces/member.interface';
 import moment from 'moment';
@@ -44,6 +44,7 @@ export const MemberForm = (props: IProps) => {
   const [planSelectedId, setPlanSelectedId] = useState('0');
   const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
   const availableMemberLabels = useMemberLabels();
+  const history = useHistory();
   useEffect(() => {
     const getAllPlans = async () => {
       const membershiPlans = await membershipPlanService.getAll();
@@ -51,8 +52,8 @@ export const MemberForm = (props: IProps) => {
         setMembershipPlanList(membershiPlans.data);
       }
     };
-
     getAllPlans();
+    
   }, []);
   let initialValues: IFormValue = {
     memberLabels: [],
@@ -120,7 +121,7 @@ export const MemberForm = (props: IProps) => {
           }] : []
         }); 
       }
-      setDisplayAlertMemberSaved(true);
+      backToMemberPage();
     } catch (err) {
       console.error(err);
       if (err.message) {
@@ -129,11 +130,13 @@ export const MemberForm = (props: IProps) => {
         setFieldError('global', 'Erreur serveur...');
       }
     }
-
     setSubmitting(false);
   };
+  const backToMemberPage = () => {
+    history.push('/admin/members');
+    setDisplayAlertMemberSaved(true);
+  }
 
-  //TODO: why it doesn't work to call setPlanSelected directly in the jsx ?
   const changePlanSelected = (id: string) => {
     setPlanSelectedId(id);
   };
