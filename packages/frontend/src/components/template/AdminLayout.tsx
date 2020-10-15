@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Button, Nav } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { Logo } from '../atoms/Logo';
