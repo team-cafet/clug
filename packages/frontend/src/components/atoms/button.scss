@@ -1,13 +1,17 @@
-button.login-button {
-    background-color: #ff581a;
-    color: #fff;
-    display:block;
-    margin: auto;
+button.btn {
     &:focus {
-        border-color:#ff581a; 
+        border-color:rgba(255, 255, 255, 0.0); 
+        box-shadow: 0 0 0 0.2rem rgba(255, 88, 26, 0.2);
     }
-    &:hover {
-        color:#fff;
-        background-color: darken(#ff581a, 10%);
+    &.btn-submit {
+        background-color: var(--c-secondary);
+        color: var(--c-light-text);
+        display:block;
+        margin: auto;
+        border-radius: var(--c-radius);
+        
+        &:hover {
+            background-color: var(--c-dark-secondary);
+        }
     }
 }

@@ -1,13 +1,24 @@
 .responsiveTableContainer{
   overflow-x:auto;
 }
-.login{
+.form {
+  .input {
+    margin: .5rem 0 .5rem 0;
+    border-radius: 12px;
+    &:focus {
+      outline: none;
+      border-color:#ff581a; 
+      border-width: 2px;
+      box-shadow: none;
+    }
+  }
+}
+.login {
+  width: 50vw;
+  margin:auto;
   background-color: #fff;
   padding: 2rem;
   -webkit-box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
   -moz-box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
   box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
-  input {
-    margin: .5rem 0 .5rem 0;
-  }
 }
