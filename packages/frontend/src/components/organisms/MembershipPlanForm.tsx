@@ -24,20 +24,17 @@ export const MembershipPlanForm = (props: IProps) => {
   const initialValues: IFormValue = props.membershipPlan
     ? { ...props.membershipPlan }
     : { price: 0, description: '', type: 1, tacit: false };
-  const [typeList, setTypeList] = useState<
-    any[]
-  >([]);
-  const [planSelectedId, setPlanSelectedId] = useState('0');
+  const [typeList, setTypeList] = useState<any[]>([]);
+  const [typeSelectedId, setTypeSelectedId] = useState(0);
+  const [tacitSelected, setTacitSelected] = useState(false);
   useEffect(() => {
-    const getAllPlans = async () => {
-      const membershiPlans = await membershipPlanService.getAllTypes();
-      console.log('plans', membershiPlans?.data)
-      if (membershiPlans) {
-        setTypeList(membershiPlans.data);
+    const getAllTypes = async () => {
+      const types = await membershipPlanService.getAllTypes();
+      if (types) {
+        setTypeList(types.data);
       }
     };
-    getAllPlans();
-    
+    getAllTypes();
   }, []);
 
   const validate = (values: IFormValue) => {
@@ -53,8 +50,10 @@ export const MembershipPlanForm = (props: IProps) => {
     formHelper: FormikHelpers<IFormValue>
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
-
-    try {
+    values.type = typeSelectedId
+    values.tacit = tacitSelected
+    console.log('values', values)
+    /* try {
       if (props.membershipPlan?.id) {
         await membershipPlanService.update(props.membershipPlan.id, values);
       } else {
@@ -71,10 +70,14 @@ export const MembershipPlanForm = (props: IProps) => {
         setFieldError('global', 'Erreur serveur...');
       }
       setSubmitting(false);
-    }
+    } */
   };
-  const changePlanSelected = (id: string) => {
-    setPlanSelectedId(id);
+  const changeTypeSelected = (id: number) => {
+    setTypeSelectedId(id);
+  };
+
+  const changeTacit = (tacit: string) => {
+    setTacitSelected(tacit === 'true');
   };
 
   return (
@@ -96,20 +99,26 @@ export const MembershipPlanForm = (props: IProps) => {
               as="select"
               name="membershipSelect"
               onChange={(event: { target: any }) => {
-                changePlanSelected(event.target.value);
+                changeTypeSelected(event.target.value);
               }}
             >
-              {typeList.map((plan) => (
-                <option key={plan.id} value={plan.id}>
-                  {`${getPlanName(plan.type)}, ${plan.price}.-`}
+              {typeList.map((type, index) => (
+                <option key={index} value={index}>
+                  {`${type}`}
                 </option>
               ))}
             </Field>
             <label htmlFor="tacit">Tacite</label>
             <Field
-              className={`form-control ${errors.tacit ? 'is-invalid' : ''}`}
-              name="tacit"
-            />
+              as="select"
+              name="tacitSelect"
+              onChange={(event: { target: any }) => {
+                changeTacit(event.target.value);
+              }}
+            >
+              <option value="true">oui</option>
+              <option value="false">non</option>
+              </Field>
             <Button variant="primary" type="submit" disabled={isSubmitting}>
               Sauver
             </Button>

@@ -12,6 +12,6 @@ export class MembershipPlanCtrl extends RESTController<MembershipPlan> {
     req: Request,
     res: Response
   ): Promise<Response> => {
-    return res.status(201).send(Object.values(PlanType));
+    return res.status(201).send(Object.values(PlanType).filter(type => typeof type === 'string'));
   };
 }

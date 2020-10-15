@@ -12,7 +12,6 @@ import {
 } from '../../services/data-mapping.service';
 import { memberService } from '../../services/member.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
-import { membershipService } from '../../services/membership.service';
 import { FormGroup } from '../molecules/FormGroup';
 
 interface IFormValue {
@@ -146,12 +145,12 @@ export const MemberForm = (props: IProps) => {
   };
 
   const updateMode = () => {
-    if(props.member?.id){
-      return true
-    }else{
-      return false
+    if (props.member?.id) {
+      return true;
+    } else {
+      return false;
     }
-  }
+  };
 
   return (
     <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
@@ -261,7 +260,7 @@ export const MemberForm = (props: IProps) => {
               />
             </div>
             <h2>Abonnement</h2>
-
+            {/* On update, this feature will be more complex. Need more analysis on this point */}
             <div className="form-row" hidden={updateMode()}>
               <Field
                 as="select"
