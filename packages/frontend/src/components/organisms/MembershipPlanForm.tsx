@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membership-plan.service';
-import { getPlanName } from '../../services/data-mapping.service';
 
 interface IFormValue {
   price?: number;
@@ -27,6 +26,7 @@ export const MembershipPlanForm = (props: IProps) => {
   const [typeList, setTypeList] = useState<any[]>([]);
   const [typeSelectedId, setTypeSelectedId] = useState(0);
   const [tacitSelected, setTacitSelected] = useState(false);
+  const history = useHistory();
   useEffect(() => {
     const getAllTypes = async () => {
       const types = await membershipPlanService.getAllTypes();
@@ -39,9 +39,7 @@ export const MembershipPlanForm = (props: IProps) => {
 
   const validate = (values: IFormValue) => {
     const errors: any = {};
-
     if (!values.price) errors.price = 'Required';
-
     return errors;
   };
 
@@ -50,10 +48,9 @@ export const MembershipPlanForm = (props: IProps) => {
     formHelper: FormikHelpers<IFormValue>
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
-    values.type = typeSelectedId
-    values.tacit = tacitSelected
-    console.log('values', values)
-    /* try {
+    values.type = typeSelectedId;
+    values.tacit = tacitSelected;
+    try {
       if (props.membershipPlan?.id) {
         await membershipPlanService.update(props.membershipPlan.id, values);
       } else {
@@ -62,6 +59,7 @@ export const MembershipPlanForm = (props: IProps) => {
           ...values,
         });
       }
+      history.push('/admin/membershipPlans')
     } catch (err) {
       console.error(err);
       if (err.message) {
@@ -70,7 +68,8 @@ export const MembershipPlanForm = (props: IProps) => {
         setFieldError('global', 'Erreur serveur...');
       }
       setSubmitting(false);
-    } */
+    }
+    
   };
   const changeTypeSelected = (id: number) => {
     setTypeSelectedId(id);
@@ -118,7 +117,7 @@ export const MembershipPlanForm = (props: IProps) => {
             >
               <option value="true">oui</option>
               <option value="false">non</option>
-              </Field>
+            </Field>
             <Button variant="primary" type="submit" disabled={isSubmitting}>
               Sauver
             </Button>
