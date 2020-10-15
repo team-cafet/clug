@@ -9,7 +9,6 @@ import { Input } from '../atoms/Input';
 import { Button } from '../atoms/Button';
 import { Alert } from '../atoms/Alert';
 import './forms.scss';
-import '../atoms/button.scss';
 
 export const LoginForm = () => {
   const [error, setError] = useState<null | { message: string }>(null);
@@ -54,10 +53,10 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={submit} className=" form login">
-      {error ? <Alert className="login-failed danger">{error.message}</Alert> : null}
+      {error ? <Alert variant="danger">{error.message}</Alert> : null}
       <Input ref={usernameInp} placeholder="Nom d'utilisateur" type="text" className="input"/>
       <Input ref={passwordInp} placeholder="Mot de passe" type="password" className="input" />
-      <Button type="submit" className="btn-submit">Se connecter</Button>
+      <Button type="submit" variant="secondary">Se connecter</Button>
     </form>
   );
 };

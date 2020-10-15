@@ -19,7 +19,6 @@
   #sidenav.open {
     display: block;
   }
-
 }
 
 @media (min-width: 992px) {
@@ -27,13 +26,11 @@
     #main {
       display: flex;
     }
-
     #sidenav {
       position: relative;
       width: 20%;
       top: 0;
     }
-
     #mainContent {
       width: 80%;
     }

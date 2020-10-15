@@ -1,4 +1,3 @@
-@import '../../screens.scss';
 
 .responsiveTableContainer{
   overflow-x:auto;
@@ -25,11 +24,11 @@
   }
 }
 
-
-@media only screen and (max-width: $screen-s) {
+// Small devices (landscape phones, less than 768px)
+@media screen and (max-width: 768px){
   .form {
     &.login {
-      width: 85vw;
+      width: 100%;
     }  
   }
 }

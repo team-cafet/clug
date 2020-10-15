@@ -3,16 +3,10 @@ button.btn {
         border-color:rgba(255, 255, 255, 0.0); 
         box-shadow: 0 0 0 0.2rem rgba(255, 88, 26, 0.2);
     }
-    &.btn-submit {
-        background-color: var(--c-secondary);
-        color: var(--c-light-text);
+     &.btn-secondary {
         display:block;
         margin: auto;
         border-radius: var(--c-radius);
         margin-top: 1rem;
-        
-        &:hover {
-            background-color: var(--c-dark-secondary);
-        }
     }
 }
