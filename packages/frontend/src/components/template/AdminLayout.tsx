@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './AdminLayout.scss';
 import { Sidebar } from './Sidebar';
+//import { Logo } from '../atoms/Logo';
 
 interface IProps {
   children: any;
@@ -39,26 +40,27 @@ export const AdminLayout = (props: IProps) => {
   return (
     <>
       <div id="adminlayout">
-      <div className="navbar header flex-md-nowrap">
-          <Link
-            to="/admin/dashboard"
-            className="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
-          >
-            Clug
-          </Link>
+        <div className="navbar bg-primary d-flex justify-content-between">
+            <Link
+              to="/admin/dashboard"
+              className="navbar-brand"
+            >
+              hello
+              {/* <Logo className="header"/> */}
+            </Link>
 
-          <ul className="navbar-nav px-3">
-            <li className="nav-item text-nowrap">
-              <Link className="nav-link" to="/logout">
-                Déconnexion
-              </Link>
-            </li>
-          </ul>
-      </div>
-        <Sidebar links= {adminLinks} pageWrapId={"mainContent"} outerContainerId={"adminLayout"}/>
-        <div className="container" id="mainContent">
-              {props.children}
-            </div>
+            <ul className="navbar-nav px-3">
+              <li className="nav-item text-nowrap">
+                <Link className="nav-link" to="/logout">
+                  Déconnexion
+                </Link>
+              </li>
+            </ul>
+        </div>
+          <Sidebar links= {adminLinks} pageWrapId={"mainContent"} outerContainerId={"adminLayout"}/>
+          <div className="container" id="mainContent">
+                {props.children}
+          </div>
       </div>
     </>
   );
