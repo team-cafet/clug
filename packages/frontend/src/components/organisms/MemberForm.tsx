@@ -134,7 +134,6 @@ export const MemberForm = (props: IProps) => {
   };
   const backToMemberPage = () => {
     history.push('/admin/members');
-    setDisplayAlertMemberSaved(true);
   }
 
   const changePlanSelected = (id: string) => {
@@ -257,7 +256,6 @@ export const MemberForm = (props: IProps) => {
                   changePlanSelected(event.target.value);
                 }}
               >
-                <option value="0">aucun</option>
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
                     {`${getPlanName(plan.type)}, ${plan.price}.-`}

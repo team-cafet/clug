@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membership-plan.service';
+import { getPlanName } from '../../services/data-mapping.service';
 
 interface IFormValue {
   price?: number;
@@ -23,6 +24,21 @@ export const MembershipPlanForm = (props: IProps) => {
   const initialValues: IFormValue = props.membershipPlan
     ? { ...props.membershipPlan }
     : { price: 0, description: '', type: 1, tacit: false };
+  const [membershipPlanList, setMembershipPlanList] = useState<
+    IMembershipPlan[]
+  >([]);
+  const [planSelectedId, setPlanSelectedId] = useState('0');
+  useEffect(() => {
+    const getAllPlans = async () => {
+      const membershiPlans = await membershipPlanService.getAllTypes();
+      console.log('plans', membershiPlans)
+      if (membershiPlans) {
+        setMembershipPlanList(membershiPlans.data);
+      }
+    };
+    getAllPlans();
+    
+  }, []);
 
   const validate = (values: IFormValue) => {
     const errors: any = {};
@@ -57,38 +73,52 @@ export const MembershipPlanForm = (props: IProps) => {
       setSubmitting(false);
     }
   };
+  const changePlanSelected = (id: string) => {
+    setPlanSelectedId(id);
+  };
 
   return (
     <div id="membershipPlanForm">
-      <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
-      {({ isSubmitting, errors }) => (
-        <Form>
-          <label htmlFor="price">Prix</label>
-          <Field
-            className={`form-control ${errors.price ? 'is-invalid' : ''}`}
-            name="price"
-          />
-          <label htmlFor="type">Type</label>
-          <Field
-            className={`form-control ${errors.type ? 'is-invalid' : ''}`}
-            name="type"
-          />
-          <label htmlFor="tacit">Tacite</label>
-          <Field
-            className={`form-control ${errors.type ? 'is-invalid' : ''}`}
-            name="tacit"
-            value={initialValues.tacit ? 'oui' : 'non'}
-          />
-
-          <Button variant="primary" type="submit" disabled={isSubmitting}>
-            Sauver
-          </Button>
-          <Link to="/admin/membershipPlans">
-            <Button variant="secondary">Annuler</Button>
-          </Link>
-        </Form>
-      )}
-    </Formik>
+      <Formik
+        initialValues={initialValues}
+        validate={validate}
+        onSubmit={submit}
+      >
+        {({ isSubmitting, errors }) => (
+          <Form>
+            <label htmlFor="price">Prix</label>
+            <Field
+              className={`form-control ${errors.price ? 'is-invalid' : ''}`}
+              name="price"
+            />
+            <label htmlFor="type">Type</label>
+            <Field
+              as="select"
+              name="membershipSelect"
+              onChange={(event: { target: any }) => {
+                changePlanSelected(event.target.value);
+              }}
+            >
+              {membershipPlanList.map((plan) => (
+                <option key={plan.id} value={plan.id}>
+                  {`${getPlanName(plan.type)}, ${plan.price}.-`}
+                </option>
+              ))}
+            </Field>
+            <label htmlFor="tacit">Tacite</label>
+            <Field
+              className={`form-control ${errors.tacit ? 'is-invalid' : ''}`}
+              name="tacit"
+            />
+            <Button variant="primary" type="submit" disabled={isSubmitting}>
+              Sauver
+            </Button>
+            <Link to="/admin/membershipPlans">
+              <Button variant="secondary">Annuler</Button>
+            </Link>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

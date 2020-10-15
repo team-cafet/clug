@@ -20,6 +20,7 @@ export const membershipPlanRouter = (): IRouter => {
   ]);
 
   app.get('/', readPermission, membershipPlanCtrl.getAll);
+  app.get('/types', readPermission, membershipPlanCtrl.getAllTypes);
   app.get('/:id', readPermission, membershipPlanCtrl.getOne);
   app.post('/', writePermission, membershipPlanCtrl.post);
   app.put('/:id', writePermission, membershipPlanCtrl.put);
