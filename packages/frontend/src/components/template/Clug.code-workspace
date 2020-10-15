@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\..\\..\\.."
+		}
+	],
+	"settings": {
+		"typescript.referencesCodeLens.enabled": false
+	}
+}
