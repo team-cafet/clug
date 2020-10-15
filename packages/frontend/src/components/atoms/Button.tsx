@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 
+
 interface IProps {
   type?: 'submit' | 'button';
   variant?: 'primary' | 'secondary';

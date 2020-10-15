@@ -1,12 +1,6 @@
 #basiclayout {
-  background-color: var(--clug-primary);
+  background-color: var(--c-primary);
   min-height: 100vh;
   padding-top: 10%;
   padding-bottom: 10%;
-
-  .main {
-    background-color: white;
-    padding: 1%;
-    border-radius: 5px;
-  }
 }

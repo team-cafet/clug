@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom';
 import { Input } from '../atoms/Input';
 import { Button } from '../atoms/Button';
 import { Alert } from '../atoms/Alert';
+import './forms.scss';
 
 export const LoginForm = () => {
   const [error, setError] = useState<null | { message: string }>(null);
@@ -51,11 +52,11 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={submit}>
-      {error ? <Alert>{error.message}</Alert> : null}
-      <Input ref={usernameInp} placeholder="username" type="text" />
-      <Input ref={passwordInp} placeholder="password" type="password" />
-      <Button type="submit">Login</Button>
+    <form onSubmit={submit} className="form login">
+      {error ? <Alert variant="danger">{error.message}</Alert> : null}
+      <Input ref={usernameInp} placeholder="Nom d'utilisateur" type="text" className="input"/>
+      <Input ref={passwordInp} placeholder="Mot de passe" type="password" className="input" />
+      <Button type="submit" variant="secondary">Se connecter</Button>
     </form>
   );
 };

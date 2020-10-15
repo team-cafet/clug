@@ -46,7 +46,7 @@ export const AdminLayout = (props: IProps) => {
   return (
     <>
       <div id="adminlayout">
-        <div className="navbar navbar-dark bg-primary d-flex p-0">
+      <div className="navbar header flex-md-nowrap">     
           <div className="d-flex p-1 w-50">
             <Button
               onClick={() => {

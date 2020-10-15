@@ -1,6 +1,10 @@
 #adminlayout {
   min-height: 100vh;
   overflow-x: hidden;
+  .header {
+    height: 9vh;
+    background-color: var(--c-primary);
+  }
 
   #sidenav {
     position: absolute;
@@ -22,13 +26,11 @@
     #main {
       display: flex;
     }
-
     #sidenav {
       position: relative;
       width: 20%;
       top: 0;
     }
-
     #mainContent {
       width: 80%;
     }
