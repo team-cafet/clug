@@ -48,6 +48,8 @@ export const memberRouter = (): IRouter => {
       member.user = req.body.user;
       member.note = req.body.note;
       member.organisation = req.body.organisation;
+      member.memberLabels = req.body.memberLabels;
+      member.club = req.body.club;
 
       const data = await memberCtrl.store(member);
       res.send(data);
@@ -77,6 +79,7 @@ export const memberRouter = (): IRouter => {
       member.note = req.body.note;
       member.organisation = req.body.organisation;
       member.memberLabels = req.body.memberLabels;
+      member.club = req.body.club;
 
       const data = await memberCtrl.update(id, member);
       res.send(data);

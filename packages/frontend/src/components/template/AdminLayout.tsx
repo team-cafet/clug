@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import { Button, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 
 import './AdminLayout.scss';
 import { Sidebar } from './Sidebar';
@@ -10,6 +12,12 @@ interface IProps {
 }
 
 export const AdminLayout = (props: IProps) => {
+  const isDesktopOrLaptop = useMediaQuery({
+    query: '(min-device-width: 992px)',
+  });
+
+  const [isMenuOpen, setIsMenuOpen] = useState(isDesktopOrLaptop);
+
   const adminLinks = [
     {
       displayName: 'Tableau de bord',

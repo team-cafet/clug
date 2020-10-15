@@ -2,14 +2,19 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { useMemberLabels } from '../../hooks/useMemberLabels';
+import { useGetAllFromService } from '../../hooks/useGetAllFromService';
+import { IClub } from '../../libs/interfaces/club.interface';
 import { IMember } from '../../libs/interfaces/member.interface';
+import { IMemberLabel } from '../../libs/interfaces/memberLabel.interface';
+import { clubService } from '../../services/club.service';
 import { memberService } from '../../services/member.service';
+import { memberLabelService } from '../../services/memberlabel.service';
 import { FormGroup } from '../molecules/FormGroup';
 
 interface IFormValue {
   global: string;
   memberLabels: number[];
+  club: undefined | number;
   user: {
     email: string;
     firstname: string;
@@ -17,9 +22,9 @@ interface IFormValue {
     birthdate: Date | string;
     phone: string;
     street: string;
-    streetNumber: null | number;
+    streetNumber: undefined | number;
     city: string;
-    postalCode: null | number;
+    postalCode: undefined | number;
   };
 }
 
@@ -30,10 +35,16 @@ interface IProps {
 
 export const MemberForm = (props: IProps) => {
   const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
-  const availableMemberLabels = useMemberLabels();
+  const [availableMemberLabels] = useGetAllFromService<IMemberLabel>({
+    service: memberLabelService,
+  });
+  const [avaiableClubs] = useGetAllFromService<IClub>({
+    service: clubService,
+  });
 
   let initialValues: IFormValue = {
     memberLabels: [],
+    club: undefined,
     user: {
       email: '',
       firstname: '',
@@ -41,9 +52,9 @@ export const MemberForm = (props: IProps) => {
       birthdate: '',
       phone: '',
       street: '',
-      streetNumber: null,
+      streetNumber: undefined,
       city: '',
-      postalCode: null,
+      postalCode: undefined,
     },
     global: '',
   };
@@ -51,15 +62,22 @@ export const MemberForm = (props: IProps) => {
   if (props.member) {
     initialValues.memberLabels =
       props.member.memberLabels?.map((label) => label.id) || [];
+    initialValues.club = props.member.club?.id;
     initialValues.user = { ...initialValues.user, ...props.member.user };
+    console.log(initialValues);
   }
 
   const validate = (values: IFormValue) => {
     const errors: any = {};
 
     if (!values.user.email) {
-      errors.user = {};
+      errors.user = { ...errors.user };
       errors.user.email = 'Requis';
+    }
+
+    if (!values.user.birthdate) {
+      errors.user = { ...errors.user };
+      errors.user.birthdate = 'Requis';
     }
 
     return errors;
@@ -75,7 +93,7 @@ export const MemberForm = (props: IProps) => {
       (values as any) = {
         ...values,
         // tag send to the server must be at least have id and name
-        memberLabels: values.memberLabels.map((label:any) =>
+        memberLabels: values.memberLabels.map((label: any) =>
           availableMemberLabels.find(
             (availabelLabel) => availabelLabel.id === Number.parseInt(label)
           )
@@ -138,6 +156,21 @@ export const MemberForm = (props: IProps) => {
                 </option>
               ))}
             </Field>
+
+            <h2>Club</h2>
+            <Field
+              component="select"
+              multiple={false}
+              name="club"
+              className="form-control"
+            >
+              {avaiableClubs.map((club) => (
+                <option key={club.id} value={club.id}>
+                  {club.name}
+                </option>
+              ))}
+            </Field>
+
             <h2>Informations générales</h2>
 
             <FormGroup
