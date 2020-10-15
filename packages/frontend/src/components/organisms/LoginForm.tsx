@@ -52,7 +52,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={submit} className=" form login">
+    <form onSubmit={submit} className="form login">
       {error ? <Alert variant="danger">{error.message}</Alert> : null}
       <Input ref={usernameInp} placeholder="Nom d'utilisateur" type="text" className="input"/>
       <Input ref={passwordInp} placeholder="Mot de passe" type="password" className="input" />

@@ -1,4 +1,4 @@
-import React     from 'react';
+import React from 'react';
 import LogoImg from '../../assets/logo/clug-logo-w.svg';
 
 interface IProps {
