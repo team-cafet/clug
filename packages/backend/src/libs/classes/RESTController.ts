@@ -3,7 +3,8 @@ import {
   FindManyOptions,
   getRepository,
   UpdateResult,
-  DeleteResult
+  DeleteResult,
+  InsertResult
 } from 'typeorm';
 import { APIError } from './APIError';
 import { Request, Response } from 'express';
@@ -23,10 +24,10 @@ export class RESTController<T> {
     }
   }
 
-  public store(body: T): Promise<T> {
+  public async store(body: T): Promise<T> {
     try {
       const entity = this.repository.create(body);
-      return this.repository.save(entity);
+      return await this.repository.save(entity);
     } catch (err) {
       throw new APIError(500, `Unexpected error: ${err}`);
     }
@@ -50,6 +51,7 @@ export class RESTController<T> {
       throw new APIError(500, `Unexpected error: ${err}`);
     }
   }
+
 
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     return res.send(await this.findAll());

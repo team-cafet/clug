@@ -43,13 +43,16 @@ export const memberRouter = (): IRouter => {
         res.status(403).send('You are not authorized to create this member');
         return;
       }
-
+      
       const member = new Member();
       member.user = req.body.user;
       member.note = req.body.note;
       member.organisation = req.body.organisation;
+      member.memberships = req.body.memberships;
 
       const data = await memberCtrl.store(member);
+
+      console.log('return object', data);
       res.send(data);
     }
   );

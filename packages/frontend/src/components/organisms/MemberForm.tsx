@@ -4,6 +4,7 @@ import { Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMemberLabels } from '../../hooks/useMemberLabels';
 import { IMember } from '../../libs/interfaces/member.interface';
+import moment from 'moment';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import {
   generatePlanEndDate,
@@ -41,6 +42,7 @@ export const MemberForm = (props: IProps) => {
     IMembershipPlan[]
   >([]);
   const [planSelectedId, setPlanSelectedId] = useState('0');
+  const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
   const availableMemberLabels = useMemberLabels();
   useEffect(() => {
     const getAllPlans = async () => {
@@ -107,18 +109,16 @@ export const MemberForm = (props: IProps) => {
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
+        console.log(values)
         const newMember = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
-        });
-        if (newMember) {
-          const newMembership = await membershipService.add({
-            startDate: new Date(),
-            endDate: generatePlanEndDate(new Date(), planSelected?.type),
-            plan: planSelected,
-          });
-          console.log(newMembership);
-        } 
+          memberships: planSelected? [{
+            startDate: new Date(startDate),
+            endDate: generatePlanEndDate(new Date(startDate), planSelected?.type),
+            plan: planSelected
+          }] : []
+        }); 
       }
       setDisplayAlertMemberSaved(true);
     } catch (err) {
@@ -261,6 +261,15 @@ export const MemberForm = (props: IProps) => {
                   </option>
                 ))}
               </Field>
+              <Field
+                name="startDate"
+                type="date"
+                onChange={(event: { target: any }) => {
+                  setStartDate(event.target.value);
+                }}
+                value={startDate}
+              >
+                </Field>
             </div>
           </div>
 

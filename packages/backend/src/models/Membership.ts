@@ -67,19 +67,20 @@ export class Membership {
 
   // ----------------------------- Business Rules
 
-  private static async endDateAfterStartDate(
+  private static endDateAfterStartDate(
     data: Membership
-  ): Promise<boolean> {
+  ): boolean {
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
+    
     if (startDate.getTime() >= endDate.getTime()) {
-      return false;
+      return true;
     }
 
-    return true;
+    return false;
   }
 
-  private static async onlyOneMembershipByMember(
+  private static async alreadyOnMembership(
     data: Membership
   ): Promise<boolean> {
     const memberRepo = getRepository(Member);
@@ -88,6 +89,7 @@ export class Membership {
     const endDate = new Date(data.endDate);
 
     const member = await memberRepo.findOne(data.member.id);
+
 
     if (member.memberships && member.memberships.length > 0) {
       member.memberships.forEach((membership) => {
@@ -99,19 +101,19 @@ export class Membership {
           (memberStart.getTime() >= startDate.getTime() &&
             memberStart.getTime() <= endDate.getTime())
         ) {
-          return false;
+          return true;
         }
       });
     }
 
-    return true;
+    return false;
   }
 
   public static async validate(data: Membership): Promise<APIError | void> {
-    if (await Membership.endDateAfterStartDate(data))
+    if (Membership.endDateAfterStartDate(data))
       return new APIError(400, 'Start date mustn\'t be after end date');
 
-    if (await Membership.onlyOneMembershipByMember(data))
+    if (await Membership.alreadyOnMembership(data))
       return new APIError(400, 'Only one membership authorized by member');
 
     return;

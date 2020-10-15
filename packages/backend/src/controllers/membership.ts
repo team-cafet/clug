@@ -32,7 +32,6 @@ export class MembershipCtrl extends RESTController<Membership> {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    console.log('BUSINESS VALIDATION');
     const data: Membership = req.body;
 
     const validationResult = await Membership.validate(data);
