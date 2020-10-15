@@ -1,6 +1,14 @@
+@import '../../screens.scss';
+
 .login-logo {
     width: 20vw;
     display:block;
     margin: auto;
     padding: 2rem;
+}
+
+@media only screen and (max-width: $screen-s) {
+    .login-logo {
+        width: 50vw;
+    }
 }

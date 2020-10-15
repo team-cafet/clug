@@ -1,4 +1,8 @@
 #adminlayout {
   min-height: 100vh;
-overflow-x: hidden;
+  overflow-x: hidden;
+.header {
+  height: 9vh;
+  background-color: var(--c-primary);
+}
 }

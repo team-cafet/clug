@@ -1,5 +1,9 @@
-.alert {
-    .login-failed {
-        
+div.alert {
+    border-radius: var(--c-radius);
+    &.danger{
+        color: var(--c-danger);
+    }
+    &.login-failed {
+        background-color: var(--c-danger-bg);
     }
 }

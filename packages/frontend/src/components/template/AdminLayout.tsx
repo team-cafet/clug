@@ -39,7 +39,7 @@ export const AdminLayout = (props: IProps) => {
   return (
     <>
       <div id="adminlayout">
-      <div className="navbar navbar-dark bg-primary flex-md-nowrap p-0">
+      <div className="navbar header flex-md-nowrap">
           <Link
             to="/admin/dashboard"
             className="navbar-brand col-md-3 col-lg-2 mr-0 px-3"

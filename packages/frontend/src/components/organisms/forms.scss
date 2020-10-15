@@ -1,3 +1,5 @@
+@import '../../screens.scss';
+
 .responsiveTableContainer{
   overflow-x:auto;
 }
@@ -12,13 +14,22 @@
       box-shadow: none;
     }
   }
+  &.login {
+    width: 50vw;
+    margin:auto;
+    background-color: #fff;
+    padding: 2rem;
+    -webkit-box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
+    box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
+  }
 }
-.login {
-  width: 50vw;
-  margin:auto;
-  background-color: #fff;
-  padding: 2rem;
-  -webkit-box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
-  -moz-box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
-  box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
+
+
+@media only screen and (max-width: $screen-s) {
+  .form {
+    &.login {
+      width: 85vw;
+    }  
+  }
 }

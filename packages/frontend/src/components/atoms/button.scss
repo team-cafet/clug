@@ -9,6 +9,7 @@ button.btn {
         display:block;
         margin: auto;
         border-radius: var(--c-radius);
+        margin-top: 1rem;
         
         &:hover {
             background-color: var(--c-dark-secondary);

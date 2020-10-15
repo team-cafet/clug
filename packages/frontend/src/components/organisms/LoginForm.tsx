@@ -54,8 +54,8 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={submit} className=" form login">
-      {error ? <Alert>{error.message}</Alert> : null}
-      <Input ref={usernameInp} placeholder="Nom d'utilisateur" type="text" className="input test-index"/>
+      {error ? <Alert className="login-failed danger">{error.message}</Alert> : null}
+      <Input ref={usernameInp} placeholder="Nom d'utilisateur" type="text" className="input"/>
       <Input ref={passwordInp} placeholder="Mot de passe" type="password" className="input" />
       <Button type="submit" className="btn-submit">Se connecter</Button>
     </form>
