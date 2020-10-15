@@ -1,8 +1,41 @@
 #adminlayout {
   min-height: 100vh;
   overflow-x: hidden;
-.header {
-  height: 9vh;
-  background-color: var(--c-primary);
+  .header {
+    height: 9vh;
+    background-color: var(--c-primary);
+  }
+
+  #sidenav {
+    position: absolute;
+    display: none;
+    background-color: white;
+    font-weight: bold;
+    z-index: 9999;
+    width: 100%;
+    height: calc(100% - 50px);
+    top: 50px;
+  }
+  #sidenav.open {
+    display: block;
+  }
+
 }
+
+@media (min-width: 992px) {
+  #adminlayout {
+    #main {
+      display: flex;
+    }
+
+    #sidenav {
+      position: relative;
+      width: 20%;
+      top: 0;
+    }
+
+    #mainContent {
+      width: 80%;
+    }
+  }
 }
