@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Button, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { Logo } from '../atoms/Logo';
+import '../atoms/Burger.scss';
+
 
 import './AdminLayout.scss';
 
@@ -46,27 +49,25 @@ export const AdminLayout = (props: IProps) => {
   return (
     <>
       <div id="adminlayout">
-      <div className="navbar header flex-md-nowrap">     
-          <div className="d-flex p-1 w-50">
-            <Button
+      <div className="navbar bg-primary d-flex justify-content-between fixed-top">     
+            <button
               onClick={() => {
                 setIsMenuOpen(!isMenuOpen);
               }}
+              className={`navbar-toggler col-1 ${isMenuOpen ? 'open' : '' }`}
             >
-              <span aria-label="button" role="img">
-                {!isMenuOpen ? '⬛' : '✖'}
-              </span>
-            </Button>
+              <div className="burger"><span></span><span></span><span></span><span></span></div>
+            </button>
 
             <Link
               to="/admin/dashboard"
-              className="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
             >
-              Clug
+              <Logo 
+                className="header"
+              />
             </Link>
-          </div>
 
-          <ul className="navbar-nav p-1">
+          <ul className="navbar-nav col-1">
             <li className="nav-item text-nowrap">
               <Link className="nav-link" to="/logout">
                 Déconnexion
@@ -77,7 +78,7 @@ export const AdminLayout = (props: IProps) => {
 
         <div id="main">
           <Nav
-            className={`flex-column ${isMenuOpen ? 'open' : null}`}
+            className={`flex-column sidenav ${isMenuOpen ? 'open' : '' }`}
             id="sidenav"
           >
             {adminLinks.map((link, index) => (

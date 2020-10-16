@@ -1,38 +1,65 @@
 #adminlayout {
   min-height: 100vh;
   overflow-x: hidden;
-  .header {
-    height: 9vh;
-    background-color: var(--c-primary);
+  .navbar {
+    height: 3.5rem;
   }
+  #main {
+    height: 100vh;
+    margin-left:0;
+  }
+    .sidenav {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 3.5rem;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    
+    .sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+    
+    .sidenav a:hover {
+      color: #b36464;
+    }
+    
+    .sidenav .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+    .sidenav.open {
+      width: 250px;
+    }
+    
+}
 
-  #sidenav {
-    position: absolute;
-    display: none;
-    background-color: white;
-    font-weight: bold;
-    z-index: 9999;
-    width: 100%;
-    height: calc(100% - 50px);
-    top: 50px;
-  }
-  #sidenav.open {
-    display: block;
-  }
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
 }
 
 @media (min-width: 992px) {
   #adminlayout {
+    .sidenav {
+      width: 250px;
+    }
     #main {
-      display: flex;
-    }
-    #sidenav {
-      position: relative;
-      width: 20%;
-      top: 0;
-    }
-    #mainContent {
-      width: 80%;
+      margin-left: 250px;
     }
   }
 }
