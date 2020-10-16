@@ -1,5 +1,6 @@
 .navbar-toggler:focus {
     outline: none;
+    cursor:default;
 }
 .burger {
     width: 30px;
@@ -12,6 +13,7 @@
     -moz-transition: .5s ease-in-out;
     -o-transition: .5s ease-in-out;
     transition: .5s ease-in-out;
+    opacity: 0;
     span {
         display: block;
         position: absolute;
@@ -40,8 +42,12 @@
     }
 }
 @media only screen and (max-width: 992px){
+    .burger {
+        opacity: 1;
+    }
     /* open */
     .open .burger {
+        cursor: pointer;
         span {
             &:nth-child(1) {
                 top: 11px;

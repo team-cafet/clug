@@ -47,9 +47,8 @@ export const AdminLayout = (props: IProps) => {
   ];
 
   return (
-    <>
       <div id="adminlayout">
-      <div className="navbar bg-primary d-flex justify-content-between fixed-top">     
+        <div className="navbar bg-primary d-flex justify-content-between fixed-top">     
             <button
               onClick={() => {
                 setIsMenuOpen(!isMenuOpen);
@@ -98,10 +97,9 @@ export const AdminLayout = (props: IProps) => {
           </Nav>
 
           <div className="container" id="mainContent">
-            {props.children}
+                {props.children}
           </div>
-        </div>
       </div>
-    </>
+    </div>
   );
 };

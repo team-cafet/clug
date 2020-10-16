@@ -7,6 +7,7 @@
   #main {
     height: 100vh;
     margin-left:0;
+    background-color: var(--c-background-color);
   }
     .sidenav {
       height: 100%;
@@ -15,23 +16,26 @@
       z-index: 1;
       top: 3.5rem;
       left: 0;
-      background-color: #111;
+      background-color: #fff;
       overflow-x: hidden;
       transition: 0.5s;
-      padding-top: 60px;
+      padding-top: 2rem;
+      box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
     }
     
     .sidenav a {
-      padding: 8px 8px 8px 32px;
+      padding: 8px 8px 8px 8px;
       text-decoration: none;
-      font-size: 25px;
       color: #818181;
       display: block;
-      transition: 0.3s;
+
     }
     
     .sidenav a:hover {
-      color: #b36464;
+      color: var(--c-primary);
+      font-weight: bold;
+      background-color: var(--c-background-color);
     }
     
     .sidenav .closebtn {
