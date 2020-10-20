@@ -67,22 +67,14 @@ export class Membership {
 
   // ----------------------------- Business Rules
 
-  private static endDateAfterStartDate(
-    data: Membership
-  ): boolean {
+  private static endDateAfterStartDate(data: Membership): boolean {
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
-    
-    if (startDate.getTime() >= endDate.getTime()) {
-      return true;
-    }
 
-    return false;
+    return startDate.getTime() >= endDate.getTime();
   }
 
-  private static async alreadyOnMembership(
-    data: Membership
-  ): Promise<boolean> {
+  private static async alreadyOnMembership(data: Membership): Promise<boolean> {
     const memberRepo = getRepository(Member);
 
     const startDate = new Date(data.startDate);
@@ -90,30 +82,28 @@ export class Membership {
 
     const member = await memberRepo.findOne(data.member.id);
 
-
     if (member.memberships && member.memberships.length > 0) {
       member.memberships.forEach((membership) => {
         const memberStart = new Date(membership.startDate);
         const memberEnd = new Date(membership.endDate);
-        if (
+        return (
           (memberEnd.getTime() >= endDate.getTime() &&
             memberEnd.getTime() <= startDate.getTime()) ||
           (memberStart.getTime() >= startDate.getTime() &&
             memberStart.getTime() <= endDate.getTime())
-        ) {
-          return true;
-        }
+        );
       });
+    }else{
+      return false;
     }
-
-    return false;
   }
 
   public static async validate(data: Membership): Promise<APIError | void> {
     if (Membership.endDateAfterStartDate(data))
-      return new APIError(400, 'Start date mustn\'t be after end date');
+      return new APIError(400, "Start date mustn't be after end date");
 
-    if (await Membership.alreadyOnMembership(data))
+      const isAlreadyOnMembership = await Membership.alreadyOnMembership(data);
+    if (isAlreadyOnMembership)
       return new APIError(400, 'Only one membership authorized by member');
 
     return;

@@ -27,7 +27,7 @@ export class RESTController<T> {
   public async store(body: T): Promise<T> {
     try {
       const entity = this.repository.create(body);
-      return await this.repository.save(entity);
+      return this.repository.save(entity);
     } catch (err) {
       throw new APIError(500, `Unexpected error: ${err}`);
     }

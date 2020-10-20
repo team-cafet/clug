@@ -20,7 +20,6 @@ export const getPlanName = (id: number | undefined): string => {
 
 export const generatePlanEndDate = (startDate: Date, planType?: number): Date => {
   let endDate = moment();
-  console.log(planType, typeof planType)
   switch (planType) {
     case PlanType.weekly:
       endDate.add(1, 'weeks');

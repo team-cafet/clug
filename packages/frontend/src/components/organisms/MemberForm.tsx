@@ -13,6 +13,7 @@ import {
 import { memberService } from '../../services/member.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
+import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 
 interface IFormValue {
   global: string;
@@ -37,22 +38,14 @@ interface IProps {
 
 export const MemberForm = (props: IProps) => {
   const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
-  const [membershipPlanList, setMembershipPlanList] = useState<
-    IMembershipPlan[]
-  >([]);
+
+  const [membershipPlanList, setMembershipPlanList] = useGetAllFromService<IMembershipPlan>({
+    service: membershipPlanService,
+  });
   const [planSelectedId, setPlanSelectedId] = useState('0');
   const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
   const availableMemberLabels = useMemberLabels();
   const history = useHistory();
-  useEffect(() => {
-    const getAllPlans = async () => {
-      const membershiPlans = await membershipPlanService.getAll();
-      if (membershiPlans) {
-        setMembershipPlanList(membershiPlans.data);
-      }
-    };
-    getAllPlans();
-  }, []);
   let initialValues: IFormValue = {
     memberLabels: [],
     user: {

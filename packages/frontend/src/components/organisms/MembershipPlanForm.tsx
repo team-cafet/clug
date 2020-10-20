@@ -4,6 +4,7 @@ import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membership-plan.service';
+import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 
 interface IFormValue {
   price?: number;
@@ -23,19 +24,12 @@ export const MembershipPlanForm = (props: IProps) => {
   const initialValues: IFormValue = props.membershipPlan
     ? { ...props.membershipPlan }
     : { price: 0, description: '', type: 1, tacit: false };
-  const [typeList, setTypeList] = useState<any[]>([]);
+  const [typeList, setTypeList] = useGetAllFromService<IMembershipPlan>({
+    service: membershipPlanService,
+  });
   const [typeSelectedId, setTypeSelectedId] = useState(0);
   const [tacitSelected, setTacitSelected] = useState(false);
   const history = useHistory();
-  useEffect(() => {
-    const getAllTypes = async () => {
-      const types = await membershipPlanService.getAllTypes();
-      if (types) {
-        setTypeList(types.data);
-      }
-    };
-    getAllTypes();
-  }, []);
 
   const validate = (values: IFormValue) => {
     const errors: any = {};
