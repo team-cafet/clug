@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMembershipPlan } from '../../../libs/interfaces/membershipPlan.interface';
-import { planTypeMapper } from '../../../services/data-mapping.service';
+import { getPlanName } from '../../../services/data-mapping.service';
 import { membershipPlanService } from '../../../services/membership-plan.service';
 import { DataTable } from '../../molecules/DataTable';
 
@@ -14,7 +14,7 @@ export const MembershipPlan = () => {
   const DATA = plans.map((plan) => ({
     ...plan,
     tacit: plan.tacit ? 'oui' : 'non',
-    type: planTypeMapper(plan.type),
+    type: getPlanName(plan.type),
   }));
 
   const COLUMNS = [
@@ -71,7 +71,7 @@ const MembershipPlanAction = ({ plan, refreshList }: any) => {
   return (
     <tr>
       <td>{plan.price}</td>
-      <td>{planTypeMapper(plan.type)}</td>
+      <td>{getPlanName(plan.type)}</td>
       <td>{plan.tacit ? 'oui' : 'non'}</td>
       <td>
         <Link

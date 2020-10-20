@@ -3,15 +3,22 @@ import { MembershipCtrl } from '../controllers/membership';
 import PromiseRouter from 'express-promise-router';
 import ExpressJWTPermissions from 'express-jwt-permissions';
 import logger from '../util/logger';
+import { Permissions } from '../config/auth';
 
 export const membershipRouter = (): IRouter => {
   const app = PromiseRouter();
   const membershipCtrl = new MembershipCtrl();
   const guard = ExpressJWTPermissions();
 
-  const writePermission = guard.check([['admin'], ['Membership:write']]);
+  const readPermission = guard.check([
+    [Permissions.admin],
+    [Permissions.membershipR]
+  ]);
+  const writePermission = guard.check([
+    [Permissions.admin],
+    [Permissions.membershipW]
+  ]);
 
-  const readPermission = guard.check([['admin'], ['Membership:read']]);
 
   app.get('/notPaid', readPermission, membershipCtrl.getNotPaid);
   app.get('/', readPermission, membershipCtrl.getAll);

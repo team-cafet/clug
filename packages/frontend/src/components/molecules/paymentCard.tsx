@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { IPayment } from '../../libs/interfaces/payment.interface';
-import { planTypeMapper } from '../../services/data-mapping.service';
+import { getPlanName } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { paymentService } from '../../services/payment.service';
 import { paymentRequestService } from '../../services/paymentRequest.service';
@@ -71,7 +71,7 @@ export const PaymentCard = (props: IProps) => {
       </div>
       <div className="card-body">
         <h5 className="card-title">
-          Abonnement {planTypeMapper(memberShip.plan?.type)}, échu le{' '}
+          Abonnement {getPlanName(memberShip.plan?.type)}, échu le{' '}
           {memberShip.endDate}
         </h5>
         prix : {memberShip.plan?.price}.-

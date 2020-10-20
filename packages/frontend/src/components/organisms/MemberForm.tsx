@@ -1,15 +1,19 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IClub } from '../../libs/interfaces/club.interface';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { IMemberLabel } from '../../libs/interfaces/memberLabel.interface';
+import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { clubService } from '../../services/club.service';
 import { memberService } from '../../services/member.service';
 import { memberLabelService } from '../../services/memberlabel.service';
+import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
+import moment from 'moment';
+import { generatePlanEndDate, getPlanName } from '../../services/data-mapping.service';
 
 interface IFormValue {
   global: string;
@@ -42,6 +46,13 @@ export const MemberForm = (props: IProps) => {
     service: clubService,
   });
 
+  const [membershipPlanList, setMembershipPlanList] = useGetAllFromService<IMembershipPlan>({
+    service: membershipPlanService,
+  });
+  const [planSelectedId, setPlanSelectedId] = useState('0');
+  const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
+
+  const history = useHistory();
   let initialValues: IFormValue = {
     memberLabels: [],
     club: undefined,
@@ -99,15 +110,30 @@ export const MemberForm = (props: IProps) => {
           )
         ),
       };
+      const planSelected = membershipPlanList.find(
+        (plan) => plan.id === parseInt(planSelectedId)
+      );
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
-        await memberService.add({
+        const newMember = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
+          memberships: planSelected
+            ? [
+                {
+                  startDate: new Date(startDate),
+                  endDate: generatePlanEndDate(
+                    new Date(startDate),
+                    planSelected?.type
+                  ),
+                  plan: planSelected,
+                },
+              ]
+            : [],
         });
       }
-      setDisplayAlertMemberSaved(true);
+      backToMemberPage();
     } catch (err) {
       console.error(err);
       if (err.message) {
@@ -116,8 +142,22 @@ export const MemberForm = (props: IProps) => {
         setFieldError('global', 'Erreur serveur...');
       }
     }
-
     setSubmitting(false);
+  };
+  const backToMemberPage = () => {
+    history.push('/admin/members');
+  };
+
+  const changePlanSelected = (id: string) => {
+    setPlanSelectedId(id);
+  };
+
+  const updateMode = () => {
+    if (props.member?.id) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   return (
@@ -241,6 +281,31 @@ export const MemberForm = (props: IProps) => {
                 formnikError={errors.user?.city}
                 name="user.city"
               />
+            </div>
+            <h2>Abonnement</h2>
+            {/* On update, this feature will be more complex. Need more analysis on this point */}
+            <div className="form-row" hidden={updateMode()}>
+              <Field
+                as="select"
+                name="membershipSelect"
+                onChange={(event: { target: any }) => {
+                  changePlanSelected(event.target.value);
+                }}
+              >
+                {membershipPlanList.map((plan) => (
+                  <option key={plan.id} value={plan.id}>
+                    {`${getPlanName(plan.type)}, ${plan.price}.-`}
+                  </option>
+                ))}
+              </Field>
+              <Field
+                name="startDate"
+                type="date"
+                onChange={(event: { target: any }) => {
+                  setStartDate(event.target.value);
+                }}
+                value={startDate}
+              ></Field>
             </div>
           </div>
 
