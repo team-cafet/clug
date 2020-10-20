@@ -1,0 +1,15 @@
+.logo {
+    &.login {
+    width: 20vw;
+    display:block;
+    margin: auto;
+    padding: 2rem;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .logo {
+        &.login {
+            width: 50vw;
+        } 
+    }
+}

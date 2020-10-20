@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Routes } from '../routes/routes';
 import { GlobalContextProvider } from '../contexts/GlobalContext';
+import '../index.scss';
 
 interface IProps {}
 
