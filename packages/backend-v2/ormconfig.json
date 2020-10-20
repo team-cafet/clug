@@ -1,0 +1,10 @@
+{
+  "entities": ["dist/models/*.js"],
+  "subscribers": ["dist/subscribers/*.js"],
+  "migrations": ["dist/migrations/*.js"],
+  "cli": {
+    "entitiesDir": "src/models",
+    "migrationsDir": "src/migrations",
+    "subscribersDir": "src/subscribers"
+  }
+}
