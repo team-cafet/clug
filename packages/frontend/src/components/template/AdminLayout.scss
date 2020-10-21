@@ -1,60 +1,83 @@
+$headerHeight: 3.5rem;
+
 #adminlayout {
   min-height: 100vh;
   overflow-x: hidden;
+
   .navbar {
-    height: 3.5rem;
+    height: $headerHeight; 
+    .logout.icon {
+      height: 25px;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
   }
+
+
   #main {
     height: 100vh;
-    margin-left:0;
+    margin-left: 0;
+    background-color: var(--c-background-color);
+
+    #mainContent {
+      margin-top: $headerHeight;
+      padding: 2rem;
+    }
+  }
+
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 3.5rem;
+    left: 0;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 2rem;
+    box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+
+  .sidenav a {
+    padding: 8px 8px 8px 8px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+
+  }
+
+  .sidenav a:hover {
+    color: var(--c-primary);
+    font-weight: bold;
     background-color: var(--c-background-color);
   }
-    .sidenav {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      z-index: 1;
-      top: 3.5rem;
-      left: 0;
-      background-color: #fff;
-      overflow-x: hidden;
-      transition: 0.5s;
-      padding-top: 2rem;
-      box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.05);
-      text-align: center;
-    }
-    
-    .sidenav a {
-      padding: 8px 8px 8px 8px;
-      text-decoration: none;
-      color: #818181;
-      display: block;
 
-    }
-    
-    .sidenav a:hover {
-      color: var(--c-primary);
-      font-weight: bold;
-      background-color: var(--c-background-color);
-    }
-    
-    .sidenav .closebtn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      margin-left: 50px;
-    }
-    .sidenav.open {
-      width: 250px;
-    }
-    
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+  .sidenav.open {
+    width: 250px;
+  }
+
 }
 
 
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 
 @media (min-width: 992px) {
@@ -62,6 +85,7 @@
     .sidenav {
       width: 250px;
     }
+
     #main {
       margin-left: 250px;
     }

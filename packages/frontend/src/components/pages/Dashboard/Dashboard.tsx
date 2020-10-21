@@ -26,14 +26,10 @@ export const Dashboard = () => {
   return (
     <>
       <h1>Tableau de bord</h1>
-
-      <hr />
-
       <div className="card-deck">
         <DashboardCard
-          title={
-            "Membres ayant leur anniversaire dans 7 jours: " + stats.birthdays.length
-          }
+          value={ stats.birthdays.length }
+          description={"Membres ayant leur anniversaire dans 7 jours"}
         >
           <ul className="list-group">
             {stats.birthdays.map((member: IMember) => (
@@ -47,10 +43,8 @@ export const Dashboard = () => {
         </DashboardCard>
 
         <DashboardCard
-          title={
-            'Membres ayant une balance négative: ' +
-            stats.negativeBalanceUsers.length
-          }
+          value={ stats.negativeBalanceUsers.length }
+          description={"Membres ayant leur anniversaire dans 7 jours"}
         >
           <ul className="list-group">
             {stats.negativeBalanceUsers.map((member: IMember) => (

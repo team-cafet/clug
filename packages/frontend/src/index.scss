@@ -27,7 +27,7 @@ $danger-bg: lighten($danger, 55%);
 $info: #0f81c7;
 $warning: #ff581a;
 $light-text: #ececec;
-$dark-text: #222222;
+$dark-text: #565656;
 $bg-light: #f5faf9;
 $primary-o-25: rgba(60, 221, 180, 0.25);
 $secondary-o-25:rgba(255, 88, 26, 0.25);
@@ -52,12 +52,12 @@ html {
   --c-dark-text: #{$dark-text};
 
 /* font sizes */
-  --title-size: 2rem;
+  --title-size: 1.3rem;
   --subtitle-size: 1.1rem;
-  --text-size: 0.8rem;
+  --text-size: 1rem;
 
 /* shapes */
-  --c-radius: 12px;
+  --c-radius: 15px;
 
 }
 
@@ -65,4 +65,17 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: var(--c-dark-text);
+  font-family: $font-family-base;
+}
+h1 {
+  font-size: var(--title-size);
+  font-weight: normal;
+}
+h2 {
+  font-size: var(--subtitle-size);
+  font-weight: normal;
+}
+p, a {
+  font-size: var(--text-size);
 }
