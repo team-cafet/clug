@@ -14,11 +14,11 @@ import { Club } from './Club';
 import { Organisation } from './Organisation';
 
 export enum PlanType {
-  hebdomadaire,
-  mensuel,
-  trimestriel,
-  semestriel,
-  annuel,
+  weekly,
+  monthly,
+  quarterly,
+  biannual,
+  annual,
 }
 
 @Entity()
@@ -35,7 +35,7 @@ export class MembershipPlan {
   @Column({
     type: 'enum',
     enum: PlanType,
-    default: PlanType.mensuel,
+    default: PlanType.monthly,
     nullable: false
   })
   type: PlanType;
