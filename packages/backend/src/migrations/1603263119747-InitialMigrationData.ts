@@ -2,7 +2,7 @@ import { Group } from '../models/Group';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { EXISTING_GROUPS } from '../config/auth';
 
-export class InitialMigrationData1601816242008 implements MigrationInterface {
+export class InitialMigrationData1603263119747 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     const GROUPS_TO_CREATE = [];
 

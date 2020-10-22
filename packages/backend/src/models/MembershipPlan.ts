@@ -77,7 +77,4 @@ export class MembershipPlan {
   organisation: Organisation;
 
   // ----------------------------- Business Rules
-
-
-
 }

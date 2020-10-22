@@ -1,3 +1,11 @@
-import { APIResource } from './api.service';
+import { APIResource, GET } from './api.service';
+class APIMembershipPlan extends APIResource {
+  constructor() {
+    super('membership-plans');
+  }
+  getAllTypes() {
+    return GET('membership-plans/types');
+  }
+}
 
-export const membershipPlanService = new APIResource('membership-plans');
+export const membershipPlanService = new APIMembershipPlan();
