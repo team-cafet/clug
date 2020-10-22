@@ -1,17 +1,17 @@
 // Import Bootstrap and its default variables
-$theme-colors: (
-  "primary": #3cddb4,
+$theme-colors: ("primary": #3cddb4,
   "secondary": #ff581a,
-  "danger": #ff4136
-);
+  "danger": #ff4136);
 @import '~bootstrap/scss/bootstrap.scss';
 @import './theming/alerts.scss';
 @import './theming/button.scss';
 
 /*! Clug theme */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap');
-$font-family-base: 'Roboto', sans-serif;
-$headings-font-family: 'Roboto', sans-serif;
+$font-family-base: 'Roboto',
+sans-serif;
+$headings-font-family: 'Roboto',
+sans-serif;
 $enable-grid-classes: false;
 /* colors */
 
@@ -35,7 +35,7 @@ $secondary-o-25:rgba(255, 88, 26, 0.25);
 
 html {
 
-/* colors */
+  /* colors */
   --c-primary: #{$primary};
   --c-dark-primary: #{$primary-dark};
   --c-light-primary: #{$primary-light};
@@ -51,12 +51,12 @@ html {
   --c-light-text: #{$light-text};
   --c-dark-text: #{$dark-text};
 
-/* font sizes */
+  /* font sizes */
   --title-size: 1.3rem;
   --subtitle-size: 1.1rem;
   --text-size: 1rem;
 
-/* shapes */
+  /* shapes */
   --c-radius: 15px;
 
 }
@@ -68,14 +68,18 @@ html {
   color: var(--c-dark-text);
   font-family: $font-family-base;
 }
+
 h1 {
   font-size: var(--title-size);
   font-weight: normal;
 }
+
 h2 {
   font-size: var(--subtitle-size);
   font-weight: normal;
 }
-p, a {
+
+p,
+a {
   font-size: var(--text-size);
 }

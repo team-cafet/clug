@@ -28,7 +28,7 @@ export const Dashboard = () => {
       <h1>Tableau de bord</h1>
       <div className="card-deck">
         <DashboardCard
-          value={ stats.birthdays.length }
+          value={stats.birthdays.length}
           description={"Membres ayant leur anniversaire dans 7 jours"}
         >
           <ul className="list-group">
@@ -43,7 +43,7 @@ export const Dashboard = () => {
         </DashboardCard>
 
         <DashboardCard
-          value={ stats.negativeBalanceUsers.length }
+          value={stats.negativeBalanceUsers.length}
           description={"Membres ayant leur anniversaire dans 7 jours"}
         >
           <ul className="list-group">
