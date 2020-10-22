@@ -52,8 +52,8 @@ export const MembershipPlan = () => {
     <>
       <h1>Gestion des abonnements</h1>
       <div className="row">
-        <Link to="/admin/membershipPlans/add" className="btn btn-primary">
-          Ajouter
+        <Link to="/admin/membershipPlans/add" className="btn btn-secondary add">
+          +
         </Link>
         <DataTable data={DATA} columns={COLUMNS} />
       </div>

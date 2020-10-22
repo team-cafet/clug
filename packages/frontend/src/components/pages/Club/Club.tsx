@@ -22,8 +22,8 @@ export const Club = () => {
       <h1>Clubs</h1>
       <div className="container">
         <div className="row">
-          <Link to="/admin/clubs/add" className="btn btn-primary">
-            Ajouter
+          <Link to="/admin/clubs/add" className="btn btn-secondary add">
+            +
           </Link>
         </div>
         <div className="row">

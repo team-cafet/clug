@@ -22,8 +22,8 @@ export const MemberLabel = () => {
       <h1>Tag de membre</h1>
       <div className="container">
         <div className="row">
-          <Link to="/admin/memberlabels/add" className="btn btn-primary">
-            Ajouter
+          <Link to="/admin/memberlabels/add" className="btn btn-secondary add">
+            +
           </Link>
         </div>
         <div className="row">

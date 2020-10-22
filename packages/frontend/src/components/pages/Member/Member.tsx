@@ -5,7 +5,7 @@ import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMember } from '../../../libs/interfaces/member.interface';
 import { memberService } from '../../../services/member.service';
 import { DataTable } from '../../molecules/DataTable';
-import './style.scss';
+import './Member.scss';
 
 
 export const Member = () => {
@@ -40,8 +40,8 @@ export const Member = () => {
       <h1>Membres</h1>
       <div className="container">
         <div className="row">
-          <Link to="/admin/members/add" className="btn btn-primary">
-            Ajouter
+          <Link to="/admin/members/add" className="btn btn-secondary add" title="Ajouter un membre">
+          +
           </Link>
         </div>
         <div className="row">
