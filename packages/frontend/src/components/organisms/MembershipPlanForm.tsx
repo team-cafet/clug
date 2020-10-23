@@ -24,13 +24,18 @@ export const MembershipPlanForm = (props: IProps) => {
   const initialValues: IFormValue = props.membershipPlan
     ? { ...props.membershipPlan }
     : { price: 0, description: '', type: 1, tacit: false };
-  const [typeList, setTypeList] = useGetAllFromService<IMembershipPlan>({
-    service: membershipPlanService,
-  });
+  const [typeList, setTypeList] = useState([]);
   const [typeSelectedId, setTypeSelectedId] = useState(0);
   const [tacitSelected, setTacitSelected] = useState(false);
   const history = useHistory();
-
+  useEffect(() => {
+    const fetchTypes = async () => {
+      const types = await membershipPlanService.getAllTypes()
+      setTypeList(types?.data)
+    }
+    fetchTypes();
+  }, []);
+  
   const validate = (values: IFormValue) => {
     const errors: any = {};
     if (!values.price) errors.price = 'Required';
