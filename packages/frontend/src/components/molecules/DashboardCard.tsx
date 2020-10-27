@@ -2,7 +2,7 @@ import React from 'react';
 import './DashboardCard.scss';
 
 interface IProps {
-  value: number;
+  value: string;
   children: any;
   description: string;
 }
