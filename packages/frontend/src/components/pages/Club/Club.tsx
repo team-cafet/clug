@@ -29,6 +29,13 @@ export const Club = () => {
         </div>
         <div className="row">
           <table className="table">
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Nom</th>
+                <th>Description</th>  
+              </tr>
+            </thead>
             <tbody>
               {clubs.map((club) => (
                 <ClubRow club={club} key={club.id} />
@@ -48,6 +55,7 @@ const ClubRow = (props: { club: IClub }) => {
     <tr>
       <td>{club.id}</td>
       <td>{club.name}</td>
+      <td>{club.description}</td>
       <td>
         <Link to={`/admin/clubs/${club.id}`}>
           <EditIcon title="Modifier ce club"/>
