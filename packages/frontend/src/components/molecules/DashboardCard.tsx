@@ -1,19 +1,22 @@
 import React from 'react';
+import './DashboardCard.scss';
 
 interface IProps {
-  title: string;
+  value: string;
   children: any;
+  description: string;
 }
 
 export const DashboardCard = (props: IProps) => {
-  const { title, children } = props;
+  const { value, children, description } = props;
 
   return (
     <div className="card">
       <div className="card-body">
-        <h5 className="card-title">{title}</h5>
+        <p className="card-text">{description}</p>
+        <h5 className="card-title">{value}</h5>
         <div>{children}</div>
       </div>
     </div>
   );
-};
+}; 
