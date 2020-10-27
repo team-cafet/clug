@@ -5,6 +5,8 @@ import { IMembershipPlan } from '../../../libs/interfaces/membershipPlan.interfa
 import { getPlanName } from '../../../services/data-mapping.service';
 import { membershipPlanService } from '../../../services/membership-plan.service';
 import { DataTable } from '../../molecules/DataTable';
+import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
+import {ReactComponent as DeleteIcon} from '../../../assets/delete.svg';
 
 export const MembershipPlan = () => {
   const [plans, getAllMembershipPlans] = useGetAllFromService<IMembershipPlan>({
@@ -52,7 +54,7 @@ export const MembershipPlan = () => {
     <>
       <h1>Gestion des abonnements</h1>
       <div className="row">
-        <Link to="/admin/membershipPlans/add" className="btn btn-secondary add">
+        <Link to="/admin/membershipPlans/add" className="btn btn-secondary add" title="Ajouter un abonnement">
           +
         </Link>
         <DataTable data={DATA} columns={COLUMNS} />
@@ -74,16 +76,16 @@ const MembershipPlanAction = ({ plan, refreshList }: any) => {
       <td>{getPlanName(plan.type)}</td>
       <td>{plan.tacit ? 'oui' : 'non'}</td>
       <td>
-        <Link
-          to={`/admin/membershipPlans/update/${plan.id}`}
-          className="btn btn-primary"
-        >
-          Modifier
+        <Link to={`/admin/membershipPlans/update/${plan.id}`}>
+          <EditIcon title="Modifier cet abonnement"/>
         </Link>
-        <button className="btn" onClick={(e) => deletePlan(plan)}>
-          Supprimer
+      </td>
+      <td>
+        <button className="btn btn-delete" onClick={(e) => deletePlan(plan)}>
+            <DeleteIcon />
         </button>
       </td>
+      
     </tr>
   );
 };

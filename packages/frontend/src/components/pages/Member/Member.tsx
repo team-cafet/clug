@@ -6,6 +6,7 @@ import { IMember } from '../../../libs/interfaces/member.interface';
 import { memberService } from '../../../services/member.service';
 import { DataTable } from '../../molecules/DataTable';
 import './Member.scss';
+import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
 
 
 export const Member = () => {
@@ -62,8 +63,8 @@ export const Member = () => {
 
 const GoToMemberBtn = (props: { id: number }) => {
   return (
-    <Link component={Button} to={`/admin/members/${props.id}`}>
-      ...
+    <Link to={`/admin/members/${props.id}`}>
+      <EditIcon title="Modifier ce membre" />
     </Link>
   );
 };
