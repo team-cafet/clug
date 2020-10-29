@@ -35,7 +35,7 @@ USER clug:clug
 
 ## --------------------- DEPENDENCIES BACKEND APP
 ## Install dependencies.
-COPY --chown=clug:clug ./packages/backend/package.json ./packages/backend/package-lock.json /usr/src/app/backend/
+COPY --chown=clug:clug ./packages/backend/package.json /usr/src/app/backend/
 WORKDIR /usr/src/app/backend
 RUN npm i --dev
 
