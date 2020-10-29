@@ -91,11 +91,13 @@ export const MembershipPlanForm = (props: IProps) => {
             <Field
               className={`form-control ${errors.price ? 'is-invalid' : ''}`}
               name="price"
+              type="number"
             />
             <label htmlFor="type">Type</label>
             <Field
               as="select"
               name="membershipSelect"
+              class="form-control"
               onChange={(event: { target: any }) => {
                 changeTypeSelected(event.target.value);
               }}
@@ -110,6 +112,7 @@ export const MembershipPlanForm = (props: IProps) => {
             <Field
               as="select"
               name="tacitSelect"
+              class="form-control"
               onChange={(event: { target: any }) => {
                 changeTacit(event.target.value);
               }}
