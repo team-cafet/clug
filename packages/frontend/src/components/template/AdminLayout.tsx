@@ -3,7 +3,6 @@ import { Nav } from 'react-bootstrap';
 import { Link, NavLink } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { Logo } from '../atoms/Logo';
-import '../atoms/Burger.scss';
 import LogoutIcon from '../../assets/logout.svg';
 import './AdminLayout.scss';
 
