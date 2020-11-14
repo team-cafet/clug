@@ -49,7 +49,7 @@ export const MemberForm = (props: IProps) => {
   const [membershipPlanList, setMembershipPlanList] = useGetAllFromService<IMembershipPlan>({
     service: membershipPlanService,
   });
-  const [planSelectedId, setPlanSelectedId] = useState('0');
+  const [planSelectedId, setPlanSelectedId] = useState('1');
   const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
 
   const history = useHistory();
@@ -99,7 +99,7 @@ export const MemberForm = (props: IProps) => {
     formHelper: FormikHelpers<IFormValue>
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
-
+    console.log('search for this plan ID:', planSelectedId)
     try {
       (values as any) = {
         ...values,
@@ -116,6 +116,7 @@ export const MemberForm = (props: IProps) => {
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
+        console.log(planSelected)
         const newMember = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },

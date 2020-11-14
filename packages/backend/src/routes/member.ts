@@ -6,12 +6,10 @@ import { OrganisationCtrl } from '../controllers/organisation';
 import { check } from 'express-validator';
 import { Member } from '../models/Member';
 import { Permissions } from '../config/auth';
-import { MembershipCtrl } from '../controllers/membership';
 
 export const memberRouter = (): IRouter => {
   const app = PromiseRouter();
   const memberCtrl = new MemberCtrl();
-  const membershipCtrl = new MembershipCtrl();
   const organisationCtrl = new OrganisationCtrl();
   const guard = ExpressJWTPermissions();
 
@@ -55,7 +53,6 @@ export const memberRouter = (): IRouter => {
       member.club = req.body.club;
 
       const data = await memberCtrl.store(member);
-      /* const newMembership = await membershipCtrl.store(req.body.memberships); */
 
       console.log('return object', data);
       res.send(data);
