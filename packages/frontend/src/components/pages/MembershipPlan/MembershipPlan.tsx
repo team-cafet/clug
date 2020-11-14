@@ -19,20 +19,23 @@ export const MembershipPlan = () => {
 
   const COLUMNS = [
     {
-      Header: 'Prix',
-      accessor: 'price',
-    },
-    {
-      Header: 'Description',
-      accessor: 'description',
-    },
-    {
       Header: 'Type',
       accessor: 'type',
+      disableFilters: true,
+      disableSortBy: true,
+    },
+
+    {
+      Header: 'Prix',
+      accessor: 'price',
+      disableFilters: true,
+      disableSortBy: true,
     },
     {
       Header: 'Tacite',
       accessor: 'tacit',
+      disableFilters: true,
+      disableSortBy: true,
     },
     {
       Header: 'Action',
@@ -69,21 +72,16 @@ const MembershipPlanAction = ({ plan, refreshList }: any) => {
   };
 
   return (
-    <tr>
-      <td>{plan.price}</td>
-      <td>{getPlanName(plan.type)}</td>
-      <td>{plan.tacit ? 'oui' : 'non'}</td>
-      <td>
-        <Link
-          to={`/admin/membershipPlans/update/${plan.id}`}
-          className="btn btn-primary"
-        >
-          Modifier
-        </Link>
-        <button className="btn" onClick={(e) => deletePlan(plan)}>
-          Supprimer
-        </button>
-      </td>
-    </tr>
+    <>
+      <Link
+        to={`/admin/membershipPlans/update/${plan.id}`}
+        className="btn btn-primary"
+      >
+        Modifier
+      </Link>
+      <button className="btn" onClick={(e) => deletePlan(plan)}>
+        Supprimer
+      </button>
+    </>
   );
 };
