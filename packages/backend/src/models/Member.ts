@@ -70,7 +70,8 @@ export class Member extends BaseEntity {
   @OneToMany((type) => Membership, (membership) => membership.member, {
     nullable: false,
     onDelete: 'NO ACTION',
-    eager: true
+    eager: true,
+    cascade: true
   })
   memberships: Membership[];
 
