@@ -294,7 +294,7 @@ export const MemberForm = (props: IProps) => {
                 onChange={(event: { target: any }) => {
                   changePlanSelected(event.target.value);
                 }}
-                class="form-control"
+                className="form-control"
               >
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
@@ -310,7 +310,7 @@ export const MemberForm = (props: IProps) => {
                   setStartDate(event.target.value);
                 }}
                 value={startDate}
-                class="form-control"
+                className="form-control"
               ></Field>
             </div>
           </div>
