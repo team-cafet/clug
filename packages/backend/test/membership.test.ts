@@ -50,15 +50,16 @@ describe('Functionnal Membership endpoint testing', () => {
         .expect(200, done);
     });
 
-    it('PUT', async (done) => {
-      request(app)
-        .put(`${API_ENDPOINT}/1`)
-        .auth(adminUser.token, { type: 'bearer' })
-        .send({
-          endDate: '2020-02-01'
-        })
-        .expect(200, done);
-    });
+    // Maybe we want not to be able to modify a membership
+    // it('PUT', async (done) => {
+    //   request(app)
+    //     .put(`${API_ENDPOINT}/1`)
+    //     .auth(adminUser.token, { type: 'bearer' })
+    //     .send({
+    //       endDate: '2020-02-01'
+    //     })
+    //     .expect(200, done);
+    // });
 
     it('POST', async (done) => {
       // TODO: Correct this to not be the same as the test for multiple
@@ -72,7 +73,7 @@ describe('Functionnal Membership endpoint testing', () => {
           endDate: '2020-09-01',
           plan: { id: 2 }
         })
-        .expect(400, done);
+        .expect(200, done);
     });
 
     it('DELETE', async (done) => {
