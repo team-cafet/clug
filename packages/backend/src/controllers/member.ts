@@ -5,6 +5,7 @@ import { User } from '../models/User';
 import { EXISTING_GROUPS } from '../config/auth';
 import { Staff } from '../models/Staff';
 import { Request, Response } from 'express';
+import * as ControllerUtils from '../util/controller-utils';
 
 export class MemberCtrl extends RESTController<Member> {
   constructor() {
@@ -43,15 +44,12 @@ export class MemberCtrl extends RESTController<Member> {
   public getOne = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
 
-    if (req.user.user.group === 'admin') {
+    if (req.user.user.group === EXISTING_GROUPS.ADMIN) {
       return res.send(await this.repository.findOneOrFail(id, {
         relations: ['user', 'memberLabels']
       }));
     }
-
-    const userRepo = getRepository(User);
-    const currentUser = await userRepo.findOne(req.user.user.id);
-    const currentOrg = await currentUser.getUserOrganisation();
+    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(req);
 
     return res.send(await this.repository.findOneOrFail(id, {
         relations: ['user', 'memberLabels', 'club'],
