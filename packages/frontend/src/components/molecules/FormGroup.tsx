@@ -16,6 +16,7 @@ export const FormGroup = ({ className, label, type, formnikError, name }: IProps
       className={`form-control ${formnikError ? 'is-invalid' : ''}`}
       name={name}
       type={type}
+      value={undefined}
     />
     <ErrorMessage name={name} component="div" className="invalid-feedback" />
   </div>

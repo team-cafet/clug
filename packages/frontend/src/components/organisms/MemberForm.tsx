@@ -13,7 +13,10 @@ import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
-import { generatePlanEndDate, getPlanName } from '../../services/data-mapping.service';
+import {
+  generatePlanEndDate,
+  getPlanName,
+} from '../../services/data-mapping.service';
 
 interface IFormValue {
   global: string;
@@ -46,7 +49,9 @@ export const MemberForm = (props: IProps) => {
     service: clubService,
   });
 
-  const [membershipPlanList, setMembershipPlanList] = useGetAllFromService<IMembershipPlan>({
+  const [membershipPlanList, setMembershipPlanList] = useGetAllFromService<
+    IMembershipPlan
+  >({
     service: membershipPlanService,
   });
   const [planSelectedId, setPlanSelectedId] = useState('1');
@@ -75,7 +80,6 @@ export const MemberForm = (props: IProps) => {
       props.member.memberLabels?.map((label) => label.id) || [];
     initialValues.club = props.member.club?.id;
     initialValues.user = { ...initialValues.user, ...props.member.user };
-    console.log(initialValues);
   }
 
   const validate = (values: IFormValue) => {
