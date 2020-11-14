@@ -7,6 +7,7 @@ import { memberService } from '../../../services/member.service';
 import { DataTable } from '../../molecules/DataTable';
 import './Member.scss';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
+import '../../organisms/forms.scss';
 
 
 export const Member = () => {
