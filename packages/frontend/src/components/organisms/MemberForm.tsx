@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
@@ -49,9 +49,7 @@ export const MemberForm = (props: IProps) => {
     service: clubService,
   });
 
-  const [membershipPlanList, setMembershipPlanList] = useGetAllFromService<
-    IMembershipPlan
-  >({
+  const [membershipPlanList] = useGetAllFromService<IMembershipPlan>({
     service: membershipPlanService,
   });
   const [planSelectedId, setPlanSelectedId] = useState('1');
@@ -119,7 +117,7 @@ export const MemberForm = (props: IProps) => {
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
-        const newMember = await memberService.add({
+        await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
           memberships: planSelected
