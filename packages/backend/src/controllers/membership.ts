@@ -7,10 +7,16 @@ export class MembershipCtrl extends RESTController<Membership> {
   constructor() {
     super(getRepository(Membership));
   }
+
+  /**
+   * Will get all the membership that are not paid
+   * @param req
+   * @param res
+   */
   public async getNotPaid(req: Request, res: Response): Promise<Response> {
-    // TODO: not return password damm
     const today: Date = new Date();
-    const memberships = await getRepository(Membership).find({
+
+    const memberships = await this.repository.find({
       relations: [
         'paymentRequest',
         'paymentRequest.payment',
@@ -22,11 +28,48 @@ export class MembershipCtrl extends RESTController<Membership> {
         endDate: LessThanOrEqual(today.toDateString())
       }
     });
-    const withoutPayment = memberships.filter(
-      (membership) => !membership.paymentRequest?.payment
-    );
+
+    const withoutPayment = memberships
+      // will get only not paid payment
+      .filter((membership) => !membership.paymentRequest?.payment)
+      // will remove all password from user
+      .map((membership) => {
+        delete membership.member.user.password;
+        return membership;
+      });
+
     return res.send(withoutPayment);
   }
+
+  /**
+   * Will terminate the membership and remove linked payment request
+   * @param req
+   * @param res
+   */
+  public async terminateMembership(
+    req: Request,
+    res: Response
+  ): Promise<Response> {
+    const id = Number.parseInt(req.params.id);
+    const membership = await this.repository.findOne(id, {
+      relations: ['paymentRequest', 'paymentRequest.payment']
+    });
+
+    // remove linked payment
+    await getRepository(PaymentRequest).delete(membership.paymentRequest.id);
+
+    // remove membership
+    await this.repository.delete(id);
+
+    return res.send('await this.remove(id)');
+  }
+
+  /**
+   *
+   * @param req
+   * @param res
+   * @param next
+   */
   public async businessValidation(
     req: Request,
     res: Response,
