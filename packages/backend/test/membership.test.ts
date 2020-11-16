@@ -62,8 +62,6 @@ describe('Functionnal Membership endpoint testing', () => {
     // });
 
     it('POST', async (done) => {
-      // TODO: Correct this to not be the same as the test for multiple
-      // Membership
       request(app)
         .post(API_ENDPOINT)
         .auth(adminUser.token, { type: 'bearer' })

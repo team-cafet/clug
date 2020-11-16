@@ -1,9 +1,11 @@
 import { RESTController } from '../libs/classes/RESTController';
 import { Membership } from '../models/Membership';
-import { getRepository, LessThanOrEqual } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { Request, Response, NextFunction } from 'express';
 import * as ControllerUtils from '../util/controller-utils';
 import { EXISTING_GROUPS } from '../config/auth';
+import { APIError } from '../libs/classes/APIError';
+import { Member } from '../models/Member';
 
 export class MembershipCtrl extends RESTController<Membership> {
   constructor() {
@@ -43,22 +45,26 @@ export class MembershipCtrl extends RESTController<Membership> {
   public getOne = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
 
-    if (req.user.user.group === EXISTING_GROUPS.ADMIN) {
-      return res.send(await this.findOneByID(id));
+    const membership = await this.repository.findOne(id, {
+      relations: ['paymentRequest', 'paymentRequest.payment', 'member']
+    });
+
+    if (!membership) {
+      throw new APIError(404, 'not found');
     }
 
     const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
       req
     );
 
-    const requestResult = await this.repository
-      .createQueryBuilder('membership')
-      .innerJoin('membership.member', 'member')
-      .where('member.organisationId = :orgId', { orgId: currentOrg.id })
-      .andWhere('membership.id = :id', { id: id })
-      .getOne();
+    if (
+      req.user.user.group !== EXISTING_GROUPS.ADMIN &&
+      membership.member.organisation.id !== currentOrg.id
+    ) {
+      throw new APIError(403, 'unauthorized');
+    }
 
-    return res.send(requestResult);
+    return res.send(membership);
   };
 
   /**
@@ -81,7 +87,7 @@ export class MembershipCtrl extends RESTController<Membership> {
       .innerJoinAndSelect('membership.member', 'member')
       .innerJoinAndSelect('member.user', 'memberUser')
       .leftJoinAndSelect('membership.paymentRequest', 'paymentRequest')
-      .leftJoinAndSelect('paymentRequest.payment', 'paymentRequestPayment') 
+      .leftJoinAndSelect('paymentRequest.payment', 'paymentRequestPayment')
       .innerJoinAndSelect('membership.plan', 'plan')
       .where('membership.endDate <= :today', {
         today: today.toDateString()
@@ -94,7 +100,7 @@ export class MembershipCtrl extends RESTController<Membership> {
     }
 
     const memberships = await membershipRequest.getMany();
-    
+
     const withoutPayment = memberships
       // will get only not paid payment
       .filter((membership) => !membership.paymentRequest?.payment)
@@ -118,8 +124,19 @@ export class MembershipCtrl extends RESTController<Membership> {
   ): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
     const membership = await this.repository.findOne(id, {
-      relations: ['paymentRequest', 'paymentRequest.payment']
+      relations: ['paymentRequest', 'paymentRequest.payment', 'member']
     });
+
+    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
+      req
+    );
+
+    if (
+      req.user.user.group !== EXISTING_GROUPS.ADMIN &&
+      membership.member.organisation.id !== currentOrg.id
+    ) {
+      throw new APIError(403, 'unauthorized');
+    }
 
     // remove linked payment
     if (membership.paymentRequest && !membership.paymentRequest.payment) {
@@ -142,13 +159,32 @@ export class MembershipCtrl extends RESTController<Membership> {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<Response> {
+  ): Promise<void> {
     const data: Membership = req.body;
 
-    const validationResult = await Membership.validate(data);
+    if (!data.member?.id) {
+      throw new APIError(400, 'Unknow member');
+    }
 
+    const [member, currentOrg] = await Promise.all([
+      getRepository(Member).findOne(data.member.id, {
+        relations: []
+      }),
+      ControllerUtils.getCurrentOrgFromUserInRequest(req)
+    ]);
+
+    // Permission for orgnanisation check
+    if (
+      req.user.user.group !== EXISTING_GROUPS.ADMIN &&
+      member.organisation.id !== currentOrg.id
+    ) {
+      throw new APIError(403, 'Unauthorized');
+    }
+
+    const validationResult = await Membership.validate(data);
+    
     if (validationResult) {
-      return res.status(validationResult.status).send(validationResult.msg);
+      throw validationResult;
     }
 
     next();
