@@ -4,7 +4,6 @@ import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membership-plan.service';
-import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 
 interface IFormValue {
   price?: number;
@@ -97,7 +96,7 @@ export const MembershipPlanForm = (props: IProps) => {
             <Field
               as="select"
               name="membershipSelect"
-              class="form-control"
+              className="form-control"
               onChange={(event: { target: any }) => {
                 changeTypeSelected(event.target.value);
               }}
@@ -112,7 +111,7 @@ export const MembershipPlanForm = (props: IProps) => {
             <Field
               as="select"
               name="tacitSelect"
-              class="form-control"
+              className="form-control"
               onChange={(event: { target: any }) => {
                 changeTacit(event.target.value);
               }}

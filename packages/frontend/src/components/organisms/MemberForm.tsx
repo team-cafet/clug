@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
@@ -13,7 +13,10 @@ import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
-import { generatePlanEndDate, getPlanName } from '../../services/data-mapping.service';
+import {
+  generatePlanEndDate,
+  getPlanName,
+} from '../../services/data-mapping.service';
 
 interface IFormValue {
   global: string;
@@ -46,10 +49,10 @@ export const MemberForm = (props: IProps) => {
     service: clubService,
   });
 
-  const [membershipPlanList, setMembershipPlanList] = useGetAllFromService<IMembershipPlan>({
+  const [membershipPlanList] = useGetAllFromService<IMembershipPlan>({
     service: membershipPlanService,
   });
-  const [planSelectedId, setPlanSelectedId] = useState('0');
+  const [planSelectedId, setPlanSelectedId] = useState('1');
   const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
 
   const history = useHistory();
@@ -75,7 +78,6 @@ export const MemberForm = (props: IProps) => {
       props.member.memberLabels?.map((label) => label.id) || [];
     initialValues.club = props.member.club?.id;
     initialValues.user = { ...initialValues.user, ...props.member.user };
-    console.log(initialValues);
   }
 
   const validate = (values: IFormValue) => {
@@ -99,7 +101,6 @@ export const MemberForm = (props: IProps) => {
     formHelper: FormikHelpers<IFormValue>
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
-
     try {
       (values as any) = {
         ...values,
@@ -116,7 +117,7 @@ export const MemberForm = (props: IProps) => {
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
       } else {
-        const newMember = await memberService.add({
+        await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
           memberships: planSelected
@@ -291,7 +292,7 @@ export const MemberForm = (props: IProps) => {
                 onChange={(event: { target: any }) => {
                   changePlanSelected(event.target.value);
                 }}
-                class="form-control"
+                className="form-control"
               >
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
@@ -307,7 +308,7 @@ export const MemberForm = (props: IProps) => {
                   setStartDate(event.target.value);
                 }}
                 value={startDate}
-                class="form-control"
+                className="form-control"
               ></Field>
             </div>
           </div>

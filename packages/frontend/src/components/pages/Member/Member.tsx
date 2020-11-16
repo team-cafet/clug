@@ -62,8 +62,10 @@ export const Member = () => {
 
 const GoToMemberBtn = (props: { id: number }) => {
   return (
-    <Link component={Button} to={`/admin/members/${props.id}`}>
-      ...
+    <Link to={`/admin/members/${props.id}`}>
+      <Button>
+        ...
+      </Button>
     </Link>
   );
 };

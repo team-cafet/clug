@@ -7,7 +7,10 @@ export class MembershipCtrl extends RESTController<Membership> {
   constructor() {
     super(getRepository(Membership));
   }
-  public async getNotPaid(req: Request, res: Response): Promise<Response> {
+  public getNotPaid = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
     // TODO: not return password damm
     const today: Date = new Date();
     const memberships = await getRepository(Membership).find({
@@ -26,7 +29,7 @@ export class MembershipCtrl extends RESTController<Membership> {
       (membership) => !membership.paymentRequest?.payment
     );
     return res.send(withoutPayment);
-  }
+  };
   public async businessValidation(
     req: Request,
     res: Response,

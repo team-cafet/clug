@@ -37,7 +37,7 @@ export const generatePlanEndDate = (startDate: Date, planType?: number): Date =>
     case PlanType.annual:
       endDate.add(1, 'years');
       break;
-      default: console.log('not a valid type')
+      default: console.error('not a valid membershipPlan type')
   }
 
   return endDate.toDate()
