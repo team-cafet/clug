@@ -24,37 +24,8 @@ describe('Functionnal App testing', () => {
   });
 
   it('should return 404', async (done) => {
-    request(app).get('/reset').expect(404, done);
+    request(app).post('/givemea404').expect(404, done);
   });
-
-  // -------------------------- API
-
-  // -------------------------- API -> organisations
-
-  // describe('Testing organisation api', () => {
-  //   it('POST', async (done) => {
-  //     request(app)
-  //       .post('/api/organisations')
-  //       .send({
-  //         name: 'organisation-test'
-  //       })
-  //       .expect(200, done);
-  //   });
-  // });
-
-  // -------------------------- API -> clubs
-
-  // describe('Testing club api', () => {
-  //   it('POST', async (done) => {
-  //     request(app)
-  //       .post('/api/clubs')
-  //       .send({
-  //         organisation: {id: 1},
-  //         name: 'club-test'
-  //       })
-  //       .expect(200, done);
-  //   });
-  // });
 
   afterAll(async () => {
     connection.close();
