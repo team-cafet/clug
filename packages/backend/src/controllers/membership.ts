@@ -103,12 +103,7 @@ export class MembershipCtrl extends RESTController<Membership> {
 
     const withoutPayment = memberships
       // will get only not paid payment
-      .filter((membership) => !membership.paymentRequest?.payment)
-      // will remove all password from user
-      .map((membership) => {
-        delete membership.member.user.password;
-        return membership;
-      });
+      .filter((membership) => !membership.paymentRequest?.payment);
 
     return res.send(withoutPayment);
   };
@@ -182,7 +177,7 @@ export class MembershipCtrl extends RESTController<Membership> {
     }
 
     const validationResult = await Membership.validate(data);
-    
+
     if (validationResult) {
       throw validationResult;
     }
