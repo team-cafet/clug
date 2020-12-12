@@ -22,18 +22,12 @@ export const clubRouter = (): IRouter => {
   app.get('/', readPermission, clubCtrl.getAll);
   app.get('/:id', readPermission, clubCtrl.getOne);
   app.post('/', writePermission, clubCtrl.post);
-  app.put('/:id', writePermission, clubCtrl.put);
-  app.delete('/:id', writePermission, async (req, res, next) => {
-    const canUpdateOrDelete = await clubCtrl.canUpdateOrDelete(req, res);
-
-    if (!canUpdateOrDelete) {
-      return res
-        .status(403)
-        .send('You do not have permission to delete this clubs');
-    }
-
-    return clubCtrl.delete(req, res);
-  });
+  app.put('/:id', [writePermission, clubCtrl.canUpdateOrDelete], clubCtrl.put);
+  app.delete(
+    '/:id',
+    [writePermission, clubCtrl.canUpdateOrDelete],
+    clubCtrl.delete
+  );
 
   return app;
 };

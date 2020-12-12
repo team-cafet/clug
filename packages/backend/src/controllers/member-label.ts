@@ -1,7 +1,7 @@
 import { RESTController } from '../libs/classes/RESTController';
 import { MemberLabel } from '../models/MemberLabel';
 import { getRepository } from 'typeorm';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { User } from '../models/User';
 
 export class MemberLabelCtrl extends RESTController<MemberLabel> {
@@ -27,12 +27,13 @@ export class MemberLabelCtrl extends RESTController<MemberLabel> {
 
   public canUpdateOrDelete = async (
     req: Request,
-    res: Response
-  ): Promise<boolean> => {
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
 
     if (req.user.user.group === 'admin') {
-      return true;
+      next();
     }
 
     const [user, label] = await Promise.all([
@@ -42,13 +43,17 @@ export class MemberLabelCtrl extends RESTController<MemberLabel> {
     const userOrg = await user.getUserOrganisation();
 
     if (!user || !label) {
-      return false;
+      return res
+      .status(403)
+      .send('You do not have permission to modify this tag');
     }
 
-    if (label.organisation.id !== userOrg.id) {
-      return false;
+    if (club.organisation.id !== userOrg.id) {
+      return res
+      .status(403)
+      .send('You do not have permission to modify this tag');
     }
 
-    return true;
+    next();
   };
 }

@@ -1,7 +1,7 @@
 import { RESTController } from '../libs/classes/RESTController';
 import { getRepository } from 'typeorm';
 import { Club } from '../models/Club';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { User } from '../models/User';
 
 export class ClubCtrl extends RESTController<Club> {
@@ -11,12 +11,13 @@ export class ClubCtrl extends RESTController<Club> {
 
   public canUpdateOrDelete = async (
     req: Request,
-    res: Response
-  ): Promise<boolean> => {
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
 
     if (req.user.user.group === 'admin') {
-      return true;
+      next();
     }
 
     const [user, club] = await Promise.all([
@@ -26,13 +27,18 @@ export class ClubCtrl extends RESTController<Club> {
     const userOrg = await user.getUserOrganisation();
 
     if (!user || !club) {
-      return false;
+      return res
+      .status(403)
+      .send('You do not have permission to modify this club');
     }
 
     if (club.organisation.id !== userOrg.id) {
-      return false;
+      return res
+      .status(403)
+      .send('You do not have permission to modify this club');
     }
 
-    return true;
+    next();
   };
+
 }

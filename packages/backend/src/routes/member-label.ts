@@ -22,18 +22,16 @@ export const memberLabelRouter = (): IRouter => {
   app.get('/', readPermission, memberLabelCtrl.getAll);
   app.get('/:id', readPermission, memberLabelCtrl.getOne);
   app.post('/', writePermission, memberLabelCtrl.post);
-  app.put('/:id', writePermission, memberLabelCtrl.put);
-  app.delete('/:id', writePermission, async (req, res, next) => {
-    const canUpdateOrDelete = await memberLabelCtrl.canUpdateOrDelete(req, res);
-
-    if (!canUpdateOrDelete) {
-      return res
-        .status(403)
-        .send('You do not have permission to delete this tag');
-    }
-
-    return memberLabelCtrl.delete(req, res);
-  });
+  app.put(
+    '/:id',
+    [writePermission, memberLabelCtrl.canUpdateOrDelete],
+    memberLabelCtrl.put
+  );
+  app.delete(
+    '/:id',
+    [writePermission, memberLabelCtrl.canUpdateOrDelete],
+    memberLabelCtrl.delete
+  );
 
   return app;
 };
