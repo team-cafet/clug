@@ -53,8 +53,6 @@ export const memberRouter = (): IRouter => {
       member.club = req.body.club;
 
       const data = await memberCtrl.store(member);
-
-      console.log('return object', data);
       res.send(data);
     }
   );
