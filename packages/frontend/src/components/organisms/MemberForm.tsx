@@ -194,21 +194,13 @@ export const MemberForm = (props: IProps) => {
               name="memberLabels"
               className="form-control"
             >
-              {availableMemberLabels.map((label) => (
+              {[...availableMemberLabels].map((label) => (
                 <option key={label.id} value={label.id}>
                   {label.name}
                 </option>
               ))}
             </Field>
 
-            {/* <Select 
-              options={
-                availableMemberLabels.map((label) => (
-                  <option key={label.id} value={label.id}>
-                    {label.name}
-                  </option>
-                ))} 
-              name="memberLabels"/> */}
             <label htmlFor="club">Club</label>
             <Field
               component="select"

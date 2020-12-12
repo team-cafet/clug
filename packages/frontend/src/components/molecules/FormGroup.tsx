@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorMessage, Field } from 'formik';
+import { ErrorMessage, Field, useFormik, useFormikContext } from 'formik';
 
 interface IProps {
   className?: string;
@@ -9,15 +9,20 @@ interface IProps {
   name: string;
 }
 
-export const FormGroup = ({ className, label, type, formnikError, name }: IProps) => (
+export const FormGroup = ({ className, label, type, formnikError, name }: IProps) => {
+  const formnik = useFormikContext();
+  const {name: inputName, value: inutValue} = {...formnik.getFieldProps(name)}
+  
+  return (
   <div className={`form-group ${className}`}>
     <label>{label}</label>
     <Field
       className={`form-control ${formnikError ? 'is-invalid' : ''}`}
-      name={name}
       type={type}
-      value={undefined}
+      name={inputName}
+      value={inutValue || ''}
     />
     <ErrorMessage name={name} component="div" className="invalid-feedback" />
   </div>
 );
+}

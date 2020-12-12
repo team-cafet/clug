@@ -25,4 +25,27 @@ export class MemberLabelCtrl extends RESTController<MemberLabel> {
       })
     );
   };
+
+  public canUpdateOrDelete = async (req: Request, res: Response): Promise<boolean> => {
+    const id = Number.parseInt(req.params.id);
+
+    if (req.user.user.group === 'admin') {
+      return true;
+    }
+
+    const [user, label] = await Promise.all(
+      [getRepository(User).findOneOrFail(req.user.user.id),
+        this.repository.findOneOrFail(id, {relations:['organisation']})]);
+    const userOrg = await user.getUserOrganisation();
+
+    if(!user || !label){
+      return false;
+    }
+    
+    if(label.organisation.id !== userOrg.id){
+      return false;
+    }
+
+    return true;
+  }
 }
