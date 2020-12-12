@@ -19,6 +19,8 @@ import {
   generatePlanEndDate,
   getPlanName,
 } from '../../services/data-mapping.service';
+import { membershipService } from '../../services/membership.service';
+import { IMembership } from '../../libs/interfaces/membership.interface';
 
 interface IFormValue {
   global: string;
@@ -35,6 +37,7 @@ interface IFormValue {
     city: string;
     postalCode: undefined | number;
   };
+  memberships: IMembership[];
 }
 
 interface IProps {
@@ -73,13 +76,15 @@ export const MemberForm = (props: IProps) => {
       postalCode: undefined,
     },
     global: '',
+    memberships: [],
   };
 
-  if (props.member) {
+  if (props.member && props.member.memberships) {
     initialValues.memberLabels =
       props.member.memberLabels?.map((label) => label.id) || [];
     initialValues.club = props.member.club?.id;
     initialValues.user = { ...initialValues.user, ...props.member.user };
+    initialValues.memberships = props.member.memberships;
   }
 
   const validate = (values: IFormValue) => {
@@ -97,6 +102,13 @@ export const MemberForm = (props: IProps) => {
 
     return errors;
   };
+
+  const getLastMembership = (memberships: IMembership[]) => {
+    memberships.sort((a,b) => {
+      return moment(b.endDate).unix() - moment(a.endDate).unix()
+    })
+    return memberships[0]
+  }
 
   const submit = async (
     values: IFormValue,
@@ -289,8 +301,9 @@ export const MemberForm = (props: IProps) => {
                 name="user.city"
               />
             </div>
-            <div className="form-row" hidden={updateMode()}>
-              <h2>Abonnement</h2>
+            <h2>Abonnement</h2>
+            <div className="form-row">
+              <label htmlFor="membershipSelect">type</label>
               <Field
                 as="select"
                 name="membershipSelect"
@@ -298,6 +311,7 @@ export const MemberForm = (props: IProps) => {
                   changePlanSelected(event.target.value);
                 }}
                 className="form-control"
+                disabled={updateMode()}
               >
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
@@ -305,6 +319,7 @@ export const MemberForm = (props: IProps) => {
                   </option>
                 ))}
               </Field>
+              <label htmlFor="startDate">Début</label>
               <Field
                 placeholder="Début"
                 name="startDate"
@@ -314,7 +329,19 @@ export const MemberForm = (props: IProps) => {
                 }}
                 value={startDate}
                 className="form-control"
+                disabled={updateMode()}
               ></Field>
+              <Button
+                variant="secondary"
+                className="cancel"
+                hidden={!updateMode()}
+                onClick={async () => {
+                  const lastMembership = getLastMembership(initialValues.memberships)
+                  
+                }}
+              >
+                Interrompre l'abonnement
+              </Button>
             </div>
           </div>
           <div className="save-cancel-group memberForm">
