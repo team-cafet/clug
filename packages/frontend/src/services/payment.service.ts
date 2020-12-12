@@ -8,7 +8,7 @@ class APIPayments extends APIResource {
   }
   createPaymentWithoutRequest(body: {
     payment: IPayment;
-    memberShip: IMembership;
+    membership: IMembership;
   }) {
     return POST('payments/payment-without-request', body);
   }

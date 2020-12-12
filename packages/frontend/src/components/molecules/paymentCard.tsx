@@ -52,7 +52,7 @@ export const PaymentCard = (props: IProps) => {
       } else {
         newPayment = await paymentService.createPaymentWithoutRequest({
           payment: paymentData,
-          memberShip,
+          membership: memberShip,
         });
       }
       if(newPayment) {
