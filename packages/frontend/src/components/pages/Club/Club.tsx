@@ -58,7 +58,7 @@ const ClubRow = (props: { club: IClub }) => {
       <td>{club.description}</td>
       <td>
         <Link to={`/admin/clubs/${club.id}`}>
-          <EditIcon title="Modifier ce club"/>
+          <EditIcon title="Modifier"/>
         </Link>
       </td>
     </tr>

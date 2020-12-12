@@ -50,7 +50,7 @@ const LabelRow = (props: { label: IMemberLabel }) => {
       <td>{label.name}</td>
       <td>
         <Link to={`/admin/memberlabels/${label.id}`}>
-          <EditIcon title="Modifier ce label"/>
+          <EditIcon title="Modifier"/>
         </Link>
       </td>
     </tr>

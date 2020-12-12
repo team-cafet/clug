@@ -65,7 +65,7 @@ export const Member = () => {
 const GoToMemberBtn = (props: { id: number }) => {
   return (
     <Link to={`/admin/members/${props.id}`}>
-      <EditIcon title="Modifier ce membre" />
+      <EditIcon title="Modifier" />
     </Link>
   );
 };

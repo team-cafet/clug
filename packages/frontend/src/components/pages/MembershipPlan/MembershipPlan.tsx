@@ -77,7 +77,7 @@ const MembershipPlanAction = ({ plan, refreshList }: any) => {
       <td>{plan.tacit ? 'oui' : 'non'}</td>
       <td>
         <Link to={`/admin/membershipPlans/update/${plan.id}`}>
-          <EditIcon title="Modifier cet abonnement"/>
+          <EditIcon title="Modifier"/>
         </Link>
       </td>
       <td>
