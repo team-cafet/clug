@@ -23,8 +23,8 @@ export const membershipPlanRouter = (): IRouter => {
   app.get('/types', readPermission, membershipPlanCtrl.getAllTypes);
   app.get('/:id', readPermission, membershipPlanCtrl.getOne);
   app.post('/', writePermission, membershipPlanCtrl.post);
-  app.put('/:id', writePermission, membershipPlanCtrl.put);
-  app.delete('/:id', writePermission, membershipPlanCtrl.delete);
+  app.put('/:id', [writePermission, membershipPlanCtrl.canUpdateOrDelete], membershipPlanCtrl.put);
+  app.delete('/:id', [writePermission, membershipPlanCtrl.canUpdateOrDelete], membershipPlanCtrl.delete);
 
   return app;
 };

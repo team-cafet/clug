@@ -48,7 +48,7 @@ export class MemberLabelCtrl extends RESTController<MemberLabel> {
       .send('You do not have permission to modify this tag');
     }
 
-    if (club.organisation.id !== userOrg.id) {
+    if (label.organisation.id !== userOrg.id) {
       return res
       .status(403)
       .send('You do not have permission to modify this tag');

@@ -30,6 +30,7 @@ export class MembershipCtrl extends RESTController<Membership> {
     );
     return res.send(withoutPayment);
   };
+
   public async businessValidation(
     req: Request,
     res: Response,
@@ -45,4 +46,5 @@ export class MembershipCtrl extends RESTController<Membership> {
 
     next();
   }
+
 }
