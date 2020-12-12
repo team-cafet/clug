@@ -1,6 +1,8 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
 import { Alert, Button } from 'react-bootstrap';
+//@ts-ignore
+import Select from 'react-select';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IClub } from '../../libs/interfaces/club.interface';
@@ -164,7 +166,7 @@ export const MemberForm = (props: IProps) => {
   return (
     <Formik initialValues={initialValues} validate={validate} onSubmit={submit}>
       {({ isSubmitting, errors, setFieldValue, values }) => (
-        <Form>
+        <Form className="form">
           {displayAlertMemberSaved && (
             <Alert
               variant="success"
@@ -183,8 +185,9 @@ export const MemberForm = (props: IProps) => {
           />
 
           {/* General member information */}
-          <div>
-            <h2>Tag</h2>
+          <div className="memberForm">
+            <h1>{ props.member ? "Modifier le profil de " + props.member.user?.firstname : "Créer un membre" }</h1>
+            <label htmlFor="memberLabels">Tag</label>
             <Field
               component="select"
               multiple={true}
@@ -198,7 +201,15 @@ export const MemberForm = (props: IProps) => {
               ))}
             </Field>
 
-            <h2>Club</h2>
+            {/* <Select 
+              options={
+                availableMemberLabels.map((label) => (
+                  <option key={label.id} value={label.id}>
+                    {label.name}
+                  </option>
+                ))} 
+              name="memberLabels"/> */}
+            <label htmlFor="club">Club</label>
             <Field
               component="select"
               multiple={false}
@@ -312,13 +323,15 @@ export const MemberForm = (props: IProps) => {
               ></Field>
             </div>
           </div>
-
-          <Button variant="primary" type="submit" disabled={isSubmitting}>
-            Sauver
-          </Button>
-          <Link to="/admin/members">
-            <Button variant="secondary">Annuler</Button>
-          </Link>
+          <div className="save-cancel-group memberForm">
+            <Link to="/admin/members">
+              <Button variant="secondary" className="cancel">Annuler</Button>
+            </Link>
+            <Button variant="primary" type="submit" disabled={isSubmitting}>
+              Sauver
+            </Button>
+          </div>
+          
         </Form>
       )}
     </Formik>

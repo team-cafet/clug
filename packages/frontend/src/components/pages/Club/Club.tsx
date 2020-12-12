@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IClub } from '../../../libs/interfaces/club.interface';
 import { clubService } from '../../../services/club.service';
+import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
 
 export const Club = () => {
   const [clubs, setClubs] = useState<IClub[]>([]);
@@ -22,12 +23,19 @@ export const Club = () => {
       <h1>Clubs</h1>
       <div className="container">
         <div className="row">
-          <Link to="/admin/clubs/add" className="btn btn-primary">
-            Ajouter
+          <Link to="/admin/clubs/add" className="btn btn-secondary add" title="Ajouter un club">
+            +
           </Link>
         </div>
         <div className="row">
           <table className="table">
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Nom</th>
+                <th>Description</th>  
+              </tr>
+            </thead>
             <tbody>
               {clubs.map((club) => (
                 <ClubRow club={club} key={club.id} />
@@ -47,8 +55,11 @@ const ClubRow = (props: { club: IClub }) => {
     <tr>
       <td>{club.id}</td>
       <td>{club.name}</td>
+      <td>{club.description}</td>
       <td>
-        <Link to={`/admin/clubs/${club.id}`}>...</Link>
+        <Link to={`/admin/clubs/${club.id}`}>
+          <EditIcon title="Modifier"/>
+        </Link>
       </td>
     </tr>
   );

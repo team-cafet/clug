@@ -5,7 +5,9 @@ import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMember } from '../../../libs/interfaces/member.interface';
 import { memberService } from '../../../services/member.service';
 import { DataTable } from '../../molecules/DataTable';
-import './style.scss';
+import './Member.scss';
+import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
+import '../../organisms/forms.scss';
 
 
 export const Member = () => {
@@ -40,8 +42,8 @@ export const Member = () => {
       <h1>Membres</h1>
       <div className="container">
         <div className="row">
-          <Link to="/admin/members/add" className="btn btn-primary">
-            Ajouter
+          <Link to="/admin/members/add" className="btn btn-secondary add" title="Ajouter un membre">
+          +
           </Link>
         </div>
         <div className="row">
@@ -63,9 +65,7 @@ export const Member = () => {
 const GoToMemberBtn = (props: { id: number }) => {
   return (
     <Link to={`/admin/members/${props.id}`}>
-      <Button>
-        ...
-      </Button>
+      <EditIcon title="Modifier" />
     </Link>
   );
 };

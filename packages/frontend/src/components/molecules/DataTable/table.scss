@@ -1,0 +1,45 @@
+.input-group {
+    svg {
+        height: 20px;
+        width: 20px;
+        fill: var(--c-dark-text);
+        opacity: 0.7;
+        margin-top: 8px;
+        position: absolute;
+        right: auto;
+        left: .4rem;
+    }
+
+    input.form-control {
+        border: none;
+        border-bottom: 2px solid var(--c-primary);
+        border-radius: 0;
+        background-color: transparent;
+        padding: 0.375rem 2.3rem;
+
+        &:focus {
+            outline: none;
+            border-bottom: 3px solid var(--c-secondary);
+            box-shadow: none;
+            background-color: transparent;
+        }
+    }
+}
+@media screen and (min-width: 992px) {
+    .table .input-group {
+        width: 40%;
+    }
+}
+
+.sortable {
+    user-select: none;
+    svg {
+        height: 10px;
+        width: 10px;
+        fill: var(--c-primary);
+        margin-left: .7rem;
+    }
+    .up {
+        transform: rotate(180deg);
+    }
+}

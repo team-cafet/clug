@@ -59,6 +59,8 @@ html {
   /* shapes */
   --c-radius: 15px;
 
+  /* shadows */
+  --c-boxshadow-block: 0px 0px 10px rgba(0, 0, 0, 0.1) ;
 }
 
 * {
@@ -71,12 +73,10 @@ html {
 
 h1 {
   font-size: var(--title-size);
-  font-weight: normal;
 }
 
 h2 {
   font-size: var(--subtitle-size);
-  font-weight: normal;
 }
 
 p,
