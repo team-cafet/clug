@@ -5,8 +5,7 @@ import { Request, Response } from 'express';
 import { User } from '../models/User';
 
 export class MemberLabelCtrl extends RESTController<MemberLabel> {
-
-  constructor(){    
+  constructor() {
     super(getRepository(MemberLabel));
   }
 
@@ -21,31 +20,35 @@ export class MemberLabelCtrl extends RESTController<MemberLabel> {
 
     return res.send(
       await this.findAll({
-        where: { organisation: currentOrg.id },
+        where: { organisation: currentOrg.id }
       })
     );
   };
 
-  public canUpdateOrDelete = async (req: Request, res: Response): Promise<boolean> => {
+  public canUpdateOrDelete = async (
+    req: Request,
+    res: Response
+  ): Promise<boolean> => {
     const id = Number.parseInt(req.params.id);
 
     if (req.user.user.group === 'admin') {
       return true;
     }
 
-    const [user, label] = await Promise.all(
-      [getRepository(User).findOneOrFail(req.user.user.id),
-        this.repository.findOneOrFail(id, {relations:['organisation']})]);
+    const [user, label] = await Promise.all([
+      getRepository(User).findOneOrFail(req.user.user.id),
+      this.repository.findOneOrFail(id, { relations: ['organisation'] })
+    ]);
     const userOrg = await user.getUserOrganisation();
 
-    if(!user || !label){
+    if (!user || !label) {
       return false;
     }
-    
-    if(label.organisation.id !== userOrg.id){
+
+    if (label.organisation.id !== userOrg.id) {
       return false;
     }
 
     return true;
-  }
+  };
 }

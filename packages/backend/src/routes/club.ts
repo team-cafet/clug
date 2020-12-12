@@ -9,15 +9,31 @@ export const clubRouter = (): IRouter => {
   const clubCtrl = new ClubCtrl();
   const guard = ExpressJWTPermissions();
 
-  const writePermission = guard.check([[Permissions.admin], [Permissions.clubW]]);
+  const writePermission = guard.check([
+    [Permissions.admin],
+    [Permissions.clubW]
+  ]);
 
-  const readPermission = guard.check([[Permissions.admin], [Permissions.clubR]]);
+  const readPermission = guard.check([
+    [Permissions.admin],
+    [Permissions.clubR]
+  ]);
 
   app.get('/', readPermission, clubCtrl.getAll);
   app.get('/:id', readPermission, clubCtrl.getOne);
   app.post('/', writePermission, clubCtrl.post);
   app.put('/:id', writePermission, clubCtrl.put);
-  app.delete('/:id', writePermission, clubCtrl.delete);
+  app.delete('/:id', writePermission, async (req, res, next) => {
+    const canUpdateOrDelete = await clubCtrl.canUpdateOrDelete(req, res);
+
+    if (!canUpdateOrDelete) {
+      return res
+        .status(403)
+        .send('You do not have permission to delete this clubs');
+    }
+
+    return clubCtrl.delete(req, res);
+  });
 
   return app;
 };
