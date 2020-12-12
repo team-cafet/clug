@@ -85,7 +85,7 @@ const MembershipPlanAction = ({ plan, refreshList }: any) => {
       </td>
       <td>
         <button className="btn btn-delete" onClick={(e) => deletePlan(plan)}>
-            <DeleteIcon />
+            <DeleteIcon title="Supprimer" />
         </button>
       </td>
       

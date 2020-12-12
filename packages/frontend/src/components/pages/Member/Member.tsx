@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMember } from '../../../libs/interfaces/member.interface';
@@ -8,6 +7,7 @@ import { DataTable } from '../../molecules/DataTable';
 import './Member.scss';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
 import '../../organisms/forms.scss';
+import {PopUp} from '../../molecules/PopUp';
 
 
 export const Member = () => {
@@ -25,6 +25,13 @@ export const Member = () => {
       disableSortBy: true,
       Cell: (cell: any) => <GoToMemberBtn id={cell.value} />,
     },
+    {
+      Header: '',
+      accessor: 'deleteMember',
+      disableFilters: true,
+      disableSortBy: true,
+      Cell: (cell: any) => <PopUp buttontext="" item="ce membre"/>,
+    }
   ];
 
   const DATA = useMemo(

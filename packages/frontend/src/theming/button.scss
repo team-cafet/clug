@@ -13,6 +13,18 @@ button.btn {
         color: #fff;
         border-radius: var(--c-radius);
         margin-top: 1rem;
+        &.deleteItem {
+            background-color: transparent;
+            color: var(--c-secondary);
+            border: none;
+            &:hover {
+                background-color: var(--c-secondary);
+                color: #fff;
+                .delete {
+                    fill: #fff;
+                }
+            }
+        }
     }
 }
 
@@ -47,6 +59,7 @@ button.btn {
     height: 1.5rem;
     width: 1.5rem;
 }
+
 .save-cancel-group {
     display: flex;
     justify-content: space-evenly;
