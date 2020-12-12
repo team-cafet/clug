@@ -186,7 +186,11 @@ export const MemberForm = (props: IProps) => {
 
           {/* General member information */}
           <div className="memberForm">
-            <h1>{ props.member ? "Modifier le profil de " + props.member.user?.firstname : "Créer un membre" }</h1>
+            <h1>
+              {props.member
+                ? 'Modifier le profil de ' + props.member.user?.firstname
+                : 'Créer un membre'}
+            </h1>
             <label htmlFor="memberLabels">Tag</label>
             <Field
               component="select"
@@ -200,15 +204,6 @@ export const MemberForm = (props: IProps) => {
                 </option>
               ))}
             </Field>
-
-            {/* <Select 
-              options={
-                availableMemberLabels.map((label) => (
-                  <option key={label.id} value={label.id}>
-                    {label.name}
-                  </option>
-                ))} 
-              name="memberLabels"/> */}
             <label htmlFor="club">Club</label>
             <Field
               component="select"
@@ -294,9 +289,8 @@ export const MemberForm = (props: IProps) => {
                 name="user.city"
               />
             </div>
-            <h2>Abonnement</h2>
-            {/* On update, this feature will be more complex. Need more analysis on this point */}
             <div className="form-row" hidden={updateMode()}>
+              <h2>Abonnement</h2>
               <Field
                 as="select"
                 name="membershipSelect"
@@ -325,13 +319,14 @@ export const MemberForm = (props: IProps) => {
           </div>
           <div className="save-cancel-group memberForm">
             <Link to="/admin/members">
-              <Button variant="secondary" className="cancel">Annuler</Button>
+              <Button variant="secondary" className="cancel">
+                Annuler
+              </Button>
             </Link>
             <Button variant="primary" type="submit" disabled={isSubmitting}>
               Sauver
             </Button>
           </div>
-          
         </Form>
       )}
     </Formik>
