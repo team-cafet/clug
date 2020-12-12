@@ -80,20 +80,27 @@ export class Membership {
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
 
-    const member = await memberRepo.findOne(data.member.id);
+    const member = await memberRepo.findOne(data.member.id, {
+      relations: ['memberships']
+    });
 
     if (member.memberships && member.memberships.length > 0) {
-      member.memberships.forEach((membership) => {
-        const memberStart = new Date(membership.startDate);
-        const memberEnd = new Date(membership.endDate);
-        return (
-          (memberEnd.getTime() >= endDate.getTime() &&
-            memberEnd.getTime() <= startDate.getTime()) ||
-          (memberStart.getTime() >= startDate.getTime() &&
-            memberStart.getTime() <= endDate.getTime())
-        );
-      });
-    }else{
+      for (const membership of member.memberships) {
+        const memberMembershipStart = new Date(membership.startDate);
+        const memberMembershipEnd = new Date(membership.endDate);
+
+        const isNewStartDateOverlapping =
+          memberMembershipStart.getTime() >= startDate.getTime() &&
+          memberMembershipStart.getTime() <= endDate.getTime();
+        const isNewEndDateOverlapping =
+          memberMembershipEnd.getTime() >= endDate.getTime() &&
+          memberMembershipEnd.getTime() <= startDate.getTime();
+
+        if (isNewEndDateOverlapping || isNewStartDateOverlapping) {
+          return true;
+        }
+      }
+    } else {
       return false;
     }
   }
@@ -102,7 +109,8 @@ export class Membership {
     if (Membership.endDateAfterStartDate(data))
       return new APIError(400, "Start date mustn't be after end date");
 
-      const isAlreadyOnMembership = await Membership.alreadyOnMembership(data);
+    const isAlreadyOnMembership = await Membership.alreadyOnMembership(data);
+
     if (isAlreadyOnMembership)
       return new APIError(400, 'Only one membership authorized by member');
 

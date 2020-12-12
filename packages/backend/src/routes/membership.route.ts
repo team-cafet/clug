@@ -2,7 +2,6 @@ import { IRouter } from 'express';
 import { MembershipCtrl } from '../controllers/membership';
 import PromiseRouter from 'express-promise-router';
 import ExpressJWTPermissions from 'express-jwt-permissions';
-import logger from '../util/logger';
 import { Permissions } from '../config/auth';
 
 export const membershipRouter = (): IRouter => {
@@ -29,8 +28,7 @@ export const membershipRouter = (): IRouter => {
     membershipCtrl.businessValidation,
     membershipCtrl.post
   );
-  app.put('/:id', writePermission, membershipCtrl.put);
-  app.delete('/:id', writePermission, membershipCtrl.delete);
+  app.delete('/:id', writePermission, membershipCtrl.terminateMembership);
 
   return app;
 };

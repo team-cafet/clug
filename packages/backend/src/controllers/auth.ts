@@ -92,9 +92,22 @@ export class AuthCtrl {
     username: string,
     password: string
   ): Promise<{ user: IUserInfo; token: string }> {
-    const user = await this.userRepository.findOne({ username });
+    
+    const user = await this.userRepository.findOne(
+      { username },
+      {
+        select: ['password', 'id', 'group'],
+        join: {
+          alias: 'user',
+          innerJoinAndSelect: {
+            group: 'user.group'
+          }
+        }
+      }
+    );
 
-    if (!user) throw new APIError(403, `No user found for username ${username}`);
+    if (!user)
+      throw new APIError(403, `No user found for username ${username}`);
     if (!user.group) throw new APIError(403, 'This user has no group');
 
     const organisation = await user.getUserOrganisation();
@@ -103,7 +116,7 @@ export class AuthCtrl {
       user: { username: user.username, group: user.group.name, id: user.id },
       permissions
     });
-    
+
     return {
       user: {
         id: user.id,
