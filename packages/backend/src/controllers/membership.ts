@@ -11,7 +11,7 @@ export class MembershipCtrl extends RESTController<Membership> {
   constructor() {
     super(getRepository(Membership));
   }
-  
+
   /**
    * Custom getAll that return all membership that belongs to the user organisation
    * or all if the user is admin
@@ -19,21 +19,23 @@ export class MembershipCtrl extends RESTController<Membership> {
    * @param res
    */
   public getAll = async (req: Request, res: Response): Promise<Response> => {
+    let memberships = [];
+
     if (req.user.user.group === EXISTING_GROUPS.ADMIN) {
-      return res.send(await this.findAll());
+      memberships = await this.findAll();
+    } else {
+      const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
+        req
+      );
+
+      memberships = await this.repository
+        .createQueryBuilder('membership')
+        .innerJoin('membership.member', 'member')
+        .where('member.organisationId = :orgId', { orgId: currentOrg.id })
+        .getMany();
     }
 
-    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
-      req
-    );
-
-    const requestResult = await this.repository
-      .createQueryBuilder('membership')
-      .innerJoin('membership.member', 'member')
-      .where('member.organisationId = :orgId', { orgId: currentOrg.id })
-      .getMany();
-
-    return res.send(requestResult);
+    return res.send(memberships);
   };
 
   /**
@@ -133,7 +135,7 @@ export class MembershipCtrl extends RESTController<Membership> {
       throw new APIError(403, 'unauthorized');
     }
 
-    // remove linked payment
+    // remove linked payment request
     if (membership.paymentRequest && !membership.paymentRequest.payment) {
       await getRepository(PaymentRequest).delete(membership.paymentRequest.id);
     }
@@ -141,7 +143,7 @@ export class MembershipCtrl extends RESTController<Membership> {
     // remove membership
     await this.repository.delete(id);
 
-    return res.send(`Membership with id ${id} terminated`);
+    return res.send(`Membership with id ${id} deleted`);
   };
 
   /**
@@ -184,5 +186,4 @@ export class MembershipCtrl extends RESTController<Membership> {
 
     next();
   }
-
 }

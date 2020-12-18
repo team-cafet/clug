@@ -11,7 +11,7 @@ interface IProps {
 
 export const FormGroup = ({ className, label, type, formnikError, name }: IProps) => {
   const formnik = useFormikContext();
-  const {name: inputName, value: inutValue} = {...formnik.getFieldProps(name)}
+  const {name: inputName, value: inputValue} = {...formnik.getFieldProps(name)}
   
   return (
   <div className={`form-group ${className}`}>
@@ -20,7 +20,7 @@ export const FormGroup = ({ className, label, type, formnikError, name }: IProps
       className={`form-control ${formnikError ? 'is-invalid' : ''}`}
       type={type}
       name={inputName}
-      value={inutValue || ''}
+      value={inputValue || ''}
     />
     <ErrorMessage name={name} component="div" className="invalid-feedback" />
   </div>

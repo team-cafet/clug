@@ -194,7 +194,7 @@ export const MemberForm = (props: IProps) => {
               name="memberLabels"
               className="form-control"
             >
-              {[...availableMemberLabels].map((label) => (
+              {availableMemberLabels.map((label) => (
                 <option key={label.id} value={label.id}>
                   {label.name}
                 </option>

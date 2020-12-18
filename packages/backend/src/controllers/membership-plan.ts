@@ -10,23 +10,25 @@ export class MembershipPlanCtrl extends RESTController<MembershipPlan> {
   }
 
   /**
-   * 
-   * @param req 
-   * @param res 
+   *
+   * @param req
+   * @param res
    */
   public getAllTypes = async (
     req: Request,
     res: Response
   ): Promise<Response> => {
+    //Return the list of type's names. We probably have to do a refactoring about
+    // membershipplan's types like have a specific table in the db.
     return res
       .status(201)
-      .send(Object.values(PlanType).filter((type) => typeof type === 'string')); //Return the list of type's names. We probably have to do a refactoring about membershipplan's types like have a specific table in the db.
+      .send(Object.values(PlanType).filter((type) => typeof type === 'string'));
   };
 
   /**
-   * 
-   * @param req 
-   * @param res 
+   *
+   * @param req
+   * @param res
    */
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     if (req.user.user.group === 'admin') {
@@ -45,33 +47,33 @@ export class MembershipPlanCtrl extends RESTController<MembershipPlan> {
   };
 
   /**
-   * 
-   * @param req 
-   * @param res 
+   *
+   * @param req
+   * @param res
    */
   public getOne = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
+    let membershipPlans = undefined;
 
     if (req.user.user.group === 'admin') {
-      return res.send(await this.repository.findOneOrFail(id, {}));
+      membershipPlans = await this.repository.findOneOrFail(id, {});
+    } else {
+      const userRepo = getRepository(User);
+      const currentUser = await userRepo.findOne(req.user.user.id);
+      const currentOrg = await currentUser.getUserOrganisation();
+      membershipPlans = await this.repository.findOneOrFail(id, {
+        where: { organisation: currentOrg.id }
+      });
     }
 
-    const userRepo = getRepository(User);
-    const currentUser = await userRepo.findOne(req.user.user.id);
-    const currentOrg = await currentUser.getUserOrganisation();
-
-    return res.send(
-      await this.repository.findOneOrFail(id, {
-        where: { organisation: currentOrg.id }
-      })
-    );
+    return res.send(membershipPlans);
   };
 
   /**
-   * 
-   * @param req 
-   * @param res 
-   * @param next 
+   *
+   * @param req
+   * @param res
+   * @param next
    */
   public canUpdateOrDelete = async (
     req: Request,
