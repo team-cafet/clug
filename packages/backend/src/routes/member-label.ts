@@ -8,7 +8,7 @@ export const memberLabelRouter = (): IRouter => {
   const app = PromiseRouter();
   const memberLabelCtrl = new MemberLabelCtrl();
   const guard = ExpressJWTPermissions();
-  
+
   const writePermission = guard.check([
     [Permissions.admin],
     [Permissions.memberLabelW]
@@ -22,8 +22,16 @@ export const memberLabelRouter = (): IRouter => {
   app.get('/', readPermission, memberLabelCtrl.getAll);
   app.get('/:id', readPermission, memberLabelCtrl.getOne);
   app.post('/', writePermission, memberLabelCtrl.post);
-  app.put('/:id', writePermission, memberLabelCtrl.put);
-  app.delete('/:id', writePermission, memberLabelCtrl.delete);
+  app.put(
+    '/:id',
+    [writePermission, memberLabelCtrl.canUpdateOrDelete],
+    memberLabelCtrl.put
+  );
+  app.delete(
+    '/:id',
+    [writePermission, memberLabelCtrl.canUpdateOrDelete],
+    memberLabelCtrl.delete
+  );
 
   return app;
 };

@@ -201,14 +201,6 @@ export const MemberForm = (props: IProps) => {
               ))}
             </Field>
 
-            {/* <Select 
-              options={
-                availableMemberLabels.map((label) => (
-                  <option key={label.id} value={label.id}>
-                    {label.name}
-                  </option>
-                ))} 
-              name="memberLabels"/> */}
             <label htmlFor="club">Club</label>
             <Field
               component="select"
