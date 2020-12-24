@@ -6,10 +6,10 @@ import { getPlanName } from '../../../services/data-mapping.service';
 import { membershipPlanService } from '../../../services/membership-plan.service';
 import { DataTable } from '../../molecules/DataTable';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
-import {ReactComponent as DeleteIcon} from '../../../assets/delete.svg';
+import {PopUp} from '../../molecules/PopUp';
 
 export const MembershipPlan = () => {
-  const [plans, getAllMembershipPlans] = useGetAllFromService<IMembershipPlan>({
+  const [plans, getAllMembershipPlans, setMembershipPlans] = useGetAllFromService<IMembershipPlan>({
     service: membershipPlanService,
   });
 
@@ -40,17 +40,31 @@ export const MembershipPlan = () => {
       disableSortBy: true,
     },
     {
-      Header: 'Action',
+      Header: 'Edit',
       accessor: 'id',
       disableFilters: true,
       disableSortBy: true,
       Cell: (cell: any) => (
-        <MembershipPlanAction
-          plan={cell.row.values}
-          refreshList={getAllMembershipPlans}
-        />
+        <Link to={`/admin/membershipPlans/update/${cell.value.id}`}>
+          <EditIcon title="Modifier"/>
+        </Link>
       ),
     },
+    {
+      Header: 'Delete',
+      accessor: 'id',
+      id: "deleteMembershipPlan",
+      disableFilters: true,
+      disableSortBy: true,
+      Cell: (cell: any) => <PopUp buttontext="" 
+      item="cet abonnement" 
+      onYes={()=>{
+        membershipPlanService.delete(cell.value);
+        let copyData = [...plans];
+        copyData.splice(cell.index, 1);
+        setMembershipPlans(copyData);
+      }}/>
+    }
   ];
 
   return (
@@ -63,32 +77,5 @@ export const MembershipPlan = () => {
         <DataTable data={DATA} columns={COLUMNS} />
       </div>
     </>
-  );
-};
-
-const MembershipPlanAction = ({ plan, refreshList }: any) => {
-  const deletePlan = async (plan: IMembershipPlan) => {
-    if (!plan) return;
-    const deleteResult = await membershipPlanService.delete(plan.id);
-    if (deleteResult) refreshList();
-  };
-
-  return (
-    <tr>
-      <td>{plan.price}</td>
-      <td>{getPlanName(plan.type)}</td>
-      <td>{plan.tacit ? 'oui' : 'non'}</td>
-      <td>
-        <Link to={`/admin/membershipPlans/update/${plan.id}`}>
-          <EditIcon title="Modifier"/>
-        </Link>
-      </td>
-      <td>
-        <button className="btn btn-delete" onClick={(e) => deletePlan(plan)}>
-            <DeleteIcon title="Supprimer" />
-        </button>
-      </td>
-      
-    </tr>
   );
 };

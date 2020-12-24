@@ -36,11 +36,9 @@ export const Member = () => {
       item="ce membre" 
       onYes={()=>{
         memberService.delete(cell.value);
-        let copyTest = [...members];
-        console.log(copyTest);
-        copyTest.splice(cell.index, 1);
-        console.log(copyTest);
-        setMembers(copyTest);
+        let copyData = [...members];
+        copyData.splice(cell.index, 1);
+        setMembers(copyData);
       }}/>,
     }
   ];
