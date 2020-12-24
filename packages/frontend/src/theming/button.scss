@@ -13,17 +13,23 @@ button.btn {
         color: #fff;
         border-radius: var(--c-radius);
         margin-top: 1rem;
-        &.deleteItem {
+        &.deleteItem, &.editItem {
             background-color: transparent;
-            color: var(--c-secondary);
             border: none;
+            margin-top: 0;
             &:hover {
-                background-color: var(--c-secondary);
                 color: #fff;
-                .delete {
-                    fill: #fff;
+                .delete, .edit {
+                fill: #fff;
                 }
             }
+            
+        }
+        &.deleteItem:hover {
+            background-color: var(--c-secondary);
+        }
+        &.editItem:hover {
+            background-color: var(--c-primary);
         }
     }
 }
@@ -78,11 +84,6 @@ button.btn {
 
 .btn-delete {
     padding: 0;
-}
-
-.edit:hover,
-.delete:hover {
-    opacity: 0.5;
 }
 
 .pagination {

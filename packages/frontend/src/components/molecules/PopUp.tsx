@@ -9,6 +9,7 @@ interface IProps {
   id?: string;
   buttontext: string;
   item: string;
+  onYes: ()=>void;
 }
 
 export const PopUp = (props: IProps) => {
@@ -16,10 +17,14 @@ export const PopUp = (props: IProps) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleYes= () => {
+    handleClose();
+    props.onYes();
+  }
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button className="deleteItem btn-popup" onClick={handleShow}>
         <DeleteIcon title="Supprimer"/>
         {props.buttontext}
       </Button>
@@ -40,7 +45,7 @@ export const PopUp = (props: IProps) => {
           <Button variant="secondary" onClick={handleClose}>
             Annuler
           </Button>
-          <Button variant="primary">
+          <Button variant="primary" onClick={handleYes}>
             Oui
           </Button>
         </Modal.Footer>

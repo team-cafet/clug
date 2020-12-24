@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMember } from '../../../libs/interfaces/member.interface';
 import { memberService } from '../../../services/member.service';
@@ -11,7 +12,7 @@ import {PopUp} from '../../molecules/PopUp';
 
 
 export const Member = () => {
-  const [members] = useGetAllFromService<IMember>({service: memberService});
+  const [members, getAllMembers, setMembers] = useGetAllFromService<IMember>({service: memberService});
 
   const COLUMNS: any[] = [
     {
@@ -27,20 +28,31 @@ export const Member = () => {
     },
     {
       Header: '',
-      accessor: 'deleteMember',
+      accessor: 'id',
+      id: "deleteMember",
       disableFilters: true,
       disableSortBy: true,
-      Cell: (cell: any) => <PopUp buttontext="" item="ce membre"/>,
+      Cell: (cell: any) => <PopUp buttontext="" 
+      item="ce membre" 
+      onYes={()=>{
+        memberService.delete(cell.value);
+        let copyTest = [...members];
+        console.log(copyTest);
+        copyTest.splice(cell.index, 1);
+        console.log(copyTest);
+        setMembers(copyTest);
+      }}/>,
     }
   ];
 
   const DATA = useMemo(
-    () =>
-      members.map((member) => ({
+    () => {
+      return members.map((member) => ({
         id: member.id,
         name: `${member.user?.firstname} ${member.user?.lastname}`,
         negativeBalance: member.balance < 0,
-      })),
+      }))
+    },
     [members]
   );
 
@@ -58,7 +70,7 @@ export const Member = () => {
             data={DATA}
             columns={COLUMNS}
             customRowProps={(row: any) => ({
-              className: DATA[row.index].negativeBalance
+              className: DATA[row.index]?.negativeBalance
                 ? 'member-table__row--negative-balance'
                 : '',
             })}
@@ -72,7 +84,7 @@ export const Member = () => {
 const GoToMemberBtn = (props: { id: number }) => {
   return (
     <Link to={`/admin/members/${props.id}`}>
-      <EditIcon title="Modifier" />
+      <Button className="editItem"><EditIcon title="Modifier" /></Button>
     </Link>
   );
 };
