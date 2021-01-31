@@ -128,7 +128,7 @@ export const MemberForm = (props: IProps) => {
       console.error(result);
     }
 
-    history.push(`/admin/members/${props.member?.id}`, {forceRefresh:true});
+    window.location.reload();
   };
 
   /**
@@ -177,7 +177,7 @@ export const MemberForm = (props: IProps) => {
 
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
-        history.push(`/admin/members/${props.member.id}`);
+        window.location.reload();
 
       } else {
         const result = await memberService.add({
