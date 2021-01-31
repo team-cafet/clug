@@ -139,7 +139,7 @@ const DataTablePagination = (props: {
 };
 
 const SortingHeader = ({ column }: { column: any }) => (
-  <div className="sortable"
+  column.canSort && <div className="sortable"
     {...column.getSortByToggleProps()}>
     {column.render('Header')}
     <span>{column.isSorted ? (column.isSortedDesc ? <SortIcon className="down"/> : <SortIcon className="up"/>) : <SortArrows className="sorting"/>}</span>

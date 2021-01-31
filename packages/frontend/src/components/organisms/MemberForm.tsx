@@ -15,6 +15,7 @@ import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
+import {ReactComponent as DeleteIcon} from '../../assets/delete.svg';
 import {
   generatePlanEndDate,
   getPlanName,
@@ -314,10 +315,15 @@ export const MemberForm = (props: IProps) => {
                 className="form-control"
               ></Field>
             </div>
+            <Button className="deleteItem" type="submit" disabled={isSubmitting} hidden={!updateMode()}>
+              <DeleteIcon title="Supprimer"/> Supprimer ce membre
+            </Button>
           </div>
           <div className="save-cancel-group memberForm">
             <Link to="/admin/members">
-              <Button variant="secondary" className="cancel">Annuler</Button>
+              <Button variant="secondary" className="cancel">
+                Annuler
+                </Button>
             </Link>
             <Button variant="primary" type="submit" disabled={isSubmitting}>
               Sauver
