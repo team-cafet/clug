@@ -15,13 +15,14 @@ import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
-import {ReactComponent as DeleteIcon} from '../../assets/delete.svg';
+import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import {
   generatePlanEndDate,
   getPlanName,
 } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { IMembership } from '../../libs/interfaces/membership.interface';
+import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
 
 interface IFormValue {
   global: string;
@@ -58,10 +59,17 @@ export const MemberForm = (props: IProps) => {
   const [membershipPlanList] = useGetAllFromService<IMembershipPlan>({
     service: membershipPlanService,
   });
-  const [planSelectedId, setPlanSelectedId] = useState('1');
-  const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
+  const [selectedMembershipPlanID, setSelectedMembershipPlanID] = useState('1');
+  const [membershipStartDate, setMembershipStartDate] = useState(
+    moment(
+      props?.member?.memberships && props?.member?.memberships[0]
+        ? props?.member?.memberships[0].startDate
+        : undefined
+    ).format('YYYY-MM-DD')
+  );
 
   const history = useHistory();
+
   let initialValues: IFormValue = {
     memberLabels: [],
     club: undefined,
@@ -104,18 +112,46 @@ export const MemberForm = (props: IProps) => {
     return errors;
   };
 
-  const getLastMembership = (memberships: IMembership[]) => {
-    memberships.sort((a,b) => {
-      return moment(b.endDate).unix() - moment(a.endDate).unix()
-    })
-    return memberships[0]
-  }
+  /**
+   * Cancel the current membership of the member by making an
+   * API call
+   */
+  const terminateMembership = async () => {
+    if (!props.member?.id) return;
+    if(!props.member.memberships || !props.member.memberships[0]) return;
 
+    const idMembership = props.member.memberships[0].id;
+
+    const result = await membershipService.delete(idMembership);
+
+    if (!result?.status || result?.status !== 200) {
+      console.error(result);
+    }
+
+    history.push(`/admin/members/${props.member?.id}`, {forceRefresh:true});
+  };
+
+  /**
+   * Confirmation before deletion
+   */
+  const deleteMember = async () => {
+    if (!props.member?.id) return;
+
+    await memberService.delete(props.member.id);
+    history.push('/admin/members');
+  };
+
+  /**
+   *
+   * @param values
+   * @param formHelper
+   */
   const submit = async (
     values: IFormValue,
     formHelper: FormikHelpers<IFormValue>
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
+
     try {
       (values as any) = {
         ...values,
@@ -124,23 +160,35 @@ export const MemberForm = (props: IProps) => {
           availableMemberLabels.find(
             (availabelLabel) => availabelLabel.id === Number.parseInt(label)
           )
-        ),
+        ),        
       };
+
+      if(!isMembershipSet()){
+        await membershipService.add({
+          member: props.member,
+          startDate: membershipStartDate,
+          plan : selectedMembershipPlanID
+        })
+      }
+
       const planSelected = membershipPlanList.find(
-        (plan) => plan.id === parseInt(planSelectedId)
+        (plan) => plan.id === parseInt(selectedMembershipPlanID)
       );
+
       if (props.member?.id) {
         await memberService.update(props.member.id, values);
+        history.push(`/admin/members/${props.member.id}`);
+
       } else {
-        await memberService.add({
+        const result = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
           memberships: planSelected
             ? [
                 {
-                  startDate: new Date(startDate),
+                  startDate: new Date(membershipStartDate),
                   endDate: generatePlanEndDate(
-                    new Date(startDate),
+                    new Date(membershipStartDate),
                     planSelected?.type
                   ),
                   plan: planSelected,
@@ -148,8 +196,10 @@ export const MemberForm = (props: IProps) => {
               ]
             : [],
         });
+
+        backToMemberPage();
       }
-      backToMemberPage();
+
     } catch (err) {
       console.error(err);
       if (err.message) {
@@ -160,20 +210,32 @@ export const MemberForm = (props: IProps) => {
     }
     setSubmitting(false);
   };
+
+  /**
+   *
+   */
   const backToMemberPage = () => {
     history.push('/admin/members');
   };
 
-  const changePlanSelected = (id: string) => {
-    setPlanSelectedId(id);
+  /**
+   *
+   * @param id
+   */
+  const changeMembershipPlan = (id: string) => {
+    setSelectedMembershipPlanID(id);
   };
 
-  const updateMode = () => {
-    if (props.member?.id) {
-      return true;
-    } else {
+  /**
+   * Control if the member has a membership set
+   */
+  const isMembershipSet = () => {
+    if (!props.member?.id) return false;
+
+    if (!props.member?.memberships || props.member?.memberships.length <= 0)
       return false;
-    }
+
+    return true;
   };
 
   return (
@@ -302,6 +364,7 @@ export const MemberForm = (props: IProps) => {
                 name="user.city"
               />
             </div>
+
             <h2>Abonnement</h2>
             <div className="form-row">
               <label htmlFor="membershipSelect">type</label>
@@ -309,51 +372,63 @@ export const MemberForm = (props: IProps) => {
                 as="select"
                 name="membershipSelect"
                 onChange={(event: { target: any }) => {
-                  changePlanSelected(event.target.value);
+                  changeMembershipPlan(event.target.value);
                 }}
                 className="form-control"
-                disabled={updateMode()}
+                disabled={isMembershipSet()}
+                value={
+                  props?.member?.memberships && props?.member?.memberships[0]
+                    ? props?.member?.memberships[0].plan?.id
+                    : undefined
+                }
               >
+                <option></option>
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
                     {`${getPlanName(plan.type)}, ${plan.price}.-`}
                   </option>
                 ))}
               </Field>
+
               <label htmlFor="startDate">Début</label>
               <Field
                 placeholder="Début"
                 name="startDate"
                 type="date"
                 onChange={(event: { target: any }) => {
-                  setStartDate(event.target.value);
+                  setMembershipStartDate(event.target.value);
                 }}
-                value={startDate}
+                value={membershipStartDate}
                 className="form-control"
-                disabled={updateMode()}
+                disabled={isMembershipSet()}
               ></Field>
+
               <Button
                 variant="secondary"
                 className="cancel"
-                hidden={!updateMode()}
-                onClick={async () => {
-                  const lastMembership = getLastMembership(initialValues.memberships)
-                  
-                }}
+                hidden={!isMembershipSet()}
+                onClick={terminateMembership}
               >
                 Interrompre l'abonnement
               </Button>
             </div>
-            <Button className="deleteItem" type="submit" disabled={isSubmitting} hidden={!updateMode()}>
-              <DeleteIcon title="Supprimer"/> Supprimer ce membre
-            </Button>
+
+            <hr/>            
+
+            <DeleteBtnWithConfirmation
+              buttontext="Supprimer ce membre"
+              item={`${initialValues.user.firstname}`}
+              onYes={() => deleteMember()}
+            />
           </div>
+          
           <div className="save-cancel-group memberForm">
             <Link to="/admin/members">
               <Button variant="secondary" className="cancel">
                 Annuler
-                </Button>
+              </Button>
             </Link>
+
             <Button variant="primary" type="submit" disabled={isSubmitting}>
               Sauver
             </Button>

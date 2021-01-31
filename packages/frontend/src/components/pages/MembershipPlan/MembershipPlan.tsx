@@ -6,7 +6,7 @@ import { getPlanName } from '../../../services/data-mapping.service';
 import { membershipPlanService } from '../../../services/membership-plan.service';
 import { DataTable } from '../../molecules/DataTable';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
-import {PopUp} from '../../molecules/PopUp';
+import {DeleteBtnWithConfirmation} from '../../molecules/Buttons/DeleteBtnWithConfirmation';
 
 export const MembershipPlan = () => {
   const [plans, getAllMembershipPlans, setMembershipPlans] = useGetAllFromService<IMembershipPlan>({
@@ -56,7 +56,7 @@ export const MembershipPlan = () => {
       id: "deleteMembershipPlan",
       disableFilters: true,
       disableSortBy: true,
-      Cell: (cell: any) => <PopUp buttontext="" 
+      Cell: (cell: any) => <DeleteBtnWithConfirmation buttontext="" 
       item="cet abonnement" 
       onYes={()=>{
         membershipPlanService.delete(cell.value);

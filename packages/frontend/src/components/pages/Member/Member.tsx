@@ -6,13 +6,14 @@ import { IMember } from '../../../libs/interfaces/member.interface';
 import { memberService } from '../../../services/member.service';
 import { DataTable } from '../../molecules/DataTable';
 import './Member.scss';
-import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
+import { ReactComponent as EditIcon } from '../../../assets/edit.svg';
 import '../../organisms/forms.scss';
-import {PopUp} from '../../molecules/PopUp';
-
+import { DeleteBtnWithConfirmation } from '../../molecules/Buttons/DeleteBtnWithConfirmation';
 
 export const Member = () => {
-  const [members, getAllMembers, setMembers] = useGetAllFromService<IMember>({service: memberService});
+  const [members, getAllMembers, setMembers] = useGetAllFromService<IMember>({
+    service: memberService,
+  });
 
   const COLUMNS: any[] = [
     {
@@ -29,38 +30,43 @@ export const Member = () => {
     {
       Header: '',
       accessor: 'id',
-      id: "deleteMember",
+      id: 'deleteMember',
       disableFilters: true,
       disableSortBy: true,
-      Cell: (cell: any) => <PopUp buttontext="" 
-      item="ce membre" 
-      onYes={()=>{
-        memberService.delete(cell.value);
-        let copyData = [...members];
-        copyData.splice(cell.index, 1);
-        setMembers(copyData);
-      }}/>,
-    }
+      Cell: (cell: any) => (
+        <DeleteBtnWithConfirmation
+          buttontext=""
+          item="ce membre"
+          onYes={() => {
+            memberService.delete(cell.value);
+            let copyData = [...members];
+            copyData.splice(cell.index, 1);
+            setMembers(copyData);
+          }}
+        />
+      ),
+    },
   ];
 
-  const DATA = useMemo(
-    () => {
-      return members.map((member) => ({
-        id: member.id,
-        name: `${member.user?.firstname} ${member.user?.lastname}`,
-        negativeBalance: member.balance < 0,
-      }))
-    },
-    [members]
-  );
+  const DATA = useMemo(() => {
+    return members.map((member) => ({
+      id: member.id,
+      name: `${member.user?.firstname} ${member.user?.lastname}`,
+      negativeBalance: member.balance < 0,
+    }));
+  }, [members]);
 
   return (
     <>
       <h1>Membres</h1>
       <div className="container">
         <div className="row">
-          <Link to="/admin/members/add" className="btn btn-secondary add" title="Ajouter un membre">
-          +
+          <Link
+            to="/admin/members/add"
+            className="btn btn-secondary add"
+            title="Ajouter un membre"
+          >
+            +
           </Link>
         </div>
         <div className="row">
@@ -82,7 +88,9 @@ export const Member = () => {
 const GoToMemberBtn = (props: { id: number }) => {
   return (
     <Link to={`/admin/members/${props.id}`}>
-      <Button className="editItem"><EditIcon title="Modifier" /></Button>
+      <Button className="editItem">
+        <EditIcon title="Modifier" />
+      </Button>
     </Link>
   );
 };

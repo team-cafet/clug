@@ -50,7 +50,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://backend:3001",
   "devDependencies": {
     "@types/react-responsive": "^8.0.2",
     "@types/react-table": "^7.0.23",

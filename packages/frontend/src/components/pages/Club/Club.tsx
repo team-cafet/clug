@@ -4,7 +4,7 @@ import { IClub } from '../../../libs/interfaces/club.interface';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { clubService } from '../../../services/club.service';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
-import {PopUp} from '../../molecules/PopUp';
+import {DeleteBtnWithConfirmation} from '../../molecules/Buttons/DeleteBtnWithConfirmation';
 
 export const Club = () => {
   const [clubs, getAllClubs, setClubs] = useGetAllFromService<IClub>({
@@ -70,7 +70,7 @@ const ClubRow = ({ club, refreshList }: any) => {
         </Link>
       </td>
       <td>
-      <PopUp buttontext="" 
+      <DeleteBtnWithConfirmation buttontext="" 
       item="ce club" 
       onYes={()=>{
         deleteClub(club);

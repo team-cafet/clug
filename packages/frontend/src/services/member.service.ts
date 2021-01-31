@@ -1,3 +1,8 @@
 import { APIResource } from './api.service';
-
-export const memberService = new APIResource('members');
+class APIMember extends APIResource {
+    constructor() {
+      super('members');
+    }
+  }
+  
+export const memberService = new APIMember();
