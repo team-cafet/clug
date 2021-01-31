@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IMemberLabel } from '../../../libs/interfaces/memberLabel.interface';
+import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { memberLabelService } from '../../../services/memberlabel.service';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
+import {PopUp} from '../../molecules/PopUp';
 
 export const MemberLabel = () => {
-  const [memberLabels, setMemberLabels] = useState<IMemberLabel[]>([]);
+  const [memberLabels, getAllMemberLabels, setMemberLabels] = useGetAllFromService<IMemberLabel>({
+    service: memberLabelService,
+  });
 
   useEffect(() => {
     const getAllMemberLabel = async () => {
@@ -16,7 +20,7 @@ export const MemberLabel = () => {
     };
 
     getAllMemberLabel();
-  }, []);
+  }, [setMemberLabels]);
 
   return (
     <>
@@ -31,7 +35,7 @@ export const MemberLabel = () => {
           <table className="table">
             <tbody>
               {memberLabels.map((label) => (
-                <LabelRow label={label} key={label.id} />
+                <LabelRow label={label} refreshList={getAllMemberLabels} key={label.id} />
               ))}
             </tbody>
           </table>
@@ -41,9 +45,12 @@ export const MemberLabel = () => {
   );
 };
 
-const LabelRow = (props: { label: IMemberLabel }) => {
-  const { label } = props;
-
+const LabelRow = ({ label, refreshList }: any) => {
+  const deleteLabel = async (club: IMemberLabel) => {
+    if (!label) return;
+    const deleteResult = await memberLabelService.delete(label.id);
+    if (deleteResult) refreshList();
+  };
   return (
     <tr>
       <td>{label.id}</td>
@@ -52,6 +59,13 @@ const LabelRow = (props: { label: IMemberLabel }) => {
         <Link to={`/admin/memberlabels/${label.id}`}>
           <EditIcon title="Modifier"/>
         </Link>
+      </td>
+      <td>
+      <PopUp buttontext="" 
+      item="ce tag" 
+      onYes={()=>{
+        deleteLabel(label);
+      }}/>
       </td>
     </tr>
   );

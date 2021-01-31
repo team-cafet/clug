@@ -20,6 +20,7 @@
     "migration:create": "typeorm migration:create --config build/config/ormconfig.js",
     "migration:run": "typeorm migration:run --config build/config/ormconfig.js",
     "migration:rollback": "typeorm migration:revert --config build/config/ormconfig.js",
+    "docker:dev": "npm run build && npm run migration:run && npm run watch-debug",
     "clug": "node build/cli.js"
   },
   "keywords": [],

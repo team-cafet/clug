@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IClub } from '../../../libs/interfaces/club.interface';
+import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { clubService } from '../../../services/club.service';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
+import {PopUp} from '../../molecules/PopUp';
 
 export const Club = () => {
-  const [clubs, setClubs] = useState<IClub[]>([]);
+  const [clubs, getAllClubs, setClubs] = useGetAllFromService<IClub>({
+    service: clubService,
+  });
 
   useEffect(() => {
     const getAllClubs = async () => {
@@ -16,7 +20,7 @@ export const Club = () => {
     };
 
     getAllClubs();
-  }, []);
+  }, [setClubs]);
 
   return (
     <>
@@ -38,7 +42,7 @@ export const Club = () => {
             </thead>
             <tbody>
               {clubs.map((club) => (
-                <ClubRow club={club} key={club.id} />
+                  <ClubRow club={club} refreshList={getAllClubs}/>
               ))}
             </tbody>
           </table>
@@ -48,8 +52,12 @@ export const Club = () => {
   );
 };
 
-const ClubRow = (props: { club: IClub }) => {
-  const { club } = props;
+const ClubRow = ({ club, refreshList }: any) => {
+  const deleteClub = async (club: IClub) => {
+    if (!club) return;
+    const deleteResult = await clubService.delete(club.id);
+    if (deleteResult) refreshList();
+  };
 
   return (
     <tr>
@@ -60,6 +68,13 @@ const ClubRow = (props: { club: IClub }) => {
         <Link to={`/admin/clubs/${club.id}`}>
           <EditIcon title="Modifier"/>
         </Link>
+      </td>
+      <td>
+      <PopUp buttontext="" 
+      item="ce club" 
+      onYes={()=>{
+        deleteClub(club);
+      }}/>
       </td>
     </tr>
   );
