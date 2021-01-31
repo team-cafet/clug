@@ -4,6 +4,9 @@ export class InitialMigration1603263119746 implements MigrationInterface {
     name = 'InitialMigration1603263119746'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE TYPE "membership_plan_type_enum" AS ENUM ('0', '1', '2', '3', '4')`, undefined);
+        await queryRunner.query(`CREATE TYPE "user_sexe_enum" AS ENUM ('0', '1', '2')`, undefined);
+
         await queryRunner.query(`CREATE TABLE "member_label" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "organisationId" integer, CONSTRAINT "PK_b9251de62a400498a7a4f5f33f7" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "organisation" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "description" character varying, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, CONSTRAINT "UQ_d9428f9c8e3052d6617e3aab0ed" UNIQUE ("name"), CONSTRAINT "PK_c725ae234ef1b74cce43d2d00c1" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "membership_plan" ("id" SERIAL NOT NULL, "price" real NOT NULL, "description" character varying, "type" "membership_plan_type_enum" NOT NULL DEFAULT '1', "tacit" boolean NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "clubId" integer, "organisationId" integer NOT NULL, CONSTRAINT "PK_e270c516189a3f2609c413ca451" PRIMARY KEY ("id"))`);
