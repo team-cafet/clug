@@ -29,7 +29,6 @@ export const MemberDetails = (props: IProps) => {
 
   return (
     <>
-      <h1>{member.user?.email}</h1>
       <MemberForm organisationID={orgID} member={member} />
     </>
   );

@@ -54,7 +54,7 @@ export class Membership {
   @ManyToOne(
     (type) => MembershipPlan,
     (membershipPlan) => membershipPlan.memberships,
-    { nullable: false }
+    { nullable: false , eager: true}
   )
   plan: MembershipPlan;
 

@@ -24,17 +24,18 @@ export class PaymentCtrl extends RESTController<Payment> {
             transactionalEntityManager,
             membership
           );
-          if (!newRequest) throw new Error();
+          if (!newRequest) throw new Error('Payment request not created');
           const newPayment = await this.createPayment(
             transactionalEntityManager,
             newRequest,
             membership
           );
-          if (!newPayment) throw new Error();
+          if (!newPayment) throw new Error('Payment not created');
         }
       );
       return res.status(201).send(newPayment);
     } catch (error) {
+      console.error(error);
       return res.status(400).send('Error during payment creation');
     }
   };
@@ -54,7 +55,7 @@ export class PaymentCtrl extends RESTController<Payment> {
     const newRequest = (
       await transaction.getRepository(PaymentRequest).save(requestEntity)
     )[0];
-    return null;
+    return newRequest;
   };
   private createPayment = async (
     transaction: EntityManager,

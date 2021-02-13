@@ -1,0 +1,25 @@
+###########################################################
+#
+# This Dockerfile purspose is to provide a simple dev env 
+# installation
+#
+###########################################################
+
+
+# Node alpine is the smallest build for node js
+FROM node:12-alpine
+
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
+
+WORKDIR /code
+
+RUN apk --no-cache add \
+      g++ \
+      make
+
+COPY package*.json ./
+
+EXPOSE 3000
+
+RUN npm ci

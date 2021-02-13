@@ -9,6 +9,9 @@ import {
 import { Table, Pagination } from 'react-bootstrap';
 import { BasicFilter } from './BasicFilter';
 import { useFilterTypes } from './UseFilterTypes';
+import './table.scss';
+import {ReactComponent as SortArrows} from '../../../assets/sort-arrows.svg';
+import {ReactComponent as SortIcon} from '../../../assets/sort-down.svg';
 
 interface IProps {
   id?: string;
@@ -66,8 +69,8 @@ export const DataTable = (props: IProps) => {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column: any) => (
                 <th {...column.getHeaderProps()}>
-                  <SortingHeader column={column} />
                   <FilterHeader column={column}/>
+                  <SortingHeader column={column} />
                 </th>
               ))}
             </tr>
@@ -136,9 +139,10 @@ const DataTablePagination = (props: {
 };
 
 const SortingHeader = ({ column }: { column: any }) => (
-  <div {...column.getSortByToggleProps()}>
+  column.canSort && <div className="sortable"
+    {...column.getSortByToggleProps()}>
     {column.render('Header')}
-    <span>{column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}</span>
+    <span>{column.isSorted ? (column.isSortedDesc ? <SortIcon className="down"/> : <SortIcon className="up"/>) : <SortArrows className="sorting"/>}</span>
   </div>
 );
 

@@ -1,8 +1,9 @@
 $headerHeight: 3.5rem;
+$mainHeightMin: calc(100vh - 3.5rem);
 
 #adminlayout {
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: hidden;  
 
   .navbar {
     height: $headerHeight;
@@ -18,7 +19,7 @@ $headerHeight: 3.5rem;
 
   #main {
     height: 100%;
-    min-height: 100vh;
+    min-height: $mainHeightMin;
     margin-left: 0;
     background-color: var(--c-background-color);
 

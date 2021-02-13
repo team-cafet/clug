@@ -9,15 +9,25 @@ export const clubRouter = (): IRouter => {
   const clubCtrl = new ClubCtrl();
   const guard = ExpressJWTPermissions();
 
-  const writePermission = guard.check([[Permissions.admin], [Permissions.clubW]]);
+  const writePermission = guard.check([
+    [Permissions.admin],
+    [Permissions.clubW]
+  ]);
 
-  const readPermission = guard.check([[Permissions.admin], [Permissions.clubR]]);
+  const readPermission = guard.check([
+    [Permissions.admin],
+    [Permissions.clubR]
+  ]);
 
   app.get('/', readPermission, clubCtrl.getAll);
   app.get('/:id', readPermission, clubCtrl.getOne);
   app.post('/', writePermission, clubCtrl.post);
-  app.put('/:id', writePermission, clubCtrl.put);
-  app.delete('/:id', writePermission, clubCtrl.delete);
+  app.put('/:id', [writePermission, clubCtrl.canUpdateOrDelete], clubCtrl.put);
+  app.delete(
+    '/:id',
+    [writePermission, clubCtrl.canUpdateOrDelete],
+    clubCtrl.delete
+  );
 
   return app;
 };

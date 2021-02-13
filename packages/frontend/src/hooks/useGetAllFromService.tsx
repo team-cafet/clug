@@ -1,9 +1,9 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { APIResource } from '../services/api.service';
 
 export function useGetAllFromService<T>(props: {
   service: APIResource;
-}): [T[], () => void] {
+}): [T[], () => void, (t:T[]) => void] {
   const [data, setData] = useState<T[]>([]);
 
   const getAll = useCallback(async () => {
@@ -17,5 +17,6 @@ export function useGetAllFromService<T>(props: {
     getAll();
   }, [getAll]);
 
-  return [data, getAll];
+  return [data, getAll, setData];
+
 }
