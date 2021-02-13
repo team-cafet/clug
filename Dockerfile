@@ -98,7 +98,7 @@ COPY --chown=clug:clug --from=builder /usr/src/app/backend/package.json /usr/src
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/package-lock.json /usr/src/app/package-lock.json
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/node_modules /usr/src/app/node_modules
 COPY --chown=clug:clug --from=builder /usr/src/app/backend/build/ /usr/src/app/build
-COPY --chown=clug:clug ./packages/backend/public /usr/src/app/public
+COPY --chown=clug:clug --from=builder ./usr/src/app/backend/public /usr/src/app/public
 
 EXPOSE 3100
 
