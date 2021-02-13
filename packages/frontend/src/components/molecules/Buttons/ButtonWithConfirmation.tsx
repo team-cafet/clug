@@ -1,32 +1,36 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
-import {ReactComponent as DeleteIcon} from '../../assets/delete.svg';
 
 interface IProps {
   variant?: 'primary' | 'secondary' | 'success' | 'danger';
   className?: string;
   id?: string;
-  buttontext: string;
-  item: string;
-  onYes: ()=>void;
+  onYes: () => void;
+  onNo: () => void;
+  children: any;
+  modal: {
+    title: string;
+    body: any;
+    cancelText: string;
+    acceptText: string;
+  };
 }
 
-export const PopUp = (props: IProps) => {
+export const ButtonWithConfirmation = (props: IProps) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleYes= () => {
+  const handleYes = () => {
     handleClose();
     props.onYes();
-  }
+  };
 
   return (
     <>
-      <Button className="deleteItem btn-popup" onClick={handleShow}>
-        <DeleteIcon title="Supprimer"/>
-        {props.buttontext}
+      <Button className="btn-popup btnWithConfirmation" onClick={handleShow}>
+        {props.children}
       </Button>
 
       <Modal
@@ -36,17 +40,15 @@ export const PopUp = (props: IProps) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Supprimer</Modal.Title>
+          <Modal.Title>{props.modal.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Voulez-vous vraiment supprimer {props.item}
-        </Modal.Body>
+        <Modal.Body>{props.modal.body}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Annuler
+            {props.modal.cancelText}
           </Button>
           <Button variant="primary" onClick={handleYes}>
-            Oui
+            {props.modal.acceptText}
           </Button>
         </Modal.Footer>
       </Modal>

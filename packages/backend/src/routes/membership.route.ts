@@ -26,7 +26,7 @@ export const membershipRouter = (): IRouter => {
     '/',
     writePermission,
     membershipCtrl.businessValidation,
-    membershipCtrl.post
+    membershipCtrl.postOne
   );
   app.delete('/:id', writePermission, membershipCtrl.terminateMembership);
 

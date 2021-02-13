@@ -6,6 +6,7 @@ import * as ControllerUtils from '../util/controller-utils';
 import { EXISTING_GROUPS } from '../config/auth';
 import { APIError } from '../libs/classes/APIError';
 import { Member } from '../models/Member';
+import { MembershipPlan, PlanType } from '../models/MembershipPlan';
 
 export class MembershipCtrl extends RESTController<Membership> {
   constructor() {
@@ -48,7 +49,7 @@ export class MembershipCtrl extends RESTController<Membership> {
     const id = Number.parseInt(req.params.id);
 
     const membership = await this.repository.findOne(id, {
-      relations: ['paymentRequest', 'paymentRequest.payment', 'member']
+      relations: ['paymentRequest', 'paymentRequest.payment', 'member'],
     });
 
     if (!membership) {
@@ -67,6 +68,51 @@ export class MembershipCtrl extends RESTController<Membership> {
     }
 
     return res.send(membership);
+  };
+
+  public postOne = async (req: Request, res: Response): Promise<Response> => {
+    if (!req.body.plan) return res.sendStatus(400);
+
+    const membershipPlanRepo = getRepository(MembershipPlan);
+    const membershipPlan = await membershipPlanRepo.findOne(req.body.plan);
+    
+    if (!membershipPlan) return res.sendStatus(404);
+
+    let numberOfDayToAddToStartDate = 0;
+
+    switch (membershipPlan.type) {
+      case PlanType.annual:
+        numberOfDayToAddToStartDate = 365;
+        break;
+
+      case PlanType.biannual:
+        numberOfDayToAddToStartDate = Math.round(365/2);
+        break;
+
+      case PlanType.monthly:
+        numberOfDayToAddToStartDate = Math.round(30);
+        break;
+
+      case PlanType.quarterly:
+        numberOfDayToAddToStartDate = Math.round(365/4);
+        break;
+
+      case PlanType.weekly:
+        numberOfDayToAddToStartDate = Math.round(365/52);
+        break;
+
+      default:
+        return res.sendStatus(404);
+    }
+
+    if(!req.body.startDate) return res.sendStatus(400);
+    
+    const endDate = new Date(req.body.startDate);
+    endDate.setDate(endDate.getDate()+numberOfDayToAddToStartDate);
+    
+    req.body.endDate =  endDate;
+    
+    return this.post(req, res);
   };
 
   /**
@@ -92,12 +138,12 @@ export class MembershipCtrl extends RESTController<Membership> {
       .leftJoinAndSelect('paymentRequest.payment', 'paymentRequestPayment')
       .innerJoinAndSelect('membership.plan', 'plan')
       .where('membership.endDate <= :today', {
-        today: today.toDateString()
+        today: today.toDateString(),
       });
 
     if (req.user.user.group !== EXISTING_GROUPS.ADMIN) {
       membershipRequest.andWhere('member.organisationId = :orgId', {
-        orgId: currentOrg.id
+        orgId: currentOrg.id,
       });
     }
 
@@ -121,7 +167,7 @@ export class MembershipCtrl extends RESTController<Membership> {
   ): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
     const membership = await this.repository.findOne(id, {
-      relations: ['paymentRequest', 'paymentRequest.payment', 'member']
+      relations: ['paymentRequest', 'paymentRequest.payment', 'member'],
     });
 
     const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
@@ -165,9 +211,9 @@ export class MembershipCtrl extends RESTController<Membership> {
 
     const [member, currentOrg] = await Promise.all([
       getRepository(Member).findOne(data.member.id, {
-        relations: []
+        relations: [],
       }),
-      ControllerUtils.getCurrentOrgFromUserInRequest(req)
+      ControllerUtils.getCurrentOrgFromUserInRequest(req),
     ]);
 
     // Permission for orgnanisation check

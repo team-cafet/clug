@@ -52,7 +52,7 @@ export class MemberCtrl extends RESTController<Member> {
     const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(req);
 
     return res.send(await this.repository.findOneOrFail(id, {
-        relations: ['user', 'memberLabels', 'club'],
+        relations: ['user', 'memberLabels', 'club', 'memberships', 'memberships.plan'],
         where: { organisation: currentOrg.id }
       }));
   }

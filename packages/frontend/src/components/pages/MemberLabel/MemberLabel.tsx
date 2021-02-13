@@ -4,7 +4,7 @@ import { IMemberLabel } from '../../../libs/interfaces/memberLabel.interface';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { memberLabelService } from '../../../services/memberlabel.service';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
-import {PopUp} from '../../molecules/PopUp';
+import {DeleteBtnWithConfirmation} from '../../molecules/Buttons/DeleteBtnWithConfirmation';
 
 export const MemberLabel = () => {
   const [memberLabels, getAllMemberLabels, setMemberLabels] = useGetAllFromService<IMemberLabel>({
@@ -61,7 +61,7 @@ const LabelRow = ({ label, refreshList }: any) => {
         </Link>
       </td>
       <td>
-      <PopUp buttontext="" 
+      <DeleteBtnWithConfirmation buttontext="" 
       item="ce tag" 
       onYes={()=>{
         deleteLabel(label);
