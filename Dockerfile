@@ -39,14 +39,28 @@ COPY --chown=clug:clug ./packages/backend/package.json /usr/src/app/backend/
 WORKDIR /usr/src/app/backend
 RUN npm i --dev
 
+## --------------------- DEPENDENCIES FRONTEND APP
+## Install dependencies.
+COPY --chown=clug:clug ./packages/frontend/package.json /usr/src/app/frontend/
+WORKDIR /usr/src/app/frontend
+RUN npm i --dev
 
-## Copy source code into builder container
+
+## Copy backend source code into builder container
 WORKDIR /usr/src/app/
 COPY --chown=clug:clug ./packages/backend/ /usr/src/app/backend/
+
+## Copy frontend source code into builder container
+WORKDIR /usr/src/app/
+COPY --chown=clug:clug ./packages/frontend/ /usr/src/app/frontend/
 
 ## --------------------- BUILD BACKEND APP
 WORKDIR /usr/src/app/backend/
 RUN npm run build
+
+## --------------------- BUILD FRONTEND APP and deploy it to backend
+WORKDIR /usr/src/app/frontend/
+RUN npm run build-and-deploy
 
 # ------------------------------- APP CONTAINER
 
