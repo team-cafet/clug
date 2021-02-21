@@ -263,19 +263,6 @@ export const MemberForm = (props: IProps) => {
                 ? 'Modifier le profil de ' + props.member.user?.firstname
                 : 'Créer un membre'}
             </h1>
-            <label htmlFor="memberLabels">Tag</label>
-            <Field
-              component="select"
-              multiple={true}
-              name="memberLabels"
-              className="form-control"
-            >
-              {availableMemberLabels.map((label) => (
-                <option key={label.id} value={label.id}>
-                  {label.name}
-                </option>
-              ))}
-            </Field>
             <label htmlFor="club">Club</label>
             <Field
               component="select"
@@ -326,6 +313,20 @@ export const MemberForm = (props: IProps) => {
               formnikError={errors.user?.phone}
               name="user.phone"
             />
+
+            <label htmlFor="memberLabels">Tag</label>
+            <Field
+              component="select"
+              multiple={true}
+              name="memberLabels"
+              className="form-control"
+            >
+              {availableMemberLabels.map((label) => (
+                <option key={label.id} value={label.id}>
+                  {label.name}
+                </option>
+              ))}
+            </Field>
 
             <h2>Adresse</h2>
 
