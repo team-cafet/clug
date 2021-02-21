@@ -41,11 +41,11 @@ $mainHeightMin: calc(100vh - 3.5rem);
     transition: 0.5s;
     padding-top: 2rem;
     box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.05);
-    text-align: center;
+    text-align: left;
   }
 
   .sidenav a {
-    padding: 8px 8px 8px 8px;
+    padding: 8px 8px 8px 2.5rem;
     text-decoration: none;
     color: #818181;
     display: block;
