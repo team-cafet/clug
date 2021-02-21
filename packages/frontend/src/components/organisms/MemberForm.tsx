@@ -155,6 +155,7 @@ export const MemberForm = (props: IProps) => {
     try {
       (values as any) = {
         ...values,
+        club: values.club ? values.club : null,
         // tag send to the server must be at least have id and name
         memberLabels: values.memberLabels.map((label: any) =>
           availableMemberLabels.find(
@@ -282,6 +283,7 @@ export const MemberForm = (props: IProps) => {
               name="club"
               className="form-control"
             >
+              <option key={null} value={undefined}></option>
               {avaiableClubs.map((club) => (
                 <option key={club.id} value={club.id}>
                   {club.name}
