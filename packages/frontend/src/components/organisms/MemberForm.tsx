@@ -162,40 +162,36 @@ export const MemberForm = (props: IProps) => {
           )
         ),        
       };
-
-      if(!isMembershipSet()){
-        await membershipService.add({
-          member: props.member,
-          startDate: membershipStartDate,
-          plan : selectedMembershipPlanID
-        })
-      }
-
+      
       const planSelected = membershipPlanList.find(
         (plan) => plan.id === parseInt(selectedMembershipPlanID)
       );
 
       if (props.member?.id) {
+        if(!isMembershipSet()){
+          await membershipService.add({
+            member: props.member,
+            startDate: membershipStartDate,
+            plan : selectedMembershipPlanID
+          })
+        }
+
         await memberService.update(props.member.id, values);
         window.location.reload();
 
       } else {
-        const result = await memberService.add({
+        const response = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
-          memberships: planSelected
-            ? [
-                {
-                  startDate: new Date(membershipStartDate),
-                  endDate: generatePlanEndDate(
-                    new Date(membershipStartDate),
-                    planSelected?.type
-                  ),
-                  plan: planSelected,
-                },
-              ]
-            : [],
         });
+
+        const memberResult = response?.data;
+
+        await membershipService.add({
+          member: memberResult,
+          startDate: membershipStartDate,
+          plan : selectedMembershipPlanID
+        })
 
         backToMemberPage();
       }
@@ -414,12 +410,12 @@ export const MemberForm = (props: IProps) => {
             </div>
 
             <hr/>            
-
-            <DeleteBtnWithConfirmation
+            
+            {props.member?.id && <DeleteBtnWithConfirmation
               buttontext="Supprimer ce membre"
               item={`${initialValues.user.firstname}`}
               onYes={() => deleteMember()}
-            />
+            />}
           </div>
           
           <div className="save-cancel-group memberForm">
