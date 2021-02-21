@@ -8,5 +8,5 @@ interface IProps {
 }
 
 export const NotificationFailed = (props: IProps) => {
-  return <Notification {...props} title="Erreur" variant='error' onClose={props.onClose}/>;
+  return <Notification {...props} title="Erreur" variant='danger' onClose={props.onClose}/>;
 };

@@ -5,7 +5,7 @@
   z-index: 999999;
 }
 
-.notification.notification-error {
+.notification.notification-danger {
   border: 2px solid var(--c-danger);
   .toast-header{
       strong {

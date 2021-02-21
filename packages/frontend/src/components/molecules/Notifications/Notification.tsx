@@ -7,7 +7,7 @@ interface IProps {
   children: any;
   delay?: number;
   smallMessage?: string;
-  variant?: 'default' | 'warning' | 'error' | 'success';
+  variant?: 'default' | 'warning' | 'danger' | 'success';
   onClose?: ()=>void
 }
 

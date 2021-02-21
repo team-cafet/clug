@@ -339,7 +339,7 @@ export const MemberForm = (props: IProps) => {
               <FormGroup
                 className="col"
                 label="Numéro"
-                type="text"
+                type="number"
                 formnikError={errors.user?.streetNumber}
                 name="user.streetNumber"
               />
