@@ -23,6 +23,8 @@ import {
 import { membershipService } from '../../services/membership.service';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
+import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
+import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
 
 interface IFormValue {
   global: string;
@@ -177,7 +179,7 @@ export const MemberForm = (props: IProps) => {
         }
 
         await memberService.update(props.member.id, values);
-        window.location.reload();
+        // window.location.reload();
 
       } else {
         const response = await memberService.add({
@@ -195,6 +197,8 @@ export const MemberForm = (props: IProps) => {
 
         backToMemberPage();
       }
+
+      setDisplayAlertMemberSaved(true);
 
     } catch (err) {
       console.error(err);
@@ -239,19 +243,16 @@ export const MemberForm = (props: IProps) => {
       {({ isSubmitting, errors, setFieldValue, values }) => (
         <Form className="form">
           {displayAlertMemberSaved && (
-            <Alert
-              variant="success"
-              onClose={() => setDisplayAlertMemberSaved(false)}
-              dismissible
+            <NotificationSuccess onClose={()=>setDisplayAlertMemberSaved(false)}
             >
               Le membre a bien été sauvé !
-            </Alert>
+            </NotificationSuccess>
           )}
 
           <ErrorMessage
             name="global"
             component={(props) => (
-              <Alert variant="danger">{props.children}</Alert>
+              <NotificationFailed>{props.children}</NotificationFailed>
             )}
           />
 
@@ -338,7 +339,7 @@ export const MemberForm = (props: IProps) => {
               <FormGroup
                 className="col"
                 label="Numéro"
-                type="number"
+                type="text"
                 formnikError={errors.user?.streetNumber}
                 name="user.streetNumber"
               />
