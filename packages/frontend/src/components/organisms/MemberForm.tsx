@@ -283,7 +283,7 @@ export const MemberForm = (props: IProps) => {
               name="club"
               className="form-control"
             >
-              <option key={null} value={undefined}></option>
+              <option key={null} value={undefined}>Sélectionner un club...</option>
               {avaiableClubs.map((club) => (
                 <option key={club.id} value={club.id}>
                   {club.name}
