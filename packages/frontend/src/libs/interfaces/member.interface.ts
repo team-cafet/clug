@@ -12,4 +12,5 @@ export interface IMember {
   memberships?: IMembership[];
   memberLabels?: IMemberLabel[];
   club?: IClub;
+  createdAt: string;
 }
