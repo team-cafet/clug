@@ -41,8 +41,10 @@ export const Club = () => {
               </tr>
             </thead>
             <tbody>
-              {clubs.map((club) => (
-                  <ClubRow club={club} refreshList={getAllClubs}/>
+              {clubs
+              .sort((a, b) =>new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime() )
+              .map((club) => (
+                  <ClubRow club={club} refreshList={getAllClubs} key={club.id}/>
               ))}
             </tbody>
           </table>
