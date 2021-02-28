@@ -28,17 +28,11 @@ export const Dashboard = () => {
       <h1>Tableau de bord</h1>
       <div className="card-deck">
         <DashboardCard
-          value={'' + stats.totalMembers}
-          description={"Nombre total de membres"}
-        >
-        </DashboardCard>
-
-        <DashboardCard
-          value={""+ stats.birthdays.length}
-          description={"Membres ayant leur anniversaire dans 7 jours"}
+          value={stats.totalMembers.length}
+          description={'Nombre total de membres'}
         >
           <ul className="list-group">
-            {stats.birthdays.map((member: IMember) => (
+            {stats.totalMembers.map((member: IMember) => (
               <li className="list-group-item" key={member.id}>
                 <Link to={`/admin/members/${member.id}`}>
                   {member.user?.firstname} {member.user?.lastname}
@@ -49,8 +43,22 @@ export const Dashboard = () => {
         </DashboardCard>
 
         <DashboardCard
-          value={"" + stats.negativeBalanceUsers.length}
-          description={"Membres devant renouveler leur abonnement"}
+          value={stats.birthdays.length}
+          description={'Membres ayant leur anniversaire dans 7 jours'}
+        >
+          <ul className="list-group">
+            {stats.birthdays.map((member: IMember) => (
+              <li className="list-group-item" key={member.id}>
+                {member.user?.firstname} {member.user?.lastname}:{' '}
+                {member?.user?.birthdate}
+              </li>
+            ))}
+          </ul>
+        </DashboardCard>
+
+        <DashboardCard
+          value={stats.negativeBalanceUsers.length}
+          description={'Membres devant renouveler leur abonnement'}
         >
           <ul className="list-group">
             {stats.negativeBalanceUsers.map((member: IMember) => (

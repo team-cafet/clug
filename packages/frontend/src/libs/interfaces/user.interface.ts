@@ -6,4 +6,5 @@ export interface IUser {
   firstname?: string;
   lastname?: string;
   organisation: IOrganisation;
+  birthdate: Date;
 }

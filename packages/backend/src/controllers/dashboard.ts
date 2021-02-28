@@ -7,7 +7,7 @@ import { MemberCtrl } from './member';
 interface IGetAllStats {
   birthdays: Member[];
   negativeBalanceUsers: Member[];
-  totalMembers: number;
+  totalMembers: Member[];
 }
 
 export class DashboardCtrl {
@@ -61,7 +61,7 @@ export class DashboardCtrl {
     const allStats: IGetAllStats = {
       birthdays: [],
       negativeBalanceUsers: [],
-      totalMembers: 0
+      totalMembers: []
     };
 
     const userRepo = getRepository(User);
@@ -71,16 +71,18 @@ export class DashboardCtrl {
     if (!currentOrg) {
       return res.send(allStats);
     }
-
-    const members = await this.getAllMembers(currentOrg.id);
-    allStats.totalMembers = members.length;
     
+
+    allStats.totalMembers = await this.getAllMembers(currentOrg.id);
+
     allStats.birthdays = await this.getAllUpcomingMemberBirthdayInOrg(
       currentOrg.id
     );
     allStats.negativeBalanceUsers = await this.getAllMemberWithNegativeBalanceInOrg(
       currentOrg.id
     );
+
+    console.log(allStats.birthdays[0]);
 
     return res.send(allStats);
   };
