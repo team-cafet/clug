@@ -44,7 +44,7 @@ export const Dashboard = () => {
 
         <DashboardCard
           value={stats.birthdays.length}
-          description={'Membres ayant leur anniversaire dans 7 jours'}
+          description={'Membres ayant leur anniversaire bientôt'}
         >
           <ul className="list-group">
             {stats.birthdays.map((member: IMember) => (
