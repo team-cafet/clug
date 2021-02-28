@@ -34,7 +34,9 @@ export const MemberLabel = () => {
         <div className="row">
           <table className="table">
             <tbody>
-              {memberLabels.map((label) => (
+              {memberLabels
+              .sort((a, b) =>new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+              .map((label) => (
                 <LabelRow label={label} refreshList={getAllMemberLabels} key={label.id} />
               ))}
             </tbody>
