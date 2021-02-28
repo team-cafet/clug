@@ -49,8 +49,11 @@ export const Dashboard = () => {
           <ul className="list-group">
             {stats.birthdays.map((member: IMember) => (
               <li className="list-group-item" key={member.id}>
-                {member.user?.firstname} {member.user?.lastname}:{' '}
-                {member?.user?.birthdate}
+                {member.user?.firstname} {member.user?.lastname} : 
+                {member?.user?.birthdate
+                  ? new Date(member.user.birthdate)
+                      .toLocaleDateString('FR-fr')
+                  : ''}
               </li>
             ))}
           </ul>
