@@ -7,6 +7,7 @@ export interface IMembershipPlan {
   type: number;
   tacit: boolean;
   memberships: IMembership[];
+  createdAt: string;
 }
 
 export enum PlanType {
