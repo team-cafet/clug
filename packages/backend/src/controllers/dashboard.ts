@@ -45,18 +45,6 @@ export class DashboardCtrl {
       .getMany();
   }
 
-  private async getAllMembers(orgID: number): Promise<Member[]> {
-    const NBR_MIN_DAY_TO_INCLUDE_MEMBER = 7;
-    const memberRepo = getRepository(Member);
-
-    return memberRepo
-      .createQueryBuilder('member')
-      .leftJoinAndSelect('member.user', 'user')
-      .leftJoinAndSelect('member.organisation', 'organisation')
-      .where('organisation.id = :id', { id: orgID })
-      .getMany();
-  }
-
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     const allStats: IGetAllStats = {
       birthdays: [],
@@ -65,15 +53,14 @@ export class DashboardCtrl {
     };
 
     const userRepo = getRepository(User);
-    const memberRepo = getRepository(Member);
     const currentUser = await userRepo.findOne(req.user.user.id);
-    const currentOrg = await currentUser.getUserOrganisation();    
+    const currentOrg = await currentUser.getUserOrganisation();
     if (!currentOrg) {
       return res.send(allStats);
     }
-    
 
-    allStats.totalMembers = await this.getAllMembers(currentOrg.id);
+    const memberCtrl = new MemberCtrl();
+    allStats.totalMembers = await memberCtrl.findAll();
 
     allStats.birthdays = await this.getAllUpcomingMemberBirthdayInOrg(
       currentOrg.id
@@ -81,8 +68,6 @@ export class DashboardCtrl {
     allStats.negativeBalanceUsers = await this.getAllMemberWithNegativeBalanceInOrg(
       currentOrg.id
     );
-
-    console.log(allStats.birthdays[0]);
 
     return res.send(allStats);
   };
