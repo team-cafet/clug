@@ -1,7 +1,7 @@
-import { IMembership } from "./membership.interface";
-import { IUser } from "./user.interface";
-import { IMemberLabel } from "./memberLabel.interface";
-import { IClub } from "./club.interface";
+import { IMembership } from './membership.interface';
+import { IUser } from './user.interface';
+import { IMemberLabel } from './memberLabel.interface';
+import { IClub } from './club.interface';
 
 export interface IMember {
   id: number;
