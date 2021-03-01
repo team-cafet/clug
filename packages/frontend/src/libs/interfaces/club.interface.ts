@@ -4,5 +4,6 @@ export interface IClub {
   id: number;
   name: string;
   description: string;
-  members: IMember[]
+  members: IMember[];
+  createdAt: string;
 }
