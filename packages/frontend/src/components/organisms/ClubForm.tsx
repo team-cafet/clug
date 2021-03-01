@@ -5,6 +5,7 @@ import { Button } from '../atoms/Button';
 import { Alert } from '../atoms/Alert';
 import { clubService } from '../../services/club.service';
 import { IClub } from '../../libs/interfaces/club.interface';
+import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 
 interface IFormValue {
   global: string;
@@ -71,7 +72,7 @@ export const ClubForm = (props: IProps) => {
           <ErrorMessage
             name="global"
             component={(props) => (
-              <Alert variant="danger">{props.children}</Alert>
+              <NotificationFailed>{props.children}</NotificationFailed>
             )}
           />
 
