@@ -15,7 +15,11 @@ export const MemberLabel = () => {
     const getAllMemberLabel = async () => {
       const memberLabels = await memberLabelService.getAll();
       if (memberLabels) {
-        setMemberLabels(memberLabels.data);
+        setMemberLabels(memberLabels.data
+          .sort(
+            (a: IMemberLabel, b: IMemberLabel) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          ));
       }
     };
 
