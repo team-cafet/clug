@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 import { APIError } from './APIError';
 import { Request, Response } from 'express';
-import { API_MESSAGE_LIST } from './APIMessageList';
+import { APIMessageList } from './APIMessageList';
 
 export class RESTController<T> {
   constructor(
@@ -42,7 +42,7 @@ export class RESTController<T> {
     } catch (err) {
       throw new APIError(
         404,
-        API_MESSAGE_LIST.GENERAL.NO_RESOURCE_FOUND_WITH_ID(id)
+        APIMessageList.NO_RESOURCE_FOUND_WITH_ID(id)
       );
     }
   }
@@ -52,7 +52,7 @@ export class RESTController<T> {
       const entity = this.repository.create(body);
       return this.repository.save(entity);
     } catch (err) {
-      throw new APIError(500, API_MESSAGE_LIST.GENERAL.UNEXPECTED_ERROR(err));
+      throw new APIError(500, APIMessageList.UNEXPECTED_ERROR(err));
     }
   }
 
@@ -62,7 +62,7 @@ export class RESTController<T> {
       this.repository.merge(entity, body);
       return this.repository.save(entity);
     } catch (err) {
-      throw new APIError(500, API_MESSAGE_LIST.GENERAL.UNEXPECTED_ERROR(err));
+      throw new APIError(500, APIMessageList.UNEXPECTED_ERROR(err));
     }
   }
 
@@ -71,7 +71,7 @@ export class RESTController<T> {
     try {
       return this.repository.softDelete(entity.id);
     } catch (err) {
-      throw new APIError(500, API_MESSAGE_LIST.GENERAL.UNEXPECTED_ERROR(err));
+      throw new APIError(500, APIMessageList.UNEXPECTED_ERROR(err));
     }
   }
 
