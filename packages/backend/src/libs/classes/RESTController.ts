@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 import { APIError } from './APIError';
 import { Request, Response } from 'express';
-import { API_MESSAGE_LIST } from '../../util/api-message-list';
+import { API_MESSAGE_LIST } from './APIMessageList';
 
 export class RESTController<T> {
   constructor(

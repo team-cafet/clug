@@ -8,7 +8,7 @@ import { User } from '../../models/User';
 import { EXISTING_GROUPS } from '../../config/auth';
 import * as ControllerUtils from '../../util/controller-utils';
 import { IResourceWithOrganisation } from '../interfaces/IResourceWithOrganisation';
-import { API_MESSAGE_LIST } from '../../util/api-message-list';
+import {APIMessageList} from './APIMessageList';
 
 
 /**
@@ -89,13 +89,13 @@ export class OrganisationRESTController<T extends IResourceWithOrganisation> ext
     if (!user || !resource) {
       return res
       .status(404)
-      .send(API_MESSAGE_LIST.GENERAL.NO_RESOURCE_FOUND);
+      .send(APIMessageList.NO_RESOURCE_FOUND);
     }
 
     if (resource.organisation.id || resource.organisation?.id !== userOrg.id) {
       return res
       .status(403)
-      .send(API_MESSAGE_LIST.GENERAL.NO_PERMISSION_TO_MODIFY);
+      .send(APIMessageList.NO_PERMISSION_TO_MODIFY);
     }
 
     next();
