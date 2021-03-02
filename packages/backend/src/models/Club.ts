@@ -12,9 +12,10 @@ import {
 import { Member } from './Member';
 import { Organisation } from './Organisation';
 import { MembershipPlan } from './MembershipPlan';
+import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
 @Entity()
-export class Club {
+export class Club implements IResourceWithOrganisation{
   @PrimaryGeneratedColumn()
   id: number;
 
