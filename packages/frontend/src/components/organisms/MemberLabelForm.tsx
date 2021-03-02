@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { IMemberLabel } from "../../libs/interfaces/memberLabel.interface";
 import { memberLabelService } from '../../services/memberlabel.service';
 import { FormGroup } from "../molecules/FormGroup";
+import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 
 interface IFormValue {
   global: string;
@@ -70,7 +71,7 @@ return (
         <ErrorMessage
           name="global"
           component={(props) => (
-            <Alert variant="danger">{props.children}</Alert>
+            <NotificationFailed>{props.children}</NotificationFailed>
           )}
         />
 

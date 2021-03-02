@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { IClub } from '../../../libs/interfaces/club.interface';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { clubService } from '../../../services/club.service';
-import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
-import {DeleteBtnWithConfirmation} from '../../molecules/Buttons/DeleteBtnWithConfirmation';
+import { ReactComponent as EditIcon } from '../../../assets/edit.svg';
+import { DeleteBtnWithConfirmation } from '../../molecules/Buttons/DeleteBtnWithConfirmation';
 
 export const Club = () => {
   const [clubs, getAllClubs, setClubs] = useGetAllFromService<IClub>({
@@ -15,7 +15,12 @@ export const Club = () => {
     const getAllClubs = async () => {
       const clubs = await clubService.getAll();
       if (clubs) {
-        setClubs(clubs.data);
+        setClubs(
+          clubs.data.sort(
+            (a: IClub, b: IClub) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        );
       }
     };
 
@@ -27,7 +32,11 @@ export const Club = () => {
       <h1>Clubs</h1>
       <div className="container">
         <div className="row">
-          <Link to="/admin/clubs/add" className="btn btn-secondary add" title="Ajouter un club">
+          <Link
+            to="/admin/clubs/add"
+            className="btn btn-secondary add"
+            title="Ajouter un club"
+          >
             +
           </Link>
         </div>
@@ -37,12 +46,12 @@ export const Club = () => {
               <tr>
                 <th>N°</th>
                 <th>Nom</th>
-                <th>Description</th>  
+                <th>Description</th>
               </tr>
             </thead>
             <tbody>
               {clubs.map((club) => (
-                  <ClubRow club={club} refreshList={getAllClubs}/>
+                <ClubRow club={club} refreshList={getAllClubs} key={club.id} />
               ))}
             </tbody>
           </table>
@@ -66,15 +75,17 @@ const ClubRow = ({ club, refreshList }: any) => {
       <td>{club.description}</td>
       <td>
         <Link to={`/admin/clubs/${club.id}`}>
-          <EditIcon title="Modifier"/>
+          <EditIcon title="Modifier" />
         </Link>
       </td>
       <td>
-      <DeleteBtnWithConfirmation buttontext="" 
-      item="ce club" 
-      onYes={()=>{
-        deleteClub(club);
-      }}/>
+        <DeleteBtnWithConfirmation
+          buttontext=""
+          item="ce club"
+          onYes={() => {
+            deleteClub(club);
+          }}
+        />
       </td>
     </tr>
   );

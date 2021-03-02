@@ -1,0 +1,30 @@
+.notification {
+  position: fixed;
+  right: 10px;
+  top: calc(3.5rem + 10px);
+  z-index: 999999;
+}
+
+.notification.notification-danger {
+  border: 2px solid var(--c-danger);
+  .toast-header{
+      strong {
+        color: var(--c-danger);
+      }
+  }
+  .toast-body {
+    color: var(--c-danger);
+  }
+}
+
+.notification.notification-success {
+    border: 2px solid var(--c-primary);
+    .toast-header{
+        strong {
+          color: var(--c-primary);
+        }
+    }
+    .toast-body {
+      color: var(--c-primary);
+    }
+  }

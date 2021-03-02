@@ -13,7 +13,9 @@ export const MembershipPlan = () => {
     service: membershipPlanService,
   });
 
-  const DATA = plans.map((plan) => ({
+  const DATA = plans
+  .sort((a, b) =>new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  .map((plan) => ({
     ...plan,
     tacit: plan.tacit ? 'oui' : 'non',
     type: getPlanName(plan.type),

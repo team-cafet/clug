@@ -1,26 +1,49 @@
 import {
   Repository,
   FindManyOptions,
-  getRepository,
-  UpdateResult,
   DeleteResult,
-  InsertResult
+  FindOneOptions,
 } from 'typeorm';
 import { APIError } from './APIError';
 import { Request, Response } from 'express';
+import { API_MESSAGE_LIST } from './APIMessageList';
 
 export class RESTController<T> {
-  constructor(protected repository: Repository<T>) {}
+  constructor(
+    protected repository: Repository<T>,
+    protected options:
+      | undefined
+      | {
+          findAllOptions?: FindManyOptions;
+          findOneOptions?: FindOneOptions;
+        } = undefined
+  ) {}
 
-  public findAll(options: FindManyOptions = {}): Promise<T[]> {
-    return this.repository.find(options);
+  public findAll(
+    options: FindManyOptions | undefined = undefined
+  ): Promise<T[]> {
+    if (!options && this.options.findAllOptions) {
+      options = this.options.findAllOptions;
+    }
+
+    return this.repository.find(options ? options : {});
   }
 
-  public findOneByID(id: number): Promise<T> {
+  public findOneByID(
+    id: number,
+    options: FindOneOptions | undefined = undefined
+  ): Promise<T> {
     try {
-      return this.repository.findOneOrFail(id);
+      if (!options && this.options.findOneOptions) {
+        options = this.options.findOneOptions;
+      }
+
+      return this.repository.findOneOrFail(id, options ? options : {});
     } catch (err) {
-      throw new APIError(404, `No record found with id ${id}`);
+      throw new APIError(
+        404,
+        API_MESSAGE_LIST.GENERAL.NO_RESOURCE_FOUND_WITH_ID(id)
+      );
     }
   }
 
@@ -29,7 +52,7 @@ export class RESTController<T> {
       const entity = this.repository.create(body);
       return this.repository.save(entity);
     } catch (err) {
-      throw new APIError(500, `Unexpected error: ${err}`);
+      throw new APIError(500, API_MESSAGE_LIST.GENERAL.UNEXPECTED_ERROR(err));
     }
   }
 
@@ -39,7 +62,7 @@ export class RESTController<T> {
       this.repository.merge(entity, body);
       return this.repository.save(entity);
     } catch (err) {
-      throw new APIError(500, `Unexpected error: ${err}`);
+      throw new APIError(500, API_MESSAGE_LIST.GENERAL.UNEXPECTED_ERROR(err));
     }
   }
 
@@ -48,31 +71,30 @@ export class RESTController<T> {
     try {
       return this.repository.softDelete(entity.id);
     } catch (err) {
-      throw new APIError(500, `Unexpected error: ${err}`);
+      throw new APIError(500, API_MESSAGE_LIST.GENERAL.UNEXPECTED_ERROR(err));
     }
   }
 
-
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     return res.send(await this.findAll());
-  }
+  };
 
   public getOne = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
     return res.send(await this.findOneByID(id));
-  }
+  };
 
   public post = async (req: Request, res: Response): Promise<Response> => {
     return res.send(await this.store(req.body));
-  }
+  };
 
   public put = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
     return res.send(await this.update(id, req.body));
-  }
+  };
 
   public delete = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
     return res.send(await this.remove(id));
-  }
+  };
 }

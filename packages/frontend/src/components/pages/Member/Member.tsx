@@ -49,7 +49,9 @@ export const Member = () => {
   ];
 
   const DATA = useMemo(() => {
-    return members.map((member) => ({
+    return members
+    .sort((a, b) =>new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime() )
+    .map((member) => ({
       id: member.id,
       name: `${member.user?.firstname} ${member.user?.lastname}`,
       negativeBalance: member.balance < 0,
