@@ -1,3 +1,5 @@
+import moment from 'moment';
+import 'moment/locale/fr';
 import React, { useEffect, useState } from 'react';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { IPayment } from '../../libs/interfaces/payment.interface';
@@ -72,7 +74,7 @@ export const PaymentCard = (props: IProps) => {
       <div className="card-body">
         <h5 className="card-title">
           Abonnement {getPlanName(memberShip.plan?.type)}, échu le{' '}
-          {memberShip.endDate}
+          {moment(memberShip.endDate).locale('fr').calendar()}
         </h5>
         prix : {memberShip.plan?.price}.-
         <div className="float-right">
