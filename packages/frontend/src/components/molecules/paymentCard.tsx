@@ -1,6 +1,7 @@
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import 'moment/locale/fr';
 import React, { useEffect, useState } from 'react';
+import { Badge } from 'react-bootstrap';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { IPayment } from '../../libs/interfaces/payment.interface';
 import { getPlanName } from '../../services/data-mapping.service';
@@ -65,6 +66,12 @@ export const PaymentCard = (props: IProps) => {
     }
   };
 
+  const isExpired = (date: Date): boolean => {
+    const date_moment: Moment = moment(date)
+    const today_moment: Moment = moment()
+    return date_moment.diff(today_moment) <= 0 
+  }
+
 
   return (
     <div className="card">
@@ -73,8 +80,9 @@ export const PaymentCard = (props: IProps) => {
       </div>
       <div className="card-body">
         <h5 className="card-title">
-          Abonnement {getPlanName(memberShip.plan?.type)}, échu le{' '}
-          {moment(memberShip.endDate).locale('fr').calendar()}
+          Abonnement {getPlanName(memberShip.plan?.type)}, 
+          {isExpired(memberShip.endDate)? <Badge variant="danger">échu</Badge>  : ' se termine'} le {/* Am I the best UX designer of the century ? I guess so */}
+          {moment(memberShip.endDate).locale('fr').format('LL')}
         </h5>
         prix : {memberShip.plan?.price}.-
         <div className="float-right">
