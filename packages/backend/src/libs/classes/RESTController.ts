@@ -22,7 +22,7 @@ export class RESTController<T> {
   public findAll(
     options: FindManyOptions | undefined = undefined
   ): Promise<T[]> {
-    if (!options && this.options.findAllOptions) {
+    if (!options && this.options?.findAllOptions) {
       options = this.options.findAllOptions;
     }
 
@@ -34,7 +34,7 @@ export class RESTController<T> {
     options: FindOneOptions | undefined = undefined
   ): Promise<T> {
     try {
-      if (!options && this.options.findOneOptions) {
+      if (!options && this.options?.findOneOptions) {
         options = this.options.findOneOptions;
       }
 
