@@ -58,8 +58,8 @@ export const PaymentCard = (props: IProps) => {
           membership: memberShip,
         });
       }
-      if(newPayment) {
-        onPaymentReceivedFunction()
+      if (newPayment) {
+        onPaymentReceivedFunction();
       }
     } catch (error) {
       console.error(error);
@@ -67,11 +67,10 @@ export const PaymentCard = (props: IProps) => {
   };
 
   const isExpired = (date: Date): boolean => {
-    const date_moment: Moment = moment(date)
-    const today_moment: Moment = moment()
-    return date_moment.diff(today_moment) <= 0 
-  }
-
+    const date_moment: Moment = moment(date);
+    const today_moment: Moment = moment();
+    return date_moment.diff(today_moment) <= 0;
+  };
 
   return (
     <div className="card">
@@ -80,8 +79,13 @@ export const PaymentCard = (props: IProps) => {
       </div>
       <div className="card-body">
         <h5 className="card-title">
-          Abonnement {getPlanName(memberShip.plan?.type)}, 
-          {isExpired(memberShip.endDate)? <Badge variant="danger">échu</Badge>  : ' se termine'} le {/* Am I the best UX designer of the century ? I guess so */}
+          Abonnement {getPlanName(memberShip.plan?.type)},
+          {isExpired(memberShip.endDate) ? (
+            <Badge variant="danger">échu</Badge>
+          ) : (
+            ' se termine'
+          )}{' '}
+          le {/* Am I the best UX designer of the century ? I guess so */}
           {moment(memberShip.endDate).locale('fr').format('LL')}
         </h5>
         prix : {memberShip.plan?.price}.-

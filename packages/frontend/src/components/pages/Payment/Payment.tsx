@@ -20,7 +20,10 @@ export const Payment = () => {
   };
   return (
     <div>
-      <h1>Gestion de paiements, nous sommes le <u>{moment().locale('fr').format('LL')}</u></h1>
+      <h1>
+        Gestion de paiements, nous sommes le{' '}
+        <u>{moment().locale('fr').format('LL')}</u>
+      </h1>
       {memberships.map((membership) => (
         <PaymentCard
           key={membership.id}
