@@ -124,7 +124,7 @@ export class MembershipCtrl extends RESTController<Membership> {
     req: Request,
     res: Response
   ): Promise<Response> => {
-    const today: Date = new Date();
+    //const today: Date = new Date();
 
     const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
       req
@@ -136,13 +136,14 @@ export class MembershipCtrl extends RESTController<Membership> {
       .innerJoinAndSelect('member.user', 'memberUser')
       .leftJoinAndSelect('membership.paymentRequest', 'paymentRequest')
       .leftJoinAndSelect('paymentRequest.payment', 'paymentRequestPayment')
-      .innerJoinAndSelect('membership.plan', 'plan')
-      .where('membership.endDate <= :today', {
+      .leftJoinAndSelect('member.organisation', 'organisation')
+      .innerJoinAndSelect('membership.plan', 'plan');
+      /* .where('membership.endDate <= :today', {
         today: today.toDateString(),
-      });
+      }); */
 
     if (req.user.user.group !== EXISTING_GROUPS.ADMIN) {
-      membershipRequest.andWhere('member.organisationId = :orgId', {
+      membershipRequest.andWhere('member.organisation.id = :orgId', {
         orgId: currentOrg.id,
       });
     }
