@@ -25,7 +25,10 @@ import { IMembership } from '../../libs/interfaces/membership.interface';
 import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
-import { MultiSelect } from '../molecules/Select/MultiSelect';
+import {
+  MultiSelect,
+  MultiSelectFormik,
+} from '../molecules/Select/MultiSelect';
 
 interface IFormValue {
   global: string;
@@ -318,26 +321,10 @@ export const MemberForm = (props: IProps) => {
             />
 
             <label htmlFor="memberLabels">Tag</label>
-            <Field
-              // component={MultiSelect}
-              // multiple={true}
-              name="memberLabels"
-              multiple
-              // className="form-control"
-              // options={
-              //   availableMemberLabels.map((label) => ({
-              //     value: label.id,
-              //     label: label.name
-              //   }))
-              // }
-            >
-              {({
-                field, // { name, value, onChange, onBlur }
-                form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-                meta,
-              }: any) => (
-                <MultiSelect
-                  {...field}
+            <Field name="memberLabels" multiple className="form-control">
+              {(fieldProps: any) => (
+                <MultiSelectFormik
+                  {...fieldProps}
                   options={availableMemberLabels.map((label) => ({
                     value: label.id,
                     label: label.name,
