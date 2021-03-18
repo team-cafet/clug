@@ -33,17 +33,14 @@ export class RESTController<T> {
     id: number,
     options: FindOneOptions | undefined = undefined
   ): Promise<T> {
-    try {
-      if (!options && this.options?.findOneOptions) {
-        options = this.options.findOneOptions;
-      }
+    if (!options && this.options?.findOneOptions) {
+      options = this.options.findOneOptions;
+    }
 
+    try {
       return this.repository.findOneOrFail(id, options ? options : {});
     } catch (err) {
-      throw new APIError(
-        404,
-        APIMessageList.NO_RESOURCE_FOUND_WITH_ID(id)
-      );
+      throw new APIError(404, APIMessageList.NO_RESOURCE_FOUND_WITH_ID(id));
     }
   }
 

@@ -25,6 +25,10 @@ import { IMembership } from '../../libs/interfaces/membership.interface';
 import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
+import {
+  MultiSelect,
+  MultiSelectFormik,
+} from '../molecules/Select/MultiSelect';
 
 interface IFormValue {
   global: string;
@@ -120,7 +124,7 @@ export const MemberForm = (props: IProps) => {
    */
   const terminateMembership = async () => {
     if (!props.member?.id) return;
-    if(!props.member.memberships || !props.member.memberships[0]) return;
+    if (!props.member.memberships || !props.member.memberships[0]) return;
 
     const idMembership = props.member.memberships[0].id;
 
@@ -163,25 +167,24 @@ export const MemberForm = (props: IProps) => {
           availableMemberLabels.find(
             (availabelLabel) => availabelLabel.id === Number.parseInt(label)
           )
-        ),        
+        ),
       };
-      
+
       const planSelected = membershipPlanList.find(
         (plan) => plan.id === parseInt(selectedMembershipPlanID)
       );
 
       if (props.member?.id) {
-        if(!isMembershipSet()){
+        if (!isMembershipSet()) {
           await membershipService.add({
             member: props.member,
             startDate: membershipStartDate,
-            plan : selectedMembershipPlanID
-          })
+            plan: selectedMembershipPlanID,
+          });
         }
 
         await memberService.update(props.member.id, values);
         // window.location.reload();
-
       } else {
         const response = await memberService.add({
           ...values,
@@ -193,14 +196,13 @@ export const MemberForm = (props: IProps) => {
         await membershipService.add({
           member: memberResult,
           startDate: membershipStartDate,
-          plan : selectedMembershipPlanID
-        })
+          plan: selectedMembershipPlanID,
+        });
 
         backToMemberPage();
       }
 
       setDisplayAlertMemberSaved(true);
-
     } catch (err) {
       console.error(err);
       if (err.message) {
@@ -244,7 +246,8 @@ export const MemberForm = (props: IProps) => {
       {({ isSubmitting, errors, setFieldValue, values }) => (
         <Form className="form">
           {displayAlertMemberSaved && (
-            <NotificationSuccess onClose={()=>setDisplayAlertMemberSaved(false)}
+            <NotificationSuccess
+              onClose={() => setDisplayAlertMemberSaved(false)}
             >
               Le membre a bien été sauvé !
             </NotificationSuccess>
@@ -271,7 +274,9 @@ export const MemberForm = (props: IProps) => {
               name="club"
               className="form-control"
             >
-              <option key={null} value={undefined}>Sélectionner un club...</option>
+              <option key={null} value={undefined}>
+                Sélectionner un club...
+              </option>
               {avaiableClubs.map((club) => (
                 <option key={club.id} value={club.id}>
                   {club.name}
@@ -316,17 +321,16 @@ export const MemberForm = (props: IProps) => {
             />
 
             <label htmlFor="memberLabels">Tag</label>
-            <Field
-              component="select"
-              multiple={true}
-              name="memberLabels"
-              className="form-control"
-            >
-              {availableMemberLabels.map((label) => (
-                <option key={label.id} value={label.id}>
-                  {label.name}
-                </option>
-              ))}
+            <Field name="memberLabels" multiple className="form-control">
+              {(fieldProps: any) => (
+                <MultiSelectFormik
+                  {...fieldProps}
+                  options={availableMemberLabels.map((label) => ({
+                    value: label.id,
+                    label: label.name,
+                  }))}
+                />
+              )}
             </Field>
 
             <h2>Adresse</h2>
@@ -413,15 +417,17 @@ export const MemberForm = (props: IProps) => {
               </Button>
             </div>
 
-            <hr/>            
-            
-            {props.member?.id && <DeleteBtnWithConfirmation
-              buttontext="Supprimer ce membre"
-              item={`${initialValues.user.firstname}`}
-              onYes={() => deleteMember()}
-            />}
+            <hr />
+
+            {props.member?.id && (
+              <DeleteBtnWithConfirmation
+                buttontext="Supprimer ce membre"
+                item={`${initialValues.user.firstname}`}
+                onYes={() => deleteMember()}
+              />
+            )}
           </div>
-          
+
           <div className="save-cancel-group memberForm">
             <Link to="/admin/members">
               <Button variant="secondary" className="cancel">
