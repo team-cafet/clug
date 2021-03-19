@@ -4,6 +4,7 @@ import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membership-plan.service';
+import { getPlanName } from '../../services/data-mapping.service';
 
 interface IFormValue {
   price?: number;
@@ -103,7 +104,7 @@ export const MembershipPlanForm = (props: IProps) => {
             >
               {typeList.map((type, index) => (
                 <option key={index} value={index}>
-                  {`${type}`}
+                  {`${getPlanName(index)}`}
                 </option>
               ))}
             </Field>
