@@ -8,7 +8,7 @@ import { getPlanName } from '../../services/data-mapping.service';
 
 interface IFormValue {
   price?: number;
-  description?: string;
+  name?: string;
   type?: number;
   tacit?: boolean;
   organisation?: {};
@@ -23,7 +23,7 @@ interface IProps {
 export const MembershipPlanForm = (props: IProps) => {
   const initialValues: IFormValue = props.membershipPlan
     ? { ...props.membershipPlan }
-    : { price: 0, description: '', type: 1, tacit: false };
+    : { price: 0, name: '', type: 1, tacit: false };
   const [typeList, setTypeList] = useState([]);
   const [typeSelectedId, setTypeSelectedId] = useState(0);
   const [tacitSelected, setTacitSelected] = useState(false);
@@ -92,6 +92,11 @@ export const MembershipPlanForm = (props: IProps) => {
               className={`form-control ${errors.price ? 'is-invalid' : ''}`}
               name="price"
               type="number"
+            />
+            <label>Nom</label>
+            <Field
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              name="name"
             />
             <label htmlFor="type">Type</label>
             <Field
