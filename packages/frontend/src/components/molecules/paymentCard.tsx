@@ -67,9 +67,9 @@ export const PaymentCard = (props: IProps) => {
   };
 
   const isExpired = (date: Date): boolean => {
-    const date_moment: Moment = moment(date);
-    const today_moment: Moment = moment();
-    return date_moment.diff(today_moment) <= 0;
+    const dateMoment: Moment = moment(date);
+    const todayMoment: Moment = moment();
+    return dateMoment.diff(todayMoment) <= 0;
   };
 
   return (
