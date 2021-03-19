@@ -75,7 +75,7 @@ export class MembershipCtrl extends RESTController<Membership> {
 
     const membershipPlanRepo = getRepository(MembershipPlan);
     const membershipPlan = await membershipPlanRepo.findOne(req.body.plan);
-    
+
     if (!membershipPlan) return res.sendStatus(404);
 
     let numberOfDayToAddToStartDate = 0;
@@ -86,7 +86,7 @@ export class MembershipCtrl extends RESTController<Membership> {
         break;
 
       case PlanType.biannual:
-        numberOfDayToAddToStartDate = Math.round(365/2);
+        numberOfDayToAddToStartDate = Math.round(365 / 2);
         break;
 
       case PlanType.monthly:
@@ -94,24 +94,24 @@ export class MembershipCtrl extends RESTController<Membership> {
         break;
 
       case PlanType.quarterly:
-        numberOfDayToAddToStartDate = Math.round(365/4);
+        numberOfDayToAddToStartDate = Math.round(365 / 4);
         break;
 
       case PlanType.weekly:
-        numberOfDayToAddToStartDate = Math.round(365/52);
+        numberOfDayToAddToStartDate = Math.round(365 / 52);
         break;
 
       default:
         return res.sendStatus(404);
     }
 
-    if(!req.body.startDate) return res.sendStatus(400);
-    
+    if (!req.body.startDate) return res.sendStatus(400);
+
     const endDate = new Date(req.body.startDate);
-    endDate.setDate(endDate.getDate()+numberOfDayToAddToStartDate);
-    
-    req.body.endDate =  endDate;
-    
+    endDate.setDate(endDate.getDate() + numberOfDayToAddToStartDate);
+
+    req.body.endDate = endDate;
+
     return this.post(req, res);
   };
 
@@ -124,8 +124,6 @@ export class MembershipCtrl extends RESTController<Membership> {
     req: Request,
     res: Response
   ): Promise<Response> => {
-    const today: Date = new Date();
-
     const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
       req
     );
@@ -136,13 +134,11 @@ export class MembershipCtrl extends RESTController<Membership> {
       .innerJoinAndSelect('member.user', 'memberUser')
       .leftJoinAndSelect('membership.paymentRequest', 'paymentRequest')
       .leftJoinAndSelect('paymentRequest.payment', 'paymentRequestPayment')
-      .innerJoinAndSelect('membership.plan', 'plan')
-      .where('membership.endDate <= :today', {
-        today: today.toDateString(),
-      });
+      .leftJoinAndSelect('member.organisation', 'organisation')
+      .innerJoinAndSelect('membership.plan', 'plan');
 
     if (req.user.user.group !== EXISTING_GROUPS.ADMIN) {
-      membershipRequest.andWhere('member.organisationId = :orgId', {
+      membershipRequest.andWhere('member.organisation.id = :orgId', {
         orgId: currentOrg.id,
       });
     }
