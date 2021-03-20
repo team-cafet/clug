@@ -8,7 +8,7 @@ import { getConnection } from 'typeorm';
 (async () => {
   loadEnv();
   try {
-    await loadORM({...connectionOptions(), dropSchema: true});
+    await loadORM({...connectionOptions()});
 
     await executeTestSeeder();
 
