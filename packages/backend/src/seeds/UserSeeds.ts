@@ -4,6 +4,7 @@ import { UserFactory } from './factory/UserFactory';
 import { EXISTING_GROUPS } from '../config/auth';
 import { getRepository } from 'typeorm';
 import { Group } from '../models/Group';
+import { Factory } from '@ClugBackend/libs/classes/Factory';
 
 export class UserSeeds implements ISeeds {
 
@@ -27,17 +28,12 @@ export class UserSeeds implements ISeeds {
         ]);
     }
 
-    async generate(number: number): Promise<User[]> {
+    async run(): Promise<void> {
         const userFactory = new UserFactory(this.USER_GROUP);
-        const users: User[] = [];
-
-        for (let i = 0; i < number; i++) {
-           users.push(userFactory.define());
-        }
-
+        const users: User[] = Factory.createMany(10, userFactory);
         users.push(userFactory.defineAdmin(this.ADMIN_GROUP));
 
-        return Promise.all(users.map( async user => await user.save()));
+        await Promise.all(users.map( async user => await user.save()));
     }
     
 }

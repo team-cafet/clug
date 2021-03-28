@@ -1,7 +1,6 @@
 import * as faker from 'faker';
 import { User, Sexe } from '../../models/User';
 import { IFactory } from '../../libs/interfaces/IFactory';
-import { EXISTING_GROUPS } from '../../config/auth';
 
 export class UserFactory implements IFactory<User> {
 

@@ -1,3 +1,3 @@
 export interface ISeeds {
-    generate(number: number);
+    run(): Promise<void>;
 }
