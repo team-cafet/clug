@@ -1,8 +1,8 @@
 import { Staff } from '../../models/Staff';
 import { IFactory } from '../../libs/interfaces/IFactory';
 import { UserFactory } from './UserFactory';
-import { Group } from '@ClugBackend/models/Group';
-import { Organisation } from '@ClugBackend/models/Organisation';
+import { Group } from '../../models/Group';
+import { Organisation } from '../../models/Organisation';
 
 export class StaffFactory implements IFactory<Staff> {
 

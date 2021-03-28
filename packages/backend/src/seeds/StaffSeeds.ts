@@ -1,19 +1,25 @@
-import { EXISTING_GROUPS } from '@ClugBackend/config/auth';
-import { Factory } from '@ClugBackend/libs/classes/Factory';
-import { ISeeds } from '@ClugBackend/libs/interfaces/ISeeds';
-import { Group } from '@ClugBackend/models/Group';
+import { EXISTING_GROUPS } from '../config/auth';
+import { Factory } from '../libs/classes/Factory';
+import { ISeeds } from '../libs/interfaces/ISeeds';
+import { Group } from '../models/Group';
 import { getRepository } from 'typeorm';
 import { StaffFactory } from './factory/StaffFactory';
+import { Organisation } from '../models/Organisation';
 
 export class StaffSeeds implements ISeeds {
   private async getStaffUserGroup() {
-    return getRepository(Group).findOneOrFail(EXISTING_GROUPS.MANAGER);
+    return getRepository(Group).findOneOrFail({name:EXISTING_GROUPS.MANAGER});
+  }
+
+  private async getFiveFirstOrganisation(): Promise<Organisation[]>{
+    return await getRepository(Organisation).find({take: 5});
   }
 
   async run(): Promise<void> {
     const staffUserGroup = await this.getStaffUserGroup();
+    const organisations = await this.getFiveFirstOrganisation();
 
-    const staffFactory = new StaffFactory(staffUserGroup);
+    const staffFactory = new StaffFactory(staffUserGroup, organisations);
 
     const staffs = Factory.createMany(10, staffFactory);
 

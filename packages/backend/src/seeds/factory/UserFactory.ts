@@ -13,7 +13,7 @@ export class UserFactory implements IFactory<User> {
         user.country = faker.address.country();
         user.streetNumber = faker.random.number(99);
         user.street = faker.address.streetName();
-        user.postalCode = faker.random.number({min: 1000, max: 9999, precision: 0});
+        user.postalCode = faker.random.number({min: 1000, max: 9999, precision: 1});
         
         user.email = faker.internet.email();
         user.firstname = faker.name.firstName();

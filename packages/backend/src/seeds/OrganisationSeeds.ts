@@ -1,5 +1,5 @@
-import { Factory } from '@ClugBackend/libs/classes/Factory';
-import { ISeeds } from '@ClugBackend/libs/interfaces/ISeeds';
+import { Factory } from '../libs/classes/Factory';
+import { ISeeds } from '../libs/interfaces/ISeeds';
 import { OrganisationFactory } from './factory/OrganisationFactory';
 
 export class OrganisationSeeds implements ISeeds{

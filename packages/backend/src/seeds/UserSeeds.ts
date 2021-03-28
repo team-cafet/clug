@@ -4,7 +4,7 @@ import { UserFactory } from './factory/UserFactory';
 import { EXISTING_GROUPS } from '../config/auth';
 import { getRepository } from 'typeorm';
 import { Group } from '../models/Group';
-import { Factory } from '@ClugBackend/libs/classes/Factory';
+import { Factory } from '../libs/classes/Factory';
 
 export class UserSeeds implements ISeeds {
 

@@ -1,6 +1,6 @@
 import * as faker from 'faker';
-import { IFactory } from '@ClugBackend/libs/interfaces/IFactory';
-import { Organisation } from '@ClugBackend/models/Organisation';
+import { IFactory } from '../../libs/interfaces/IFactory';
+import { Organisation } from '../../models/Organisation';
 
 export class OrganisationFactory implements IFactory<Organisation> {
   define(): Organisation {
