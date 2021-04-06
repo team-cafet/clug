@@ -1,29 +1,35 @@
 import { ISeeds } from '../libs/interfaces/ISeeds';
-import { getConnection } from 'typeorm';
+import { getConnection, Repository } from 'typeorm';
 import { OrganisationSeeds } from './OrganisationSeeds';
 import { StaffSeeds } from './StaffSeeds';
 import { UserSeeds } from './UserSeeds';
+import { ClubSeeds } from './ClubSeeds';
+import { MembershipPlanSeeds } from './MembershipPlanSeeds';
+import { MemberSeeds } from './MemberSeeds';
 
 export class DatabaseSeeds implements ISeeds
 {
     async run(): Promise<void> {
         console.log('-----------Cleaning Database');
-        this.clearDatabase();
+        await this.clearDatabase();
 
         console.log('-----------Seeding database');
         await (new OrganisationSeeds()).run();
         await (new UserSeeds()).run();
         await (new StaffSeeds()).run();
+        await (new ClubSeeds()).run();
+        await (new MembershipPlanSeeds).run();
+        await (new MemberSeeds).run();
+
+        console.log('-----------Seeding ended witout errors');
     }
 
     private async clearDatabase() {
         const connection = getConnection();
         const entities = connection.entityMetadatas;
 
-        entities.forEach(async (entity) => {
-            const repository = connection.getRepository(entity.name);
-            await repository.query(`DELETE FROM public.${entity.tableName}`);
-        });
+        const truncatedEntities = entities.map(entity => `public."${entity.tableName}"`);
+        await connection.query(`TRUNCATE ${truncatedEntities.join(',')} CASCADE`); 
     }
 
 }

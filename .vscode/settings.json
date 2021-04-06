@@ -8,6 +8,9 @@
   },
   "eslint.validate": ["javascript", "typescript"],
   "editor.formatOnSave": false,
+  "editor.detectIndentation": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
   "[javascript]": {
     "editor.formatOnSave": false
   },

@@ -7,7 +7,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToMany
+  OneToMany,
+  BaseEntity,
 } from 'typeorm';
 import { Membership } from './Membership';
 import { Club } from './Club';
@@ -22,7 +23,7 @@ export enum PlanType {
 }
 
 @Entity()
-export class MembershipPlan {
+export class MembershipPlan extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -36,7 +37,7 @@ export class MembershipPlan {
     type: 'enum',
     enum: PlanType,
     default: PlanType.monthly,
-    nullable: false
+    nullable: false,
   })
   type: PlanType;
 
@@ -59,21 +60,25 @@ export class MembershipPlan {
   @OneToMany((type) => Membership, (membership) => membership.plan, {
     nullable: true,
     onDelete: 'NO ACTION',
-    eager: false
+    eager: false,
   })
   memberships: Membership[];
 
   @ManyToOne((type) => Club, (club) => club.membershipPlans, {
     onDelete: 'NO ACTION',
-    nullable: true
+    nullable: true,
   })
   club?: Club;
 
-  @ManyToOne((type) => Organisation, (organisation) => organisation.membershipPlans, {
-    onDelete: 'NO ACTION',
-    nullable: false,
-    eager: true
-  })
+  @ManyToOne(
+    (type) => Organisation,
+    (organisation) => organisation.membershipPlans,
+    {
+      onDelete: 'NO ACTION',
+      nullable: false,
+      eager: true,
+    }
+  )
   organisation: Organisation;
 
   // ----------------------------- Business Rules
