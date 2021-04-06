@@ -42,7 +42,8 @@ export class MemberSeeds implements ISeeds {
       memberships
     );
 
-    const members = Factory.createMany(100, memberFactory);
+    const members = Factory.createMany(1000, memberFactory);
+
     await getConnection().manager.save(members);
   }
 }

@@ -1,15 +1,15 @@
-import { connectionOptions } from '../config/database';
-import { loadEnv } from '../util/loadenv';
-import { loadORM } from '../util/loadorm';
 import { DatabaseSeeds } from '../seeds/DatabaseSeeds';
 
-(async () => {
-  loadEnv();
+exports.command = 'seeds';
+exports.desc = 'Seeds database with seeding set of data';
+exports.builder = {};
+
+exports.handler = async function (argv) {
   try {
-    await loadORM({...connectionOptions()});
-    console.log('launching...');
     await new DatabaseSeeds().run();
+    process.exit();
   } catch (err) {
     console.error(err);
+    process.exit();
   }
-})();
+};

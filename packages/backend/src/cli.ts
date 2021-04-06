@@ -4,9 +4,7 @@ import { loadEnv } from './util/loadenv';
 
 loadEnv();
 loadORM().finally(() => {
-  yargs
-    .scriptName('clug')
-    .usage('$0 <cmd> [args]')
+  yargs(process.argv.slice(2))
     .commandDir('./cli')
     .demandCommand()
     .help().argv;
