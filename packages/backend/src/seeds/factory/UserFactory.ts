@@ -20,6 +20,7 @@ export class UserFactory implements IFactory<User> {
         user.lastname = faker.name.lastName();
         user.birthdate = faker.date.past();
         user.sexe = faker.random.arrayElement([Sexe.FEMALE, Sexe.MALE, Sexe['NON-BINARY']]);
+        user.phone = faker.phone.phoneNumber('+## ## ### ## ##');
 
         user.password = faker.random.words(3);
 

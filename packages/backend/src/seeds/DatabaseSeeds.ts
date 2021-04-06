@@ -1,11 +1,12 @@
 import { ISeeds } from '../libs/interfaces/ISeeds';
-import { getConnection, Repository } from 'typeorm';
+import { getConnection } from 'typeorm';
 import { OrganisationSeeds } from './OrganisationSeeds';
 import { StaffSeeds } from './StaffSeeds';
 import { UserSeeds } from './UserSeeds';
 import { ClubSeeds } from './ClubSeeds';
 import { MembershipPlanSeeds } from './MembershipPlanSeeds';
 import { MemberSeeds } from './MemberSeeds';
+import { TagSeeds } from './TagSeeds';
 
 export class DatabaseSeeds implements ISeeds
 {
@@ -19,6 +20,7 @@ export class DatabaseSeeds implements ISeeds
         await (new StaffSeeds()).run();
         await (new ClubSeeds()).run();
         await (new MembershipPlanSeeds).run();
+        await (new TagSeeds).run();
         await (new MemberSeeds).run();
 
         console.log('-----------Seeding ended witout errors');

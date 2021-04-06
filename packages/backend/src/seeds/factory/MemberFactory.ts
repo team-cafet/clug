@@ -8,13 +8,15 @@ import { Club } from '../../models/Club';
 import { MembershipPlan, PlanType } from '../../models/MembershipPlan';
 import { Membership } from '../../models/Membership';
 import { PaymentRequest } from '../../models/PaymentRequest';
+import { MemberLabel } from '../../models/MemberLabel';
 
 export class MemberFactory implements IFactory<Member> {
   constructor(
     private userGroup: Group,
     private existingOrganisations: Organisation[],
-    private existingClub: Club[],
-    private existingMembershipPlan: MembershipPlan[]
+    private existingClubs: Club[],
+    private existingMembershipPlans: MembershipPlan[],
+    private existingTags: MemberLabel[]
   ) {}
 
   private getRandomOrganisation() {
@@ -22,10 +24,17 @@ export class MemberFactory implements IFactory<Member> {
   }
 
   private getRandomClubFromOrganisation(organisation: Organisation) {
-    const filteredClubs = this.existingClub.filter(
+    const filteredClubs = this.existingClubs.filter(
       (club) => club.organisation.id === organisation.id
     );
     return faker.random.arrayElement(filteredClubs);
+  }
+
+  private getRandomTagsFromOrganisation(organisation: Organisation) {
+    const filteredTags = this.existingTags.filter(
+      (tag) => tag.organisation.id === organisation.id
+    );
+    return faker.random.arrayElement(filteredTags);
   }
 
   // TODO: Extract this logic into the membership model
@@ -63,7 +72,7 @@ export class MemberFactory implements IFactory<Member> {
   }
 
   private getRandomMembershipPlanFromOrganisation(organisation: Organisation) {
-    const filteredMembershipPlan = this.existingMembershipPlan.filter(
+    const filteredMembershipPlan = this.existingMembershipPlans.filter(
       (membership) => membership.organisation.id === organisation.id
     );
     const plan = faker.random.arrayElement(filteredMembershipPlan);
@@ -95,12 +104,13 @@ export class MemberFactory implements IFactory<Member> {
     member.user = userFactory.define();
     member.organisation = organisation;
     member.club = this.getRandomClubFromOrganisation(organisation);
+    member.memberLabels = [this.getRandomTagsFromOrganisation(organisation)];
 
     if (faker.random.boolean()) {
       member.memberships = [
         this.getRandomMembershipPlanFromOrganisation(organisation),
       ];
-      member.balance = -(member.memberships[0].plan.price);
+      member.balance = -member.memberships[0].plan.price;
     } else {
       member.balance = 0;
     }
