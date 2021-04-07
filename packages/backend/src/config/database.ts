@@ -22,23 +22,23 @@ export const connectionOptions = (): ConnectionOptions => {
     },
   };
   switch (process.env.NODE_ENV) {
-    case 'production':
-      return {
-        ...defaultConnectionOption,
-        logging: ['error'],
-        synchronize: false,
-      };
+  case 'production':
+    return {
+      ...defaultConnectionOption,
+      logging: ['error'],
+      synchronize: false,
+    };
 
-    case 'test':
-      return {
-        ...defaultConnectionOption,
-        logging: false,
-        dropSchema: true,
-        synchronize: true,
-        entities: [__dirname + '/../models/*.{js,ts}'],
-      };
+  case 'test':
+    return {
+      ...defaultConnectionOption,
+      logging: false,
+      dropSchema: true,
+      synchronize: true,
+      entities: [__dirname + '/../models/*.{js,ts}'],
+    };
 
-    default:
-      return defaultConnectionOption;
+  default:
+    return defaultConnectionOption;
   }
 };

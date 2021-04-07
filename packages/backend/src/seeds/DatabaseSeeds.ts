@@ -10,28 +10,28 @@ import { TagSeeds } from './TagSeeds';
 
 export class DatabaseSeeds implements ISeeds
 {
-    async run(): Promise<void> {
-        console.log('-----------Cleaning Database');
-        await this.clearDatabase();
+  async run(): Promise<void> {
+    console.log('-----------Cleaning Database');
+    await this.clearDatabase();
 
-        console.log('-----------Seeding database');
-        await (new OrganisationSeeds()).run();
-        await (new UserSeeds()).run();
-        await (new StaffSeeds()).run();
-        await (new ClubSeeds()).run();
-        await (new MembershipPlanSeeds).run();
-        await (new TagSeeds).run();
-        await (new MemberSeeds).run();
+    console.log('-----------Seeding database');
+    await (new OrganisationSeeds()).run();
+    await (new UserSeeds()).run();
+    await (new StaffSeeds()).run();
+    await (new ClubSeeds()).run();
+    await (new MembershipPlanSeeds).run();
+    await (new TagSeeds).run();
+    await (new MemberSeeds).run();
 
-        console.log('-----------Seeding ended witout errors');
-    }
+    console.log('-----------Seeding ended witout errors');
+  }
 
-    private async clearDatabase() {
-        const connection = getConnection();
-        const entities = connection.entityMetadatas;
+  private async clearDatabase() {
+    const connection = getConnection();
+    const entities = connection.entityMetadatas;
 
-        const truncatedEntities = entities.map(entity => `public."${entity.tableName}"`);
-        await connection.query(`TRUNCATE ${truncatedEntities.join(',')} CASCADE`); 
-    }
+    const truncatedEntities = entities.map(entity => `public."${entity.tableName}"`);
+    await connection.query(`TRUNCATE ${truncatedEntities.join(',')} CASCADE`); 
+  }
 
 }

@@ -6,19 +6,19 @@ import { Organisation } from '../../models/Organisation';
 
 export class StaffFactory implements IFactory<Staff> {
 
-    constructor(private userGroup: Group, private existingOrganisations: Organisation[]){}
+  constructor(private userGroup: Group, private existingOrganisations: Organisation[]){}
 
-    private getRandomOrganisation(){
-        return this.existingOrganisations[Math.floor(Math.random() * this.existingOrganisations.length)];
-    }
+  private getRandomOrganisation(){
+    return this.existingOrganisations[Math.floor(Math.random() * this.existingOrganisations.length)];
+  }
 
-    define(): Staff {
-        const userFactory = new UserFactory(this.userGroup);
+  define(): Staff {
+    const userFactory = new UserFactory(this.userGroup);
 
-        const staff = new Staff();
-        staff.user = userFactory.define();
-        staff.organisation = this.getRandomOrganisation();
-        return staff;
-    }
+    const staff = new Staff();
+    staff.user = userFactory.define();
+    staff.organisation = this.getRandomOrganisation();
+    return staff;
+  }
 
 }

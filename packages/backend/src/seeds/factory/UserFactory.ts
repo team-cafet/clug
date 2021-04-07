@@ -4,38 +4,38 @@ import { IFactory } from '../../libs/interfaces/IFactory';
 
 export class UserFactory implements IFactory<User> {
 
-    constructor(private userGroup){}
+  constructor(private userGroup){}
 
-    define(): User {
-        const user = new User();
+  define(): User {
+    const user = new User();
         
-        user.city = faker.address.city();
-        user.country = faker.address.country();
-        user.streetNumber = faker.random.number(99);
-        user.street = faker.address.streetName();
-        user.postalCode = faker.random.number({min: 1000, max: 9999, precision: 1});
+    user.city = faker.address.city();
+    user.country = faker.address.country();
+    user.streetNumber = faker.random.number(99);
+    user.street = faker.address.streetName();
+    user.postalCode = faker.random.number({min: 1000, max: 9999, precision: 1});
         
-        user.email = faker.internet.email();
-        user.firstname = faker.name.firstName();
-        user.lastname = faker.name.lastName();
-        user.birthdate = faker.date.past();
-        user.sexe = faker.random.arrayElement([Sexe.FEMALE, Sexe.MALE, Sexe['NON-BINARY']]);
-        user.phone = faker.phone.phoneNumber('+## ## ### ## ##');
+    user.email = faker.internet.email();
+    user.firstname = faker.name.firstName();
+    user.lastname = faker.name.lastName();
+    user.birthdate = faker.date.past();
+    user.sexe = faker.random.arrayElement([Sexe.FEMALE, Sexe.MALE, Sexe['NON-BINARY']]);
+    user.phone = faker.phone.phoneNumber('+## ## ### ## ##');
 
-        user.password = faker.random.words(3);
+    user.password = faker.random.words(3);
 
-        user.group = this.userGroup;
+    user.group = this.userGroup;
 
-        return user;
-    }
+    return user;
+  }
 
-    defineAdmin(adminGroup): User {
-        const admin = this.define();
-        admin.email = 'admin@test.ch';
-        admin.password = '1234';
-        admin.group = adminGroup;
+  defineAdmin(adminGroup): User {
+    const admin = this.define();
+    admin.email = 'admin@test.ch';
+    admin.password = '1234';
+    admin.group = adminGroup;
 
-        return admin;
-    }
+    return admin;
+  }
 
 }

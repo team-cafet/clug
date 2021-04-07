@@ -81,28 +81,28 @@ export class MembershipCtrl extends RESTController<Membership> {
     let numberOfDayToAddToStartDate = 0;
 
     switch (membershipPlan.type) {
-      case PlanType.annual:
-        numberOfDayToAddToStartDate = 365;
-        break;
+    case PlanType.annual:
+      numberOfDayToAddToStartDate = 365;
+      break;
 
-      case PlanType.biannual:
-        numberOfDayToAddToStartDate = Math.round(365 / 2);
-        break;
+    case PlanType.biannual:
+      numberOfDayToAddToStartDate = Math.round(365 / 2);
+      break;
 
-      case PlanType.monthly:
-        numberOfDayToAddToStartDate = Math.round(30);
-        break;
+    case PlanType.monthly:
+      numberOfDayToAddToStartDate = Math.round(30);
+      break;
 
-      case PlanType.quarterly:
-        numberOfDayToAddToStartDate = Math.round(365 / 4);
-        break;
+    case PlanType.quarterly:
+      numberOfDayToAddToStartDate = Math.round(365 / 4);
+      break;
 
-      case PlanType.weekly:
-        numberOfDayToAddToStartDate = Math.round(365 / 52);
-        break;
+    case PlanType.weekly:
+      numberOfDayToAddToStartDate = Math.round(365 / 52);
+      break;
 
-      default:
-        return res.sendStatus(404);
+    default:
+      return res.sendStatus(404);
     }
 
     if (!req.body.startDate) return res.sendStatus(400);
