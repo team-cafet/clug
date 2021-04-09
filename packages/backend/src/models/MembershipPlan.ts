@@ -13,6 +13,7 @@ import {
 import { Membership } from './Membership';
 import { Club } from './Club';
 import { Organisation } from './Organisation';
+import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
 export enum PlanType {
   weekly,
@@ -23,7 +24,7 @@ export enum PlanType {
 }
 
 @Entity()
-export class MembershipPlan extends BaseEntity {
+export class MembershipPlan extends BaseEntity implements IResourceWithOrganisation{
   @PrimaryGeneratedColumn()
   id: number;
 

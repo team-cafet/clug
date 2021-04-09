@@ -47,7 +47,7 @@ export const MembershipPlan = () => {
       disableFilters: true,
       disableSortBy: true,
       Cell: (cell: any) => (
-        <Link to={`/admin/membershipPlans/update/${cell.value.id}`}>
+        <Link to={`/admin/membershipPlans/update/${cell.value}`}>
           <EditIcon title="Modifier"/>
         </Link>
       ),
