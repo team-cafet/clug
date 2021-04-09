@@ -44,14 +44,14 @@ export class MemberLabelCtrl extends RESTController<MemberLabel> {
 
     if (!user || !label) {
       return res
-      .status(403)
-      .send('You do not have permission to modify this tag');
+        .status(403)
+        .send('You do not have permission to modify this tag');
     }
 
     if (label.organisation.id !== userOrg.id) {
       return res
-      .status(403)
-      .send('You do not have permission to modify this tag');
+        .status(403)
+        .send('You do not have permission to modify this tag');
     }
 
     next();

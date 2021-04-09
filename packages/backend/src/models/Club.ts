@@ -7,7 +7,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  ManyToOne
+  ManyToOne,
+  BaseEntity
 } from 'typeorm';
 import { Member } from './Member';
 import { Organisation } from './Organisation';
@@ -15,7 +16,7 @@ import { MembershipPlan } from './MembershipPlan';
 import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
 @Entity()
-export class Club implements IResourceWithOrganisation{
+export class Club extends BaseEntity implements IResourceWithOrganisation{
   @PrimaryGeneratedColumn()
   id: number;
 

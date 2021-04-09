@@ -18,7 +18,7 @@ export class MembershipPlanCtrl extends RESTController<MembershipPlan> {
     req: Request,
     res: Response
   ): Promise<Response> => {
-    //Return the list of type's names. We probably have to do a refactoring about
+    // Return the list of type's names. We probably have to do a refactoring about
     // membershipplan's types like have a specific table in the db.
     return res
       .status(201)

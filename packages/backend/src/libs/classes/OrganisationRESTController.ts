@@ -59,8 +59,8 @@ export class OrganisationRESTController<T extends IResourceWithOrganisation> ext
 
     return res.send(await this.findOneByID(id, {
       ...(this.options?.findOneOptions ?? {}),
-        where: { organisation: currentOrg.id }
-      }));
+      where: { organisation: currentOrg.id }
+    }));
   }
 
   /**
@@ -88,14 +88,14 @@ export class OrganisationRESTController<T extends IResourceWithOrganisation> ext
 
     if (!user || !resource) {
       return res
-      .status(404)
-      .send(APIMessageList.NO_RESOURCE_FOUND);
+        .status(404)
+        .send(APIMessageList.NO_RESOURCE_FOUND);
     }
 
     if (resource.organisation.id || resource.organisation?.id !== userOrg.id) {
       return res
-      .status(403)
-      .send(APIMessageList.NO_PERMISSION_TO_MODIFY);
+        .status(403)
+        .send(APIMessageList.NO_PERMISSION_TO_MODIFY);
     }
 
     next();
