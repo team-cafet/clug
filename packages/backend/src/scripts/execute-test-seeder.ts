@@ -1,5 +1,5 @@
 import { loadORM } from '../util/loadorm';
-import { executeTestSeeder } from '../seeds';
+import { executeTestSeeder } from '../seeds/TestSeeds';
 import { connectionOptions } from '../config/database';
 
 import { loadEnv } from '../util/loadenv';
