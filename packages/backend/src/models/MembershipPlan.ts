@@ -34,6 +34,9 @@ export class MembershipPlan extends BaseEntity implements IResourceWithOrganisat
   @Column({ type: 'varchar', nullable: true })
   name: string;
 
+  @Column({ type: 'varchar', nullable: true })
+  description: string;
+
   @Column({
     type: 'enum',
     enum: PlanType,
