@@ -107,3 +107,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Local S3 storage for dev env
+.localstack
