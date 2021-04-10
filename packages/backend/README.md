@@ -31,7 +31,7 @@ npm run watch-debug
 - ``npm run clug -- create-user [ARGS]`` Create a new user in the database
 
 ## Docker thing
-docker-compose down --rmi local -V //Delete all containers
+docker-compose down --rmi local -v //Delete all containers
 docker-compose up -d //Run docker containers
 
 ## libs used
