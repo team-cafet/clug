@@ -23,23 +23,16 @@ export const MembershipPlan = () => {
 
   const COLUMNS = [
     {
+      Header: 'Nom',
+      accessor: 'name',
+    },
+    {
       Header: 'Type',
       accessor: 'type',
-      disableFilters: true,
-      disableSortBy: true,
     },
-
     {
       Header: 'Prix',
       accessor: 'price',
-      disableFilters: true,
-      disableSortBy: true,
-    },
-    {
-      Header: 'Tacite',
-      accessor: 'tacit',
-      disableFilters: true,
-      disableSortBy: true,
     },
     {
       Header: 'Edit',
