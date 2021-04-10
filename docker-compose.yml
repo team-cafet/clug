@@ -90,4 +90,14 @@ services:
 volumes:
   db_data:
   api_node_modules_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./packages/backend/node_modules
   frontend_node_modules_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./packages/frontend/node_modules
