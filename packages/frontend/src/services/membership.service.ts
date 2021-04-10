@@ -3,7 +3,6 @@ class APIMembership extends APIResource {
   constructor() {
     super('memberships');
   }
-  
   getNotPaid() {
     return GET('memberships/notPaid');
   }

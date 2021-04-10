@@ -1,12 +1,11 @@
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { IMembership } from '../../../libs/interfaces/membership.interface';
 import {} from '../../../services/member.service';
 import { membershipService } from '../../../services/membership.service';
 import { PaymentCard } from '../../molecules/paymentCard';
 import { Tabs, Tab, Button } from 'react-bootstrap';
 import { DataTable } from '../../molecules/DataTable';
-import { getPlanName } from '../../../services/data-mapping.service';
 import { paymentRequestService } from '../../../services/paymentRequest.service';
 import { createCallChain } from 'typescript';
 import { IPayment } from '../../../libs/interfaces/payment.interface';
@@ -14,6 +13,9 @@ import { paymentService } from '../../../services/payment.service';
 
 export const Payment = () => {
   const [memberships, setMemberships] = useState<IMembership[]>([]);
+  const [allMemberships, setAllMemberships] = useState<IMembership[]>([]);
+  const tabLateTitle= `Paiements d'abos échus (${memberships.length})`;
+  const tabRunningTitle= `Paiements d'abos en cours (${allMemberships.length})`;
 
   const getNotPaidMemberships = async (): Promise<void> => {
     const memberships = await membershipService.getNotPaid();
@@ -24,11 +26,9 @@ export const Payment = () => {
     setAllMemberships(allMemberships?.data);
   };
   const [alreadyRequested, setAlreadyRequested] = useState<boolean>(false);
-  /* useEffect(() => {
-    if (memberShip.paymentRequest) setAlreadyRequested(true);
+ /*  useEffect(() => {
+    if (membership.paymentRequest) setAlreadyRequested(true);
   }, [memberShip.paymentRequest]); */
-
-
   const createPaymentRequest = async (
     membership: IMembership
   ): Promise<void> => {
@@ -76,6 +76,8 @@ export const Payment = () => {
   };
 
 
+
+  console.log(allMemberships);
   const COLUMNS: any[] = [
     {
       Header: 'Concerne',
@@ -98,48 +100,38 @@ export const Payment = () => {
     },
     {
       Header: 'Prix',
-      accessor: 'plan.price',
+      accessor: 'planPrice',
       disableFilters: true,
       disableSortBy: false,
     },
     {
       Header: '',
-      accessor: '',
-      id: 'actions',
+      accessor: 'lol',
       disableFilters: true,
       disableSortBy: true,
-      Cell: (cell: any) => <>
-      <button
-        type="button"
-        className="btn btn-secondary"
-        onClick={async () => createPaymentRequest(cell.row.original)}
-        disabled={alreadyRequested}
-      >
+      Cell: (cell: any) => <><button
+      type="button"
+      className="btn btn-secondary"
+      onClick={async () => createPaymentRequest(cell)}
+      disabled={alreadyRequested}
+    >
       Paiment demandé
-      </button> 
-      <button
-        type="button"
-        className="btn btn-primary"
-        onClick={async () => createPayment(cell.row.original)}
-      >
-        Argent reçu
-      </button>
-      </>
+    </button> 
+    <Button>Paiement reçu</Button></>,
     },
   ];
 
-  console.log(memberships);
-
   useEffect(() => {
     getNotPaidMemberships();
+    getAllMemberships();
   }, []);
   const paymentReceived = async () => {
     await getNotPaidMemberships();
   };
   return (
     <div>
-      <h1>
-        Gestion de paiements, nous sommes le{' '}
+      <h1>Gestion des paiements</h1>
+      <p>Nous sommes le{' '}
         <u>{moment().locale('fr').format('LL')}</u>
       </p>
       <p>En attente d'action:{' '}{memberships.length}</p>
@@ -158,10 +150,10 @@ export const Payment = () => {
           ))}
         </Tab>
         <Tab eventKey="running" title={tabRunningTitle}>
-          <DataTable 
-            data={allMemberships}
-            columns={COLUMNS}
-          />
+        <DataTable 
+          data={allMemberships}
+          columns={COLUMNS}
+        />
         </Tab>
       </Tabs>
     </div>
