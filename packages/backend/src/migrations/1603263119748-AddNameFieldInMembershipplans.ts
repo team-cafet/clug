@@ -1,8 +1,8 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddNameFieldInMembershipplans implements MigrationInterface {
+export class AddNameFieldInMembershipplans1603263119748 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('ALTER TABLE table_name ADD name character varying');    
+    await queryRunner.query('ALTER TABLE membership_plan ADD name character varying');    
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {

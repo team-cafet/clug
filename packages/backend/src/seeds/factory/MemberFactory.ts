@@ -89,7 +89,7 @@ export class MemberFactory implements IFactory<Member> {
     const newPaymentRequest = new PaymentRequest();
     newPaymentRequest.amount = plan.price;
     newPaymentRequest.date = newMembership.startDate;
-    newPaymentRequest.description = `${plan.type} - ${plan.description}`;
+    newPaymentRequest.description = `${plan.type} - ${plan.name}`;
 
     newMembership.paymentRequest = newPaymentRequest;
 
