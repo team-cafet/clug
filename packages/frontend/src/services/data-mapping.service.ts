@@ -1,7 +1,7 @@
 import { PlanType } from '../libs/interfaces/membershipPlan.interface';
 import moment from 'moment';
 
-export const getPlanName = (id: number | undefined): string => {
+export const getPlanTypeName = (id: number | undefined): string => {
   switch (id) {
     case PlanType.weekly:
       return 'hebdomadaire';

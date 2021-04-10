@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMembershipPlan } from '../../../libs/interfaces/membershipPlan.interface';
-import { getPlanName } from '../../../services/data-mapping.service';
+import { getPlanTypeName } from '../../../services/data-mapping.service';
 import { membershipPlanService } from '../../../services/membership-plan.service';
 import { DataTable } from '../../molecules/DataTable';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
@@ -19,7 +19,7 @@ export const MembershipPlan = () => {
   .map((plan) => ({
     ...plan,
     tacit: plan.tacit ? 'oui' : 'non',
-    type: getPlanName(plan.type),
+    type: getPlanTypeName(plan.type),
   }));
 
   const COLUMNS = [

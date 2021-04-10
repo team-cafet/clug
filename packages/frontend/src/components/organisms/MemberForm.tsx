@@ -19,7 +19,7 @@ import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
-import { getPlanName } from '../../services/data-mapping.service';
+import { getPlanTypeName } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
@@ -413,7 +413,9 @@ export const MemberForm = (props: IProps) => {
                 <option></option>
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
-                    {`${getPlanName(plan.type)}, ${plan.name}, ${plan.price}.-`}
+                    {`${plan.name}, ${getPlanTypeName(plan.type)}, ${
+                      plan.price
+                    }.-`}
                   </option>
                 ))}
               </Field>
