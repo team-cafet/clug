@@ -7,6 +7,7 @@ import { membershipPlanService } from '../../../services/membership-plan.service
 import { DataTable } from '../../molecules/DataTable';
 import {ReactComponent as EditIcon} from '../../../assets/edit.svg';
 import {DeleteBtnWithConfirmation} from '../../molecules/Buttons/DeleteBtnWithConfirmation';
+import './MembershipPlan.scss';
 
 export const MembershipPlan = () => {
   const [plans, getAllMembershipPlans, setMembershipPlans] = useGetAllFromService<IMembershipPlan>({
@@ -29,10 +30,13 @@ export const MembershipPlan = () => {
     {
       Header: 'Type',
       accessor: 'type',
+      disableFilters: true,
     },
     {
       Header: 'Prix',
       accessor: 'price',
+      disableFilters: true,
+
     },
     {
       Header: 'Edit',
