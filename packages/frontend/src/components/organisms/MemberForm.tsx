@@ -413,7 +413,7 @@ export const MemberForm = (props: IProps) => {
                 <option></option>
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
-                    {`${getPlanName(plan.type)}, ${plan.price}.-`}
+                    {`${getPlanName(plan.type)}, ${plan.name}, ${plan.price}.-`}
                   </option>
                 ))}
               </Field>
