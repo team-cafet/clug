@@ -6,12 +6,14 @@ import { OrganisationCtrl } from '../controllers/organisation';
 import { check } from 'express-validator';
 import { Member } from '../models/Member';
 import { Permissions } from '../config/auth';
+import { fileConfig } from '../config/file';
 
 export const memberRouter = (): IRouter => {
   const app = PromiseRouter();
   const memberCtrl = new MemberCtrl();
   const organisationCtrl = new OrganisationCtrl();
   const guard = ExpressJWTPermissions();
+  const upload = fileConfig().multer.memberpicture;
 
   const readPermission = guard.check([
     [Permissions.admin],
@@ -56,6 +58,8 @@ export const memberRouter = (): IRouter => {
       res.send(data);
     }
   );
+
+  app.put('/picture', [writePermission], upload.single('picture') ,memberCtrl.updateMemberPicture);
 
   app.put(
     '/:id',

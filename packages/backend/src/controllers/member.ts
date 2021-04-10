@@ -6,6 +6,7 @@ import { EXISTING_GROUPS } from '../config/auth';
 import { Staff } from '../models/Staff';
 import { Request, Response } from 'express';
 import * as ControllerUtils from '../util/controller-utils';
+import { IRequestWithFile } from '../libs/interfaces/IRequestWithFile';
 
 export class MemberCtrl extends RESTController<Member> {
   constructor() {
@@ -120,5 +121,15 @@ export class MemberCtrl extends RESTController<Member> {
     }
 
     return false;
+  }
+  
+
+  public updateMemberPicture = async (req: IRequestWithFile, res: Response) => {
+    console.log(req.file);
+
+
+
+
+    return res.status(200).send(req.file);
   }
 }

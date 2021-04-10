@@ -1,5 +1,5 @@
 {
-  "name": "backend-v2-test",
+  "name": "backend-v2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -22,6 +22,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.884.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "class-validator": "^0.12.2",
@@ -34,6 +35,8 @@
     "faker": "^5.4.0",
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
     "pg": "^8.3.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.25",
