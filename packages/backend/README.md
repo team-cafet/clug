@@ -32,7 +32,7 @@ npm run watch-debug
 
 ## Docker thing
 docker-compose down --rmi local -v //Delete all containers
-docker-compose up -d //Run docker containers
+docker-compose up -d //Build containers
 
 ## libs used
 
