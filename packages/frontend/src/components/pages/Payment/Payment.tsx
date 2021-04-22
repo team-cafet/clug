@@ -4,8 +4,6 @@ import { IMembership } from '../../../libs/interfaces/membership.interface';
 import {} from '../../../services/member.service';
 import { membershipService } from '../../../services/membership.service';
 import { PaymentCard } from '../../molecules/paymentCard';
-<<<<<<< Updated upstream
-=======
 import { Tabs, Tab, Button } from 'react-bootstrap';
 import { DataTable } from '../../molecules/DataTable';
 import { getPlanName } from '../../../services/data-mapping.service';
@@ -13,7 +11,6 @@ import { paymentRequestService } from '../../../services/paymentRequest.service'
 import { createCallChain } from 'typescript';
 import { IPayment } from '../../../libs/interfaces/payment.interface';
 import { paymentService } from '../../../services/payment.service';
->>>>>>> Stashed changes
 
 export const Payment = () => {
   const [memberships, setMemberships] = useState<IMembership[]>([]);
@@ -22,8 +19,6 @@ export const Payment = () => {
     const memberships = await membershipService.getNotPaid();
     setMemberships(memberships?.data);
   };
-<<<<<<< Updated upstream
-=======
   const getAllMemberships = async (): Promise<void> => {
     const allMemberships = await membershipService.getAll();
     setAllMemberships(allMemberships?.data);
@@ -135,7 +130,6 @@ export const Payment = () => {
 
   console.log(memberships);
 
->>>>>>> Stashed changes
   useEffect(() => {
     getNotPaidMemberships();
   }, []);
@@ -147,18 +141,6 @@ export const Payment = () => {
       <h1>
         Gestion de paiements, nous sommes le{' '}
         <u>{moment().locale('fr').format('LL')}</u>
-<<<<<<< Updated upstream
-      </h1>
-      {memberships.map((membership) => (
-        <PaymentCard
-          key={membership.id}
-          memberShip={membership}
-          onPaymentReceivedFunction={() => {
-            paymentReceived();
-          }}
-        ></PaymentCard>
-      ))}
-=======
       </p>
       <p>En attente d'action:{' '}{memberships.length}</p>
       <Tabs
@@ -182,7 +164,6 @@ export const Payment = () => {
           />
         </Tab>
       </Tabs>
->>>>>>> Stashed changes
     </div>
   );
 };
