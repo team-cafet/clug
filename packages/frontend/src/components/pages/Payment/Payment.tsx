@@ -39,9 +39,9 @@ export const Payment = () => {
         date: new Date(),
         description: 'demandé manuellement',
       });
-      await membershipService.update(membership.id, {
+      /* await membershipService.update(membership.id, {
         paymentRequest: newPaymentRequest?.data,
-      });
+      }); */
       setAlreadyRequested(true);
     } catch (e) {
       console.error('error on createPaymentRequest()', e);
@@ -109,12 +109,13 @@ export const Payment = () => {
       accessor: 'lol',
       disableFilters: true,
       disableSortBy: true,
-      Cell: (cell: any) => <><button
-      type="button"
-      className="btn btn-secondary"
-      onClick={async () => createPaymentRequest(cell)}
-      disabled={alreadyRequested}
-    >
+      Cell: (cell: any) => <>
+      <button
+        type="button"
+        className="btn btn-secondary"
+        onClick={async () => createPaymentRequest(cell.row.original)}
+        disabled={!!cell.row.original.paymentRequest}
+      >
       Paiment demandé
     </button> 
     <Button>Paiement reçu</Button></>,
