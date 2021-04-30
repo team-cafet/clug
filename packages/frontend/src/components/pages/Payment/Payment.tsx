@@ -140,21 +140,18 @@ export const Payment = () => {
         defaultActiveKey={'late'}
       >
         <Tab eventKey="late" title={tabLateTitle}>
-          {memberships.map((membership) => (
-            <PaymentCard
-              key={membership.id}
-              memberShip={membership}
-              onPaymentReceivedFunction={() => {
-                paymentReceived();
-              }}
-            ></PaymentCard>
-          ))}
+        <DataTable 
+            data={memberships}
+            // test if in mobile mode, change columns or other solution
+            columns={COLUMNS}
+          />
         </Tab>
         <Tab eventKey="running" title={tabRunningTitle}>
-        <DataTable 
-          data={allMemberships}
-          columns={COLUMNS}
-        />
+          <DataTable 
+            data={allMemberships}
+            // test if in mobile mode, change columns or other solution
+            columns={COLUMNS}
+          />
         </Tab>
       </Tabs>
     </div>
