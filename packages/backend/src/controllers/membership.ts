@@ -20,7 +20,7 @@ export class MembershipCtrl extends RESTController<Membership> {
    * @param res
    */
   public getAll = async (req: Request, res: Response): Promise<Response> => {
-    let membershipsRequest = await this.repository
+    const membershipsRequest = await this.repository
       .createQueryBuilder('membership')
       .innerJoinAndSelect('membership.member', 'member')
       .innerJoinAndSelect('member.user', 'memberUser')

@@ -10,7 +10,7 @@ class APIPaymentRequest extends APIResource {
     paymentRequest: IPaymentRequest;
     membership: IMembership;
   }) {
-    return POST('payment-requests/paymen-request-membership', body);
+    return POST('payment-requests/payment-request-membership', body);
   }
 }
 

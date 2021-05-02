@@ -3,8 +3,8 @@ import { PaymentRequest } from '../models/PaymentRequest';
 import { getRepository } from 'typeorm';
 
 export class PaymentRequestCtrl extends RESTController<PaymentRequest> {
-
-  constructor(){    
+  constructor() {
     super(getRepository(PaymentRequest));
   }
+
 }
