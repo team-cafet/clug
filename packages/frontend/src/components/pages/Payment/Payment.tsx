@@ -14,8 +14,8 @@ import { paymentService } from '../../../services/payment.service';
 export const Payment = () => {
   const [memberships, setMemberships] = useState<IMembership[]>([]);
   const [allMemberships, setAllMemberships] = useState<IMembership[]>([]);
-  const tabLateTitle= `Paiements d'abos échus (${memberships.length})`;
-  const tabRunningTitle= `Paiements d'abos en cours (${allMemberships.length})`;
+  const tabLateTitle = `Paiements d'abos échus (${memberships.length})`;
+  const tabRunningTitle = `Paiements d'abos en cours (${allMemberships.length})`;
 
   const getNotPaidMemberships = async (): Promise<void> => {
     const memberships = await membershipService.getNotPaid();
@@ -34,15 +34,26 @@ export const Payment = () => {
   ): Promise<void> => {
     if (!membership.plan) return; // TODO: how to correctly check non nullity of some fields more globally ?
     try {
-      const newPaymentRequest = await paymentRequestService.add({
+      const newPaymentRequest = await paymentRequestService.createPaymenRequestAndUpdateMembership(
+        {
+          paymentRequest: {
+            amount: membership.plan.price,
+            date: new Date(),
+            description: 'demandé manuellement',
+            hasBeenCanceled: false,
+          },
+          membership,
+        }
+      );
+      /* const newPaymentRequest = await paymentRequestService.add({
         amount: membership.plan.price,
         date: new Date(),
         description: 'demandé manuellement',
-      });
+      }); */
       /* await membershipService.update(membership.id, {
         paymentRequest: newPaymentRequest?.data,
       }); */
-      setAlreadyRequested(true);
+      //setAlreadyRequested(true);
     } catch (e) {
       console.error('error on createPaymentRequest()', e);
     }
@@ -75,28 +86,25 @@ export const Payment = () => {
     }
   };
 
-
-
-  console.log(allMemberships);
   const COLUMNS: any[] = [
     {
       Header: 'Concerne',
       accessor: 'member.user',
-      Cell: (cell: any) => `${cell.value.firstname} ${cell.value.lastname}`
+      Cell: (cell: any) => `${cell.value.firstname} ${cell.value.lastname}`,
     },
     {
       Header: 'Abonnement',
       accessor: 'plan.type',
       disableFilters: true,
       disableSortBy: false,
-      Cell: (cell: any) => getPlanName(cell.value)
+      Cell: (cell: any) => getPlanName(cell.value),
     },
     {
       Header: 'Echéance',
       accessor: 'endDate',
       disableFilters: true,
       disableSortBy: false,
-      Cell: (cell: any) => `${moment(cell.value).locale('fr').format('LL')}`
+      Cell: (cell: any) => `${moment(cell.value).locale('fr').format('LL')}`,
     },
     {
       Header: 'Prix',
@@ -109,16 +117,25 @@ export const Payment = () => {
       accessor: 'lol',
       disableFilters: true,
       disableSortBy: true,
-      Cell: (cell: any) => <>
-      <button
-        type="button"
-        className="btn btn-secondary"
-        onClick={async () => createPaymentRequest(cell.row.original)}
-        disabled={!!cell.row.original.paymentRequest}
-      >
-      Paiment demandé
-    </button> 
-    <Button>Paiement reçu</Button></>,
+      Cell: (cell: any) => (
+        <>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={async () => createPaymentRequest(cell.row.original)}
+            disabled={!!cell.row.original.paymentRequest}
+          >
+            Paiment demandé
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={async () => createPayment(cell.row.original)}
+          >
+            Argent reçu
+          </button>
+        </>
+      ),
     },
   ];
 
@@ -132,22 +149,20 @@ export const Payment = () => {
   return (
     <div>
       <h1>Gestion des paiements</h1>
-      <p>Nous sommes le{' '}
-        <u>{moment().locale('fr').format('LL')}</u>
+      <p>
+        Nous sommes le <u>{moment().locale('fr').format('LL')}</u>
       </p>
-      <p>En attente d'action:{' '}{memberships.length}</p>
-      <Tabs
-        defaultActiveKey={'late'}
-      >
+      <p>En attente d'action: {memberships.length}</p>
+      <Tabs defaultActiveKey={'late'}>
         <Tab eventKey="late" title={tabLateTitle}>
-        <DataTable 
+          <DataTable
             data={memberships}
             // test if in mobile mode, change columns or other solution
             columns={COLUMNS}
           />
         </Tab>
         <Tab eventKey="running" title={tabRunningTitle}>
-          <DataTable 
+          <DataTable
             data={allMemberships}
             // test if in mobile mode, change columns or other solution
             columns={COLUMNS}

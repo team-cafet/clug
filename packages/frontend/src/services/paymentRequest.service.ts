@@ -1,3 +1,17 @@
-import { APIResource } from './api.service';
+import { IMembership } from '../libs/interfaces/membership.interface';
+import { IPaymentRequest } from '../libs/interfaces/paymentRequest.interface';
+import { APIResource, POST } from './api.service';
 
-export const paymentRequestService = new APIResource('payment-requests');
+class APIPaymentRequest extends APIResource {
+  constructor() {
+    super('payment-requests');
+  }
+  createPaymenRequestAndUpdateMembership(body: {
+    paymentRequest: IPaymentRequest;
+    membership: IMembership;
+  }) {
+    return POST('payment-requests/paymen-request-membership', body);
+  }
+}
+
+export const paymentRequestService = new APIPaymentRequest();
