@@ -23,7 +23,8 @@ export enum METHODS {
 export async function makeApiRequest(
   url: string,
   method: METHODS,
-  body: any = undefined
+  body: any = undefined,
+  options?: any
 ) {
   const instance = axios.create({ baseURL: API_URL });
 
@@ -31,6 +32,15 @@ export async function makeApiRequest(
   const token = getToken();
   if (token) {
     instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+
+  if (options?.formdata) {
+    instance.defaults.headers['Content-Type'] = 'multipart/form-data';
+    const formData = new FormData();
+    Object.keys(body).forEach((key) => {
+      formData.append(key, body[key]);
+    });
+    body = formData;
   }
 
   switch (method) {
@@ -67,8 +77,8 @@ export function GET(url: string, body?: any) {
  * @param {*} url
  * @param {*} body
  */
-export function POST(url: string, body: any) {
-  return makeApiRequest(url, METHODS.POST, body);
+export function POST(url: string, body: any, options?: any) {
+  return makeApiRequest(url, METHODS.POST, body, options);
 }
 
 /**
@@ -76,8 +86,8 @@ export function POST(url: string, body: any) {
  * @param {*} url
  * @param {*} body
  */
-export function PUT(url: string, body: any) {
-  return makeApiRequest(url, METHODS.PUT, body);
+export function PUT(url: string, body: any, options?: any) {
+  return makeApiRequest(url, METHODS.PUT, body, options);
 }
 
 /**
@@ -133,6 +143,16 @@ export class APIResource {
    */
   update(id: number, body: any) {
     return PUT(`${this.resourceURL}/${id}`, body);
+  }
+
+  /**
+   * 
+   * @param id 
+   * @param body 
+   * @returns 
+   */
+  updateWithFormData(id: number, body: any) {
+    return PUT(`${this.resourceURL}/${id}`, body, { formdata: true });
   }
 
   /**

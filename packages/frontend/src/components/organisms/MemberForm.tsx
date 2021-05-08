@@ -1,6 +1,14 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
+import {
+  Alert,
+  Button,
+  Container,
+  Image,
+  Row,
+  Col,
+  Form as FormBootstrap,
+} from 'react-bootstrap';
 //@ts-ignore
 import Select from 'react-select';
 import { Link, useHistory } from 'react-router-dom';
@@ -29,9 +37,11 @@ import {
   MultiSelect,
   MultiSelectFormik,
 } from '../molecules/Select/MultiSelect';
+import { getToken } from '../../services/auth.service';
 
 interface IFormValue {
   global: string;
+  picture: any;
   memberLabels: number[];
   club: undefined | number;
   user: {
@@ -77,6 +87,9 @@ export const MemberForm = (props: IProps) => {
   const history = useHistory();
 
   let initialValues: IFormValue = {
+    picture: `/api/members/picture/${
+      props.member?.user?.pictureURL
+    }?token=${getToken()}`,
     memberLabels: [],
     club: undefined,
     user: {
@@ -183,7 +196,7 @@ export const MemberForm = (props: IProps) => {
           });
         }
 
-        await memberService.update(props.member.id, values);
+        await memberService.updateWithFormData(props.member.id, values);
         // window.location.reload();
       } else {
         const response = await memberService.add({
@@ -262,11 +275,44 @@ export const MemberForm = (props: IProps) => {
 
           {/* General member information */}
           <div className="memberForm">
+            <Container className="mb-5">
+              <Row className="justify-content-center mb-3">
+                <Col md={4} className="d-flex justify-content-center">
+                  {props.member?.user?.pictureURL && (
+                    <Image
+                      width={128}
+                      height={128}
+                      className="img-thumbnail"
+                      src={values.picture}
+                      alt=""
+                      roundedCircle
+                    />
+                  )}
+                </Col>
+              </Row>
+              <Row className="justify-content-center">
+                <Col md={4}>
+                  <FormBootstrap.File
+                    id="picture"
+                    name="picture"
+                    onChange={(event: any) => {
+                      setFieldValue(
+                        'picture',
+                        (event as any)?.currentTarget?.files[0]
+                      );
+                    }}
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+            </Container>
+
             <h1>
               {props.member
                 ? 'Modifier le profil de ' + props.member.user?.firstname
                 : 'Créer un membre'}
             </h1>
+
             <label htmlFor="club">Club</label>
             <Field
               component="select"
