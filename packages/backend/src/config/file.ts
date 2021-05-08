@@ -1,46 +1,35 @@
 import { join as joinPath } from 'path';
 import multer from 'multer';
-import AWS from 'aws-sdk';
-import multerS3 from 'multer-s3';
 
 interface IFileConfig {
-  s3: any;
+  s3: {
+    endpoint: string,
+    accessKeyId: string ,
+    secretAccessKey: string, 
+    sslEnabled: boolean,
+    s3ForcePathStyle: boolean
+  };
   multer: {
     general: any,
     memberpicture: any
   };
-  buckets: {
-    memberpicture: string;
-  };
 }
 
 export const fileConfig = (): IFileConfig => {
-  const spacesEndpoint = new AWS.Endpoint(
-    process.env.S3_ENDPOINT ?? 'http://localstack-s3:4566'
-  );
-  const s3 = new AWS.S3({
-    endpoint: spacesEndpoint,
-    accessKeyId: process.env.S3_SPACES_KEY ?? 'key',
-    secretAccessKey: process.env.S3_SPACES_SECRET ?? 'secret',
-    sslEnabled: false
-  });
+  
+  const s3 = { 
+    endpoint: process.env.S3_ENDPOINT ?? 'http://localstack-s3:4566',
+    accessKeyId: process.env.S3_SPACES_KEY ?? 'test',
+    secretAccessKey: process.env.S3_SPACES_SECRET ?? 'test',
+    sslEnabled: process.env.S3_SSL === 'true' ?? false,
+    s3ForcePathStyle: process.env.S3_FORCE_PATH_STYLE ? process.env.S3_FORCE_PATH_STYLE === 'true' : true
+  };
 
-  console.log(s3);
+  const MULTER_MEMORY_STORAGE = multer.memoryStorage();
 
-  const memberpicture = 'member-picture';
   const uploadFolder = joinPath(process.cwd(), '/uploads');
   const multerMemberPicture = multer({
-    dest: uploadFolder,
-    storage: multerS3({
-      s3: s3,
-      bucket: memberpicture,
-      metadata: function (req, file, cb) {
-        cb(null, { fieldName: file.fieldname });
-      },
-      key: function (req, file, cb) {
-        cb(null, Date.now().toString());
-      },
-    }),
+    storage: MULTER_MEMORY_STORAGE
   });
 
   return {
@@ -48,9 +37,6 @@ export const fileConfig = (): IFileConfig => {
     multer: {
       general: multer({dest: uploadFolder}),
       memberpicture: multerMemberPicture 
-    },
-    buckets: {
-      memberpicture,
-    },
+    }
   };
 };

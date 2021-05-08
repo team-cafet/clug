@@ -59,36 +59,11 @@ export const memberRouter = (): IRouter => {
     }
   );
 
-  app.put('/picture', [writePermission], upload.single('picture') ,memberCtrl.updateMemberPicture);
-
   app.put(
     '/:id',
     [writePermission, check('user.email').isEmail()],
-    async (req, res, next) => {
-      const id = Number.parseInt(req.params.id);
-
-      if (!(await organisationCtrl.findOneByID(req.body?.organisation?.id))) {
-        res
-          .status(404)
-          .send(`No organisation found with id ${req.body?.organisation?.id}`);
-        return;
-      }
-
-      if (!(await memberCtrl.isUserCanUpdateMember(id, req.user.user.id))) {
-        res.status(403).send('You are not authorized to update this member');
-        return;
-      }
-
-      const member = new Member();
-      member.user = req.body.user;
-      member.note = req.body.note;
-      member.organisation = req.body.organisation;
-      member.memberLabels = req.body.memberLabels;
-      member.club = req.body.club;
-
-      const data = await memberCtrl.update(id, member);
-      res.send(data);
-    }
+    upload.single('picture'),
+    memberCtrl.putWithPicture 
   );
 
   app.delete('/:id', writePermission, async (req, res, next) => {

@@ -101,7 +101,6 @@ services:
     volumes:
       - './.localstack:/tmp/localstack'
 
-
 volumes:
   db_data:
   api_node_modules_data:
