@@ -9,10 +9,11 @@ import * as ControllerUtils from '../util/controller-utils';
 import { IRequestWithFile } from '../libs/interfaces/IRequestWithFile';
 import { S3FileManager } from '../libs/classes/S3FileManager';
 import { OrganisationCtrl } from './organisation';
-import { logger } from '../config/ormconfig';
+import { checkFileTypeFromName } from '../util/file-utils';
 
 export class MemberCtrl extends RESTController<Member> {
   public S3_PICTURE_BUCKET = (): string => 'member-picture';
+  public AUTHORIZED_IMAGE_EXTENSION = ():string[] => ['png', 'jpeg', 'jpg'];
   protected organisationCtrl = new OrganisationCtrl();
   protected s3FileManager: S3FileManager = new S3FileManager();
 
@@ -88,11 +89,17 @@ export class MemberCtrl extends RESTController<Member> {
   ): Promise<Response> => {
     if (req.file) {
       const filename = `${Date.now()}-${req.file.originalname}`;
+
+      if(! checkFileTypeFromName(filename, this.AUTHORIZED_IMAGE_EXTENSION())){
+        return res.sendStatus(400);
+      }
+
       try {
         await this.s3FileManager.uploadToBucket(
           this.S3_PICTURE_BUCKET(),
           filename,
-          req.file.buffer
+          req.file.buffer,
+          req.file.mimetype
         );
 
         req.body.user = { ...req.body.user, pictureURL: filename };
@@ -128,6 +135,23 @@ export class MemberCtrl extends RESTController<Member> {
     const data = await this.update(id, member);
     return res.send(data);
   };
+
+  /**
+   * 
+   * @param req 
+   * @param res 
+   * @returns 
+   */
+  public getPicture = async (req: Request, res: Response): Promise<Response> => {
+    // TODO: Maybe check if the user has the right to get picture
+    const filename = req.params.filename;
+    const file = await this.s3FileManager.getFromBucket(this.S3_PICTURE_BUCKET(), filename);
+    const contentType = `image/${checkFileTypeFromName(filename, this.AUTHORIZED_IMAGE_EXTENSION())}`;
+
+    res.set('Content-Type', contentType);
+    return res.send(file.Body);
+  }
+
 
   /**
    * Check if the current user can create a member in the organisation

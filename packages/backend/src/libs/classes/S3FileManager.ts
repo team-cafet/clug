@@ -1,7 +1,11 @@
 import { fileConfig } from '../../config/file';
 import { S3, Endpoint } from 'aws-sdk';
 import { Readable } from 'node:stream';
-import { ClientConfiguration } from 'aws-sdk/clients/s3';
+import {
+  ClientConfiguration,
+  GetObjectOutput,
+  PutObjectOutput,
+} from 'aws-sdk/clients/s3';
 
 export class S3FileManager {
   protected fileConfig;
@@ -22,16 +26,31 @@ export class S3FileManager {
   public async uploadToBucket(
     bucket: string,
     filename: string,
-    file: Readable | ReadableStream | Blob
-  ): Promise<any> {
+    file: Readable | ReadableStream | Blob,
+    contentType?: string
+  ): Promise<PutObjectOutput> {
     return new Promise((resolve, reject) =>
       this.s3Client.putObject(
         {
           Bucket: bucket,
           Key: filename,
           Body: file,
-          // ContentType: req.file.mimetype,
-          ACL: 'public-read',
+          ContentType: contentType ?? null
+        },
+        (err, data) => (err ? reject(err) : resolve(data))
+      )
+    );
+  }
+
+  public async getFromBucket(
+    bucket: string,
+    filename: string
+  ): Promise<GetObjectOutput> {
+    return new Promise((resolve, reject) =>
+      this.s3Client.getObject(
+        {
+          Bucket: bucket,
+          Key: filename
         },
         (err, data) => (err ? reject(err) : resolve(data))
       )

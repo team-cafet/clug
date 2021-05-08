@@ -25,6 +25,8 @@ export const memberRouter = (): IRouter => {
   ]);
 
   app.get('/', readPermission, memberCtrl.getAll);
+  
+  app.get('/picture/:filename', readPermission, memberCtrl.getPicture);
 
   app.get('/:id', readPermission, memberCtrl.getOne);
 

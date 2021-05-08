@@ -99,7 +99,8 @@ services:
       - DATA_DIR=/tmp/localstack/data
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
-      - './.localstack:/tmp/localstack'
+      - ./.localstack:/tmp/localstack
+      - ./docker/aws:/docker-entrypoint-initaws.d
 
 volumes:
   db_data:
