@@ -32,6 +32,9 @@ export class MembershipPlan extends BaseEntity implements IResourceWithOrganisat
   price: number;
 
   @Column({ type: 'varchar', nullable: true })
+  name: string;
+
+  @Column({ type: 'varchar', nullable: true })
   description: string;
 
   @Column({
