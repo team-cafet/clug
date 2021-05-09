@@ -1,71 +1,29 @@
-import { RESTController } from '../libs/classes/RESTController';
 import { Member } from '../models/Member';
 import { getRepository } from 'typeorm';
 import { User } from '../models/User';
 import { EXISTING_GROUPS } from '../config/auth';
 import { Staff } from '../models/Staff';
 import { Request, Response } from 'express';
-import * as ControllerUtils from '../util/controller-utils';
 import { IRequestWithFile } from '../libs/interfaces/IRequestWithFile';
 import { S3FileManager } from '../libs/classes/S3FileManager';
 import { OrganisationCtrl } from './organisation';
 import { checkFileTypeFromName } from '../util/file-utils';
+import { OrganisationRESTController } from '../libs/classes/OrganisationRESTController';
 
-export class MemberCtrl extends RESTController<Member> {
+export class MemberCtrl extends OrganisationRESTController<Member> {
   public S3_PICTURE_BUCKET = (): string => 'member-picture';
-  public AUTHORIZED_IMAGE_EXTENSION = ():string[] => ['png', 'jpeg', 'jpg'];
+  public AUTHORIZED_IMAGE_EXTENSION = (): string[] => ['png', 'jpeg', 'jpg'];
   protected organisationCtrl = new OrganisationCtrl();
   protected s3FileManager: S3FileManager = new S3FileManager();
 
   constructor() {
     super(getRepository(Member));
-  }
 
-  /**
-   * Custom getAll is needed here as we need to give only the member which
-   * are related to the current user.
-   * @param req
-   * @param res
-   */
-  public getAll = async (req: Request, res: Response): Promise<Response> => {
-    if (req.user.user.group === 'admin') {
-      return res.send(await this.findAll());
-    }
-
-    const userRepo = getRepository(User);
-    const currentUser = await userRepo.findOne(req.user.user.id);
-    const currentOrg = await currentUser.getUserOrganisation();
-
-    return res.send(
-      await this.findAll({
+    this.options = {
+      findAllOptions: {
         relations: ['user'],
-        where: { organisation: currentOrg.id },
-      })
-    );
-  };
-
-  /**
-   * Custom getOne is needed here as we need to give only member which are in the
-   * user organisation and with more information like tag
-   * @param req
-   * @param res
-   */
-  public getOne = async (req: Request, res: Response): Promise<Response> => {
-    const id = Number.parseInt(req.params.id);
-
-    if (req.user.user.group === EXISTING_GROUPS.ADMIN) {
-      return res.send(
-        await this.repository.findOneOrFail(id, {
-          relations: ['user', 'memberLabels'],
-        })
-      );
-    }
-    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
-      req
-    );
-
-    return res.send(
-      await this.repository.findOneOrFail(id, {
+      },
+      findOneOptions: {
         relations: [
           'user',
           'memberLabels',
@@ -73,10 +31,9 @@ export class MemberCtrl extends RESTController<Member> {
           'memberships',
           'memberships.plan',
         ],
-        where: { organisation: currentOrg.id },
-      })
-    );
-  };
+      },
+    };
+  }
 
   /**
    *
@@ -90,7 +47,7 @@ export class MemberCtrl extends RESTController<Member> {
     if (req.file) {
       const filename = `${Date.now()}-${req.file.originalname}`;
 
-      if(! checkFileTypeFromName(filename, this.AUTHORIZED_IMAGE_EXTENSION())){
+      if (!checkFileTypeFromName(filename, this.AUTHORIZED_IMAGE_EXTENSION())) {
         return res.sendStatus(400);
       }
 
@@ -137,21 +94,29 @@ export class MemberCtrl extends RESTController<Member> {
   };
 
   /**
-   * 
-   * @param req 
-   * @param res 
-   * @returns 
+   *
+   * @param req
+   * @param res
+   * @returns
    */
-  public getPicture = async (req: Request, res: Response): Promise<Response> => {
+  public getPicture = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
     // TODO: Maybe check if the user has the right to get picture
     const filename = req.params.filename;
-    const file = await this.s3FileManager.getFromBucket(this.S3_PICTURE_BUCKET(), filename);
-    const contentType = `image/${checkFileTypeFromName(filename, this.AUTHORIZED_IMAGE_EXTENSION())}`;
+    const file = await this.s3FileManager.getFromBucket(
+      this.S3_PICTURE_BUCKET(),
+      filename
+    );
+    const contentType = `image/${checkFileTypeFromName(
+      filename,
+      this.AUTHORIZED_IMAGE_EXTENSION()
+    )}`;
 
     res.set('Content-Type', contentType);
     return res.send(file.Body);
-  }
-
+  };
 
   /**
    * Check if the current user can create a member in the organisation

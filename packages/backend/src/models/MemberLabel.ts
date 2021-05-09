@@ -8,14 +8,15 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   ManyToOne,
-  ManyToMany
+  ManyToMany,
+  BaseEntity
 } from 'typeorm';
-import { User } from './User';
 import { Member } from './Member';
 import { Organisation } from './Organisation';
+import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
 @Entity()
-export class MemberLabel {
+export class MemberLabel extends BaseEntity implements IResourceWithOrganisation {
   @PrimaryGeneratedColumn()
   id: number;
 
