@@ -7,7 +7,6 @@ import { membershipPlanService } from '../../../services/membership-plan.service
 import { DataTable } from '../../molecules/DataTable';
 import { ReactComponent as EditIcon } from '../../../assets/edit.svg';
 import { DeleteBtnWithConfirmation } from '../../molecules/Buttons/DeleteBtnWithConfirmation';
-import './MembershipPlan.scss';
 
 export const MembershipPlan = () => {
   const [
