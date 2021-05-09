@@ -1,7 +1,6 @@
 version: '3.7'
 
 services:
-  # Main Express.js application container
   backend:
     build: 
       context: ./packages/backend/
@@ -13,18 +12,20 @@ services:
       - db
 
     volumes:
+      - './packages/backend/:/code/'
+      # Persist installed node_modules into a named volume.
+      - 'api_node_modules_data:/code/node_modules'
+
+      # Below is how you must create the docker-compose in production
       # Mount each required directory and file independently instead of mounting
       # the entire current directory. Otherwise the `node_modules` directory
       # from the developer's machine is mounted into the container as well.
       # There is no guarantee that this machine is running the same architecture
       # as the container's image. In that case, packages with C code compiled on
       # the machine, such as bcrypt, might not work in the container.
-      - './packages/backend/:/code/'
       # - './packages/backend/package.json:/code/package.json'
       # - './packages/backend/package-lock.json:/code/package-lock.json'
       # - './packages/backend/tsconfig.json:/code/tsconfig.json:ro'
-      # Persist installed node_modules into a named volume.
-      - 'api_node_modules_data:/code/node_modules'
 
     environment:
       DATABASE_NAME: clug-db
@@ -48,19 +49,21 @@ services:
     command: npm run start
 
     volumes:
+      - './packages/frontend/:/code/'
+      # Persist installed node_modules into a named volume.
+      - 'frontend_node_modules_data:/code/node_modules'
+
+      # Below is how you must create the docker-compose in production
       # Mount each required directory and file independently instead of mounting
       # the entire current directory. Otherwise the `node_modules` directory
       # from the developer's machine is mounted into the container as well.
       # There is no guarantee that this machine is running the same architecture
       # as the container's image. In that case, packages with C code compiled on
       # the machine, such as bcrypt, might not work in the container.
-      - './packages/frontend/:/code/'
       # - './packages/frontend/public:/code/public'
       # - './packages/frontend/package.json:/code/package.json'
       # - './packages/frontend/package-lock.json:/code/package-lock.json'
       # - './packages/frontend/tsconfig.json:/code/tsconfig.json:ro'
-      # Persist installed node_modules into a named volume.
-      - 'frontend_node_modules_data:/code/node_modules'
     
     links:
       - backend
