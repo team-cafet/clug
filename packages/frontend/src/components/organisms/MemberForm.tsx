@@ -1,8 +1,12 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
-//@ts-ignore
-import Select from 'react-select';
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Form as FormBootstrap,
+} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IClub } from '../../libs/interfaces/club.interface';
@@ -15,23 +19,19 @@ import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
-import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
-import {
-  generatePlanEndDate,
-  getPlanName,
-} from '../../services/data-mapping.service';
+import { getPlanName } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
-import {
-  MultiSelect,
-  MultiSelectFormik,
-} from '../molecules/Select/MultiSelect';
+import { MultiSelectFormik } from '../molecules/Select/MultiSelect';
+import { getToken } from '../../services/auth.service';
+import { Thumb } from '../molecules/Thumb';
 
 interface IFormValue {
   global: string;
+  picture: any;
   memberLabels: number[];
   club: undefined | number;
   user: {
@@ -77,6 +77,11 @@ export const MemberForm = (props: IProps) => {
   const history = useHistory();
 
   let initialValues: IFormValue = {
+    picture: props.member?.user?.pictureURL
+      ? `/api/members/picture/${
+          props.member?.user?.pictureURL
+        }?token=${getToken()}`
+      : null,
     memberLabels: [],
     club: undefined,
     user: {
@@ -170,10 +175,6 @@ export const MemberForm = (props: IProps) => {
         ),
       };
 
-      const planSelected = membershipPlanList.find(
-        (plan) => plan.id === parseInt(selectedMembershipPlanID)
-      );
-
       if (props.member?.id) {
         if (!isMembershipSet()) {
           await membershipService.add({
@@ -183,8 +184,7 @@ export const MemberForm = (props: IProps) => {
           });
         }
 
-        await memberService.update(props.member.id, values);
-        // window.location.reload();
+        await memberService.updateWithFormData(props.member.id, values);
       } else {
         const response = await memberService.add({
           ...values,
@@ -262,11 +262,35 @@ export const MemberForm = (props: IProps) => {
 
           {/* General member information */}
           <div className="memberForm">
+            <Container className="mb-5">
+              <Row className="justify-content-center mb-3">
+                <Col md={4} className="d-flex justify-content-center">
+                  <Thumb src={values.picture} />
+                </Col>
+              </Row>
+              <Row className="justify-content-center">
+                <Col md={4}>
+                  <FormBootstrap.File
+                    id="picture"
+                    name="picture"
+                    onChange={(event: any) => {
+                      setFieldValue(
+                        'picture',
+                        (event as any)?.currentTarget?.files[0]
+                      );
+                    }}
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+            </Container>
+
             <h1>
               {props.member
                 ? 'Modifier le profil de ' + props.member.user?.firstname
                 : 'Créer un membre'}
             </h1>
+
             <label htmlFor="club">Club</label>
             <Field
               component="select"

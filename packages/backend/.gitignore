@@ -41,3 +41,5 @@ yarn.lock
 # ignore builded file in public
 public/*
 !public/.gitkeep
+
+uploads/*
