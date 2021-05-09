@@ -92,7 +92,7 @@ export class OrganisationRESTController<T extends IResourceWithOrganisation> ext
         .send(APIMessageList.NO_RESOURCE_FOUND);
     }
 
-    if (resource.organisation.id || resource.organisation?.id !== userOrg.id) {
+    if (resource.organisation?.id !== userOrg.id) {
       return res
         .status(403)
         .send(APIMessageList.NO_PERMISSION_TO_MODIFY);

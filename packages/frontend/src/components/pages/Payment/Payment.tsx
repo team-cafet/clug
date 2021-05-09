@@ -10,6 +10,7 @@ import { paymentRequestService } from '../../../services/paymentRequest.service'
 import { createCallChain } from 'typescript';
 import { IPayment } from '../../../libs/interfaces/payment.interface';
 import { paymentService } from '../../../services/payment.service';
+import { getPlanTypeName } from '../../../services/data-mapping.service';
 
 export const Payment = () => {
   const [memberships, setMemberships] = useState<IMembership[]>([]);
@@ -26,7 +27,7 @@ export const Payment = () => {
     setAllMemberships(allMemberships?.data);
   };
   const [alreadyRequested, setAlreadyRequested] = useState<boolean>(false);
- /*  useEffect(() => {
+  /*  useEffect(() => {
     if (membership.paymentRequest) setAlreadyRequested(true);
   }, [memberShip.paymentRequest]); */
   const createPaymentRequest = async (
@@ -97,7 +98,7 @@ export const Payment = () => {
       accessor: 'plan.type',
       disableFilters: true,
       disableSortBy: false,
-      Cell: (cell: any) => getPlanName(cell.value),
+      Cell: (cell: any) => getPlanTypeName(cell.value),
     },
     {
       Header: 'Echéance',

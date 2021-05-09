@@ -1,10 +1,8 @@
 import moment, { Moment } from 'moment';
 import 'moment/locale/fr';
 import React, { useEffect, useState } from 'react';
-import { Badge } from 'react-bootstrap';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { IPayment } from '../../libs/interfaces/payment.interface';
-import { getPlanName } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { paymentService } from '../../services/payment.service';
 import { paymentRequestService } from '../../services/paymentRequest.service';

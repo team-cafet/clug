@@ -6,7 +6,8 @@ class APIPaymentRequest extends APIResource {
   constructor() {
     super('payment-requests');
   }
-  createPaymenRequestAndUpdateMembership(body: {
+
+  public createPaymenRequestAndUpdateMembership(body: {
     paymentRequest: IPaymentRequest;
     membership: IMembership;
   }) {
