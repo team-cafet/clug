@@ -109,20 +109,20 @@ export const Payment = () => {
     },
     {
       Header: 'Prix',
-      accessor: 'planPrice',
+      accessor: 'plan.price',
       disableFilters: true,
       disableSortBy: false,
     },
     {
       Header: '',
-      accessor: 'lol',
+      accessor: 'any',
       disableFilters: true,
       disableSortBy: true,
       Cell: (cell: any) => (
         <>
           <button
             type="button"
-            className="btn btn-secondary"
+            className="btn btn-secondary smallMarginRight"
             onClick={async () => createPaymentRequest(cell.row.original)}
             disabled={!!cell.row.original.paymentRequest}
           >
@@ -147,6 +147,7 @@ export const Payment = () => {
   const paymentReceived = async () => {
     await getNotPaidMemberships();
   };
+  console.log(memberships);
   return (
     <div>
       <h1>Gestion des paiements</h1>

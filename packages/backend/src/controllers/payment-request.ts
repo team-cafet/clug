@@ -1,7 +1,7 @@
 import { RESTController } from '../libs/classes/RESTController';
 import { PaymentRequest } from '../models/PaymentRequest';
 import { getConnection, getRepository } from 'typeorm';
-import { Membership } from 'src/models/Membership';
+import { Membership } from '../models/Membership';
 
 export class PaymentRequestCtrl extends RESTController<PaymentRequest> {
   constructor() {
