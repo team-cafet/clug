@@ -147,7 +147,6 @@ export const Payment = () => {
   const paymentReceived = async () => {
     await getNotPaidMemberships();
   };
-  console.log(memberships);
   return (
     <div>
       <h1>Gestion des paiements</h1>
