@@ -276,21 +276,22 @@ export const MemberForm = (props: IProps) => {
           <div className="memberForm">
             <Container className="mb-5">
               <Row className="justify-content-center mb-3">
-                <Col md={4} className="d-flex justify-content-center">
-                  <Thumb src={thumbPicture} />
-                </Col>
+                <div className="d-flex justify-content-center">
+                  <Thumb src={values.picture} />
+                  <label htmlFor="picture" className="clug-file-input">Choose a file</label>
+                </div>
               </Row>
               <Row className="justify-content-center">
-                <Col md={4}>
+                <Col>
                   <FormBootstrap.File
                     id="picture"
                     name="picture"
+                    className="clug-hide-input"
                     onChange={(event: any) => {
                       const picture = (event as any)?.currentTarget?.files[0];
                       setFieldValue('picture', picture);
                       setThumbPicture(picture);
                     }}
-                    className="form-control"
                   />
                 </Col>
               </Row>
