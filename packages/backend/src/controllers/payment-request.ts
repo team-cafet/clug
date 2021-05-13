@@ -30,7 +30,7 @@ export class PaymentRequestCtrl extends RESTController<PaymentRequest> {
 
           body.membership.paymentRequest = newRequest;
 
-          const updatedMbership = await transactionalEntityManager
+          const updatedMembership = await transactionalEntityManager
             .getRepository(PaymentRequest)
             .save(body.membership);
         }

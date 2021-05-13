@@ -182,19 +182,4 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
 
     return false;
   }
-
-  public async updateMemberBalance(
-    memberID: number,
-    value: number
-  ): Promise<Member> {
-    let memberUpdated: Member;
-    try {
-      const member = await getRepository(Member).findOneOrFail(memberID);
-      member.balance += value;
-      memberUpdated = await getRepository(Member).save(member);
-    } catch (error) {
-      console.error('unable to update member balance');
-    }
-    return memberUpdated;
-  }
 }
