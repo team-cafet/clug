@@ -2,12 +2,8 @@ name: Backend CI
 
 on:
   push:
-    paths: 
-      - './packages/backend/**'
     branches: [ master, develop ]
   pull_request:
-    paths: 
-      - './packages/backend/**'
     branches: [ master, develop ]
 
 jobs:
