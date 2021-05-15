@@ -10,7 +10,7 @@ import {
   ManyToOne,
   OneToMany,
   ManyToMany,
-  JoinTable
+  JoinTable,
 } from 'typeorm';
 import { Club } from './Club';
 import { Membership } from './Membership';
@@ -19,9 +19,10 @@ import { Organisation } from './Organisation';
 import { PaymentRequest } from './PaymentRequest';
 import { User } from './User';
 import { MemberLabel } from './MemberLabel';
+import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
 @Entity()
-export class Member extends BaseEntity {
+export class Member extends BaseEntity implements IResourceWithOrganisation {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -32,14 +33,14 @@ export class Member extends BaseEntity {
 
   // ----------------------------- Financial informations
 
-  @Column({ type: 'real', nullable: false, default:0 })
+  @Column({ type: 'real', nullable: false, default: 0 })
   balance: number;
 
   // ----------------------------- Special information
 
   @Column({ type: 'json', nullable: true })
   customInformations: any;
-  
+
   // ----------------------------- Timestamps
 
   @CreateDateColumn()
@@ -56,14 +57,14 @@ export class Member extends BaseEntity {
   @ManyToOne((type) => Organisation, (organisation) => organisation.members, {
     onDelete: 'NO ACTION',
     nullable: false,
-    eager: true
+    eager: true,
   })
   organisation: Organisation;
 
   @ManyToOne((type) => Club, (club) => club.members, {
     onDelete: 'NO ACTION',
     nullable: true,
-    cascade: true
+    cascade: true,
   })
   club: Club;
 
@@ -71,26 +72,26 @@ export class Member extends BaseEntity {
     nullable: false,
     onDelete: 'NO ACTION',
     eager: true,
-    cascade: true
+    cascade: true,
   })
   memberships: Membership[];
 
   @OneToMany((type) => Payment, (payment) => payment.member, {
     nullable: true,
-    onDelete: 'NO ACTION'
+    onDelete: 'NO ACTION',
   })
   payments: Payment[];
 
   @ManyToMany((type) => PaymentRequest, (payReq) => payReq.members, {
     nullable: true,
-    onDelete: 'NO ACTION'
+    onDelete: 'NO ACTION',
   })
   paymentRequests: PaymentRequest[];
 
   @ManyToMany((type) => MemberLabel, (label) => label.members, {
     nullable: true,
     onDelete: 'NO ACTION',
-    cascade: true
+    cascade: true,
   })
   @JoinTable({ name: 'members_labels' })
   memberLabels: MemberLabel[];
@@ -99,8 +100,7 @@ export class Member extends BaseEntity {
     onDelete: 'NO ACTION',
     nullable: false,
     cascade: true,
-    eager: true
+    eager: true,
   })
   user: User;
-  
 }

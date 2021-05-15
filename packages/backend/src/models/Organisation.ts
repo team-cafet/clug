@@ -6,7 +6,8 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn
+  DeleteDateColumn,
+  BaseEntity
 } from 'typeorm';
 import { Member } from './Member';
 import { Club } from './Club';
@@ -14,7 +15,7 @@ import { MemberLabel } from './MemberLabel';
 import { MembershipPlan } from './MembershipPlan';
 
 @Entity()
-export class Organisation {
+export class Organisation extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

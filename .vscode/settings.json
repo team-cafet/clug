@@ -1,15 +1,16 @@
 {
   "eslint.workingDirectories": [
     "./packages/backend",
-    "./packages/backend-v2",
     "./packages/frontend",
-    "./packages/frontend-v2"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
   "eslint.validate": ["javascript", "typescript"],
   "editor.formatOnSave": false,
+  "editor.detectIndentation": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
   "[javascript]": {
     "editor.formatOnSave": false
   },

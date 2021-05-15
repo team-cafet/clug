@@ -15,6 +15,10 @@ export const paymentRequestRouter = (): IRouter => {
   app.get('/', readPermission, paymentRequestCtrl.getAll);
   app.get('/:id', readPermission, paymentRequestCtrl.getOne);
   app.post('/', writePermission, paymentRequestCtrl.post);
-  
+  app.post('/payment-request-membership', async (req, res, next) => {
+    const paymentRequest = await paymentRequestCtrl.createWithMembership(req.body);
+    return res.send(paymentRequest);
+  });
+
   return app;
 };

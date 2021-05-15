@@ -4,10 +4,11 @@ import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membership-plan.service';
+import { getPlanTypeName } from '../../services/data-mapping.service';
 
 interface IFormValue {
   price?: number;
-  description?: string;
+  name?: string;
   type?: number;
   tacit?: boolean;
   organisation?: {};
@@ -22,7 +23,7 @@ interface IProps {
 export const MembershipPlanForm = (props: IProps) => {
   const initialValues: IFormValue = props.membershipPlan
     ? { ...props.membershipPlan }
-    : { price: 0, description: '', type: 1, tacit: false };
+    : { price: 0, name: '', type: 1, tacit: false };
   const [typeList, setTypeList] = useState([]);
   const [typeSelectedId, setTypeSelectedId] = useState(0);
   const [tacitSelected, setTacitSelected] = useState(false);
@@ -92,6 +93,11 @@ export const MembershipPlanForm = (props: IProps) => {
               name="price"
               type="number"
             />
+            <label>Nom</label>
+            <Field
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              name="name"
+            />
             <label htmlFor="type">Type</label>
             <Field
               as="select"
@@ -103,7 +109,7 @@ export const MembershipPlanForm = (props: IProps) => {
             >
               {typeList.map((type, index) => (
                 <option key={index} value={index}>
-                  {`${type}`}
+                  {`${getPlanTypeName(index)}`}
                 </option>
               ))}
             </Field>

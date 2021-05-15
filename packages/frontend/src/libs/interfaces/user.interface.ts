@@ -7,4 +7,5 @@ export interface IUser {
   lastname?: string;
   organisation: IOrganisation;
   birthdate: string;
+  pictureURL?: string;
 }

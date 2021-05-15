@@ -11,30 +11,34 @@ export const connectionOptions = (): ConnectionOptions => {
     port: Number.parseInt(process.env.DATABASE_PORT, 10),
     synchronize: process.env.DATABASE_SYNCHRONIZE === 'true',
     dropSchema: process.env.DATABASE_DROPSCHEMA === 'true',
-    logging: true,
+    logging: ['error', 'warn'],
     entities: [joinPath(process.cwd(), '/build/models/*.js')],
     subscribers: [joinPath(process.cwd(), '/build/subscribers/*.js')],
     migrations: [joinPath(process.cwd(), '/build/migrations/*.js')],
     cli: {
       entitiesDir: '/src/models',
       migrationsDir: 'src/migrations',
-      subscribersDir: '/src/subscribers'
-    }
+      subscribersDir: '/src/subscribers',
+    },
   };
   switch (process.env.NODE_ENV) {
-    case 'production':
-      return { ...defaultConnectionOption, logging: false, synchronize: false };
+  case 'production':
+    return {
+      ...defaultConnectionOption,
+      logging: ['error'],
+      synchronize: false,
+    };
 
-    case 'test':
-      return {
-        ...defaultConnectionOption,
-        logging: false,
-        dropSchema: true,
-        synchronize: true,
-        entities: [__dirname + '/../models/*.{js,ts}']
-      };
+  case 'test':
+    return {
+      ...defaultConnectionOption,
+      logging: false,
+      dropSchema: true,
+      synchronize: true,
+      entities: [__dirname + '/../models/*.{js,ts}'],
+    };
 
-    default:
-      return defaultConnectionOption;
+  default:
+    return defaultConnectionOption;
   }
 };

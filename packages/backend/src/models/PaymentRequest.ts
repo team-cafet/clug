@@ -9,7 +9,8 @@ import {
   DeleteDateColumn,
   ManyToMany,
   JoinTable,
-  OneToOne
+  OneToOne,
+  BaseEntity
 } from 'typeorm';
 import { User } from './User';
 import { Member } from './Member';
@@ -17,7 +18,7 @@ import { Membership } from './Membership';
 import { Payment } from './Payment';
 
 @Entity()
-export class PaymentRequest {
+export class PaymentRequest extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -1,7 +1,7 @@
 import { PlanType } from '../libs/interfaces/membershipPlan.interface';
 import moment from 'moment';
 
-export const getPlanName = (id: number | undefined): string => {
+export const getPlanTypeName = (id: number | undefined): string => {
   switch (id) {
     case PlanType.weekly:
       return 'hebdomadaire';
@@ -18,9 +18,12 @@ export const getPlanName = (id: number | undefined): string => {
   }
 };
 
-export const generatePlanEndDate = (startDate: Date, planType?: number): Date => {
+export const generatePlanEndDate = (
+  startDate: Date,
+  planType?: number
+): Date => {
   let endDate = moment();
-  
+
   switch (planType) {
     case PlanType.weekly:
       endDate.add(1, 'weeks');
@@ -37,8 +40,9 @@ export const generatePlanEndDate = (startDate: Date, planType?: number): Date =>
     case PlanType.annual:
       endDate.add(1, 'years');
       break;
-      default: console.error('not a valid membershipPlan type')
+    default:
+      console.error('not a valid membershipPlan type');
   }
 
-  return endDate.toDate()
+  return endDate.toDate();
 };

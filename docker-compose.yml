@@ -1,7 +1,6 @@
 version: '3.7'
 
 services:
-  # Main Express.js application container
   backend:
     build: 
       context: ./packages/backend/
@@ -13,18 +12,20 @@ services:
       - db
 
     volumes:
+      - './packages/backend/:/code/'
+      # Persist installed node_modules into a named volume.
+      - 'api_node_modules_data:/code/node_modules'
+
+      # Below is how you must create the docker-compose in production
       # Mount each required directory and file independently instead of mounting
       # the entire current directory. Otherwise the `node_modules` directory
       # from the developer's machine is mounted into the container as well.
       # There is no guarantee that this machine is running the same architecture
       # as the container's image. In that case, packages with C code compiled on
       # the machine, such as bcrypt, might not work in the container.
-      - './packages/backend/src:/code/src:ro'
-      - './packages/backend/package.json:/code/package.json:ro'
-      - './packages/backend/package-lock.json:/code/package-lock.json:ro'
-      - './packages/backend/tsconfig.json:/code/tsconfig.json:ro'
-      # Persist installed node_modules into a named volume.
-      - 'api_node_modules_data:/code/node_modules'
+      # - './packages/backend/package.json:/code/package.json'
+      # - './packages/backend/package-lock.json:/code/package-lock.json'
+      # - './packages/backend/tsconfig.json:/code/tsconfig.json:ro'
 
     environment:
       DATABASE_NAME: clug-db
@@ -48,19 +49,21 @@ services:
     command: npm run start
 
     volumes:
+      - './packages/frontend/:/code/'
+      # Persist installed node_modules into a named volume.
+      - 'frontend_node_modules_data:/code/node_modules'
+
+      # Below is how you must create the docker-compose in production
       # Mount each required directory and file independently instead of mounting
       # the entire current directory. Otherwise the `node_modules` directory
       # from the developer's machine is mounted into the container as well.
       # There is no guarantee that this machine is running the same architecture
       # as the container's image. In that case, packages with C code compiled on
       # the machine, such as bcrypt, might not work in the container.
-      - './packages/frontend/src:/code/src:ro'
-      - './packages/frontend/public:/code/public:ro'
-      - './packages/frontend/package.json:/code/package.json:ro'
-      - './packages/frontend/package-lock.json:/code/package-lock.json:ro'
-      - './packages/frontend/tsconfig.json:/code/tsconfig.json:ro'
-      # Persist installed node_modules into a named volume.
-      - 'frontend_node_modules_data:/code/node_modules'
+      # - './packages/frontend/public:/code/public'
+      # - './packages/frontend/package.json:/code/package.json'
+      # - './packages/frontend/package-lock.json:/code/package-lock.json'
+      # - './packages/frontend/tsconfig.json:/code/tsconfig.json:ro'
     
     links:
       - backend
@@ -87,7 +90,32 @@ services:
     ports:
       - 8080:8080
 
+  localstack-s3:
+    image: localstack/localstack:latest
+    container_name: localstack-s3
+    ports:
+      - '4566:4566'
+    environment:
+      - EDGE_PORT=4566
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - ./.localstack:/tmp/localstack
+      - ./docker/aws:/docker-entrypoint-initaws.d
+
 volumes:
   db_data:
   api_node_modules_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./packages/backend/node_modules
   frontend_node_modules_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./packages/frontend/node_modules

@@ -1,8 +1,12 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
-//@ts-ignore
-import Select from 'react-select';
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Form as FormBootstrap,
+} from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IClub } from '../../libs/interfaces/club.interface';
@@ -15,19 +19,19 @@ import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
-import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
-import {
-  generatePlanEndDate,
-  getPlanName,
-} from '../../services/data-mapping.service';
+import { getPlanTypeName } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
+import { MultiSelectFormik } from '../molecules/Select/MultiSelect';
+import { getToken } from '../../services/auth.service';
+import { Thumb } from '../molecules/Thumb';
 
 interface IFormValue {
   global: string;
+  picture: any;
   memberLabels: number[];
   club: undefined | number;
   user: {
@@ -73,6 +77,11 @@ export const MemberForm = (props: IProps) => {
   const history = useHistory();
 
   let initialValues: IFormValue = {
+    picture: props.member?.user?.pictureURL
+      ? `/api/members/picture/${
+          props.member?.user?.pictureURL
+        }?token=${getToken()}`
+      : null,
     memberLabels: [],
     club: undefined,
     user: {
@@ -120,7 +129,7 @@ export const MemberForm = (props: IProps) => {
    */
   const terminateMembership = async () => {
     if (!props.member?.id) return;
-    if(!props.member.memberships || !props.member.memberships[0]) return;
+    if (!props.member.memberships || !props.member.memberships[0]) return;
 
     const idMembership = props.member.memberships[0].id;
 
@@ -163,25 +172,19 @@ export const MemberForm = (props: IProps) => {
           availableMemberLabels.find(
             (availabelLabel) => availabelLabel.id === Number.parseInt(label)
           )
-        ),        
+        ),
       };
-      
-      const planSelected = membershipPlanList.find(
-        (plan) => plan.id === parseInt(selectedMembershipPlanID)
-      );
 
       if (props.member?.id) {
-        if(!isMembershipSet()){
+        if (!isMembershipSet()) {
           await membershipService.add({
             member: props.member,
             startDate: membershipStartDate,
-            plan : selectedMembershipPlanID
-          })
+            plan: selectedMembershipPlanID,
+          });
         }
 
-        await memberService.update(props.member.id, values);
-        // window.location.reload();
-
+        await memberService.updateWithFormData(props.member.id, values);
       } else {
         const response = await memberService.add({
           ...values,
@@ -193,14 +196,13 @@ export const MemberForm = (props: IProps) => {
         await membershipService.add({
           member: memberResult,
           startDate: membershipStartDate,
-          plan : selectedMembershipPlanID
-        })
+          plan: selectedMembershipPlanID,
+        });
 
         backToMemberPage();
       }
 
       setDisplayAlertMemberSaved(true);
-
     } catch (err) {
       console.error(err);
       if (err.message) {
@@ -244,7 +246,8 @@ export const MemberForm = (props: IProps) => {
       {({ isSubmitting, errors, setFieldValue, values }) => (
         <Form className="form">
           {displayAlertMemberSaved && (
-            <NotificationSuccess onClose={()=>setDisplayAlertMemberSaved(false)}
+            <NotificationSuccess
+              onClose={() => setDisplayAlertMemberSaved(false)}
             >
               Le membre a bien été sauvé !
             </NotificationSuccess>
@@ -259,11 +262,35 @@ export const MemberForm = (props: IProps) => {
 
           {/* General member information */}
           <div className="memberForm">
+            <Container className="mb-5">
+              <Row className="justify-content-center mb-3">
+                <Col md={4} className="d-flex justify-content-center">
+                  <Thumb src={values.picture} />
+                </Col>
+              </Row>
+              <Row className="justify-content-center">
+                <Col md={4}>
+                  <FormBootstrap.File
+                    id="picture"
+                    name="picture"
+                    onChange={(event: any) => {
+                      setFieldValue(
+                        'picture',
+                        (event as any)?.currentTarget?.files[0]
+                      );
+                    }}
+                    className="form-control"
+                  />
+                </Col>
+              </Row>
+            </Container>
+
             <h1>
               {props.member
                 ? 'Modifier le profil de ' + props.member.user?.firstname
                 : 'Créer un membre'}
             </h1>
+
             <label htmlFor="club">Club</label>
             <Field
               component="select"
@@ -271,7 +298,9 @@ export const MemberForm = (props: IProps) => {
               name="club"
               className="form-control"
             >
-              <option key={null} value={undefined}>Sélectionner un club...</option>
+              <option key={null} value={undefined}>
+                Sélectionner un club...
+              </option>
               {avaiableClubs.map((club) => (
                 <option key={club.id} value={club.id}>
                   {club.name}
@@ -316,17 +345,16 @@ export const MemberForm = (props: IProps) => {
             />
 
             <label htmlFor="memberLabels">Tag</label>
-            <Field
-              component="select"
-              multiple={true}
-              name="memberLabels"
-              className="form-control"
-            >
-              {availableMemberLabels.map((label) => (
-                <option key={label.id} value={label.id}>
-                  {label.name}
-                </option>
-              ))}
+            <Field name="memberLabels" multiple className="form-control">
+              {(fieldProps: any) => (
+                <MultiSelectFormik
+                  {...fieldProps}
+                  options={availableMemberLabels.map((label) => ({
+                    value: label.id,
+                    label: label.name,
+                  }))}
+                />
+              )}
             </Field>
 
             <h2>Adresse</h2>
@@ -385,7 +413,9 @@ export const MemberForm = (props: IProps) => {
                 <option></option>
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
-                    {`${getPlanName(plan.type)}, ${plan.price}.-`}
+                    {`${plan.name}, ${getPlanTypeName(plan.type)}, ${
+                      plan.price
+                    }.-`}
                   </option>
                 ))}
               </Field>
@@ -413,15 +443,17 @@ export const MemberForm = (props: IProps) => {
               </Button>
             </div>
 
-            <hr/>            
-            
-            {props.member?.id && <DeleteBtnWithConfirmation
-              buttontext="Supprimer ce membre"
-              item={`${initialValues.user.firstname}`}
-              onYes={() => deleteMember()}
-            />}
+            <hr />
+
+            {props.member?.id && (
+              <DeleteBtnWithConfirmation
+                buttontext="Supprimer ce membre"
+                item={`${initialValues.user.firstname}`}
+                onYes={() => deleteMember()}
+              />
+            )}
           </div>
-          
+
           <div className="save-cancel-group memberForm">
             <Link to="/admin/members">
               <Button variant="secondary" className="cancel">

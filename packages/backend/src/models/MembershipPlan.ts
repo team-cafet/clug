@@ -7,11 +7,13 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToMany
+  OneToMany,
+  BaseEntity,
 } from 'typeorm';
 import { Membership } from './Membership';
 import { Club } from './Club';
 import { Organisation } from './Organisation';
+import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
 export enum PlanType {
   weekly,
@@ -22,12 +24,15 @@ export enum PlanType {
 }
 
 @Entity()
-export class MembershipPlan {
+export class MembershipPlan extends BaseEntity implements IResourceWithOrganisation{
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'real', nullable: false })
   price: number;
+
+  @Column({ type: 'varchar', nullable: true })
+  name: string;
 
   @Column({ type: 'varchar', nullable: true })
   description: string;
@@ -36,7 +41,7 @@ export class MembershipPlan {
     type: 'enum',
     enum: PlanType,
     default: PlanType.monthly,
-    nullable: false
+    nullable: false,
   })
   type: PlanType;
 
@@ -59,21 +64,25 @@ export class MembershipPlan {
   @OneToMany((type) => Membership, (membership) => membership.plan, {
     nullable: true,
     onDelete: 'NO ACTION',
-    eager: false
+    eager: false,
   })
   memberships: Membership[];
 
   @ManyToOne((type) => Club, (club) => club.membershipPlans, {
     onDelete: 'NO ACTION',
-    nullable: true
+    nullable: true,
   })
   club?: Club;
 
-  @ManyToOne((type) => Organisation, (organisation) => organisation.membershipPlans, {
-    onDelete: 'NO ACTION',
-    nullable: false,
-    eager: true
-  })
+  @ManyToOne(
+    (type) => Organisation,
+    (organisation) => organisation.membershipPlans,
+    {
+      onDelete: 'NO ACTION',
+      nullable: false,
+      eager: true,
+    }
+  )
   organisation: Organisation;
 
   // ----------------------------- Business Rules

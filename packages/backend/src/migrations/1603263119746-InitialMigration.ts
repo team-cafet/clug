@@ -4,8 +4,8 @@ export class InitialMigration1603263119746 implements MigrationInterface {
     name = 'InitialMigration1603263119746'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query('CREATE TYPE "membership_plan_type_enum" AS ENUM (\'0\', \'1\', \'2\', \'3\', \'4\')');
-        await queryRunner.query('CREATE TYPE "user_sexe_enum" AS ENUM (\'0\', \'1\', \'2\')');
+      await queryRunner.query('CREATE TYPE "membership_plan_type_enum" AS ENUM (\'0\', \'1\', \'2\', \'3\', \'4\')');
+      await queryRunner.query('CREATE TYPE "user_sexe_enum" AS ENUM (\'0\', \'1\', \'2\')');
 
         await queryRunner.query('CREATE TABLE "member_label" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, "organisationId" integer, CONSTRAINT "PK_b9251de62a400498a7a4f5f33f7" PRIMARY KEY ("id"))');
         await queryRunner.query('CREATE TABLE "organisation" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "description" character varying, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, CONSTRAINT "UQ_d9428f9c8e3052d6617e3aab0ed" UNIQUE ("name"), CONSTRAINT "PK_c725ae234ef1b74cce43d2d00c1" PRIMARY KEY ("id"))');
@@ -46,42 +46,42 @@ export class InitialMigration1603263119746 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query('ALTER TABLE "members_labels" DROP CONSTRAINT "FK_2b0cddcb22383e05517e6c46e12"');
-        await queryRunner.query('ALTER TABLE "members_labels" DROP CONSTRAINT "FK_46e55e4d8cd2e3c80e04ee09bee"');
-        await queryRunner.query('ALTER TABLE "paymentrequests_members" DROP CONSTRAINT "FK_0f07eac4c942e95e1bc0ef20b2f"');
-        await queryRunner.query('ALTER TABLE "paymentrequests_members" DROP CONSTRAINT "FK_36fdeb547098018a69cb3a374ec"');
-        await queryRunner.query('ALTER TABLE "club" DROP CONSTRAINT "FK_fb2ae2127243a73bf63453bdd9c"');
-        await queryRunner.query('ALTER TABLE "member" DROP CONSTRAINT "FK_08897b166dee565859b7fb2fcc8"');
-        await queryRunner.query('ALTER TABLE "member" DROP CONSTRAINT "FK_955d09117efe3a9c9cb67107fa5"');
-        await queryRunner.query('ALTER TABLE "member" DROP CONSTRAINT "FK_c2b06fef9ad9c2ed21706accf0e"');
-        await queryRunner.query('ALTER TABLE "membership" DROP CONSTRAINT "FK_855d85ae2a4a4272e31f3ed9df1"');
-        await queryRunner.query('ALTER TABLE "membership" DROP CONSTRAINT "FK_e475cfe9bc4cedda21faa674b27"');
-        await queryRunner.query('ALTER TABLE "membership" DROP CONSTRAINT "FK_3b4b41597707b13086e71727422"');
-        await queryRunner.query('ALTER TABLE "payment" DROP CONSTRAINT "FK_40f8d1745a86d3f687b149ce2b3"');
-        await queryRunner.query('ALTER TABLE "payment" DROP CONSTRAINT "FK_89ce346f102c90b97ee97a94d75"');
-        await queryRunner.query('ALTER TABLE "user" DROP CONSTRAINT "FK_974590e8d8d4ceb64e30c38e051"');
-        await queryRunner.query('ALTER TABLE "staff" DROP CONSTRAINT "FK_eba76c23bcfc9dad2479b7fd2ad"');
-        await queryRunner.query('ALTER TABLE "staff" DROP CONSTRAINT "FK_e827b9c11685b003f31a069d3bf"');
-        await queryRunner.query('ALTER TABLE "membership_plan" DROP CONSTRAINT "FK_f60e52cb6c3bbfbcc533062db73"');
-        await queryRunner.query('ALTER TABLE "membership_plan" DROP CONSTRAINT "FK_62efb7ea5ffa04bd3e811ffd43b"');
-        await queryRunner.query('ALTER TABLE "member_label" DROP CONSTRAINT "FK_579e4c88902aa74f53f9daf5b91"');
-        await queryRunner.query('DROP INDEX "IDX_2b0cddcb22383e05517e6c46e1"');
-        await queryRunner.query('DROP INDEX "IDX_46e55e4d8cd2e3c80e04ee09be"');
-        await queryRunner.query('DROP TABLE "members_labels"');
-        await queryRunner.query('DROP INDEX "IDX_0f07eac4c942e95e1bc0ef20b2"');
-        await queryRunner.query('DROP INDEX "IDX_36fdeb547098018a69cb3a374e"');
-        await queryRunner.query('DROP TABLE "paymentrequests_members"');
-        await queryRunner.query('DROP TABLE "club"');
-        await queryRunner.query('DROP TABLE "member"');
-        await queryRunner.query('DROP TABLE "membership"');
-        await queryRunner.query('DROP TABLE "payment_request"');
-        await queryRunner.query('DROP TABLE "payment"');
-        await queryRunner.query('DROP TABLE "user"');
-        await queryRunner.query('DROP TABLE "staff"');
-        await queryRunner.query('DROP TABLE "group"');
-        await queryRunner.query('DROP TABLE "membership_plan"');
-        await queryRunner.query('DROP TABLE "organisation"');
-        await queryRunner.query('DROP TABLE "member_label"');
+      await queryRunner.query('ALTER TABLE "members_labels" DROP CONSTRAINT "FK_2b0cddcb22383e05517e6c46e12"');
+      await queryRunner.query('ALTER TABLE "members_labels" DROP CONSTRAINT "FK_46e55e4d8cd2e3c80e04ee09bee"');
+      await queryRunner.query('ALTER TABLE "paymentrequests_members" DROP CONSTRAINT "FK_0f07eac4c942e95e1bc0ef20b2f"');
+      await queryRunner.query('ALTER TABLE "paymentrequests_members" DROP CONSTRAINT "FK_36fdeb547098018a69cb3a374ec"');
+      await queryRunner.query('ALTER TABLE "club" DROP CONSTRAINT "FK_fb2ae2127243a73bf63453bdd9c"');
+      await queryRunner.query('ALTER TABLE "member" DROP CONSTRAINT "FK_08897b166dee565859b7fb2fcc8"');
+      await queryRunner.query('ALTER TABLE "member" DROP CONSTRAINT "FK_955d09117efe3a9c9cb67107fa5"');
+      await queryRunner.query('ALTER TABLE "member" DROP CONSTRAINT "FK_c2b06fef9ad9c2ed21706accf0e"');
+      await queryRunner.query('ALTER TABLE "membership" DROP CONSTRAINT "FK_855d85ae2a4a4272e31f3ed9df1"');
+      await queryRunner.query('ALTER TABLE "membership" DROP CONSTRAINT "FK_e475cfe9bc4cedda21faa674b27"');
+      await queryRunner.query('ALTER TABLE "membership" DROP CONSTRAINT "FK_3b4b41597707b13086e71727422"');
+      await queryRunner.query('ALTER TABLE "payment" DROP CONSTRAINT "FK_40f8d1745a86d3f687b149ce2b3"');
+      await queryRunner.query('ALTER TABLE "payment" DROP CONSTRAINT "FK_89ce346f102c90b97ee97a94d75"');
+      await queryRunner.query('ALTER TABLE "user" DROP CONSTRAINT "FK_974590e8d8d4ceb64e30c38e051"');
+      await queryRunner.query('ALTER TABLE "staff" DROP CONSTRAINT "FK_eba76c23bcfc9dad2479b7fd2ad"');
+      await queryRunner.query('ALTER TABLE "staff" DROP CONSTRAINT "FK_e827b9c11685b003f31a069d3bf"');
+      await queryRunner.query('ALTER TABLE "membership_plan" DROP CONSTRAINT "FK_f60e52cb6c3bbfbcc533062db73"');
+      await queryRunner.query('ALTER TABLE "membership_plan" DROP CONSTRAINT "FK_62efb7ea5ffa04bd3e811ffd43b"');
+      await queryRunner.query('ALTER TABLE "member_label" DROP CONSTRAINT "FK_579e4c88902aa74f53f9daf5b91"');
+      await queryRunner.query('DROP INDEX "IDX_2b0cddcb22383e05517e6c46e1"');
+      await queryRunner.query('DROP INDEX "IDX_46e55e4d8cd2e3c80e04ee09be"');
+      await queryRunner.query('DROP TABLE "members_labels"');
+      await queryRunner.query('DROP INDEX "IDX_0f07eac4c942e95e1bc0ef20b2"');
+      await queryRunner.query('DROP INDEX "IDX_36fdeb547098018a69cb3a374e"');
+      await queryRunner.query('DROP TABLE "paymentrequests_members"');
+      await queryRunner.query('DROP TABLE "club"');
+      await queryRunner.query('DROP TABLE "member"');
+      await queryRunner.query('DROP TABLE "membership"');
+      await queryRunner.query('DROP TABLE "payment_request"');
+      await queryRunner.query('DROP TABLE "payment"');
+      await queryRunner.query('DROP TABLE "user"');
+      await queryRunner.query('DROP TABLE "staff"');
+      await queryRunner.query('DROP TABLE "group"');
+      await queryRunner.query('DROP TABLE "membership_plan"');
+      await queryRunner.query('DROP TABLE "organisation"');
+      await queryRunner.query('DROP TABLE "member_label"');
     }
 
 }
