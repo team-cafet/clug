@@ -1,6 +1,6 @@
 
 export interface IPaymentRequest {
-  id: number;
+  id?: number;
   amount: number;
   date: Date;
   hasBeenCanceled: boolean;
