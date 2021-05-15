@@ -3,18 +3,18 @@ name: Backend CI
 on:
   push:
     paths: 
-      - 'packages/backend/**'
+      - './packages/backend/**'
     branches: [ master, develop ]
   pull_request:
     paths: 
-      - 'packages/backend/**'
+      - './packages/backend/**'
     branches: [ master, develop ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    default: 
+    defaults: 
       run:
         working-directory: ./packages/backend
 
