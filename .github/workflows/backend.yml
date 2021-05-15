@@ -14,6 +14,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    default: 
+      run:
+        working-directory: ./packages/frontend
 
     steps:
       - uses: actions/checkout@v2
