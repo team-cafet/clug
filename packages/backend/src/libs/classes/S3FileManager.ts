@@ -1,6 +1,6 @@
 import { fileConfig } from '../../config/file';
 import { S3, Endpoint } from 'aws-sdk';
-import { Readable } from 'node:stream';
+import { Readable } from 'stream';
 import {
   ClientConfiguration,
   GetObjectOutput,
