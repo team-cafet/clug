@@ -19,8 +19,8 @@ export const fileConfig = (): IFileConfig => {
   
   const s3 = { 
     endpoint: process.env.S3_ENDPOINT ?? 'http://localstack-s3:4566',
-    accessKeyId: process.env.S3_SPACES_KEY ?? 'test',
-    secretAccessKey: process.env.S3_SPACES_SECRET ?? 'test',
+    accessKeyId: process.env.S3_ACCESS_KEY ?? 'test',
+    secretAccessKey: process.env.S3_SECRET_KEY ?? 'test',
     sslEnabled: process.env.S3_SSL === 'true' ?? false,
     s3ForcePathStyle: process.env.S3_FORCE_PATH_STYLE ? process.env.S3_FORCE_PATH_STYLE === 'true' : true
   };
