@@ -2,6 +2,4 @@
 
 HOLà.
 
-![alt text][logo]
-
-[logo]: ./assets/img/cap1.PNG "Logo Title Text 2"
+![alt text](./assets/img/cap1.PNG "Logo Title Text 1")
