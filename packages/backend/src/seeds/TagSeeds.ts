@@ -13,7 +13,7 @@ export class TagSeeds implements ISeeds {
     const organisations = await this.getFiveFirstOrganisation();
     const tagFactory = new TagFactory(organisations);
 
-    const tags = Factory.createMany(1000, tagFactory);
+    const tags = Factory.createMany(Number.parseInt(process.env.SEEDS_NB_TAG) ?? 1000, tagFactory);
 
     await getConnection().manager.save(tags);
   }

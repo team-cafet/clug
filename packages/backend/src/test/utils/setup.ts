@@ -10,6 +10,12 @@ import { DatabaseSeeds } from '../../seeds/DatabaseSeeds';
 import { AuthCtrl } from '../../controllers/auth';
 
 process.env.NODE_ENV = 'test';
+process.env.SEEDS_NB_CLUB = '10';
+process.env.SEEDS_NB_MEMBERSHIP = '20';
+process.env.SEEDS_NB_ORGANISATION = '5';
+process.env.SEEDS_NB_TAG = '30';
+process.env.SEEDS_NB_MEMBER = '50';
+
 config();
 
 /**
@@ -57,7 +63,11 @@ export class TestFactory {
     this._connection = await createConnection(this.options);
 
     const dbSeeds = new DatabaseSeeds();
-    await dbSeeds.run(false, false);
+    try {
+      await dbSeeds.run(false, false);
+    } catch (err) {
+      console.error('Seeding failed...', { err });
+    }
 
     this._app = initApp();
     this._server = createServer(this._app).listen(process.env.NODE_PORT);
