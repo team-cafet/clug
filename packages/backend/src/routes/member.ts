@@ -61,11 +61,12 @@ export const memberRouter = (): IRouter => {
     }
   );
 
+  app.post('/picture', [writePermission], upload.single('picture'), memberCtrl.postPicture);
+
   app.put(
     '/:id',
     [writePermission, check('user.email').isEmail()],
-    upload.single('picture'),
-    memberCtrl.putWithPicture 
+    memberCtrl.put
   );
 
   app.delete('/:id', writePermission, async (req, res, next) => {

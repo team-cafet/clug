@@ -163,6 +163,15 @@ export const MemberForm = (props: IProps) => {
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
 
+    if(values.picture) {
+      try{
+        (values as any).user.pictureURL = (await memberService.postPicture(values.picture)).pictureURL;
+        delete (values as any).picture;
+      } catch(err){
+        console.error(err);
+      }
+    }
+
     try {
       (values as any) = {
         ...values,
@@ -184,7 +193,7 @@ export const MemberForm = (props: IProps) => {
           });
         }
 
-        await memberService.updateWithFormData(props.member.id, values);
+        await memberService.update(props.member.id, values);
       } else {
         const response = await memberService.add({
           ...values,

@@ -64,7 +64,7 @@ export class Member extends BaseEntity implements IResourceWithOrganisation {
   @ManyToOne((type) => Club, (club) => club.members, {
     onDelete: 'NO ACTION',
     nullable: true,
-    cascade: true,
+    cascade: true
   })
   club: Club;
 
