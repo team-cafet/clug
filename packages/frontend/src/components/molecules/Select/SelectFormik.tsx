@@ -1,19 +1,27 @@
-import { FieldInputProps, FieldMetaProps, FormikBag } from 'formik';
-import React from 'react';
+import React, { Props } from 'react';
 import Select from 'react-select';
 
 interface IProps {
-  name: string;
-  value: any;
+  field: {
+    name: string;
+    value: any;
+    onChange: any;
+  };
   options: {
-    value: string;
+    value: number;
     label: string;
   }[];
 }
-//Use Custom in class name to prevent ambuguity with native Select component
 export const SelectFormik = (props: IProps) => {
-  console.log(props)
-  const selectedValue = props.value
+  let selectedValue =
+    props.field.value &&
+    props.options.filter((option) => option.value === props.field.value)[0];
+
+  const patchedOnChange = (option: any) => {
+    props.field.onChange({
+      currentTarget: { value: option.value, name: props.field.name },
+    });
+  };
 
   return (
     <Select
@@ -21,6 +29,7 @@ export const SelectFormik = (props: IProps) => {
       closeMenuOnSelect={true}
       value={selectedValue}
       options={props.options}
+      onChange={patchedOnChange}
     />
   );
 };

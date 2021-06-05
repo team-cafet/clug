@@ -28,7 +28,8 @@ import { NotificationSuccess } from '../molecules/Notifications/NotificationSucc
 import { MultiSelectFormik } from '../molecules/Select/MultiSelect';
 import { getToken } from '../../services/auth.service';
 import { Thumb } from '../molecules/Thumb';
-import { SelectCustom, SelectFormik } from '../molecules/Select/SelectCustom';
+import { SelectFormik } from '../molecules/Select/SelectFormik';
+import Select from 'react-select';
 
 interface IFormValue {
   global: string;
@@ -294,7 +295,8 @@ export const MemberForm = (props: IProps) => {
 
             <label htmlFor="club">Club</label>
             <Field multiple={false} name="club" className="form-control">
-              {(fieldProps: any) => (
+              {
+              (fieldProps: any) => (
                 <SelectFormik
                   {...fieldProps}
                   options={avaiableClubs.map((club) => ({
