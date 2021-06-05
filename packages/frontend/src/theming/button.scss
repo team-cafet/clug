@@ -55,18 +55,22 @@ button.btn, a.btn {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.edit, .delete {
+.edit, .delete, .whiteIcon {
     height: 1.5rem;
     width: 1.5rem;
 }
 .edit {
     fill: var(--c-primary);
 }
-
 .delete {
     fill: var(--c-secondary);
     height: 1.5rem;
     width: 1.5rem;
+}
+
+.whiteIcon {
+    fill: #fff;
+    opacity: 1;
 }
 
 .save-cancel-group {

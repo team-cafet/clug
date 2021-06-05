@@ -7,6 +7,7 @@ import {
   Col,
   Form as FormBootstrap,
 } from 'react-bootstrap';
+import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IClub } from '../../libs/interfaces/club.interface';
@@ -278,7 +279,9 @@ export const MemberForm = (props: IProps) => {
               <Row className="justify-content-center mb-3">
                 <div className="d-flex justify-content-center">
                   <Thumb src={values.picture} />
-                  <label htmlFor="picture" className="clug-file-input">Choose a file</label>
+                  <Button className="clug-file-input btn btn-primary" >
+                    <label htmlFor="picture"><EditIcon title="Modifier pic" className="whiteIcon" /></label>
+                  </Button>
                 </div>
               </Row>
               <Row className="justify-content-center">
