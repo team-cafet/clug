@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import { Member } from '../models/Member';
-import { User } from '../models/User';
+import * as ControllerUtils from '../util/controller-utils';
 import { getRepository } from 'typeorm';
 import { MemberCtrl } from './member';
 
@@ -52,15 +52,13 @@ export class DashboardCtrl {
       totalMembers: []
     };
 
-    const userRepo = getRepository(User);
-    const currentUser = await userRepo.findOne(req.user.user.id);
-    const currentOrg = await currentUser.getUserOrganisation();
+    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(req);
     if (!currentOrg) {
       return res.send(allStats);
     }
 
     const memberCtrl = new MemberCtrl();
-    allStats.totalMembers = await memberCtrl.findAll();
+    allStats.totalMembers = await memberCtrl.findAll({where: { organisation: currentOrg.id }});
 
     allStats.birthdays = await this.getAllUpcomingMemberBirthdayInOrg(
       currentOrg.id

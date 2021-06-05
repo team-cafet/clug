@@ -16,7 +16,7 @@ import {APIMessageList} from './APIMessageList';
  * the filtering of organisation
  */
 export class OrganisationRESTController<T extends IResourceWithOrganisation> extends RESTController<T>{
-  
+
 
   /**
    * Custom getAll is needed here as we need to give only the resources from
@@ -29,9 +29,7 @@ export class OrganisationRESTController<T extends IResourceWithOrganisation> ext
       return res.send(await this.findAll());
     }
 
-    const userRepo = getRepository(User);
-    const currentUser = await userRepo.findOne(req.user.user.id);
-    const currentOrg = await currentUser.getUserOrganisation();
+    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(req);
 
     return res.send(
       await this.findAll({
