@@ -74,14 +74,18 @@ export const MemberForm = (props: IProps) => {
     ).format('YYYY-MM-DD')
   );
 
-  const history = useHistory();
-
-  let initialValues: IFormValue = {
-    picture: props.member?.user?.pictureURL
+  const [thumbPicture, setThumbPicture] = useState<string | File | null>(
+    props.member?.user?.pictureURL
       ? `/api/members/picture/${
           props.member?.user?.pictureURL
         }?token=${getToken()}`
-      : null,
+      : null
+  );
+
+  const history = useHistory();
+
+  let initialValues: IFormValue = {
+    picture: null,
     memberLabels: [],
     club: undefined,
     user: {
@@ -163,11 +167,13 @@ export const MemberForm = (props: IProps) => {
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
 
-    if(values.picture) {
-      try{
-        (values as any).user.pictureURL = (await memberService.postPicture(values.picture)).pictureURL;
+    if (values.picture) {
+      try {
+        (values as any).user.pictureURL = (
+          await memberService.postPicture(values.picture)
+        ).pictureURL;
         delete (values as any).picture;
-      } catch(err){
+      } catch (err) {
         console.error(err);
       }
     }
@@ -274,7 +280,7 @@ export const MemberForm = (props: IProps) => {
             <Container className="mb-5">
               <Row className="justify-content-center mb-3">
                 <Col md={4} className="d-flex justify-content-center">
-                  <Thumb src={values.picture} />
+                  <Thumb src={thumbPicture} />
                 </Col>
               </Row>
               <Row className="justify-content-center">
@@ -283,10 +289,9 @@ export const MemberForm = (props: IProps) => {
                     id="picture"
                     name="picture"
                     onChange={(event: any) => {
-                      setFieldValue(
-                        'picture',
-                        (event as any)?.currentTarget?.files[0]
-                      );
+                      const picture = (event as any)?.currentTarget?.files[0];
+                      setFieldValue('picture', picture);
+                      setThumbPicture(picture);
                     }}
                     className="form-control"
                   />
