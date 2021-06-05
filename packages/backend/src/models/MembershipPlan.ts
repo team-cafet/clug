@@ -38,7 +38,7 @@ export class MembershipPlan extends BaseEntity implements IResourceWithOrganisat
   description: string;
 
   @Column({
-    type: 'enum',
+    type: 'simple-enum',
     enum: PlanType,
     default: PlanType.monthly,
     nullable: false,

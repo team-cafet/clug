@@ -38,7 +38,7 @@ export class Member extends BaseEntity implements IResourceWithOrganisation {
 
   // ----------------------------- Special information
 
-  @Column({ type: 'json', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   customInformations: any;
 
   // ----------------------------- Timestamps

@@ -39,6 +39,7 @@
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
     "sharp": "^0.28.3",
+    "sql.js": "^1.5.0",
     "typeorm": "^0.2.34",
     "winston": "^3.3.3",
     "yargs": "^16.0.3"

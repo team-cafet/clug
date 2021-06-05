@@ -24,8 +24,8 @@ export class MembershipPlanFactory implements IFactory<MembershipPlan> {
 
   define(): MembershipPlan {
     const membershipPlan = new MembershipPlan();
-    membershipPlan.price = faker.random.float({min:10, max: 999, precision: 2});
-    membershipPlan.tacit = faker.random.boolean();
+    membershipPlan.price = faker.datatype.float({min:10, max: 999, precision: 2});
+    membershipPlan.tacit = faker.datatype.boolean();
     membershipPlan.type = this.getRandomMembershipPlanType();
     membershipPlan.name = faker.lorem.word(1);
     membershipPlan.organisation = this.getRandomOrganisation();
