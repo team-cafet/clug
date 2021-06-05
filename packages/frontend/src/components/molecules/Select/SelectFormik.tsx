@@ -13,6 +13,7 @@ interface IProps {
   }[];
 }
 export const SelectFormik = (props: IProps) => {
+  console.log(props)
   let selectedValue =
     props.field.value &&
     props.options.filter((option) => option.value === props.field.value)[0];

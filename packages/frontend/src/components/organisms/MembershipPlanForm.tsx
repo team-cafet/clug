@@ -5,6 +5,7 @@ import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { getPlanTypeName } from '../../services/data-mapping.service';
+import { SelectFormik } from '../molecules/Select/SelectFormik';
 
 interface IFormValue {
   price?: number;
@@ -107,11 +108,21 @@ export const MembershipPlanForm = (props: IProps) => {
                 changeTypeSelected(event.target.value);
               }}
             >
-              {typeList.map((type, index) => (
+              {
+              (fieldProps: any) => (
+                <SelectFormik
+                  {...fieldProps}
+                  options={typeList.map((type: any, index: number) => ({
+                    value: index,
+                    label: `${getPlanTypeName(index)}`,
+                  }))}
+                />
+              )}
+              {/* {typeList.map((type, index) => (
                 <option key={index} value={index}>
                   {`${getPlanTypeName(index)}`}
                 </option>
-              ))}
+              ))} */}
             </Field>
             <label htmlFor="tacit">Tacite</label>
             <Field
