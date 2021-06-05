@@ -74,13 +74,7 @@ export const MemberForm = (props: IProps) => {
     ).format('YYYY-MM-DD')
   );
 
-  const [thumbPicture, setThumbPicture] = useState<string | File | null>(
-    props.member?.user?.pictureURL
-      ? `/api/members/picture/${
-          props.member?.user?.pictureURL
-        }?token=${getToken()}`
-      : null
-  );
+  const [thumbPicture, setThumbPicture] = useState<string | File | null>(props.member ? memberService.getMemberPictureURL(props.member) : null);
 
   const history = useHistory();
 
@@ -199,7 +193,10 @@ export const MemberForm = (props: IProps) => {
           });
         }
 
-        await memberService.update(props.member.id, values);
+        const response = await memberService.update(props.member.id, values);
+        
+        const completeURL = response?.data ? memberService.getMemberPictureURL(response.data) : null;
+        setThumbPicture(completeURL);
       } else {
         const response = await memberService.add({
           ...values,
@@ -226,6 +223,7 @@ export const MemberForm = (props: IProps) => {
         setFieldError('global', 'Erreur serveur...');
       }
     }
+
     setSubmitting(false);
   };
 

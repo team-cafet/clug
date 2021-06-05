@@ -1,9 +1,10 @@
-import { Member } from '../models/Member';
+import { Request, Response } from 'express';
+import sharp from 'sharp';
 import { getRepository } from 'typeorm';
+import { Member } from '../models/Member';
 import { User } from '../models/User';
 import { EXISTING_GROUPS } from '../config/auth';
 import { Staff } from '../models/Staff';
-import { Request, Response } from 'express';
 import { IRequestWithFile } from '../libs/interfaces/IRequestWithFile';
 import { S3FileManager } from '../libs/classes/S3FileManager';
 import { OrganisationCtrl } from './organisation';
@@ -48,10 +49,19 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       }
 
       try {
+        const compressedFile = await sharp(req.file.buffer)
+          .resize(500, 500, {
+            kernel: sharp.kernel.nearest,
+            fit: 'contain',
+            background: { r: 255, g: 255, b: 255, alpha: 0.5 }
+          })
+          .png({compressionLevel: 7})
+          .toBuffer();
+
         await this.s3FileManager.uploadToBucket(
           this.S3_PICTURE_BUCKET(),
           filename,
-          req.file.buffer,
+          compressedFile,
           req.file.mimetype
         );
 
