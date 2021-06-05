@@ -10,8 +10,7 @@ import { DeleteBtnWithConfirmation } from '../../molecules/Buttons/DeleteBtnWith
 
 export const MembershipPlan = () => {
   const [
-    plans,
-    getAllMembershipPlans,
+    plans,,
     setMembershipPlans,
   ] = useGetAllFromService<IMembershipPlan>({
     service: membershipPlanService,

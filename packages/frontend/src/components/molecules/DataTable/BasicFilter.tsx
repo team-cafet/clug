@@ -5,8 +5,6 @@ import {ReactComponent as SearchIcon} from '../../../assets/search.svg';
 export const BasicFilter = ({
   column: { filterValue, preFilteredRows, setFilter },
 }: any) => {
-  const count = preFilteredRows.length;
-
   return (
     <InputGroup className="mb-3">
       <FormControl

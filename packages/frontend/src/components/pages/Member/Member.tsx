@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
@@ -11,7 +11,7 @@ import '../../organisms/forms.scss';
 import { DeleteBtnWithConfirmation } from '../../molecules/Buttons/DeleteBtnWithConfirmation';
 
 export const Member = () => {
-  const [members, getAllMembers, setMembers] = useGetAllFromService<IMember>({
+  const [members,, setMembers] = useGetAllFromService<IMember>({
     service: memberService,
   });
 

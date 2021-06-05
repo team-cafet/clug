@@ -26,7 +26,6 @@ import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithCon
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
 import { MultiSelectFormik } from '../molecules/Select/MultiSelect';
-import { getToken } from '../../services/auth.service';
 import { Thumb } from '../molecules/Thumb';
 
 interface IFormValue {

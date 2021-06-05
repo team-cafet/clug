@@ -33,7 +33,7 @@ export const memberRouter = (): IRouter => {
   app.post(
     '/',
     [writePermission, check('user.email').isEmail()],
-    async (req, res, next) => {
+    async (req, res) => {
       if (!(await organisationCtrl.findOneByID(req.body?.organisation?.id))) {
         res
           .status(404)
@@ -69,7 +69,7 @@ export const memberRouter = (): IRouter => {
     memberCtrl.put
   );
 
-  app.delete('/:id', writePermission, async (req, res, next) => {
+  app.delete('/:id', writePermission, async (req, res) => {
     const id = Number.parseInt(req.params.id);
 
     if (!(await memberCtrl.isUserCanUpdateMember(id, req.user.user.id))) {
