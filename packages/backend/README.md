@@ -34,6 +34,10 @@ npm run watch-debug
 docker-compose down --rmi local -v //Delete all containers
 docker-compose up -d //Build containers
 
+## Seed database
+1. docker-compose exec backend sh
+2. npm run clug seeds
+
 ## libs used
 
 ### database
