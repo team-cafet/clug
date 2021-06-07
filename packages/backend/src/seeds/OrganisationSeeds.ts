@@ -5,7 +5,7 @@ import { OrganisationFactory } from './factory/OrganisationFactory';
 export class OrganisationSeeds implements ISeeds{
   async run(): Promise<void> {
     const organisationFactory = new OrganisationFactory();
-    const organisations = Factory.createMany(Number.parseInt(process.env.SEEDS_NB_ORGANISATION) ?? 10, organisationFactory);
+    const organisations = Factory.createMany(process.env.SEEDS_NB_ORGANISATION ? Number.parseInt(process.env.SEEDS_NB_ORGANISATION) : 10, organisationFactory);
     const testOrg = organisationFactory.define();
     testOrg.name = 'Clug';
     organisations.push(testOrg);

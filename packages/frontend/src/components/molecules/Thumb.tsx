@@ -1,4 +1,3 @@
-import { getByDisplayValue } from '@testing-library/dom';
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
 import defaultThumb from '../../assets/default_thumbnail.svg';
