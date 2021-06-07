@@ -7,6 +7,7 @@ import {
   Col,
   Form as FormBootstrap,
 } from 'react-bootstrap';
+import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IClub } from '../../libs/interfaces/club.interface';
@@ -73,7 +74,9 @@ export const MemberForm = (props: IProps) => {
     ).format('YYYY-MM-DD')
   );
 
-  const [thumbPicture, setThumbPicture] = useState<string | File | null>(props.member ? memberService.getMemberPictureURL(props.member) : null);
+  const [thumbPicture, setThumbPicture] = useState<string | File | null>(
+    props.member ? memberService.getMemberPictureURL(props.member) : null
+  );
 
   const history = useHistory();
 
@@ -193,8 +196,10 @@ export const MemberForm = (props: IProps) => {
         }
 
         const response = await memberService.update(props.member.id, values);
-        
-        const completeURL = response?.data ? memberService.getMemberPictureURL(response.data) : null;
+
+        const completeURL = response?.data
+          ? memberService.getMemberPictureURL(response.data)
+          : null;
         setThumbPicture(completeURL);
       } else {
         const response = await memberService.add({
@@ -276,21 +281,26 @@ export const MemberForm = (props: IProps) => {
           <div className="memberForm">
             <Container className="mb-5">
               <Row className="justify-content-center mb-3">
-                <Col md={4} className="d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                   <Thumb src={thumbPicture} />
-                </Col>
+                  <Button className="clug-file-input btn btn-primary">
+                    <label htmlFor="picture">
+                      <EditIcon title="Modifier pic" className="whiteIcon" />
+                    </label>
+                  </Button>
+                </div>
               </Row>
               <Row className="justify-content-center">
-                <Col md={4}>
+                <Col>
                   <FormBootstrap.File
                     id="picture"
                     name="picture"
+                    className="clug-hide-input"
                     onChange={(event: any) => {
                       const picture = (event as any)?.currentTarget?.files[0];
                       setFieldValue('picture', picture);
                       setThumbPicture(picture);
                     }}
-                    className="form-control"
                   />
                 </Col>
               </Row>

@@ -51,7 +51,7 @@ export class MemberSeeds implements ISeeds {
       tags
     );
 
-    const members = Factory.createMany(Number.parseInt(process.env.SEEDS_NB_MEMBER) ?? 1000, memberFactory);
+    const members = Factory.createMany(process.env.SEEDS_NB_MEMBER ? Number.parseInt(process.env.SEEDS_NB_MEMBER) : 1000, memberFactory);
 
     await getConnection().manager.save(members);
   }
