@@ -13,7 +13,7 @@ export class MembershipPlanSeeds implements ISeeds {
     const organisations = await this.getFiveFirstOrganisation();
     const membershipPlanFactory = new MembershipPlanFactory(organisations);
 
-    const plans = Factory.createMany(20, membershipPlanFactory);
+    const plans = Factory.createMany(Number.parseInt(process.env.SEEDS_NB_MEMBERSHIP) ?? 20, membershipPlanFactory);
 
     await Promise.all(plans.map(async (plan) => plan.save()));
   }

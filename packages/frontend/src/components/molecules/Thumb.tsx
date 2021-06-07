@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
 
 interface IProps {
-  src: string | File;
+  src: string | File | null;
   size?: number;
   alt?: string;
 }

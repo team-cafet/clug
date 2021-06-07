@@ -106,7 +106,7 @@ export class MemberFactory implements IFactory<Member> {
     member.club = this.getRandomClubFromOrganisation(organisation);
     member.memberLabels = [this.getRandomTagsFromOrganisation(organisation)];
 
-    if (faker.random.boolean()) {
+    if (faker.datatype.boolean()) {
       member.memberships = [
         this.getRandomMembershipPlanFromOrganisation(organisation),
       ];

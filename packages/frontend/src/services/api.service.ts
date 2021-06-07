@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { getToken } from './auth.service';
 
+interface IOptions {
+  formdata: any;
+}
+
 const API_URL = '/api/';
 
 /**
@@ -15,6 +19,31 @@ export enum METHODS {
 }
 
 /**
+ * Helper function to build a formdata
+ * based on https://stackoverflow.com/a/42483509
+ * @param data 
+ */
+function buildFormData(data: any) {
+  const formData = new FormData();
+  Object.keys(data).forEach((key) => {
+    const value = data[key];
+    if (
+      value &&
+      typeof value === 'object' &&
+      !(value instanceof Date) &&
+      !(value instanceof File) &&
+      !(value instanceof Blob)
+    ) {
+      formData.append(key, JSON.stringify(value));
+    } else {
+      formData.append(key, value);
+    }
+  });
+
+  return formData;
+}
+
+/**
  * General purpose function to make a request on the api
  * @param {*} url
  * @param {*} method
@@ -24,7 +53,7 @@ export async function makeApiRequest(
   url: string,
   method: METHODS,
   body: any = undefined,
-  options?: any
+  options?: IOptions
 ) {
   const instance = axios.create({ baseURL: API_URL });
 
@@ -35,12 +64,8 @@ export async function makeApiRequest(
   }
 
   if (options?.formdata) {
-    instance.defaults.headers['Content-Type'] = 'multipart/form-data';
-    const formData = new FormData();
-    Object.keys(body).forEach((key) => {
-      formData.append(key, body[key]);
-    });
-    body = formData;
+    instance.defaults.headers['Content-Type'] = 'multipart/form-data';    
+    body = buildFormData(body);
   }
 
   switch (method) {
@@ -77,7 +102,7 @@ export function GET(url: string, body?: any) {
  * @param {*} url
  * @param {*} body
  */
-export function POST(url: string, body: any, options?: any) {
+export function POST(url: string, body: any, options?: IOptions) {
   return makeApiRequest(url, METHODS.POST, body, options);
 }
 
@@ -86,7 +111,7 @@ export function POST(url: string, body: any, options?: any) {
  * @param {*} url
  * @param {*} body
  */
-export function PUT(url: string, body: any, options?: any) {
+export function PUT(url: string, body: any, options?: IOptions) {
   return makeApiRequest(url, METHODS.PUT, body, options);
 }
 
@@ -146,10 +171,10 @@ export class APIResource {
   }
 
   /**
-   * 
-   * @param id 
-   * @param body 
-   * @returns 
+   *
+   * @param id
+   * @param body
+   * @returns
    */
   updateWithFormData(id: number, body: any) {
     return PUT(`${this.resourceURL}/${id}`, body, { formdata: true });

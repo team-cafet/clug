@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { DashboardCard } from '../../molecules/DashboardCard';
+import { DashboardCard } from '../../molecules/Dashboard/DashboardCard';
+import { DashboardCardWithSubCard } from '../../molecules/Dashboard/DashboardCardWithList';
 import { dashboardService } from '../../../services/dashboard.service';
 import { IDashboardStats } from '../../../libs/interfaces/dashboard.interface';
 import { Link } from 'react-router-dom';
 import { IMember } from '../../../libs/interfaces/member.interface';
+import { Button, CardColumns } from 'react-bootstrap';
 
 export const Dashboard = () => {
   const [stats, setStats] = useState<IDashboardStats | null>(null);
@@ -26,23 +28,15 @@ export const Dashboard = () => {
   return (
     <>
       <h1>Tableau de bord</h1>
-      <div className="card-deck">
+      <CardColumns>
         <DashboardCard
           value={stats.totalMembers.length}
           description={'Nombre total de membres'}
         >
-          <ul className="list-group">
-            {stats.totalMembers.map((member: IMember) => (
-              <li className="list-group-item" key={member.id}>
-                <Link to={`/admin/members/${member.id}`}>
-                  {member.user?.firstname} {member.user?.lastname}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Button variant="primary" as={Link} to={`/admin/members`}>Voir la liste</Button>         
         </DashboardCard>
 
-        <DashboardCard
+        <DashboardCardWithSubCard
           value={stats.birthdays.length}
           description={'Membres ayant leur anniversaire bientôt'}
         >
@@ -57,23 +51,15 @@ export const Dashboard = () => {
               </li>
             ))}
           </ul>
-        </DashboardCard>
+        </DashboardCardWithSubCard>
 
         <DashboardCard
           value={stats.negativeBalanceUsers.length}
           description={'Membres devant renouveler leur abonnement'}
         >
-          <ul className="list-group">
-            {stats.negativeBalanceUsers.map((member: IMember) => (
-              <li className="list-group-item">
-                <Link to={`/admin/members/${member.id}`}>
-                  {member.user?.firstname} {member.user?.lastname}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <Button variant="primary" as={Link} to={`/admin/payments`}>Voir la liste</Button>          
         </DashboardCard>
-      </div>
+      </CardColumns>
     </>
   );
 };

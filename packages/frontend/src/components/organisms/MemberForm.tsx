@@ -26,7 +26,6 @@ import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithCon
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
 import { MultiSelectFormik } from '../molecules/Select/MultiSelect';
-import { getToken } from '../../services/auth.service';
 import { Thumb } from '../molecules/Thumb';
 
 interface IFormValue {
@@ -74,14 +73,12 @@ export const MemberForm = (props: IProps) => {
     ).format('YYYY-MM-DD')
   );
 
+  const [thumbPicture, setThumbPicture] = useState<string | File | null>(props.member ? memberService.getMemberPictureURL(props.member) : null);
+
   const history = useHistory();
 
   let initialValues: IFormValue = {
-    picture: props.member?.user?.pictureURL
-      ? `/api/members/picture/${
-          props.member?.user?.pictureURL
-        }?token=${getToken()}`
-      : null,
+    picture: null,
     memberLabels: [],
     club: undefined,
     user: {
@@ -163,6 +160,17 @@ export const MemberForm = (props: IProps) => {
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
 
+    if (values.picture) {
+      try {
+        (values as any).user.pictureURL = (
+          await memberService.postPicture(values.picture)
+        ).pictureURL;
+        delete (values as any).picture;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     try {
       (values as any) = {
         ...values,
@@ -184,7 +192,10 @@ export const MemberForm = (props: IProps) => {
           });
         }
 
-        await memberService.updateWithFormData(props.member.id, values);
+        const response = await memberService.update(props.member.id, values);
+        
+        const completeURL = response?.data ? memberService.getMemberPictureURL(response.data) : null;
+        setThumbPicture(completeURL);
       } else {
         const response = await memberService.add({
           ...values,
@@ -211,6 +222,7 @@ export const MemberForm = (props: IProps) => {
         setFieldError('global', 'Erreur serveur...');
       }
     }
+
     setSubmitting(false);
   };
 
@@ -265,7 +277,7 @@ export const MemberForm = (props: IProps) => {
             <Container className="mb-5">
               <Row className="justify-content-center mb-3">
                 <Col md={4} className="d-flex justify-content-center">
-                  <Thumb src={values.picture} />
+                  <Thumb src={thumbPicture} />
                 </Col>
               </Row>
               <Row className="justify-content-center">
@@ -274,10 +286,9 @@ export const MemberForm = (props: IProps) => {
                     id="picture"
                     name="picture"
                     onChange={(event: any) => {
-                      setFieldValue(
-                        'picture',
-                        (event as any)?.currentTarget?.files[0]
-                      );
+                      const picture = (event as any)?.currentTarget?.files[0];
+                      setFieldValue('picture', picture);
+                      setThumbPicture(picture);
                     }}
                     className="form-control"
                   />

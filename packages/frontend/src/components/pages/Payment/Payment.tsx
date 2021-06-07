@@ -1,13 +1,11 @@
 import moment from 'moment';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IMembership } from '../../../libs/interfaces/membership.interface';
 import {} from '../../../services/member.service';
 import { membershipService } from '../../../services/membership.service';
-import { PaymentCard } from '../../molecules/paymentCard';
-import { Tabs, Tab, Button } from 'react-bootstrap';
+import { Tabs, Tab } from 'react-bootstrap';
 import { DataTable } from '../../molecules/DataTable';
 import { paymentRequestService } from '../../../services/paymentRequest.service';
-import { createCallChain } from 'typescript';
 import { IPayment } from '../../../libs/interfaces/payment.interface';
 import { paymentService } from '../../../services/payment.service';
 import { getPlanTypeName } from '../../../services/data-mapping.service';
@@ -26,16 +24,14 @@ export const Payment = () => {
     const allMemberships = await membershipService.getAll();
     setAllMemberships(allMemberships?.data);
   };
-  const [alreadyRequested, setAlreadyRequested] = useState<boolean>(false);
-  /*  useEffect(() => {
-    if (membership.paymentRequest) setAlreadyRequested(true);
-  }, [memberShip.paymentRequest]); */
+  const [alreadyRequested,] = useState<boolean>(false);
+  
   const createPaymentRequest = async (
     membership: IMembership
   ): Promise<void> => {
     if (!membership.plan) return; // TODO: how to correctly check non nullity of some fields more globally ?
     try {
-      const newPaymentRequest = await paymentRequestService.createPaymenRequestAndUpdateMembership(
+      await paymentRequestService.createPaymenRequestAndUpdateMembership(
         {
           paymentRequest: {
             amount: membership.plan.price,
@@ -46,15 +42,7 @@ export const Payment = () => {
           membership,
         }
       );
-      /* const newPaymentRequest = await paymentRequestService.add({
-        amount: membership.plan.price,
-        date: new Date(),
-        description: 'demandé manuellement',
-      }); */
-      /* await membershipService.update(membership.id, {
-        paymentRequest: newPaymentRequest?.data,
-      }); */
-      //setAlreadyRequested(true);
+      
     } catch (e) {
       console.error('error on createPaymentRequest()', e);
     }
