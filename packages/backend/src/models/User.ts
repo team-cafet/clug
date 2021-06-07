@@ -57,7 +57,7 @@ export class User extends BaseEntity {
   lastname: string;
 
   @Column({
-    type: 'enum',
+    type: 'simple-enum',
     enum: Sexe,
     default: Sexe.MALE,
     nullable: true
@@ -97,7 +97,7 @@ export class User extends BaseEntity {
 
   // ----------------------------- Special information
 
-  @Column({ type: 'json', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   settings: any;
 
   // ----------------------------- Timestamps

@@ -1,14 +1,16 @@
-import { Member } from '../models/Member';
+import { Request, Response } from 'express';
+import sharp from 'sharp';
 import { getRepository } from 'typeorm';
+import { Member } from '../models/Member';
 import { User } from '../models/User';
 import { EXISTING_GROUPS } from '../config/auth';
 import { Staff } from '../models/Staff';
-import { Request, Response } from 'express';
 import { IRequestWithFile } from '../libs/interfaces/IRequestWithFile';
 import { S3FileManager } from '../libs/classes/S3FileManager';
 import { OrganisationCtrl } from './organisation';
 import { checkFileTypeFromName } from '../util/file-utils';
 import { OrganisationRESTController } from '../libs/classes/OrganisationRESTController';
+import logger from '../util/logger';
 
 export class MemberCtrl extends OrganisationRESTController<Member> {
   public S3_PICTURE_BUCKET = (): string => 'member-picture';
@@ -35,12 +37,7 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     };
   }
 
-  /**
-   *
-   * @param req
-   * @param res
-   */
-  public putWithPicture = async (
+  postPicture = async (
     req: IRequestWithFile,
     res: Response
   ): Promise<Response> => {
@@ -52,46 +49,29 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       }
 
       try {
+        const compressedFile = await sharp(req.file.buffer)
+          .resize(500, 500, {
+            kernel: sharp.kernel.nearest,
+            fit: 'contain',
+            background: { r: 255, g: 255, b: 255, alpha: 0.5 }
+          })
+          .png({compressionLevel: 7})
+          .toBuffer();
+
         await this.s3FileManager.uploadToBucket(
           this.S3_PICTURE_BUCKET(),
           filename,
-          req.file.buffer,
+          compressedFile,
           req.file.mimetype
         );
 
-        req.body.user = { ...req.body.user, pictureURL: filename };
+        return res.send({pictureURL: filename});
       } catch (err) {
-        console.error(err);
+        logger.debug(err);
         return res.sendStatus(500);
       }
     }
-
-    const id = Number.parseInt(req.params.id);
-
-    if (
-      !(await this.organisationCtrl.findOneByID(req.body?.organisation?.id))
-    ) {
-      res
-        .status(404)
-        .send(`No organisation found with id ${req.body?.organisation?.id}`);
-      return;
-    }
-
-    if (!(await this.isUserCanUpdateMember(id, req.user.user.id))) {
-      res.status(403).send('You are not authorized to update this member');
-      return;
-    }
-
-    const member = new Member();
-    member.user = req.body.user;
-    member.note = req.body.note;
-    member.organisation = req.body.organisation;
-    member.memberLabels = req.body.memberLabels;
-    member.club = req.body.club;
-
-    const data = await this.update(id, member);
-    return res.send(data);
-  };
+  }
 
   /**
    *

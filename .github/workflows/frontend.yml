@@ -2,19 +2,15 @@ name: Frontend CI
 
 on:
   push:
-    paths: 
-      - 'packages/frontend/**'
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request:
-    paths: 
-      - 'packages/frontend/**'
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    default: 
+    defaults: 
       run:
         working-directory: ./packages/frontend
 

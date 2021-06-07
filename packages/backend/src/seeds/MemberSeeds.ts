@@ -2,7 +2,7 @@ import { EXISTING_GROUPS } from '../config/auth';
 import { Factory } from '../libs/classes/Factory';
 import { ISeeds } from '../libs/interfaces/ISeeds';
 import { Group } from '../models/Group';
-import { getConnection, getRepository, In } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import { Organisation } from '../models/Organisation';
 import { MemberFactory } from './factory/MemberFactory';
 import { Club } from '../models/Club';
@@ -51,7 +51,7 @@ export class MemberSeeds implements ISeeds {
       tags
     );
 
-    const members = Factory.createMany(1000, memberFactory);
+    const members = Factory.createMany(process.env.SEEDS_NB_MEMBER ? Number.parseInt(process.env.SEEDS_NB_MEMBER) : 1000, memberFactory);
 
     await getConnection().manager.save(members);
   }

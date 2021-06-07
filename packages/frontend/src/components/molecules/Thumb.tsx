@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-bootstrap';
+import defaultThumb from '../../assets/default_thumbnail.svg';
+import './Thumb.scss';
 
 interface IProps {
-  src: string | File;
+  src: string | File | null;
   size?: number;
   alt?: string;
 }
@@ -11,7 +13,7 @@ export const Thumb = (props: IProps) => {
   let { src, size, alt } = props;
 
   if (!size) {
-    size = 256;
+    size = 200;
   }
 
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +40,17 @@ export const Thumb = (props: IProps) => {
   }, [src, thumb]);
 
   if (!src) {
-    return null;
+    return (
+      <Image
+      width={size}
+      height={size}
+      className="clug-thumb"
+      alt={alt}
+      roundedCircle
+      src={defaultThumb}
+    />
+    );
+
   }
 
   if (isLoading) {
@@ -49,7 +61,7 @@ export const Thumb = (props: IProps) => {
     <Image
       width={size}
       height={size}
-      className="img-thumbnail"
+      className="clug-thumb"
       alt={alt}
       roundedCircle
       src={thumb}
