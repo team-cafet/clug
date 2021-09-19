@@ -19,9 +19,10 @@ import { Organisation } from './Organisation';
 import { PaymentRequest } from './PaymentRequest';
 import { User } from './User';
 import { MemberLabel } from './MemberLabel';
+import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
 @Entity()
-export class Member extends BaseEntity {
+export class Member extends BaseEntity implements IResourceWithOrganisation {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -37,7 +38,7 @@ export class Member extends BaseEntity {
 
   // ----------------------------- Special information
 
-  @Column({ type: 'json', nullable: true })
+  @Column({ type: 'simple-json', nullable: true })
   customInformations: any;
 
   // ----------------------------- Timestamps

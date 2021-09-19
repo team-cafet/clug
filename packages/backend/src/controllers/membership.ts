@@ -20,21 +20,25 @@ export class MembershipCtrl extends RESTController<Membership> {
    * @param res
    */
   public getAll = async (req: Request, res: Response): Promise<Response> => {
-    let memberships = [];
+    const membershipsRequest = await this.repository
+      .createQueryBuilder('membership')
+      .innerJoinAndSelect('membership.member', 'member')
+      .innerJoinAndSelect('member.user', 'memberUser')
+      .leftJoinAndSelect('membership.paymentRequest', 'paymentRequest')
+      .leftJoinAndSelect('paymentRequest.payment', 'paymentRequestPayment')
+      .leftJoinAndSelect('member.organisation', 'organisation')
+      .innerJoinAndSelect('membership.plan', 'plan');
 
-    if (req.user.user.group === EXISTING_GROUPS.ADMIN) {
-      memberships = await this.findAll();
-    } else {
+    if (req.user.user.group !== EXISTING_GROUPS.ADMIN) {
       const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(
         req
       );
+      membershipsRequest.andWhere('member.organisation.id = :orgId', {
+        orgId: currentOrg.id,
+      });
 
-      memberships = await this.repository
-        .createQueryBuilder('membership')
-        .innerJoin('membership.member', 'member')
-        .where('member.organisationId = :orgId', { orgId: currentOrg.id })
-        .getMany();
     }
+    const memberships = await membershipsRequest.getMany();
 
     return res.send(memberships);
   };
@@ -81,28 +85,28 @@ export class MembershipCtrl extends RESTController<Membership> {
     let numberOfDayToAddToStartDate = 0;
 
     switch (membershipPlan.type) {
-      case PlanType.annual:
-        numberOfDayToAddToStartDate = 365;
-        break;
+    case PlanType.annual:
+      numberOfDayToAddToStartDate = 365;
+      break;
 
-      case PlanType.biannual:
-        numberOfDayToAddToStartDate = Math.round(365 / 2);
-        break;
+    case PlanType.biannual:
+      numberOfDayToAddToStartDate = Math.round(365 / 2);
+      break;
 
-      case PlanType.monthly:
-        numberOfDayToAddToStartDate = Math.round(30);
-        break;
+    case PlanType.monthly:
+      numberOfDayToAddToStartDate = Math.round(30);
+      break;
 
-      case PlanType.quarterly:
-        numberOfDayToAddToStartDate = Math.round(365 / 4);
-        break;
+    case PlanType.quarterly:
+      numberOfDayToAddToStartDate = Math.round(365 / 4);
+      break;
 
-      case PlanType.weekly:
-        numberOfDayToAddToStartDate = Math.round(365 / 52);
-        break;
+    case PlanType.weekly:
+      numberOfDayToAddToStartDate = Math.round(365 / 52);
+      break;
 
-      default:
-        return res.sendStatus(404);
+    default:
+      return res.sendStatus(404);
     }
 
     if (!req.body.startDate) return res.sendStatus(400);

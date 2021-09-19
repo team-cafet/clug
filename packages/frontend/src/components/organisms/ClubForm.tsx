@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
-import { Alert } from '../atoms/Alert';
 import { clubService } from '../../services/club.service';
 import { IClub } from '../../libs/interfaces/club.interface';
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';

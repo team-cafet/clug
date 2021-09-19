@@ -10,12 +10,12 @@ import {
   OneToMany,
   getRepository,
   OneToOne,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  ValidationArguments
+  ValidationArguments,
 } from 'class-validator';
 import { Member } from './Member';
 import { MembershipPlan } from './MembershipPlan';
@@ -47,20 +47,21 @@ export class Membership {
   // ----------------------------- Relations
 
   @ManyToOne((type) => Member, (member) => member.memberships, {
-    nullable: false
+    nullable: false,
   })
   member: Member;
 
   @ManyToOne(
     (type) => MembershipPlan,
     (membershipPlan) => membershipPlan.memberships,
-    { nullable: false , eager: true}
+    { nullable: false, eager: true }
   )
   plan: MembershipPlan;
 
   @OneToOne(
     (type) => PaymentRequest,
-    (paymentRequest) => paymentRequest.membership
+    (paymentRequest) => paymentRequest.membership,
+    { cascade: ['insert'] }
   )
   @JoinColumn()
   paymentRequest: PaymentRequest;
@@ -81,7 +82,7 @@ export class Membership {
     const endDate = new Date(data.endDate);
 
     const member = await memberRepo.findOne(data.member.id, {
-      relations: ['memberships']
+      relations: ['memberships'],
     });
 
     if (member.memberships && member.memberships.length > 0) {

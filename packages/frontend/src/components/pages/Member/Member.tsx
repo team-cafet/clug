@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
@@ -11,7 +11,7 @@ import '../../organisms/forms.scss';
 import { DeleteBtnWithConfirmation } from '../../molecules/Buttons/DeleteBtnWithConfirmation';
 
 export const Member = () => {
-  const [members, getAllMembers, setMembers] = useGetAllFromService<IMember>({
+  const [members,, setMembers] = useGetAllFromService<IMember>({
     service: memberService,
   });
 
@@ -50,12 +50,15 @@ export const Member = () => {
 
   const DATA = useMemo(() => {
     return members
-    .sort((a, b) =>new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime() )
-    .map((member) => ({
-      id: member.id,
-      name: `${member.user?.firstname} ${member.user?.lastname}`,
-      negativeBalance: member.balance < 0,
-    }));
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )
+      .map((member) => ({
+        id: member.id,
+        name: `${member.user?.firstname} ${member.user?.lastname}`,
+        negativeBalance: member.balance < 0,
+      }));
   }, [members]);
 
   return (

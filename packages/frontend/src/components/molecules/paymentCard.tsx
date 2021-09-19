@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Badge } from 'react-bootstrap';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { IPayment } from '../../libs/interfaces/payment.interface';
-import { getPlanName } from '../../services/data-mapping.service';
+import { getPlanTypeName } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { paymentService } from '../../services/payment.service';
 import { paymentRequestService } from '../../services/paymentRequest.service';
@@ -79,7 +79,7 @@ export const PaymentCard = (props: IProps) => {
       </div>
       <div className="card-body">
         <h5 className="card-title">
-          Abonnement {getPlanName(memberShip.plan?.type)},
+          Abonnement {getPlanTypeName(memberShip.plan?.type)},
           {isExpired(memberShip.endDate) ? (
             <Badge variant="danger">échu</Badge>
           ) : (

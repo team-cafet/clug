@@ -3,7 +3,7 @@ import { IMembership } from "./membership.interface";
 export interface IMembershipPlan {
   id: number;
   price: number;
-  description?: string;
+  name?: string;
   type: number;
   tacit: boolean;
   memberships: IMembership[];

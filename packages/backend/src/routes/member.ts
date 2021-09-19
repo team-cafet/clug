@@ -6,12 +6,14 @@ import { OrganisationCtrl } from '../controllers/organisation';
 import { check } from 'express-validator';
 import { Member } from '../models/Member';
 import { Permissions } from '../config/auth';
+import { fileConfig } from '../config/file';
 
 export const memberRouter = (): IRouter => {
   const app = PromiseRouter();
   const memberCtrl = new MemberCtrl();
   const organisationCtrl = new OrganisationCtrl();
   const guard = ExpressJWTPermissions();
+  const upload = fileConfig().multer.memberpicture;
 
   const readPermission = guard.check([
     [Permissions.admin],
@@ -23,13 +25,15 @@ export const memberRouter = (): IRouter => {
   ]);
 
   app.get('/', readPermission, memberCtrl.getAll);
+  
+  app.get('/picture/:filename', readPermission, memberCtrl.getPicture);
 
   app.get('/:id', readPermission, memberCtrl.getOne);
 
   app.post(
     '/',
     [writePermission, check('user.email').isEmail()],
-    async (req, res, next) => {
+    async (req, res) => {
       if (!(await organisationCtrl.findOneByID(req.body?.organisation?.id))) {
         res
           .status(404)
@@ -57,37 +61,15 @@ export const memberRouter = (): IRouter => {
     }
   );
 
+  app.post('/picture', [writePermission], upload.single('picture'), memberCtrl.postPicture);
+
   app.put(
     '/:id',
     [writePermission, check('user.email').isEmail()],
-    async (req, res, next) => {
-      const id = Number.parseInt(req.params.id);
-
-      if (!(await organisationCtrl.findOneByID(req.body?.organisation?.id))) {
-        res
-          .status(404)
-          .send(`No organisation found with id ${req.body?.organisation?.id}`);
-        return;
-      }
-
-      if (!(await memberCtrl.isUserCanUpdateMember(id, req.user.user.id))) {
-        res.status(403).send('You are not authorized to update this member');
-        return;
-      }
-
-      const member = new Member();
-      member.user = req.body.user;
-      member.note = req.body.note;
-      member.organisation = req.body.organisation;
-      member.memberLabels = req.body.memberLabels;
-      member.club = req.body.club;
-
-      const data = await memberCtrl.update(id, member);
-      res.send(data);
-    }
+    memberCtrl.put
   );
 
-  app.delete('/:id', writePermission, async (req, res, next) => {
+  app.delete('/:id', writePermission, async (req, res) => {
     const id = Number.parseInt(req.params.id);
 
     if (!(await memberCtrl.isUserCanUpdateMember(id, req.user.user.id))) {

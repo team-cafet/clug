@@ -1,8 +1,13 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useState } from 'react';
-import { Alert, Button } from 'react-bootstrap';
-//@ts-ignore
-import Select from 'react-select';
+import {
+  Button,
+  Container,
+  Row,
+  Col,
+  Form as FormBootstrap,
+} from 'react-bootstrap';
+import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IClub } from '../../libs/interfaces/club.interface';
@@ -15,23 +20,18 @@ import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
-import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
-import {
-  generatePlanEndDate,
-  getPlanName,
-} from '../../services/data-mapping.service';
+import { getPlanTypeName } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { IMembership } from '../../libs/interfaces/membership.interface';
 import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
-import {
-  MultiSelect,
-  MultiSelectFormik,
-} from '../molecules/Select/MultiSelect';
+import { MultiSelectFormik } from '../molecules/Select/MultiSelect';
+import { Thumb } from '../molecules/Thumb';
 
 interface IFormValue {
   global: string;
+  picture: any;
   memberLabels: number[];
   club: undefined | number;
   user: {
@@ -74,9 +74,14 @@ export const MemberForm = (props: IProps) => {
     ).format('YYYY-MM-DD')
   );
 
+  const [thumbPicture, setThumbPicture] = useState<string | File | null>(
+    props.member ? memberService.getMemberPictureURL(props.member) : null
+  );
+
   const history = useHistory();
 
   let initialValues: IFormValue = {
+    picture: null,
     memberLabels: [],
     club: undefined,
     user: {
@@ -158,6 +163,17 @@ export const MemberForm = (props: IProps) => {
   ) => {
     const { setSubmitting, setFieldError } = formHelper;
 
+    if (values.picture) {
+      try {
+        (values as any).user.pictureURL = (
+          await memberService.postPicture(values.picture)
+        ).pictureURL;
+        delete (values as any).picture;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     try {
       (values as any) = {
         ...values,
@@ -170,10 +186,6 @@ export const MemberForm = (props: IProps) => {
         ),
       };
 
-      const planSelected = membershipPlanList.find(
-        (plan) => plan.id === parseInt(selectedMembershipPlanID)
-      );
-
       if (props.member?.id) {
         if (!isMembershipSet()) {
           await membershipService.add({
@@ -183,8 +195,12 @@ export const MemberForm = (props: IProps) => {
           });
         }
 
-        await memberService.update(props.member.id, values);
-        // window.location.reload();
+        const response = await memberService.update(props.member.id, values);
+
+        const completeURL = response?.data
+          ? memberService.getMemberPictureURL(response.data)
+          : null;
+        setThumbPicture(completeURL);
       } else {
         const response = await memberService.add({
           ...values,
@@ -211,6 +227,7 @@ export const MemberForm = (props: IProps) => {
         setFieldError('global', 'Erreur serveur...');
       }
     }
+
     setSubmitting(false);
   };
 
@@ -262,11 +279,39 @@ export const MemberForm = (props: IProps) => {
 
           {/* General member information */}
           <div className="memberForm">
+            <Container className="mb-5">
+              <Row className="justify-content-center mb-3">
+                <div className="d-flex justify-content-center">
+                  <Thumb src={thumbPicture} />
+                  <Button className="clug-file-input btn btn-primary">
+                    <label htmlFor="picture">
+                      <EditIcon title="Modifier pic" className="whiteIcon" />
+                    </label>
+                  </Button>
+                </div>
+              </Row>
+              <Row className="justify-content-center">
+                <Col>
+                  <FormBootstrap.File
+                    id="picture"
+                    name="picture"
+                    className="clug-hide-input"
+                    onChange={(event: any) => {
+                      const picture = (event as any)?.currentTarget?.files[0];
+                      setFieldValue('picture', picture);
+                      setThumbPicture(picture);
+                    }}
+                  />
+                </Col>
+              </Row>
+            </Container>
+
             <h1>
               {props.member
                 ? 'Modifier le profil de ' + props.member.user?.firstname
                 : 'Créer un membre'}
             </h1>
+
             <label htmlFor="club">Club</label>
             <Field
               component="select"
@@ -389,7 +434,9 @@ export const MemberForm = (props: IProps) => {
                 <option></option>
                 {membershipPlanList.map((plan) => (
                   <option key={plan.id} value={plan.id}>
-                    {`${getPlanName(plan.type)}, ${plan.price}.-`}
+                    {`${plan.name}, ${getPlanTypeName(plan.type)}, ${
+                      plan.price
+                    }.-`}
                   </option>
                 ))}
               </Field>

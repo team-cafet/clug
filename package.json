@@ -4,7 +4,8 @@
   "scripts": {
     "docker:up": "docker-compose -f docker-compose.yml up -d",
     "docker:down": "docker-compose -f docker-compose.yml down",
-    "docker:build": "docker image build -t teamcafet/clug-test -f Dockerfile ."
+    "docker:build": "docker image build -t teamcafet/clug-test -f Dockerfile .",
+    "docker:deploy": "docker tag teamcafet/clug-test teamcafet/clug:latest && docker push teamcafet/clug:latest"
   },
   "devDependencies": {
     "lerna": "^3.20.2"

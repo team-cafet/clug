@@ -4,6 +4,7 @@ import { EntityManager, getConnection, getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import { PaymentRequest } from '../models/PaymentRequest';
 import { Membership } from '../models/Membership';
+import { Member } from '../models/Member';
 
 export class PaymentCtrl extends RESTController<Payment> {
   constructor() {
@@ -31,6 +32,8 @@ export class PaymentCtrl extends RESTController<Payment> {
             membership
           );
           if (!newPayment) throw new Error('Payment not created');
+          membership.member.balance += membership.plan.price;
+          await transactionalEntityManager.getRepository(Member).save(membership.member);
         }
       );
       return res.status(201).send(newPayment);
