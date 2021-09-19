@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    depends_on:
+      - db
+
+    environment:
+      DATABASE_NAME: clug-db
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: .Clug-123
+      JWT_SECRET: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
+      NODE_ENV: production
+
+    ports:
+      - 3100:3100
+    #restart: always
+
+  db:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: .Clug-123
+      POSTGRES_DB: clug-db
+    restart: always
+    volumes:
+      # Persist data in a named volume. Run `docker-compose down -v` to
+      # permanently delete it.
+      - "db_data:/var/lib/postgresql/data"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  localstack-s3:
+    image: localstack/localstack:latest
+    container_name: localstack-s3
+    ports:
+      - '4566:4566'
+    environment:
+      - EDGE_PORT=4566
+      - SERVICES=s3
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - ./.localstack:/tmp/localstack
+      - ./docker/aws:/docker-entrypoint-initaws.d
+        
+volumes:
+  db_data:

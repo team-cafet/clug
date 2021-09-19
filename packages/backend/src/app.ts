@@ -18,6 +18,7 @@ import { membershipRouter } from './routes/membership.route';
 import { memberLabelRouter } from './routes/member-label';
 import { membershipPlanRouter } from './routes/membership-plan.route';
 import { dashboardRouter } from './routes/dashboard';
+import backofficeRouter from './routes/backoffice/';
 
 export const initApp = (): express.Express => {
   const app = express();
@@ -72,6 +73,9 @@ export const initApp = (): express.Express => {
   app.use('/api/auth', authRouter());
   app.use('/api/membership-plans', membershipPlanRouter());
   app.use('/api/dashboard', dashboardRouter());
+  
+  // backoffice routes
+  app.use('/api/', backofficeRouter());
 
   // static
   app.use(

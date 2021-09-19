@@ -11,7 +11,7 @@ export const connectionOptions = (): ConnectionOptions => {
     port: Number.parseInt(process.env.DATABASE_PORT, 10),
     synchronize: process.env.DATABASE_SYNCHRONIZE === 'true',
     dropSchema: process.env.DATABASE_DROPSCHEMA === 'true',
-    logging: ['error', 'warn'],
+    logging: ['error', 'warn', 'query'],
     entities: [joinPath(process.cwd(), '/build/models/*.js')],
     subscribers: [joinPath(process.cwd(), '/build/subscribers/*.js')],
     migrations: [joinPath(process.cwd(), '/build/migrations/*.js')],

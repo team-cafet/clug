@@ -35,6 +35,8 @@ export class Staff extends BaseEntity {
 
   // ----------------------------- Relations
 
+  // TODO: REMOVE ALL BELOW EAGER LOADING
+  
   @ManyToOne((type) => Organisation, (organisation) => organisation.members, {
     onDelete: 'NO ACTION',
     nullable: true,

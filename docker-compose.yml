@@ -70,7 +70,28 @@ services:
 
     ports:
       - 3000:3000
-    #restart: always
+    restart: always
+
+  backoffice:
+    build: 
+      context: ./packages/backoffice/
+      dockerfile: Dockerfile.dev
+
+    tty: true
+    command: npm run start
+
+    volumes:
+      - './packages/backoffice/:/code/'
+      # Persist installed node_modules into a named volume.
+      - 'backoffice_node_modules_data:/code/node_modules'
+
+    links:
+      - backend
+
+    ports:
+      - 3002:3000
+      - 3010:3010
+    restart: always
 
   db:
     image: postgres:12-alpine
@@ -104,7 +125,7 @@ services:
     volumes:
       - ./.localstack:/tmp/localstack
       - ./docker/aws:/docker-entrypoint-initaws.d
-
+        
 volumes:
   db_data:
   api_node_modules_data:
@@ -119,3 +140,9 @@ volumes:
       type: none
       o: bind
       device: ./packages/frontend/node_modules
+  backoffice_node_modules_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./packages/backoffice/node_modules

@@ -3,6 +3,7 @@ import {
   FindManyOptions,
   DeleteResult,
   FindOneOptions,
+  DeepPartial,
 } from 'typeorm';
 import { APIError } from './APIError';
 import { Request, Response } from 'express';
@@ -44,20 +45,20 @@ export class RESTController<T> {
     }
   }
 
-  public async store(body: T): Promise<T> {
+  public async store(body: DeepPartial<T>): Promise<T> {
     try {
       const entity = this.repository.create(body);
-      return this.repository.save(entity);
+      return this.repository.save(entity as DeepPartial<T>);
     } catch (err) {
       throw new APIError(500, APIMessageList.UNEXPECTED_ERROR(err));
     }
   }
 
-  public async update(id: number, body: T): Promise<T> {
+  public async update(id: number, body: DeepPartial<T>): Promise<T> {
     const entity = await this.findOneByID(id);
     try {
       this.repository.merge(entity, body);
-      return this.repository.save(entity);
+      return this.repository.save(entity as DeepPartial<T>);
     } catch (err) {
       throw new APIError(500, APIMessageList.UNEXPECTED_ERROR(err));
     }
