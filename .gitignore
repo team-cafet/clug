@@ -110,3 +110,7 @@ dist
 
 # Local S3 storage for dev env
 .localstack
+
+#subDependencies
+packages/backend/node_modules/
+packages/frontend/node_modules/
