@@ -78,6 +78,9 @@ export class User extends BaseEntity {
   })
   pictureURL: string;
 
+  @Column({ unique: true, nullable: true })
+  profession: string;
+
   // ----------------------------- Address information
 
   @Column({ nullable: true })
@@ -99,6 +102,13 @@ export class User extends BaseEntity {
 
   @Column({ type: 'json', nullable: true })
   settings: any;
+
+  // ----------------------------- Responsible contact
+  @Column({ unique: true, nullable: true })
+  responsible_name: string;
+
+  @Column({ unique: true, nullable: true })
+  responsible_number: string;
 
   // ----------------------------- Timestamps
 
