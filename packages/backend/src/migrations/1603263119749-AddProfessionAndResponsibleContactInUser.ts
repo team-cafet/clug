@@ -16,7 +16,7 @@ implements MigrationInterface
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query('ALTER TABLE "user" DROP name');
+    await queryRunner.query('ALTER TABLE "user" DROP profession');
     await queryRunner.query('ALTER TABLE "user" DROP responsible_name');
     await queryRunner.query('ALTER TABLE "user" DROP responsible_phone');
   }
