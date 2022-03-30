@@ -46,6 +46,8 @@ interface IFormValue {
     streetNumber: undefined | number;
     city: string;
     postalCode: undefined | number;
+    responsible_name: string;
+    responsible_number: string;
   };
   memberships: IMembership[];
 }
@@ -96,6 +98,8 @@ export const MemberForm = (props: IProps) => {
       streetNumber: undefined,
       city: '',
       postalCode: undefined,
+      responsible_name: '',
+      responsible_number: '',
     },
     global: '',
     memberships: [],
@@ -207,11 +211,11 @@ export const MemberForm = (props: IProps) => {
       setDisplayAlertMemberSaved(true);
     } catch (err) {
       console.error(err);
-      if (err.message) {
+      /* if (err.message) {
         setFieldError('global', err.message);
       } else {
         setFieldError('global', 'Erreur serveur...');
-      }
+      } */
     }
     setSubmitting(false);
   };
@@ -389,6 +393,25 @@ export const MemberForm = (props: IProps) => {
                 type="text"
                 formnikError={errors.user?.city}
                 name="user.city"
+              />
+            </div>
+
+            <h2>Personne de contact/responsable</h2>
+
+            <div className="form-row">
+              <FormGroup
+                className="col-8"
+                label="Nom"
+                type="text"
+                formnikError={errors.user?.responsible_name}
+                name="user.responsible_name"
+              />
+              <FormGroup
+                className="col"
+                label="Numéro"
+                type="number"
+                formnikError={errors.user?.responsible_number}
+                name="user.responsible_number"
               />
             </div>
 
