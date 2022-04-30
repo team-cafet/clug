@@ -17,7 +17,6 @@ interface IFormValue {
 interface IProps {
   membershipPlan?: IMembershipPlan;
   organisationID: number;
-  clubID?: number;
 }
 
 export const MembershipPlanForm = (props: IProps) => {

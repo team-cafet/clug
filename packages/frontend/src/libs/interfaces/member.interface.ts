@@ -1,6 +1,5 @@
 import { IMembership } from './membership.interface';
 import { IUser } from './user.interface';
-import { IClub } from './club.interface';
 
 export interface IMember {
   id: number;
@@ -9,6 +8,5 @@ export interface IMember {
   note: string;
   user?: IUser;
   memberships?: IMembership[];
-  club?: IClub;
   createdAt: string;
 }

@@ -10,10 +10,8 @@ import {
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
-import { IClub } from '../../libs/interfaces/club.interface';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
-import { clubService } from '../../services/club.service';
 import { memberService } from '../../services/member.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
@@ -29,7 +27,6 @@ import { Thumb } from '../molecules/Thumb';
 interface IFormValue {
   global: string;
   picture: any;
-  club: undefined | number;
   user: {
     email: string;
     firstname: string;
@@ -51,9 +48,6 @@ interface IProps {
 
 export const MemberForm = (props: IProps) => {
   const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
-  const [avaiableClubs] = useGetAllFromService<IClub>({
-    service: clubService,
-  });
 
   const [membershipPlanList] = useGetAllFromService<IMembershipPlan>({
     service: membershipPlanService,
@@ -75,7 +69,6 @@ export const MemberForm = (props: IProps) => {
 
   let initialValues: IFormValue = {
     picture: null,
-    club: undefined,
     user: {
       email: '',
       firstname: '',
@@ -92,7 +85,6 @@ export const MemberForm = (props: IProps) => {
   };
 
   if (props.member && props.member.memberships) {
-    initialValues.club = props.member.club?.id;
     initialValues.user = { ...initialValues.user, ...props.member.user };
     initialValues.memberships = props.member.memberships;
   }
@@ -165,11 +157,6 @@ export const MemberForm = (props: IProps) => {
     }
 
     try {
-      (values as any) = {
-        ...values,
-        club: values.club ? values.club : null,
-      };
-
       if (props.member?.id) {
         if (!isMembershipSet()) {
           await membershipService.add({
@@ -295,23 +282,6 @@ export const MemberForm = (props: IProps) => {
                 ? 'Modifier le profil de ' + props.member.user?.firstname
                 : 'Créer un membre'}
             </h1>
-
-            <label htmlFor="club">Club</label>
-            <Field
-              component="select"
-              multiple={false}
-              name="club"
-              className="form-control"
-            >
-              <option key={null} value={undefined}>
-                Sélectionner un club...
-              </option>
-              {avaiableClubs.map((club) => (
-                <option key={club.id} value={club.id}>
-                  {club.name}
-                </option>
-              ))}
-            </Field>
 
             <h2>Informations générales</h2>
 

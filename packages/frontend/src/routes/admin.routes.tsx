@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { MemberRoutes } from './member.routes';
-import { ClubRoutes } from './club.routes';
 import { MembershipPlanRoute } from './membershipPlan.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
@@ -19,10 +18,6 @@ export const AdminRoutes = () => {
 
       <Route path={`${path}/members`}>
         <MemberRoutes />
-      </Route>
-
-      <Route path={`${path}/clubs`}>
-        <ClubRoutes />
       </Route>
 
       <Route path={`${path}/dashboard`}>
