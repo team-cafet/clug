@@ -28,7 +28,6 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       findOneOptions: {
         relations: [
           'user',
-          'memberLabels',
           'club',
           'memberships',
           'memberships.plan',
@@ -142,7 +141,6 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
   ): Promise<boolean> {
     const user = await getRepository(User).findOneOrFail(userID);
     const member = await this.repository.findOneOrFail(memberID);
-
     if (
       user?.group?.name === EXISTING_GROUPS.ADMIN ||
       user?.group?.name === EXISTING_GROUPS.MANAGER

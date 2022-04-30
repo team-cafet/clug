@@ -27,20 +27,12 @@ export const AdminLayout = (props: IProps) => {
       to: '/admin/members',
     },
     {
-      displayName: 'Clubs',
-      to: '/admin/clubs',
-    },
-    {
       displayName: 'Abonnements',
       to: '/admin/membershipPlans',
     },
     {
       displayName: 'Paiements',
       to: '/admin/payments',
-    },
-    {
-      displayName: 'Tag de membre',
-      to: '/admin/memberlabels',
     },
   ];
 

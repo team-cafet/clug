@@ -11,7 +11,6 @@ import {
 } from 'typeorm';
 import { Member } from './Member';
 import { Club } from './Club';
-import { MemberLabel } from './MemberLabel';
 import { MembershipPlan } from './MembershipPlan';
 import { Staff } from './Staff';
 
@@ -44,9 +43,6 @@ export class Organisation extends BaseEntity {
 
   @OneToMany((type) => Club, (club) => club.organisation)
   clubs?: Club[];
-
-  @OneToMany((type) => MemberLabel, (label) => label.organisation)
-  memberLabels: MemberLabel[];
 
   @OneToMany(
     (type) => MembershipPlan,

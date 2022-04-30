@@ -1,9 +1,7 @@
 import React from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { MemberRoutes } from './member.routes';
-import { ClubRoutes } from './club.routes';
 import { MembershipPlanRoute } from './membershipPlan.routes';
-import { MemberLabelRoutes } from './memberLabel.routes';
 
 // ------------------------------------------ COMPONENTS IMPORT
 import { Dashboard } from '../components/pages/Dashboard/Dashboard';
@@ -22,10 +20,6 @@ export const AdminRoutes = () => {
         <MemberRoutes />
       </Route>
 
-      <Route path={`${path}/clubs`}>
-        <ClubRoutes />
-      </Route>
-
       <Route path={`${path}/dashboard`}>
         <Dashboard />
       </Route>
@@ -36,10 +30,6 @@ export const AdminRoutes = () => {
 
       <Route path={`${path}/payments`}>
         <PaymentRoute />
-      </Route>
-
-      <Route path={`${path}/memberlabels`}>
-        <MemberLabelRoutes />
       </Route>
     </Switch>
   );

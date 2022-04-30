@@ -21,9 +21,6 @@ export enum Permissions {
   userR = 'user:read',
   userW = 'user:write',
 
-  memberLabelR = 'memberLabel:read',
-  memberLabelW = 'memberLabel:write',
-
   membershipR = 'membership:read',
   membershipW = 'membership:write',
 
@@ -54,9 +51,6 @@ export const GROUP_PERMISSIONS = {
 
     Permissions.userR,
 
-    Permissions.memberLabelR,
-    Permissions.memberLabelW,
-
     Permissions.membershipR,
     Permissions.membershipW,
 
@@ -80,9 +74,6 @@ export const GROUP_PERMISSIONS = {
 
     Permissions.staffR,
     Permissions.staffW,
-
-    Permissions.memberLabelR,
-    Permissions.memberLabelW,
 
     Permissions.membershipR,
     Permissions.membershipW,
