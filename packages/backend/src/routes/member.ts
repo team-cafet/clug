@@ -21,6 +21,7 @@ export const memberRouter = (): IRouter => {
   ]);
   const writePermission = guard.check([
     [Permissions.admin],
+    [Permissions.memberW],
   ]);
 
   app.get('/', readPermission, memberCtrl.getAll);

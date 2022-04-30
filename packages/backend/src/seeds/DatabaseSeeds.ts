@@ -6,7 +6,6 @@ import { UserSeeds } from './UserSeeds';
 import { ClubSeeds } from './ClubSeeds';
 import { MembershipPlanSeeds } from './MembershipPlanSeeds';
 import { MemberSeeds } from './MemberSeeds';
-import { TagSeeds } from './TagSeeds';
 
 export class DatabaseSeeds implements ISeeds {
   async run(withClear = true, withLog = true): Promise<void> {
@@ -22,7 +21,6 @@ export class DatabaseSeeds implements ISeeds {
     await new StaffSeeds().run();
     await new ClubSeeds().run();
     await new MembershipPlanSeeds().run();
-    await new TagSeeds().run();
     await new MemberSeeds().run();
 
     withLog && console.log('-----------Seeding ended witout errors');
