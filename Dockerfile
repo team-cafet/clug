@@ -14,14 +14,14 @@
 
 # ------------------------------- BUILDER CONTAINER
 # Node alpine is the smallest build for node js
-FROM node:12-alpine as builder
+FROM node:14-alpine as builder
 
 ENV NODE_ENV=production
 
 
 ## Install build toolchain, install node deps and compile native add-ons
 ## (needed for node-gyp --> bcrypt)
-RUN apk add --no-cache python make g++ curl
+RUN apk add --no-cache python3 make g++ curl
 
 ## Create special user (good practise)
 RUN addgroup -S clug && \
@@ -34,37 +34,47 @@ WORKDIR /usr/src/app
 USER clug:clug
 
 ## --------------------- DEPENDENCIES BACKEND APP
-## Install dependencies.
 COPY --chown=clug:clug ./packages/backend/package.json /usr/src/app/backend/
 WORKDIR /usr/src/app/backend
 RUN npm i --dev
-
-## --------------------- DEPENDENCIES FRONTEND APP
-## Install dependencies.
-COPY --chown=clug:clug ./packages/frontend/package.json /usr/src/app/frontend/
-WORKDIR /usr/src/app/frontend
-RUN npm i --dev
-
 
 ## Copy backend source code into builder container
 WORKDIR /usr/src/app/
 COPY --chown=clug:clug ./packages/backend/ /usr/src/app/backend/
 
-## Copy frontend source code into builder container
-WORKDIR /usr/src/app/
-COPY --chown=clug:clug ./packages/frontend/ /usr/src/app/frontend/
-
 ## --------------------- BUILD BACKEND APP
 WORKDIR /usr/src/app/backend/
 RUN npm run build
+
+
+## --------------------- DEPENDENCIES FRONTEND APP
+COPY --chown=clug:clug ./packages/frontend/package.json /usr/src/app/frontend/
+WORKDIR /usr/src/app/frontend
+RUN npm i --also=dev
+
+## Copy frontend source code into builder container
+WORKDIR /usr/src/app/
+COPY --chown=clug:clug ./packages/frontend/ /usr/src/app/frontend/
 
 ## --------------------- BUILD FRONTEND APP and deploy it to backend
 WORKDIR /usr/src/app/frontend/
 RUN npm run build-and-deploy
 
+
+## --------------------- DEPENDENCIES BACKOFFICE APP
+COPY --chown=clug:clug ./packages/backoffice/package.json /usr/src/app/backoffice/
+WORKDIR /usr/src/app/backoffice
+RUN npm i --also=dev
+
+## --------------------- BUILD BACKOFFICe APP and deploy it to backend
+WORKDIR /usr/src/app/backoffice/
+COPY --chown=clug:clug ./packages/backoffice/ /usr/src/app/backoffice/
+RUN npm run build-and-deploy
+
+
 # ------------------------------- APP CONTAINER
 
-FROM node:12-alpine as app
+FROM node:14-alpine as app
 
 LABEL maintainer="team-cafet"
 
