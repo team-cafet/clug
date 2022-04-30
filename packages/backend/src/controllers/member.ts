@@ -28,7 +28,6 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       findOneOptions: {
         relations: [
           'user',
-          'memberLabels',
           'club',
           'memberships',
           'memberships.plan',

@@ -7,7 +7,6 @@ import { Organisation } from '../models/Organisation';
 import { MemberFactory } from './factory/MemberFactory';
 import { Club } from '../models/Club';
 import { MembershipPlan } from '../models/MembershipPlan';
-import { MemberLabel } from '../models/MemberLabel';
 
 export class MemberSeeds implements ISeeds {
   private async getMemberUserGroup() {
@@ -30,25 +29,17 @@ export class MemberSeeds implements ISeeds {
     return plans.filter(plan => organisationsIDs.includes(plan.organisation.id));
   }
   
-  private async getAllTagsFromOrganisations(organisations): Promise<MemberLabel[]> {
-    const organisationsIDs = organisations.map(org => org.id);
-    const tags = await getRepository(MemberLabel).find({relations:['organisation']});
-    return tags.filter(tag => organisationsIDs.includes(tag.organisation.id));
-  }
-  
   async run(): Promise<void> {
     const memberUserGroup = await this.getMemberUserGroup();
     const organisations = await this.getFiveFirstOrganisation();
     const clubs = await this.getAllClubFromOrganisations(organisations);
     const memberships = await this.getAllMembershipPlanFromOrganisations(organisations);
-    const tags = await this.getAllTagsFromOrganisations(organisations);
 
     const memberFactory = new MemberFactory(
       memberUserGroup,
       organisations,
       clubs,
       memberships,
-      tags
     );
 
     const members = Factory.createMany(process.env.SEEDS_NB_MEMBER ? Number.parseInt(process.env.SEEDS_NB_MEMBER) : 1000, memberFactory);

@@ -21,7 +21,6 @@ export const memberRouter = (): IRouter => {
   ]);
   const writePermission = guard.check([
     [Permissions.admin],
-    [Permissions.memberLabelW]
   ]);
 
   app.get('/', readPermission, memberCtrl.getAll);
@@ -53,7 +52,6 @@ export const memberRouter = (): IRouter => {
       member.note = req.body.note;
       member.organisation = req.body.organisation;
       member.memberships = req.body.memberships;
-      member.memberLabels = req.body.memberLabels;
       member.club = req.body.club;
 
       const data = await memberCtrl.store(member);

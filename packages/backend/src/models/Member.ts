@@ -18,7 +18,6 @@ import { Payment } from './Payment';
 import { Organisation } from './Organisation';
 import { PaymentRequest } from './PaymentRequest';
 import { User } from './User';
-import { MemberLabel } from './MemberLabel';
 import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
 @Entity()
@@ -87,14 +86,6 @@ export class Member extends BaseEntity implements IResourceWithOrganisation {
     onDelete: 'NO ACTION',
   })
   paymentRequests: PaymentRequest[];
-
-  @ManyToMany((type) => MemberLabel, (label) => label.members, {
-    nullable: true,
-    onDelete: 'NO ACTION',
-    cascade: true,
-  })
-  @JoinTable({ name: 'members_labels' })
-  memberLabels: MemberLabel[];
 
   @ManyToOne((type) => User, (user) => user.members, {
     onDelete: 'NO ACTION',

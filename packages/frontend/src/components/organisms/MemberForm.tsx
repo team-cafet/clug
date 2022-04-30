@@ -24,7 +24,6 @@ import { IMembership } from '../../libs/interfaces/membership.interface';
 import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
-import { MultiSelectFormik } from '../molecules/Select/MultiSelect';
 import { Thumb } from '../molecules/Thumb';
 
 interface IFormValue {

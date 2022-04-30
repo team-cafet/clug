@@ -9,7 +9,6 @@ import { User } from '../models/User';
 import { Payment } from '../models/Payment';
 import { PaymentRequest } from '../models/PaymentRequest';
 import { Membership } from '../models/Membership';
-import { MemberLabel } from '../models/MemberLabel';
 import { MembershipPlan, PlanType } from '../models/MembershipPlan';
 
 /**
@@ -24,7 +23,6 @@ export const executeTestSeeder = async () => {
   const paymentRepo = getRepository(Payment);
   const paymentRequestRepo = getRepository(PaymentRequest);
   const membershipRepo = getRepository(Membership);
-  const memberLabelRepo = getRepository(MemberLabel);
   const membershipPlanRepo = getRepository(MembershipPlan);
 
   const [adminGrp, managerGrp, userGrp] = await getRepository(Group).save([
@@ -154,21 +152,6 @@ export const executeTestSeeder = async () => {
         startDate: '2020-01-01',
         endDate: '2021-01-01',
         plan : plan2
-      }
-    ])
-  );
-
-  await memberLabelRepo.save(
-    memberLabelRepo.create([
-      {
-        name: 'Lvl: 1',
-        organisation: org1,
-        members: [member1]
-      },
-      {
-        name: 'Lvl: 1',
-        organisation: org2,
-        members: [member2]
       }
     ])
   );
