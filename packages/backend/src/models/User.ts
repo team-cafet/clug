@@ -12,6 +12,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   getRepository,
+  JoinColumn,
 } from 'typeorm';
 import { hash } from 'bcrypt';
 import { BCRYPT_SALT_ROUND } from '../config/auth';
@@ -30,7 +31,7 @@ export enum Sexe {
 }
 
 @Entity()
-export class User extends Person {
+export class User extends BaseEntity{
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -106,8 +107,11 @@ export class User extends Person {
   })
   members: Member[];
 
-  /*  @ManyToOne((type) => Person, (person) => person.users, { eager: true })
-  person: Person; */
+  @OneToOne(() => Person,{
+    cascade: true
+  })
+  @JoinColumn()
+  person: Person
 
   // ----------------------------- Getter and Setter
 

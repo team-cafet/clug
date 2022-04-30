@@ -9,6 +9,8 @@ import {
   DeleteDateColumn,
   ManyToOne,
   BaseEntity,
+  JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { Member } from './Member';
 import { Organisation } from './Organisation';
@@ -26,13 +28,13 @@ export class Person extends BaseEntity {
 
   @Column({
     length: 254,
-    nullable: true
+    nullable: true,
   })
   firstname: string;
 
   @Column({
     length: 254,
-    nullable: true
+    nullable: true,
   })
   lastname: string;
 
@@ -47,8 +49,8 @@ export class Person extends BaseEntity {
   @DeleteDateColumn({ name: 'deletedAt' })
   deletedAt: Date;
 
-  // ----------------------------- Relations 
+  // ----------------------------- Relations
 
-  /* @OneToMany((type) => User, (user) => user.person)
-  users: User[]; */
+  @OneToOne(() => User)
+  user: User;
 }
