@@ -11,7 +11,7 @@ import {
   OneToOne,
   BeforeInsert,
   BeforeUpdate,
-  getRepository
+  getRepository,
 } from 'typeorm';
 import { hash } from 'bcrypt';
 import { BCRYPT_SALT_ROUND } from '../config/auth';
@@ -21,15 +21,16 @@ import { PaymentRequest } from './PaymentRequest';
 import { Staff } from './Staff';
 import { Member } from './Member';
 import { Organisation } from './Organisation';
+import { Person } from './Person';
 
 export enum Sexe {
   'MALE',
   'FEMALE',
-  'NON-BINARY'
+  'NON-BINARY',
 }
 
 @Entity()
-export class User extends BaseEntity {
+export class User extends Person {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -41,32 +42,17 @@ export class User extends BaseEntity {
 
   // ----------------------------- Personal information
 
-  @Column({ nullable: false })
-  email: string;
-
-  @Column({
-    length: 254,
-    nullable: true
-  })
-  firstname: string;
-
-  @Column({
-    length: 254,
-    nullable: true
-  })
-  lastname: string;
-
   @Column({
     type: 'simple-enum',
     enum: Sexe,
     default: Sexe.MALE,
-    nullable: true
+    nullable: true,
   })
   sexe: Sexe;
 
   @Column({
     length: 50,
-    nullable: true
+    nullable: true,
   })
   phone: string;
 
@@ -74,7 +60,7 @@ export class User extends BaseEntity {
   birthdate: Date;
 
   @Column({
-    nullable: true
+    nullable: true,
   })
   pictureURL: string;
 
@@ -100,17 +86,6 @@ export class User extends BaseEntity {
   @Column({ type: 'simple-json', nullable: true })
   settings: any;
 
-  // ----------------------------- Timestamps
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn({ name: 'deletedAt' })
-  deletedAt: Date;
-
   // ----------------------------- Relations
 
   @ManyToOne((type) => Group, (group) => group.users, { eager: true })
@@ -121,15 +96,18 @@ export class User extends BaseEntity {
 
   @OneToMany((type) => Staff, (staff) => staff.user, {
     onDelete: 'NO ACTION',
-    nullable: true
+    nullable: true,
   })
   staffs: Staff[];
 
   @OneToMany((type) => Member, (member) => member.user, {
     onDelete: 'NO ACTION',
-    nullable: true
+    nullable: true,
   })
   members: Member[];
+
+  /*  @ManyToOne((type) => Person, (person) => person.users, { eager: true })
+  person: Person; */
 
   // ----------------------------- Getter and Setter
 
@@ -152,7 +130,7 @@ export class User extends BaseEntity {
   async getUserOrganisation(): Promise<Organisation | null> {
     const userRepo = getRepository(User);
     const currentUser = await userRepo.findOne(this.id, {
-      relations: ['staffs']
+      relations: ['staffs'],
     });
     const staffs = currentUser.staffs;
 
@@ -161,7 +139,7 @@ export class User extends BaseEntity {
     }
 
     const loadedStaff = await getRepository(Staff).findOneOrFail(staffs[0].id, {
-      relations: ['organisation']
+      relations: ['organisation'],
     });
 
     const organisation = loadedStaff.organisation;
