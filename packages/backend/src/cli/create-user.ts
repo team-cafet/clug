@@ -1,3 +1,4 @@
+import { Person } from '../models/Person';
 import { DeepPartial, getRepository } from 'typeorm';
 
 import { User } from '../models/User';
@@ -6,6 +7,12 @@ const createUser = async (data: DeepPartial<User>): Promise<User> => {
   const userRepo = getRepository(User);
   const userData = userRepo.create([data]);
   return userData[0].save();
+};
+
+const createPerson = async (data: DeepPartial<Person>): Promise<Person> => {
+  const personRepo = getRepository(Person);
+  const personData = personRepo.create([data]);
+  return personData[0].save();
 };
 
 exports.command = 'create-user <name> <email> <password> <groupid>';
@@ -38,8 +45,11 @@ exports.builder = {
 exports.handler = async function (argv) {
   try {
     console.log('Creating user....');
-    const user = await createUser({
+    const person = await createPerson({
       email: argv.email as string,
+    });
+    const user = await createUser({
+      person,
       username: argv.username as string,
       password: argv.password as string,
       group: argv.groupId,

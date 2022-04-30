@@ -32,7 +32,7 @@ export const memberRouter = (): IRouter => {
 
   app.post(
     '/',
-    [writePermission, check('user.email').isEmail()],
+    [writePermission, check('user.person.email').isEmail()],
     async (req, res) => {
       if (!(await organisationCtrl.findOneByID(req.body?.organisation?.id))) {
         res
@@ -64,7 +64,7 @@ export const memberRouter = (): IRouter => {
 
   app.put(
     '/:id',
-    [writePermission, check('user.email').isEmail()],
+    [writePermission, check('user.person.email').isEmail()],
     memberCtrl.put
   );
 
