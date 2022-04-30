@@ -143,7 +143,7 @@ export const Payment = () => {
       </p>
       <p>En attente d'action: {memberships.length}</p>
       <Tabs defaultActiveKey={'late'}>
-        <Tab eventKey="late" title={tabLateTitle}>
+        <Tab eventKey="late" title={tabLateTitle} className="overflow">
           <DataTable
             data={memberships}
             // test if in mobile mode, change columns or other solution

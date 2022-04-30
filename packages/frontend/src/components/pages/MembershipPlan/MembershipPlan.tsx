@@ -29,10 +29,6 @@ export const MembershipPlan = () => {
 
   const COLUMNS = [
     {
-      Header: 'Nom',
-      accessor: 'name',
-    },
-    {
       Header: 'Type',
       accessor: 'type',
       disableFilters: true,
@@ -77,7 +73,7 @@ export const MembershipPlan = () => {
   return (
     <>
       <h1>Gestion des abonnements</h1>
-      <div className="row">
+      <div className="row overflow">
         <Link
           to="/admin/membershipPlans/add"
           className="btn btn-secondary add"
