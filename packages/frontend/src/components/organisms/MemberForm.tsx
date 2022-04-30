@@ -12,11 +12,9 @@ import { Link, useHistory } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IClub } from '../../libs/interfaces/club.interface';
 import { IMember } from '../../libs/interfaces/member.interface';
-import { IMemberLabel } from '../../libs/interfaces/memberLabel.interface';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { clubService } from '../../services/club.service';
 import { memberService } from '../../services/member.service';
-import { memberLabelService } from '../../services/memberlabel.service';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { FormGroup } from '../molecules/FormGroup';
 import moment from 'moment';
@@ -32,7 +30,6 @@ import { Thumb } from '../molecules/Thumb';
 interface IFormValue {
   global: string;
   picture: any;
-  memberLabels: number[];
   club: undefined | number;
   user: {
     email: string;
@@ -55,9 +52,6 @@ interface IProps {
 
 export const MemberForm = (props: IProps) => {
   const [displayAlertMemberSaved, setDisplayAlertMemberSaved] = useState(false);
-  const [availableMemberLabels] = useGetAllFromService<IMemberLabel>({
-    service: memberLabelService,
-  });
   const [avaiableClubs] = useGetAllFromService<IClub>({
     service: clubService,
   });
@@ -82,7 +76,6 @@ export const MemberForm = (props: IProps) => {
 
   let initialValues: IFormValue = {
     picture: null,
-    memberLabels: [],
     club: undefined,
     user: {
       email: '',
@@ -100,8 +93,6 @@ export const MemberForm = (props: IProps) => {
   };
 
   if (props.member && props.member.memberships) {
-    initialValues.memberLabels =
-      props.member.memberLabels?.map((label) => label.id) || [];
     initialValues.club = props.member.club?.id;
     initialValues.user = { ...initialValues.user, ...props.member.user };
     initialValues.memberships = props.member.memberships;
@@ -178,12 +169,6 @@ export const MemberForm = (props: IProps) => {
       (values as any) = {
         ...values,
         club: values.club ? values.club : null,
-        // tag send to the server must be at least have id and name
-        memberLabels: values.memberLabels.map((label: any) =>
-          availableMemberLabels.find(
-            (availabelLabel) => availabelLabel.id === Number.parseInt(label)
-          )
-        ),
       };
 
       if (props.member?.id) {
@@ -364,19 +349,6 @@ export const MemberForm = (props: IProps) => {
               formnikError={errors.user?.phone}
               name="user.phone"
             />
-
-            <label htmlFor="memberLabels">Tag</label>
-            <Field name="memberLabels" multiple className="form-control">
-              {(fieldProps: any) => (
-                <MultiSelectFormik
-                  {...fieldProps}
-                  options={availableMemberLabels.map((label) => ({
-                    value: label.id,
-                    label: label.name,
-                  }))}
-                />
-              )}
-            </Field>
 
             <h2>Adresse</h2>
 

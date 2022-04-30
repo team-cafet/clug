@@ -38,10 +38,6 @@ export const AdminLayout = (props: IProps) => {
       displayName: 'Paiements',
       to: '/admin/payments',
     },
-    {
-      displayName: 'Tag de membre',
-      to: '/admin/memberlabels',
-    },
   ];
 
   return (
