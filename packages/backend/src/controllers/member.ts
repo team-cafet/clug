@@ -139,6 +139,7 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     memberID: number,
     userID: number
   ): Promise<boolean> {
+    console.log('HOLAHOLA');
     const user = await getRepository(User).findOneOrFail(userID);
     const member = await this.repository.findOneOrFail(memberID);
     if (
