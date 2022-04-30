@@ -3,7 +3,7 @@ import 'source-map-support/register';
 import { config } from 'dotenv';
 import express from 'express';
 import supertest from 'supertest';
-import { createConnection, ConnectionOptions, Connection } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import { createServer, Server as HttpServer } from 'http';
 import { initApp } from '../../app';
 import { DatabaseSeeds } from '../../seeds/DatabaseSeeds';
@@ -26,12 +26,12 @@ config();
 
 export class TestFactory {
   private _app: express.Application;
-  private _connection: Connection;
+  private _connection: DataSource;
   private _server: HttpServer;
   private _staffToken: string;
 
   // DB connection options
-  private options: ConnectionOptions = {
+  private options: DataSourceOptions = {
     type: 'sqljs',
     database: new Uint8Array(),
     location: 'database',
@@ -44,7 +44,7 @@ export class TestFactory {
     return supertest(this._app);
   }
 
-  public get connection(): Connection {
+  public get connection(): DataSource {
     return this._connection;
   }
 
@@ -60,7 +60,7 @@ export class TestFactory {
    * Connect to DB and start server
    */
   public async init(): Promise<void> {
-    this._connection = await createConnection(this.options);
+    this._connection = await new DataSource(this.options);
 
     const dbSeeds = new DatabaseSeeds();
     try {
@@ -82,6 +82,6 @@ export class TestFactory {
    */
   public async close(): Promise<void> {
     this._server.close();
-    this._connection.close();
+    this._connection.destroy();
   }
 }

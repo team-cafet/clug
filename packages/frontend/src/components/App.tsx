@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Routes } from '../routes/routes';
+import { Routing } from '../routes/routes';
 import { GlobalContextProvider } from '../contexts/GlobalContext';
 import '../index.scss';
 
@@ -10,7 +10,7 @@ export const App = (props: IProps) => {
   return (
     <GlobalContextProvider>
       <Router>
-        <Routes />
+        <Routing />
       </Router>
     </GlobalContextProvider>
   );

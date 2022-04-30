@@ -8,19 +8,18 @@ import {
   DeleteDateColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   BeforeInsert,
   BeforeUpdate,
-  getRepository
 } from 'typeorm';
 import { hash } from 'bcrypt';
 import { BCRYPT_SALT_ROUND } from '../config/auth';
-import logger from '../util/logger';
+import logger from '../libs/functions/logger';
 import { Group } from './Group';
 import { PaymentRequest } from './PaymentRequest';
 import { Staff } from './Staff';
 import { Member } from './Member';
 import { Organisation } from './Organisation';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 export enum Sexe {
   'MALE',
@@ -31,30 +30,30 @@ export enum Sexe {
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
 
   @Column({ unique: true, nullable: true })
-  username: string;
+    username: string;
 
   @Column({ nullable: true, select: false })
-  password: string;
+    password: string;
 
   // ----------------------------- Personal information
 
   @Column({ nullable: false })
-  email: string;
+    email: string;
 
   @Column({
     length: 254,
     nullable: true
   })
-  firstname: string;
+    firstname: string;
 
   @Column({
     length: 254,
     nullable: true
   })
-  lastname: string;
+    lastname: string;
 
   @Column({
     type: 'simple-enum',
@@ -62,74 +61,74 @@ export class User extends BaseEntity {
     default: Sexe.MALE,
     nullable: true
   })
-  sexe: Sexe;
+    sexe: Sexe;
 
   @Column({
     length: 50,
     nullable: true
   })
-  phone: string;
+    phone: string;
 
   @Column({ type: 'date', nullable: true })
-  birthdate: Date;
+    birthdate: Date;
 
   @Column({
     nullable: true
   })
-  pictureURL: string;
+    pictureURL: string;
 
   // ----------------------------- Address information
 
   @Column({ nullable: true })
-  street: string;
+    street: string;
 
   @Column({ nullable: true })
-  streetNumber: number;
+    streetNumber: number;
 
   @Column({ nullable: true })
-  city: string;
+    city: string;
 
   @Column({ nullable: true })
-  postalCode: number;
+    postalCode: number;
 
   @Column({ nullable: true })
-  country: string;
+    country: string;
 
   // ----------------------------- Special information
 
   @Column({ type: 'simple-json', nullable: true })
-  settings: any;
+    settings: any;
 
   // ----------------------------- Timestamps
 
   @CreateDateColumn()
-  createdAt: Date;
+    createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+    updatedAt: Date;
 
   @DeleteDateColumn({ name: 'deletedAt' })
-  deletedAt: Date;
+    deletedAt: Date;
 
   // ----------------------------- Relations
 
   @ManyToOne((type) => Group, (group) => group.users, { eager: true })
-  group: Group;
+    group: Group;
 
   @OneToMany((type) => PaymentRequest, (payReq) => payReq.user)
-  paymentRequests: PaymentRequest[];
+    paymentRequests: PaymentRequest[];
 
   @OneToMany((type) => Staff, (staff) => staff.user, {
     onDelete: 'NO ACTION',
     nullable: true
   })
-  staffs: Staff[];
+    staffs: Staff[];
 
   @OneToMany((type) => Member, (member) => member.user, {
     onDelete: 'NO ACTION',
     nullable: true
   })
-  members: Member[];
+    members: Member[];
 
   // ----------------------------- Getter and Setter
 
@@ -150,8 +149,9 @@ export class User extends BaseEntity {
    * @returns the organisation or null if the user is not in an organisation
    */
   async getUserOrganisation(): Promise<Organisation | null> {
-    const userRepo = getRepository(User);
-    const currentUser = await userRepo.findOne(this.id, {
+    const userRepo = TypeORMService.getInstance().getRepository(User);
+    const currentUser = await userRepo.findOne({
+      where: {id: this.id},
       relations: ['staffs']
     });
     const staffs = currentUser.staffs;
@@ -160,7 +160,10 @@ export class User extends BaseEntity {
       return null;
     }
 
-    const loadedStaff = await getRepository(Staff).findOneOrFail(staffs[0].id, {
+    const loadedStaff = await TypeORMService.getInstance().getRepository(Staff).findOneOrFail({
+      where: {
+        id: staffs[0].id
+      },
       relations: ['organisation']
     });
 

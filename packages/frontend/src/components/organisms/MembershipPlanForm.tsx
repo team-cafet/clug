@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
@@ -26,7 +26,9 @@ export const MembershipPlanForm = (props: IProps) => {
   const [typeList, setTypeList] = useState([]);
   const [typeSelectedId, setTypeSelectedId] = useState(0);
   const [tacitSelected, setTacitSelected] = useState(false);
-  const history = useHistory();
+  
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchTypes = async () => {
       const types = await membershipPlanService.getAllTypes()
@@ -57,7 +59,7 @@ export const MembershipPlanForm = (props: IProps) => {
           ...values,
         });
       }
-      history.push('/admin/membershipPlans')
+      navigate('/admin/membershipPlans')
     } catch (err) {
       console.error(err);
       if (err.message) {

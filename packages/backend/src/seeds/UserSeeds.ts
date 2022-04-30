@@ -1,8 +1,8 @@
 import { ISeeds } from '../libs/interfaces/ISeeds';
 import { UserFactory } from './factory/UserFactory';
 import { EXISTING_GROUPS } from '../config/auth';
-import { getConnection, getRepository } from 'typeorm';
 import { Group } from '../models/Group';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 export class UserSeeds implements ISeeds {
   private ADMIN_GROUP;
@@ -10,7 +10,7 @@ export class UserSeeds implements ISeeds {
   private USER_GROUP;
 
   private async createUserGroup() {
-    return await getRepository(Group).save([
+    return await TypeORMService.getInstance().getRepository(Group).save([
       { name: EXISTING_GROUPS.ADMIN },
       { name: EXISTING_GROUPS.MANAGER },
       { name: EXISTING_GROUPS.USER },
@@ -25,6 +25,6 @@ export class UserSeeds implements ISeeds {
 
     const userFactory = new UserFactory(this.USER_GROUP);
     const users = [userFactory.defineAdmin(this.ADMIN_GROUP)];
-    await getConnection().manager.save(users);
+    await TypeORMService.getInstance().getDataSource().manager.save(users);
   }
 }

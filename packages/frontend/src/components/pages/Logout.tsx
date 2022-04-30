@@ -1,20 +1,21 @@
 import React, { useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   GlobalContext,
   GlobalContextActions,
 } from '../../contexts/GlobalContext';
 
 export const Logout = () => {
+  const navigate = useNavigate();
   const globalCtxt = useContext(GlobalContext);
   useEffect(() => {
     if (globalCtxt?.state.isAuthentified) {
       globalCtxt?.dispatch({ type: GlobalContextActions.LOGOUT });
     }
-  }, [globalCtxt]);
 
-  const history = useHistory();
-  history.push('/login');
+    navigate('/login');
+  }, [globalCtxt, navigate]);
+
 
   return (
     <>

@@ -2,7 +2,7 @@
   "parser": "@typescript-eslint/parser",
   "extends": ["plugin:@typescript-eslint/recommended"],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "rules": {
@@ -11,7 +11,9 @@
     "eol-last": "error",
     "spaced-comment":"warn",
     "no-tabs":"error",
-    "indent": ["warn", 2],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "array-bracket-spacing":"error",
+    "brace-style": "error",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": 1,
     "@typescript-eslint/no-inferrable-types": [

@@ -12,7 +12,6 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Club } from './Club';
 import { Membership } from './Membership';
 import { Payment } from './Payment';
 import { Organisation } from './Organisation';
@@ -59,13 +58,6 @@ export class Member extends BaseEntity implements IResourceWithOrganisation {
     eager: true,
   })
   organisation: Organisation;
-
-  @ManyToOne((type) => Club, (club) => club.members, {
-    onDelete: 'NO ACTION',
-    nullable: true,
-    cascade: true
-  })
-  club: Club;
 
   @OneToMany((type) => Membership, (membership) => membership.member, {
     nullable: false,

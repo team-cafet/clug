@@ -4,7 +4,6 @@ import { UserFactory } from './UserFactory';
 import { Group } from '../../models/Group';
 import { Organisation } from '../../models/Organisation';
 import { Member } from '../../models/Member';
-import { Club } from '../../models/Club';
 import { MembershipPlan, PlanType } from '../../models/MembershipPlan';
 import { Membership } from '../../models/Membership';
 import { PaymentRequest } from '../../models/PaymentRequest';
@@ -13,7 +12,6 @@ export class MemberFactory implements IFactory<Member> {
   constructor(
     private userGroup: Group,
     private existingOrganisations: Organisation[],
-    private existingClubs: Club[],
     private existingMembershipPlans: MembershipPlan[],
   ) {}
 
@@ -21,40 +19,33 @@ export class MemberFactory implements IFactory<Member> {
     return faker.random.arrayElement(this.existingOrganisations);
   }
 
-  private getRandomClubFromOrganisation(organisation: Organisation) {
-    const filteredClubs = this.existingClubs.filter(
-      (club) => club.organisation.id === organisation.id
-    );
-    return faker.random.arrayElement(filteredClubs);
-  }
-
   // TODO: Extract this logic into the membership model
   private defineEndDateForMembership(startDate: Date, planType: PlanType) {
     let numberOfDayToAddToStartDate = 0;
 
     switch (planType) {
-    case PlanType.annual:
-      numberOfDayToAddToStartDate = 365;
-      break;
+      case PlanType.annual:
+        numberOfDayToAddToStartDate = 365;
+        break;
 
-    case PlanType.biannual:
-      numberOfDayToAddToStartDate = Math.round(365 / 2);
-      break;
+      case PlanType.biannual:
+        numberOfDayToAddToStartDate = Math.round(365 / 2);
+        break;
 
-    case PlanType.monthly:
-      numberOfDayToAddToStartDate = Math.round(30);
-      break;
+      case PlanType.monthly:
+        numberOfDayToAddToStartDate = Math.round(30);
+        break;
 
-    case PlanType.quarterly:
-      numberOfDayToAddToStartDate = Math.round(365 / 4);
-      break;
+      case PlanType.quarterly:
+        numberOfDayToAddToStartDate = Math.round(365 / 4);
+        break;
 
-    case PlanType.weekly:
-      numberOfDayToAddToStartDate = Math.round(365 / 52);
-      break;
+      case PlanType.weekly:
+        numberOfDayToAddToStartDate = Math.round(365 / 52);
+        break;
 
-    default:
-      break;
+      default:
+        break;
     }
 
     const endDate = new Date(startDate);
@@ -94,7 +85,6 @@ export class MemberFactory implements IFactory<Member> {
     const member = new Member();
     member.user = userFactory.define();
     member.organisation = organisation;
-    member.club = this.getRandomClubFromOrganisation(organisation);
 
     if (faker.datatype.boolean()) {
       member.memberships = [

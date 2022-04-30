@@ -14,7 +14,7 @@ export const MemberDetails = (props: IProps) => {
 
   useEffect(() => {
     const getAMember = async () => {
-      const result = await memberService.getByID(id);
+      const result = await memberService.getByID(id as string);
       if (result?.data) {
         setMember(result.data);
       }

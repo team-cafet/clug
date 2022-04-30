@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["es5", "es6"],
     "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -11,9 +12,10 @@
     "sourceMap": true,
     "outDir": "build",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "*": ["node_modules/*", "src/types/*"],
-    }
+    },
   },
   "include": ["src/**/*"],
 

@@ -1,14 +1,11 @@
-import {
-  getRepository,
-} from 'typeorm';
-
 import { NextFunction, Request, Response } from 'express';
 import { RESTController } from './RESTController';
 import { User } from '../../models/User';
 import { EXISTING_GROUPS } from '../../config/auth';
-import * as ControllerUtils from '../../util/controller-utils';
 import { IResourceWithOrganisation } from '../interfaces/IResourceWithOrganisation';
 import {APIMessageList} from './APIMessageList';
+import { TypeORMService } from '../services/TypeORMService';
+import { ControllerHelper } from './helpers/ControllerHelper';
 
 
 /**
@@ -16,35 +13,21 @@ import {APIMessageList} from './APIMessageList';
  * the filtering of organisation
  */
 export class OrganisationRESTController<T extends IResourceWithOrganisation> extends RESTController<T>{
-
-
-  /**
-   * Custom getAll is needed here as we need to give only the resources from
-   * the orgaisation
-   * @param req 
-   * @param res 
-   */
   public getAll = async (req: Request, res: Response): Promise<Response> => {
     if (req.user.user.group === 'admin') {
       return res.send(await this.findAll());
     }
 
-    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(req);
+    const currentOrg = await ControllerHelper.getCurrentOrgFromUserInRequest(req);
 
     return res.send(
       await this.findAll({
         ...(this.options?.findAllOptions ?? {}),
-        where: { organisation: currentOrg.id },
+        where: { organisation: {id: currentOrg.id} },
       })
     );
   };
 
-  /**
-   * Custom getOne is needed here as we need to give only the resource which are in the
-   * user organisation
-   * @param req 
-   * @param res 
-   */
   public getOne = async (req: Request, res: Response): Promise<Response> => {
     const id = Number.parseInt(req.params.id);
 
@@ -53,20 +36,14 @@ export class OrganisationRESTController<T extends IResourceWithOrganisation> ext
         ...(this.options?.findOneOptions ?? {})
       }));
     }
-    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(req);
+    const currentOrg = await ControllerHelper.getCurrentOrgFromUserInRequest(req);
 
     return res.send(await this.findOneByID(id, {
       ...(this.options?.findOneOptions ?? {}),
-      where: { organisation: currentOrg.id }
+      where: { organisation: {id: currentOrg.id} }
     }));
-  }
+  };
 
-  /**
-   * Check if the user can update or delete the resource
-   * @param req 
-   * @param res 
-   * @param next 
-   */
   public canUpdateOrDelete = async (
     req: Request,
     res: Response,
@@ -79,8 +56,11 @@ export class OrganisationRESTController<T extends IResourceWithOrganisation> ext
     }
 
     const [user, resource] = await Promise.all([
-      getRepository(User).findOneOrFail(req.user.user.id),
-      this.repository.findOneOrFail(id, { relations: ['organisation'] })
+      TypeORMService.getInstance().getRepository(User).findOneOrFail({where: {id: req.user.user.id}}),
+      
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      this.repository.findOneOrFail({ where: { id }, relations: ['organisation'] })
     ]);
     const userOrg = await user.getUserOrganisation();
 
@@ -98,6 +78,4 @@ export class OrganisationRESTController<T extends IResourceWithOrganisation> ext
 
     next();
   };
-
-  
 }

@@ -1,18 +1,12 @@
-import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import { MembershipPlan, PlanType } from '../models/MembershipPlan';
 import { OrganisationRESTController } from '../libs/classes/OrganisationRESTController';
 
 export class MembershipPlanCtrl extends OrganisationRESTController<MembershipPlan> {
   constructor() {
-    super(getRepository(MembershipPlan));
+    super(MembershipPlan);
   }
 
-  /**
-   *
-   * @param req
-   * @param res
-   */
   public getAllTypes = async (
     req: Request,
     res: Response

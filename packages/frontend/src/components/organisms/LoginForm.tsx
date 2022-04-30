@@ -4,7 +4,7 @@ import {
   GlobalContext,
   GlobalContextActions,
 } from '../../contexts/GlobalContext';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Input } from '../atoms/Input';
 import { Button } from '../atoms/Button';
 import { Alert } from '../atoms/Alert';
@@ -23,7 +23,7 @@ export const LoginForm = () => {
   }
 
   if (globalContext.state.isAuthentified) {
-    return <Redirect to="/admin/dashboard" />;
+    return <Navigate to='/admin/dashboard' />;
   }
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {

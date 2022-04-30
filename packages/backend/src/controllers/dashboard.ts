@@ -1,23 +1,24 @@
 import { Response, Request } from 'express';
+import { Repository } from 'typeorm';
+import { ControllerHelper } from '../libs/classes/helpers/ControllerHelper';
+import { IGetAllStats } from '../libs/interfaces/dashboard/IGetAllStats';
+import { TypeORMService } from '../libs/services/TypeORMService';
 import { Member } from '../models/Member';
-import * as ControllerUtils from '../util/controller-utils';
-import { getRepository } from 'typeorm';
 import { MemberCtrl } from './member';
 
-interface IGetAllStats {
-  birthdays: Member[];
-  negativeBalanceUsers: Member[];
-  totalMembers: Member[];
-}
-
 export class DashboardCtrl {
+  protected memberRepository: Repository<Member>;
+
+  constructor() {
+    this.memberRepository = TypeORMService.getInstance().getRepository(Member);
+  }
+
   private async getAllUpcomingMemberBirthdayInOrg(
     orgID: number
   ): Promise<Member[]> {
     const NBR_MIN_DAY_TO_INCLUDE_MEMBER = 7;
-    const memberRepo = getRepository(Member);
 
-    return memberRepo
+    return this.memberRepository
       .createQueryBuilder('member')
       .leftJoinAndSelect('member.user', 'user')
       .leftJoinAndSelect('member.organisation', 'organisation')
@@ -34,9 +35,7 @@ export class DashboardCtrl {
   private async getAllMemberWithNegativeBalanceInOrg(
     orgID: number
   ): Promise<Member[]> {
-    const memberRepo = getRepository(Member);
-
-    return memberRepo
+    return this.memberRepository
       .createQueryBuilder('member')
       .leftJoinAndSelect('member.user', 'user')
       .leftJoinAndSelect('member.organisation', 'organisation')
@@ -52,7 +51,7 @@ export class DashboardCtrl {
       totalMembers: []
     };
 
-    const currentOrg = await ControllerUtils.getCurrentOrgFromUserInRequest(req);
+    const currentOrg = await ControllerHelper.getCurrentOrgFromUserInRequest(req);
     if (!currentOrg) {
       return res.send(allStats);
     }

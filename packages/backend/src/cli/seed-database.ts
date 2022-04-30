@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { DatabaseSeeds } from '../seeds/DatabaseSeeds';
 
 exports.command = 'seeds';

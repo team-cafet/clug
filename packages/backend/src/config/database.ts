@@ -1,8 +1,8 @@
-import { ConnectionOptions } from 'typeorm';
+import { DataSourceOptions } from 'typeorm';
 import { join as joinPath } from 'path';
 
-export const connectionOptions = (): ConnectionOptions => {
-  const defaultConnectionOption: ConnectionOptions = {
+export const connectionOptions = (): DataSourceOptions => {
+  const defaultConnectionOption: DataSourceOptions = {
     type: 'postgres',
     host: process.env.DATABASE_HOST,
     username: process.env.DATABASE_USERNAME,
@@ -15,30 +15,31 @@ export const connectionOptions = (): ConnectionOptions => {
     entities: [joinPath(process.cwd(), '/build/models/*.js')],
     subscribers: [joinPath(process.cwd(), '/build/subscribers/*.js')],
     migrations: [joinPath(process.cwd(), '/build/migrations/*.js')],
-    cli: {
-      entitiesDir: '/src/models',
-      migrationsDir: 'src/migrations',
-      subscribersDir: '/src/subscribers',
-    },
+    // TODO: Check if below are needed
+    // cli: {
+    // entitiesDir: '/src/models',
+    // migrationsDir: 'src/migrations',
+    // subscribersDir: '/src/subscribers',
+    // },
   };
   switch (process.env.NODE_ENV) {
-  case 'production':
-    return {
-      ...defaultConnectionOption,
-      logging: ['error'],
-      synchronize: false,
-    };
+    case 'production':
+      return {
+        ...defaultConnectionOption,
+        logging: ['error'],
+        synchronize: false,
+      };
 
-  case 'test':
-    return {
-      ...defaultConnectionOption,
-      logging: false,
-      dropSchema: true,
-      synchronize: true,
-      entities: [__dirname + '/../models/*.{js,ts}'],
-    };
+    case 'test':
+      return {
+        ...defaultConnectionOption,
+        logging: false,
+        dropSchema: true,
+        synchronize: true,
+        entities: [__dirname + '/../models/*.{js,ts}'],
+      };
 
-  default:
-    return defaultConnectionOption;
+    default:
+      return defaultConnectionOption;
   }
 };
