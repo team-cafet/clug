@@ -12,6 +12,7 @@ import {
 import { Member } from './Member';
 import { Club } from './Club';
 import { MembershipPlan } from './MembershipPlan';
+import { Staff } from './Staff';
 
 @Entity()
 export class Organisation extends BaseEntity {
@@ -49,4 +50,7 @@ export class Organisation extends BaseEntity {
     { nullable: true }
   )
   membershipPlans?: MembershipPlan[];
+  
+  @OneToMany(() => Staff, (staff) => staff.organisation, {nullable: true})
+  staffs?: Staff[];
 }

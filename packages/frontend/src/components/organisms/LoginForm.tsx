@@ -39,8 +39,6 @@ export const LoginForm = () => {
       await login(username, password);
 
       globalContext.dispatch({ type: GlobalContextActions.HAS_LOGIN });
-
-      // setHasLogin(true);
     } catch (err) {
       console.error(err);
       if (err.message) {

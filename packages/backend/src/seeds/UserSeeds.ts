@@ -1,4 +1,3 @@
-import { User } from '../models/User';
 import { ISeeds } from '../libs/interfaces/ISeeds';
 import { UserFactory } from './factory/UserFactory';
 import { EXISTING_GROUPS } from '../config/auth';

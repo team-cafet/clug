@@ -31,6 +31,7 @@ export class UserFactory implements IFactory<User> {
 
   defineAdmin(adminGroup): User {
     const admin = this.define();
+    admin.username = 'admin';
     admin.email = 'admin@test.ch';
     admin.password = '1234';
     admin.group = adminGroup;
