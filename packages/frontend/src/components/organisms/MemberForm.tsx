@@ -190,7 +190,7 @@ export const MemberForm = (props: IProps) => {
       }
 
       setDisplayAlertMemberSaved(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       if (err.message) {
         setFieldError('global', err.message);

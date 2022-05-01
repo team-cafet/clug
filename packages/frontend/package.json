@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
-    "@types/node": "^14.18.16",
+    "@types/node": "^16.11.33",
     "@types/react": "^17.0.44",
     "axios": "^0.27.2",
     "bootstrap": "^4.6.1",
@@ -21,7 +21,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
     "react-table": "^7.7.0",
-    "typescript": "^3.9.10"
+    "typescript": "^4.6.4"
   },
   "scripts": {
     "start": "GENERATE_SOURCEMAP=false react-scripts start",

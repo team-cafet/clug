@@ -3,14 +3,14 @@ import 'source-map-support/register';
 import { config } from 'dotenv';
 import express from 'express';
 import supertest from 'supertest';
-import { DataSource, DataSourceOptions } from 'typeorm';
+import { DataSource } from 'typeorm';
 import { createServer, Server as HttpServer } from 'http';
 import { initApp } from '../../app';
 import { DatabaseSeeds } from '../../seeds/DatabaseSeeds';
 import { AuthCtrl } from '../../controllers/auth';
+import { TypeORMService } from '../../libs/services/TypeORMService';
 
 process.env.NODE_ENV = 'test';
-process.env.SEEDS_NB_CLUB = '10';
 process.env.SEEDS_NB_MEMBERSHIP = '20';
 process.env.SEEDS_NB_ORGANISATION = '5';
 process.env.SEEDS_NB_TAG = '30';
@@ -29,16 +29,6 @@ export class TestFactory {
   private _connection: DataSource;
   private _server: HttpServer;
   private _staffToken: string;
-
-  // DB connection options
-  private options: DataSourceOptions = {
-    type: 'sqljs',
-    database: new Uint8Array(),
-    location: 'database',
-    logging: false,
-    synchronize: true,
-    entities: ['build/models/**/*.js'],
-  };
 
   public get app(): supertest.SuperTest<supertest.Test> {
     return supertest(this._app);
@@ -60,7 +50,8 @@ export class TestFactory {
    * Connect to DB and start server
    */
   public async init(): Promise<void> {
-    this._connection = await new DataSource(this.options);
+    await TypeORMService.getInstance().load();
+    this._connection = TypeORMService.getInstance().getDataSource();
 
     const dbSeeds = new DatabaseSeeds();
     try {

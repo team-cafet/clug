@@ -60,7 +60,7 @@ export const MembershipPlanForm = (props: IProps) => {
         });
       }
       navigate('/admin/membershipPlans')
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       if (err.message) {
         setFieldError('global', err.message);

@@ -32,11 +32,13 @@ export const connectionOptions = (): DataSourceOptions => {
 
     case 'test':
       return {
-        ...defaultConnectionOption,
+        type: 'sqljs',
+        database: new Uint8Array(),
+        location: 'database',
         logging: false,
-        dropSchema: true,
         synchronize: true,
-        entities: [__dirname + '/../models/*.{js,ts}'],
+        entities: ['build/models/**/*.js'],
+        dropSchema: true,
       };
 
     default:
