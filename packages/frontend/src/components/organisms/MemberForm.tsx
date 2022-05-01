@@ -273,7 +273,7 @@ export const MemberForm = (props: IProps) => {
 
             <h1>
               {props.member
-                ? 'Modifier le profil de ' + props.member.user?.person.firstname
+                ? 'Modifier le profil de ' + props.member.user?.person?.firstname
                 : 'Créer un membre'}
             </h1>
 
@@ -283,34 +283,34 @@ export const MemberForm = (props: IProps) => {
               label="Email"
               type="text"
               formnikError={errors.user?.person?.email}
-              name="user.email"
+              name="user.person.email"
             />
 
             <FormGroup
               label="Nom"
               type="text"
               formnikError={errors.user?.person?.lastname}
-              name="user.lastname"
+              name="user.person.lastname"
             />
             <FormGroup
               label="Prénom"
               type="text"
               formnikError={errors.user?.person?.firstname}
-              name="user.firstname"
+              name="user.person.firstname"
             />
 
             <FormGroup
               label="Date de naissance"
               type="date"
               formnikError={errors.user?.person?.birthdate}
-              name="use.birthdate"
+              name="use.person.birthdate"
             />
 
             <FormGroup
               label="Téléphone"
               type="text"
               formnikError={errors.user?.person?.phone}
-              name="user.phone"
+              name="user.person.phone"
             />
 
             <h2>Adresse</h2>
@@ -321,14 +321,14 @@ export const MemberForm = (props: IProps) => {
                 label="Rue"
                 type="text"
                 formnikError={errors.user?.person?.street}
-                name="user.street"
+                name="user.person.street"
               />
               <FormGroup
                 className="col"
                 label="Numéro"
                 type="number"
                 formnikError={errors.user?.person?.streetNumber}
-                name="user.streetNumber"
+                name="user.person.streetNumber"
               />
             </div>
 
@@ -338,14 +338,14 @@ export const MemberForm = (props: IProps) => {
                 label="NPA"
                 type="number"
                 formnikError={errors.user?.person?.postalCode}
-                name="user.postalCode"
+                name="user.person.postalCode"
               />
               <FormGroup
                 className="col"
                 label="Ville"
                 type="text"
                 formnikError={errors.user?.person?.city}
-                name="user.city"
+                name="user.person.city"
               />
             </div>
 
