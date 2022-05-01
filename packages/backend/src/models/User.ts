@@ -67,7 +67,7 @@ export class User extends BaseEntity {
 
   @OneToOne(() => Person, {
     cascade: true,
-    eager: false,
+    eager: true,
   })
   @JoinColumn()
   person: Person;
