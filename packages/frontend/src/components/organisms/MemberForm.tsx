@@ -6,6 +6,7 @@ import {
   Row,
   Col,
   Form as FormBootstrap,
+  ToggleButton,
 } from 'react-bootstrap';
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { Link, useHistory } from 'react-router-dom';
@@ -24,6 +25,7 @@ import { NotificationFailed } from '../molecules/Notifications/NotificationFaile
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
 import { Thumb } from '../molecules/Thumb';
 import { IUser } from '../../libs/interfaces/user.interface';
+import { PersonResponsibleForm } from './PersonResponsibleForm';
 
 interface IFormValue {
   global: string;
@@ -51,6 +53,7 @@ export const MemberForm = (props: IProps) => {
         : undefined
     ).format('YYYY-MM-DD')
   );
+  const [responsibleChecked, setResponsibleChecked] = useState(false);
 
   const [thumbPicture, setThumbPicture] = useState<string | File | null>(
     props.member ? memberService.getMemberPictureURL(props.member) : null
@@ -273,7 +276,8 @@ export const MemberForm = (props: IProps) => {
 
             <h1>
               {props.member
-                ? 'Modifier le profil de ' + props.member.user?.person?.firstname
+                ? 'Modifier le profil de ' +
+                  props.member.user?.person?.firstname
                 : 'Créer un membre'}
             </h1>
 
@@ -312,9 +316,6 @@ export const MemberForm = (props: IProps) => {
               formnikError={errors.user?.person?.phone}
               name="user.person.phone"
             />
-
-            <h2>Adresse</h2>
-
             <div className="form-row">
               <FormGroup
                 className="col-8"
@@ -347,6 +348,23 @@ export const MemberForm = (props: IProps) => {
                 formnikError={errors.user?.person?.city}
                 name="user.person.city"
               />
+            </div>
+            <div className='d-flex baseline-align'>
+            <ToggleButton
+                className="checkbox-reveal"
+                id="toggle-check"
+                type="checkbox"
+                variant="outline-primary"
+                checked={responsibleChecked}
+                value="1"
+                onChange={(e) => setResponsibleChecked(e.currentTarget.checked)}
+              >
+              </ToggleButton>
+              <p>Le membre est mineur/sous tutelle</p>
+            </div>
+
+            <div className="form-row">
+              {responsibleChecked ? <PersonResponsibleForm /> : ''}
             </div>
 
             <h2>Abonnement</h2>
