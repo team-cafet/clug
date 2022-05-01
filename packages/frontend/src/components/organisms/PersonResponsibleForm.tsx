@@ -12,7 +12,7 @@ export const PersonResponsibleForm = (props: IProps) => {
 
   return (
     <div className='form-responsibleContact'>
-      <p>Veuillez rentrer les informations concernant la personne responsable du membre:</p>
+      <p className="light-text small-text">Veuillez rentrer les informations concernant la personne responsable du membre:</p>
       <div className="form-row">
         <FormGroup
           label="Nom"

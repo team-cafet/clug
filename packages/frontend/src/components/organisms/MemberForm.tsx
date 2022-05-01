@@ -349,18 +349,14 @@ export const MemberForm = (props: IProps) => {
                 name="user.person.city"
               />
             </div>
-            <div className='d-flex baseline-align'>
-            <ToggleButton
-                className="checkbox-reveal"
-                id="toggle-check"
-                type="checkbox"
-                variant="outline-primary"
+            <div className="d-flex baseline-align">
+              <FormBootstrap.Check
                 checked={responsibleChecked}
-                value="1"
                 onChange={(e) => setResponsibleChecked(e.currentTarget.checked)}
-              >
-              </ToggleButton>
-              <p>Le membre est mineur/sous tutelle</p>
+                type="switch"
+                label="Le membre est mineur/sous tutelle"
+                id="switch"
+              />
             </div>
 
             <div className="form-row">

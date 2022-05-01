@@ -5,3 +5,10 @@
 .smallMarginRight {
   margin-right: 10px;
 }
+.small-text {
+  font-size: var(--sm-text-size);
+}
+.light-text {
+  color: var(--c-dark-text);
+  opacity: 0.5;
+}

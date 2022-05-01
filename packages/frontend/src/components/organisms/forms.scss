@@ -58,7 +58,10 @@
     padding: 1rem 9rem;
   }
   .form-responsibleContact{
-    margin-left: 3rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 10px;
+    border: 1px solid var(--c-primary);
   }
 }
 // Small devices (landscape phones, less than 768px)
