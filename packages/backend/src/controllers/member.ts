@@ -23,10 +23,11 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
 
     this.options = {
       findAllOptions: {
-        relations: ['user'],
+        relations: ['person', 'user'],
       },
       findOneOptions: {
         relations: [
+          'person',
           'user',
           'club',
           'memberships',
@@ -52,9 +53,9 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
           .resize(500, 500, {
             kernel: sharp.kernel.nearest,
             fit: 'contain',
-            background: { r: 255, g: 255, b: 255, alpha: 0.5 }
+            background: { r: 255, g: 255, b: 255, alpha: 0.5 },
           })
-          .png({compressionLevel: 7})
+          .png({ compressionLevel: 7 })
           .toBuffer();
 
         await this.s3FileManager.uploadToBucket(
@@ -64,13 +65,13 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
           req.file.mimetype
         );
 
-        return res.send({pictureURL: filename});
+        return res.send({ pictureURL: filename });
       } catch (err) {
         logger.debug(err);
         return res.sendStatus(500);
       }
     }
-  }
+  };
 
   /**
    *

@@ -91,12 +91,12 @@ export const executeTestSeeder = async () => {
             email: 'admin@test.ch',
             firstname: 'PrénomTest',
             lastname: 'NomTest',
+            city: 'Laus Angeles',
           },
           username: 'user-test',
           /* email: 'user@test.ch', */
           password: '1234',
           group: userGrp,
-          city: 'Laus Angeles',
         },
         organisation: org1,
       },

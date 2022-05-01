@@ -3,20 +3,19 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  ManyToOne,
   BaseEntity,
-  JoinColumn,
   OneToOne,
 } from 'typeorm';
-import { Member } from './Member';
-import { Organisation } from './Organisation';
-import { MembershipPlan } from './MembershipPlan';
-import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 import { User } from './User';
+
+export enum Sexe {
+  'MALE',
+  'FEMALE',
+  'NON-BINARY',
+}
 
 @Entity()
 export class Person extends BaseEntity {
@@ -37,6 +36,42 @@ export class Person extends BaseEntity {
     nullable: true,
   })
   lastname: string;
+
+  // ----------------------------- Personal information
+
+  @Column({
+    type: 'simple-enum',
+    enum: Sexe,
+    default: Sexe.MALE,
+    nullable: true,
+  })
+  sexe: Sexe;
+
+  @Column({
+    length: 50,
+    nullable: true,
+  })
+  phone: string;
+
+  @Column({ type: 'date', nullable: true })
+  birthdate: Date;
+
+  // ----------------------------- Address information
+
+  @Column({ nullable: true })
+  street: string;
+
+  @Column({ nullable: true })
+  streetNumber: number;
+
+  @Column({ nullable: true })
+  city: string;
+
+  @Column({ nullable: true })
+  postalCode: number;
+
+  @Column({ nullable: true })
+  country: string;
 
   // ----------------------------- Timestamps
 

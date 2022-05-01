@@ -1,11 +1,9 @@
 import { IOrganisation } from './organisation.interface';
+import { IPerson } from './person.interface';
 
 export interface IUser {
-  id: number;
-  email: string;
-  firstname?: string;
-  lastname?: string;
+  id?: number;
   organisation: IOrganisation;
-  birthdate: string;
+  person: IPerson;
   pictureURL?: string;
 }

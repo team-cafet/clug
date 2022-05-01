@@ -24,14 +24,8 @@ import { Member } from './Member';
 import { Organisation } from './Organisation';
 import { Person } from './Person';
 
-export enum Sexe {
-  'MALE',
-  'FEMALE',
-  'NON-BINARY',
-}
-
 @Entity()
-export class User extends BaseEntity{
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -41,46 +35,10 @@ export class User extends BaseEntity{
   @Column({ nullable: true, select: false })
   password: string;
 
-  // ----------------------------- Personal information
-
-  @Column({
-    type: 'simple-enum',
-    enum: Sexe,
-    default: Sexe.MALE,
-    nullable: true,
-  })
-  sexe: Sexe;
-
-  @Column({
-    length: 50,
-    nullable: true,
-  })
-  phone: string;
-
-  @Column({ type: 'date', nullable: true })
-  birthdate: Date;
-
   @Column({
     nullable: true,
   })
   pictureURL: string;
-
-  // ----------------------------- Address information
-
-  @Column({ nullable: true })
-  street: string;
-
-  @Column({ nullable: true })
-  streetNumber: number;
-
-  @Column({ nullable: true })
-  city: string;
-
-  @Column({ nullable: true })
-  postalCode: number;
-
-  @Column({ nullable: true })
-  country: string;
 
   // ----------------------------- Special information
 
@@ -107,12 +65,23 @@ export class User extends BaseEntity{
   })
   members: Member[];
 
-  @OneToOne(() => Person,{
+  @OneToOne(() => Person, {
     cascade: true,
-    eager: false
+    eager: false,
   })
   @JoinColumn()
-  person: Person
+  person: Person;
+
+  // ----------------------------- Timestamps
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deletedAt' })
+  deletedAt: Date;
 
   // ----------------------------- Getter and Setter
 

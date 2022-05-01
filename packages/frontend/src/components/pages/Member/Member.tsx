@@ -56,7 +56,7 @@ export const Member = () => {
       )
       .map((member) => ({
         id: member.id,
-        name: `${member.user?.firstname} ${member.user?.lastname}`,
+        name: `${member.user?.person?.firstname} ${member.user?.person?.lastname}`,
         negativeBalance: member.balance < 0,
       }));
   }, [members]);

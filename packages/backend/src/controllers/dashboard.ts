@@ -20,13 +20,14 @@ export class DashboardCtrl {
     return memberRepo
       .createQueryBuilder('member')
       .leftJoinAndSelect('member.user', 'user')
+      .leftJoinAndSelect('user.person', 'person')
       .leftJoinAndSelect('member.organisation', 'organisation')
       .where('organisation.id = :id', { id: orgID })
       .andWhere(
-        "DATE_PART('doy', user.birthdate) >= DATE_PART('doy', CURRENT_DATE)"
+        "DATE_PART('doy', person.birthdate) >= DATE_PART('doy', CURRENT_DATE)"
       )
       .andWhere(
-        `DATE_PART(\'doy\', user.birthdate) <= DATE_PART('doy', CURRENT_DATE + INTERVAL '${NBR_MIN_DAY_TO_INCLUDE_MEMBER} day')`
+        `DATE_PART(\'doy\', person.birthdate) <= DATE_PART('doy', CURRENT_DATE + INTERVAL '${NBR_MIN_DAY_TO_INCLUDE_MEMBER} day')`
       )
       .getMany();
   }
@@ -39,6 +40,7 @@ export class DashboardCtrl {
     return memberRepo
       .createQueryBuilder('member')
       .leftJoinAndSelect('member.user', 'user')
+      .leftJoinAndSelect('user.person', 'person')
       .leftJoinAndSelect('member.organisation', 'organisation')
       .where('organisation.id = :id', { id: orgID })
       .andWhere('member.balance < 0')

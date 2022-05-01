@@ -23,21 +23,12 @@ import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithCon
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
 import { Thumb } from '../molecules/Thumb';
+import { IUser } from '../../libs/interfaces/user.interface';
 
 interface IFormValue {
   global: string;
   picture: any;
-  user: {
-    email: string;
-    firstname: string;
-    lastname: string;
-    birthdate: Date | string;
-    phone: string;
-    street: string;
-    streetNumber: undefined | number;
-    city: string;
-    postalCode: undefined | number;
-  };
+  user: IUser;
   memberships: IMembership[];
 }
 
@@ -70,15 +61,18 @@ export const MemberForm = (props: IProps) => {
   let initialValues: IFormValue = {
     picture: null,
     user: {
-      email: '',
-      firstname: '',
-      lastname: '',
-      birthdate: '',
-      phone: '',
-      street: '',
-      streetNumber: undefined,
-      city: '',
-      postalCode: undefined,
+      organisation: { id: props.organisationID, name: '' },
+      person: {
+        email: '',
+        firstname: '',
+        lastname: '',
+        birthdate: '',
+        phone: '',
+        street: '',
+        city: '',
+        streetNumber: undefined,
+        postalCode: undefined,
+      },
     },
     global: '',
     memberships: [],
@@ -92,14 +86,14 @@ export const MemberForm = (props: IProps) => {
   const validate = (values: IFormValue) => {
     const errors: any = {};
 
-    if (!values.user.email) {
+    if (!values.user.person.email) {
       errors.user = { ...errors.user };
-      errors.user.email = 'Requis';
+      errors.user.person.email = 'Requis';
     }
 
-    if (!values.user.birthdate) {
+    if (!values.user.person.birthdate) {
       errors.user = { ...errors.user };
-      errors.user.birthdate = 'Requis';
+      errors.user.person.birthdate = 'Requis';
     }
 
     return errors;
@@ -279,7 +273,7 @@ export const MemberForm = (props: IProps) => {
 
             <h1>
               {props.member
-                ? 'Modifier le profil de ' + props.member.user?.firstname
+                ? 'Modifier le profil de ' + props.member.user?.person.firstname
                 : 'Créer un membre'}
             </h1>
 
@@ -288,34 +282,34 @@ export const MemberForm = (props: IProps) => {
             <FormGroup
               label="Email"
               type="text"
-              formnikError={errors.user?.email}
+              formnikError={errors.user?.person?.email}
               name="user.email"
             />
 
             <FormGroup
               label="Nom"
               type="text"
-              formnikError={errors.user?.lastname}
+              formnikError={errors.user?.person?.lastname}
               name="user.lastname"
             />
             <FormGroup
               label="Prénom"
               type="text"
-              formnikError={errors.user?.firstname}
+              formnikError={errors.user?.person?.firstname}
               name="user.firstname"
             />
 
             <FormGroup
               label="Date de naissance"
               type="date"
-              formnikError={errors.user?.birthdate}
-              name="user.birthdate"
+              formnikError={errors.user?.person?.birthdate}
+              name="use.birthdate"
             />
 
             <FormGroup
               label="Téléphone"
               type="text"
-              formnikError={errors.user?.phone}
+              formnikError={errors.user?.person?.phone}
               name="user.phone"
             />
 
@@ -326,14 +320,14 @@ export const MemberForm = (props: IProps) => {
                 className="col-8"
                 label="Rue"
                 type="text"
-                formnikError={errors.user?.street}
+                formnikError={errors.user?.person?.street}
                 name="user.street"
               />
               <FormGroup
                 className="col"
                 label="Numéro"
                 type="number"
-                formnikError={errors.user?.streetNumber}
+                formnikError={errors.user?.person?.streetNumber}
                 name="user.streetNumber"
               />
             </div>
@@ -343,14 +337,14 @@ export const MemberForm = (props: IProps) => {
                 className="col-4"
                 label="NPA"
                 type="number"
-                formnikError={errors.user?.postalCode}
+                formnikError={errors.user?.person?.postalCode}
                 name="user.postalCode"
               />
               <FormGroup
                 className="col"
                 label="Ville"
                 type="text"
-                formnikError={errors.user?.city}
+                formnikError={errors.user?.person?.city}
                 name="user.city"
               />
             </div>
@@ -410,7 +404,7 @@ export const MemberForm = (props: IProps) => {
             {props.member?.id && (
               <DeleteBtnWithConfirmation
                 buttontext="Supprimer ce membre"
-                item={`${initialValues.user.firstname}`}
+                item={`${initialValues.user.person.firstname}`}
                 onYes={() => deleteMember()}
               />
             )}
