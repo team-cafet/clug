@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonProps } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 
-interface IProps {
+interface IProps extends ButtonProps {
   variant?: 'primary' | 'secondary' | 'success' | 'danger';
   className?: string;
   id?: string;
@@ -29,10 +29,14 @@ export const ButtonWithConfirmation = (props: IProps) => {
 
   return (
     <>
-      <Button className="btn-popup btnWithConfirmation" onClick={handleShow}>
+      <Button
+        className={`${props.className}`}
+        onClick={handleShow}
+        title={props.title}
+        disabled={props.disabled}
+      >
         {props.children}
       </Button>
-
       <Modal
         show={show}
         onHide={handleClose}

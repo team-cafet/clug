@@ -5,4 +5,5 @@ export interface IPaymentRequest {
   date: Date;
   hasBeenCanceled: boolean;
   description?: string;
+  payment?: IPaymentRequest
 }

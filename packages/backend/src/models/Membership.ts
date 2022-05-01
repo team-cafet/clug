@@ -61,7 +61,7 @@ export class Membership {
   @OneToOne(
     (type) => PaymentRequest,
     (paymentRequest) => paymentRequest.membership,
-    { cascade: ['insert'] }
+    { cascade: ['insert'] , eager: true}
   )
   @JoinColumn()
   paymentRequest: PaymentRequest;

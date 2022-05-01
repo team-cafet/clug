@@ -3,36 +3,29 @@ button.btn, a.btn {
         border-color: rgba(255, 255, 255, 0.0);
         box-shadow: 0 0 0 0.2rem rgba(255, 88, 26, 0.2);
     }
-
-    &.btn-secondary {
-        border-radius: var(--c-radius);
-        margin-top: 1rem;
-    }
-
-    &.btn-primary {
-        color: #fff;
-        border-radius: var(--c-radius);
-        margin-top: 1rem;
-        &.btnWithConfirmation, &.editItem {
-            background-color: transparent;
-            border: none;
-            margin-top: 0;
+    &.btn-icon {
+        color: var(--c-primary);
+        background-color: transparent;
+        border: none;
+        font-size: var(--subtitle-size);
+        &:hover {
+            color: var(--c-dark-primary); 
+        }
+        &.white {
+            color: var(--c-light-text);
             &:hover {
-                color: #fff;
-                .delete, .edit {
-                fill: #fff;
-                }
-            }
-            
-        }
-        &.btnWithConfirmation {
-           color: var(--c-secondary); 
-           &:hover {
-            background-color: var(--c-secondary);
+                filter: brightness(0.8);
             }
         }
-        &.editItem:hover {
-            background-color: var(--c-primary);
+        &.warning {
+            color: var(--c-warning);
+            &:hover {
+                filter: brightness(0.8);
+            }
+        }
+        &[disabled=""] {
+            opacity: 0.3;
+            pointer-events: none;
         }
     }
 }
