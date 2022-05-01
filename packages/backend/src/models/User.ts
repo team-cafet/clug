@@ -89,7 +89,7 @@ export class User extends BaseEntity{
 
   // ----------------------------- Relations
 
-  @ManyToOne((type) => Group, (group) => group.users, { eager: true })
+  @ManyToOne((type) => Group, (group) => group.users, { eager: false })
   group: Group;
 
   @OneToMany((type) => PaymentRequest, (payReq) => payReq.user)
@@ -108,7 +108,8 @@ export class User extends BaseEntity{
   members: Member[];
 
   @OneToOne(() => Person,{
-    cascade: true
+    cascade: true,
+    eager: false
   })
   @JoinColumn()
   person: Person
