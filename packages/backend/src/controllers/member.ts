@@ -71,7 +71,6 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
         return res.send({pictureURL: filename});
       } catch (err) {
         logger.debug(err);
-        console.error(err);
         return res.sendStatus(500);
       }
     }

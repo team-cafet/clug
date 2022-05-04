@@ -5,7 +5,6 @@ import fs from 'fs';
 
 
 export default async () => {
-  
   if (fs.existsSync('.env')) {
     dotenv.config({ path: '.env' });
   } 

@@ -15,12 +15,6 @@ export const connectionOptions = (): DataSourceOptions => {
     entities: [joinPath(process.cwd(), '/build/models/*.js')],
     subscribers: [joinPath(process.cwd(), '/build/subscribers/*.js')],
     migrations: [joinPath(process.cwd(), '/build/migrations/*.js')],
-    // TODO: Check if below are needed
-    // cli: {
-    // entitiesDir: '/src/models',
-    // migrationsDir: 'src/migrations',
-    // subscribersDir: '/src/subscribers',
-    // },
   };
   switch (process.env.NODE_ENV) {
     case 'production':
