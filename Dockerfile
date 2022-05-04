@@ -14,7 +14,7 @@
 
 # ------------------------------- BUILDER CONTAINER
 # Node alpine is the smallest build for node js
-FROM node:14-alpine as builder
+FROM node:16-alpine as builder
 
 ENV NODE_ENV=production
 
@@ -50,13 +50,12 @@ RUN npm run build
 ## --------------------- DEPENDENCIES FRONTEND APP
 COPY --chown=clug:clug ./packages/frontend/package.json /usr/src/app/frontend/
 WORKDIR /usr/src/app/frontend
-RUN npm i --also=dev
+RUN npm i --include=dev
 
-## Copy frontend source code into builder container
+## --------------------- BUILD FRONTEND APP and deploy it to backend
 WORKDIR /usr/src/app/
 COPY --chown=clug:clug ./packages/frontend/ /usr/src/app/frontend/
 
-## --------------------- BUILD FRONTEND APP and deploy it to backend
 WORKDIR /usr/src/app/frontend/
 RUN npm run build-and-deploy
 
@@ -67,14 +66,16 @@ WORKDIR /usr/src/app/backoffice
 RUN npm i --also=dev
 
 ## --------------------- BUILD BACKOFFICe APP and deploy it to backend
-WORKDIR /usr/src/app/backoffice/
+WORKDIR /usr/src/app/
 COPY --chown=clug:clug ./packages/backoffice/ /usr/src/app/backoffice/
+
+WORKDIR /usr/src/app/backoffice/
 RUN npm run build-and-deploy
 
 
 # ------------------------------- APP CONTAINER
 
-FROM node:14-alpine as app
+FROM node:16-alpine as app
 
 LABEL maintainer="team-cafet"
 

@@ -10,12 +10,12 @@ const PATH_TO_PUBLIC = path.resolve(
 
 if (!fs.existsSync(PATH_TO_BUILD_FOLDER)) {
   console.error('no build created...');
-  return;
+  process.exit();
 }
 
 // Delete last public folder
 console.log('Deleting backend public folder');
-fs.rmdirSync(PATH_TO_PUBLIC, { recursive: true });
+fs.rmSync(PATH_TO_PUBLIC, { recursive: true, force: true });
 
 fs.mkdirSync(PATH_TO_PUBLIC);
 

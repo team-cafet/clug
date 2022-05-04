@@ -7,7 +7,7 @@
 
 
 # Node alpine is the smallest build for node js
-FROM node:14-alpine
+FROM node:16-alpine
 
 ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}

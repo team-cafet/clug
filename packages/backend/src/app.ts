@@ -1,12 +1,10 @@
-import bodyParser from 'body-parser';
+import {json, urlencoded} from 'body-parser';
 import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
-import 'reflect-metadata';
-import logger from './util/logger';
+import logger from './libs/functions/logger';
 import { memberRouter } from './routes/member';
 import { organisationRouter } from './routes/organisation';
-import { clubRouter } from './routes/club';
 import { staffRouter } from './routes/staff';
 import { authRouter } from './routes/auth';
 import ExpressJWT from 'express-jwt';
@@ -26,8 +24,8 @@ export const initApp = (): express.Express => {
 
   app.use(helmet());
 
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(json());
+  app.use(urlencoded({ extended: true }));
 
   app.use((req, res, next) => {
     logger.debug(
@@ -63,7 +61,6 @@ export const initApp = (): express.Express => {
   // main api routes
   app.use('/api/members', memberRouter());
   app.use('/api/organisations', organisationRouter());
-  app.use('/api/clubs', clubRouter());
   app.use('/api/staffs', staffRouter());
   app.use('/api/payments', paymentRouter());
   app.use('/api/payment-requests', paymentRequestRouter());

@@ -1,11 +1,11 @@
 import { RESTController } from '../libs/classes/RESTController';
 import { PaymentRequest } from '../models/PaymentRequest';
-import { getConnection, getRepository } from 'typeorm';
 import { Membership } from '../models/Membership';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 export class PaymentRequestCtrl extends RESTController<PaymentRequest> {
   constructor() {
-    super(getRepository(PaymentRequest));
+    super(PaymentRequest);
   }
 
   public async createWithMembership(body: {
@@ -14,7 +14,7 @@ export class PaymentRequestCtrl extends RESTController<PaymentRequest> {
   }): Promise<PaymentRequest> {
     try {
       let newRequest;
-      const transacResult = await getConnection().transaction(
+      await TypeORMService.getInstance().getDataSource().transaction(
         async (transactionalEntityManager) => {
           newRequest = await transactionalEntityManager
             .getRepository(PaymentRequest)
@@ -30,7 +30,7 @@ export class PaymentRequestCtrl extends RESTController<PaymentRequest> {
 
           body.membership.paymentRequest = newRequest;
 
-          const updatedMbership = await transactionalEntityManager
+          await transactionalEntityManager
             .getRepository(PaymentRequest)
             .save(body.membership);
         }

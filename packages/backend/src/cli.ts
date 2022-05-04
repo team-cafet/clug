@@ -1,9 +1,7 @@
 import yargs from 'yargs';
-import { loadORM } from './util/loadorm';
-import { loadEnv } from './util/loadenv';
+import boot from './boot';
 
-loadEnv();
-loadORM().finally(() => {
+boot().finally(() => {
   yargs(process.argv.slice(2))
     .commandDir('./cli')
     .demandCommand()
