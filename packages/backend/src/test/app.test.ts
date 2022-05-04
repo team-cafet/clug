@@ -11,7 +11,7 @@ describe('Functionnal App testing', () => {
     await factory.close();
   });
 
-  it('should return 404', async (done) => {
+  it('should return 404', (done) => {
     factory.app.post('/givemea404').expect(404, done);
   });
 });

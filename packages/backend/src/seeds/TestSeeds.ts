@@ -1,6 +1,4 @@
 import { Organisation } from '../models/Organisation';
-import { getRepository } from 'typeorm';
-import { Club } from '../models/Club';
 import { Staff } from '../models/Staff';
 import { Member } from '../models/Member';
 import { Group } from '../models/Group';
@@ -10,16 +8,15 @@ import { Payment } from '../models/Payment';
 import { PaymentRequest } from '../models/PaymentRequest';
 import { Membership } from '../models/Membership';
 import { MembershipPlan, PlanType } from '../models/MembershipPlan';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
-/**
- * Seeder for testing the app
- */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const executeTestSeeder = async () => {
+  const getRepository = TypeORMService.getInstance().getRepository;
+
   const userRepo = getRepository(User);
   const staffRepo = getRepository(Staff);
   const memberRepo = getRepository(Member);
-  const clubRepo = getRepository(Club);
   const paymentRepo = getRepository(Payment);
   const paymentRequestRepo = getRepository(PaymentRequest);
   const membershipRepo = getRepository(Membership);
@@ -35,10 +32,6 @@ export const executeTestSeeder = async () => {
     { name: 'Organisation 1' },
     { name: 'Organisation 2' }
   ]);
-
-  const [club1] = await clubRepo.save(
-    clubRepo.create([{ name: 'Club 1', organisation: org1 }])
-  );
 
   const [admin, manager] = await userRepo.save(
     userRepo.create([
@@ -162,7 +155,6 @@ export const executeTestSeeder = async () => {
       manager: manager
     },
     organisations: [org1, org2],
-    clubs: [club1],
     staff: [staff1],
     member: [member1, member2]
   };
@@ -172,7 +164,7 @@ export const executeTestSeeder = async () => {
  * Will execute the seeder needed to have a clean app
  */
 export const executeInitialConfigSeeder = async (): Promise<void> => {
-  await getRepository(Group).save([
+  await TypeORMService.getInstance().getRepository(Group).save([
     { name: EXISTING_GROUPS.ADMIN },
     { name: EXISTING_GROUPS.MANAGER },
     { name: EXISTING_GROUPS.USER }

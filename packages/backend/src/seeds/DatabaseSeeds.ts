@@ -1,11 +1,10 @@
 import { ISeeds } from '../libs/interfaces/ISeeds';
-import { getConnection } from 'typeorm';
 import { OrganisationSeeds } from './OrganisationSeeds';
 import { StaffSeeds } from './StaffSeeds';
 import { UserSeeds } from './UserSeeds';
-import { ClubSeeds } from './ClubSeeds';
 import { MembershipPlanSeeds } from './MembershipPlanSeeds';
 import { MemberSeeds } from './MemberSeeds';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 export class DatabaseSeeds implements ISeeds {
   async run(withClear = true, withLog = true): Promise<void> {
@@ -19,7 +18,6 @@ export class DatabaseSeeds implements ISeeds {
     await new OrganisationSeeds().run();
     await new UserSeeds().run();
     await new StaffSeeds().run();
-    await new ClubSeeds().run();
     await new MembershipPlanSeeds().run();
     await new MemberSeeds().run();
 
@@ -27,7 +25,7 @@ export class DatabaseSeeds implements ISeeds {
   }
 
   private async clearDatabase() {
-    const connection = getConnection();
+    const connection = TypeORMService.getInstance().getDataSource();
     const entities = connection.entityMetadatas;
 
     const truncatedEntities = entities.map(

@@ -11,7 +11,6 @@ import {
   BaseEntity,
 } from 'typeorm';
 import { Membership } from './Membership';
-import { Club } from './Club';
 import { Organisation } from './Organisation';
 import { IResourceWithOrganisation } from '../libs/interfaces/IResourceWithOrganisation';
 
@@ -67,12 +66,6 @@ export class MembershipPlan extends BaseEntity implements IResourceWithOrganisat
     eager: false,
   })
   memberships: Membership[];
-
-  @ManyToOne((type) => Club, (club) => club.membershipPlans, {
-    onDelete: 'NO ACTION',
-    nullable: true,
-  })
-  club?: Club;
 
   @ManyToOne(
     (type) => Organisation,

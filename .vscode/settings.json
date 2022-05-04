@@ -2,6 +2,7 @@
   "eslint.workingDirectories": [
     "./packages/backend",
     "./packages/frontend",
+    "./packages/backoffice",
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
@@ -27,5 +28,7 @@
     "**/coverage": true
   },
   "typescript.referencesCodeLens.enabled": false,
-  "editor.rulers": [80]
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.quoteStyle": "single",
+  "editor.rulers": [100]
 }

@@ -9,6 +9,10 @@
     "preview": "vite preview",
     "build-and-deploy": "tsc && vite build --base=/backoffice/ && node deploy-to-backend"
   },
+  "engines" : { 
+    "npm" : ">=7.0.0",
+    "node" : ">=16.0.0"
+  },
   "dependencies": {
     "antd": "^4.19.5",
     "axios": "^0.26.1",

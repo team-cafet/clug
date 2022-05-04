@@ -8,7 +8,7 @@ import {
   Form as FormBootstrap,
 } from 'react-bootstrap';
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGetAllFromService } from '../../hooks/useGetAllFromService';
 import { IMember } from '../../libs/interfaces/member.interface';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
@@ -65,7 +65,7 @@ export const MemberForm = (props: IProps) => {
     props.member ? memberService.getMemberPictureURL(props.member) : null
   );
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   let initialValues: IFormValue = {
     picture: null,
@@ -131,7 +131,7 @@ export const MemberForm = (props: IProps) => {
     if (!props.member?.id) return;
 
     await memberService.delete(props.member.id);
-    history.push('/admin/members');
+    navigate('/admin/members');
   };
 
   /**
@@ -190,7 +190,7 @@ export const MemberForm = (props: IProps) => {
       }
 
       setDisplayAlertMemberSaved(true);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       if (err.message) {
         setFieldError('global', err.message);
@@ -206,7 +206,7 @@ export const MemberForm = (props: IProps) => {
    *
    */
   const backToMemberPage = () => {
-    history.push('/admin/members');
+    navigate('/admin/members');
   };
 
   /**
@@ -243,10 +243,11 @@ export const MemberForm = (props: IProps) => {
 
           <ErrorMessage
             name="global"
-            component={(props) => (
-              <NotificationFailed>{props.children}</NotificationFailed>
+          >
+            {msg => (
+              <NotificationFailed>{msg}</NotificationFailed>
             )}
-          />
+          </ErrorMessage>
 
           {/* General member information */}
           <div className="memberForm">

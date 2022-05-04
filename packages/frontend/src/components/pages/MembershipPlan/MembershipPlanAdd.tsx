@@ -16,12 +16,21 @@ export const MembershipPlanAdd = (props: IProps) => {
 
   useEffect(() => {
     const userInfo = getUserInfo();
-    if (userInfo?.organisation?.id) setOrgID(userInfo?.organisation.id);
+
+    if (userInfo?.organisation?.id) {
+      setOrgID(userInfo?.organisation.id);
+    }
+
     const fetchData = async () => {
-      const membershipPlan = await membershipPlanService.getByID(id);
-      if (membershipPlan) setPlanToUpdate(membershipPlan.data);
+      const membershipPlan = await membershipPlanService.getByID(id as string);
+      if (membershipPlan) {
+         setPlanToUpdate(membershipPlan.data);
+      }    
     };
-    if (id) fetchData();
+
+    if (id) {
+      fetchData();
+    }
   }, [id]);
 
   return (

@@ -7,20 +7,14 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToMany,
-  getRepository,
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import {
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-  ValidationArguments,
-} from 'class-validator';
 import { Member } from './Member';
 import { MembershipPlan } from './MembershipPlan';
 import { APIError } from '../libs/classes/APIError';
 import { PaymentRequest } from './PaymentRequest';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 @Entity()
 export class Membership {
@@ -76,12 +70,13 @@ export class Membership {
   }
 
   private static async alreadyOnMembership(data: Membership): Promise<boolean> {
-    const memberRepo = getRepository(Member);
+    const memberRepo = TypeORMService.getInstance().getRepository(Member);
 
     const startDate = new Date(data.startDate);
     const endDate = new Date(data.endDate);
 
-    const member = await memberRepo.findOne(data.member.id, {
+    const member = await memberRepo.findOne({
+      where: {id: data.member.id},
       relations: ['memberships'],
     });
 

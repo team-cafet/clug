@@ -1,8 +1,8 @@
 import { TestFactory } from './utils/setup';
 
-const API_ENDPOINT = '/api/clubs';
+const API_ENDPOINT = '/api/members';
 
-describe('Functionnal Club endpoint testing', () => {
+describe('Functionnal Member endpoint testing', () => {
   const factory: TestFactory = new TestFactory();
 
   beforeAll(async () => {
@@ -13,7 +13,7 @@ describe('Functionnal Club endpoint testing', () => {
     await factory.close();
   });
 
-  it('get all should return 200', async (done) => {
+  it('get all should return 200', (done) => {
     factory.app
       .get(API_ENDPOINT)
       .send()
