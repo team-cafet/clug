@@ -1,4 +1,3 @@
-import { getRepository } from 'typeorm';
 import { User } from '../../models/User';
 import {
   JWT_SECRET,
@@ -8,23 +7,14 @@ import {
 import { APIError } from '../../libs/classes/APIError';
 import { getGroupPermission } from '../../libs/functions/auth';
 import { getToken } from '../../libs/functions/auth';
-
-/**
- * Following inteface must be the same as IUserInfo in backend
- */
-interface IUserInfo {
-  id: number;
-  username: string;
-  organisation: {
-    id: number;
-  } | null;
-  group: {
-    id: number;
-  };
-}
+import { TypeORMService } from '../../libs/services/TypeORMService';
 
 export class AuthCtrl {
-  private userRepository = getRepository(User);
+  private userRepository;
+  
+  constructor() {
+    this.userRepository = TypeORMService.getInstance().getRepository(User);
+  }
 
   public async login(
     username: string,

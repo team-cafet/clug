@@ -2,7 +2,7 @@
   "parser": "@typescript-eslint/parser",
   "extends": ["plugin:@typescript-eslint/recommended"],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "rules": {
@@ -11,7 +11,21 @@
     "eol-last": "error",
     "spaced-comment":"warn",
     "no-tabs":"error",
-    "indent": ["warn", 2],
+    "indent": "off",
+    "@typescript-eslint/indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": [
+          "FunctionExpression > .params[decorators.length > 0]",
+          "FunctionExpression > .params > :matches(Decorator, :not(:first-child))",
+          "ClassBody.body > PropertyDefinition[decorators.length > 0] > .key"
+        ]
+      }
+    ],
+    "array-bracket-spacing":"error",
+    "brace-style": "error",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": 1,
     "@typescript-eslint/no-inferrable-types": [

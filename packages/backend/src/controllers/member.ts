@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import sharp from 'sharp';
-import { getRepository } from 'typeorm';
 import { Member } from '../models/Member';
 import { User } from '../models/User';
 import { EXISTING_GROUPS } from '../config/auth';
@@ -8,18 +7,24 @@ import { Staff } from '../models/Staff';
 import { IRequestWithFile } from '../libs/interfaces/IRequestWithFile';
 import { S3FileManager } from '../libs/classes/S3FileManager';
 import { OrganisationCtrl } from './organisation';
-import { checkFileTypeFromName } from '../util/file-utils';
 import { OrganisationRESTController } from '../libs/classes/OrganisationRESTController';
-import logger from '../util/logger';
+import logger from '../libs/functions/logger';
+import { TypeORMService } from '../libs/services/TypeORMService';
+import { Repository } from 'typeorm';
 
 export class MemberCtrl extends OrganisationRESTController<Member> {
-  public S3_PICTURE_BUCKET = (): string => 'member-picture';
+  public S3_PICTURE_BUCKET = (): string => 'member-pictures';
   public AUTHORIZED_IMAGE_EXTENSION = (): string[] => ['png', 'jpeg', 'jpg'];
   protected organisationCtrl = new OrganisationCtrl();
   protected s3FileManager: S3FileManager = new S3FileManager();
+  protected userRepository: Repository<User>;
+  protected staffRepository: Repository<Staff>;
 
   constructor() {
-    super(getRepository(Member));
+    super(Member);
+
+    this.userRepository = TypeORMService.getInstance().getRepository(User);
+    this.staffRepository = TypeORMService.getInstance().getRepository(Staff);
 
     this.options = {
       findAllOptions: {
@@ -28,7 +33,6 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       findOneOptions: {
         relations: [
           'user',
-          'club',
           'memberships',
           'memberships.plan',
           'user.person'
@@ -44,7 +48,7 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     if (req.file) {
       const filename = `${Date.now()}-${req.file.originalname}`;
 
-      if (!checkFileTypeFromName(filename, this.AUTHORIZED_IMAGE_EXTENSION())) {
+      if (!S3FileManager.checkFileTypeFromName(filename, this.AUTHORIZED_IMAGE_EXTENSION())) {
         return res.sendStatus(400);
       }
 
@@ -73,12 +77,6 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     }
   };
 
-  /**
-   *
-   * @param req
-   * @param res
-   * @returns
-   */
   public getPicture = async (
     req: Request,
     res: Response
@@ -87,28 +85,19 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     const filename = req.params.filename;
     const file = await this.s3FileManager.getFromBucket(
       this.S3_PICTURE_BUCKET(),
-      filename
-    );
-    const contentType = `image/${checkFileTypeFromName(
       filename,
       this.AUTHORIZED_IMAGE_EXTENSION()
-    )}`;
-
-    res.set('Content-Type', contentType);
-    return res.send(file.Body);
+    );
+    
+    res.set('Content-Type', file.contentType);
+    return res.send(file.file);
   };
 
-  /**
-   * Check if the current user can create a member in the organisation
-   * and if he has the right to do that
-   * @param memberBody
-   * @param userID
-   */
   public async isUserCanCreateMember(
     memberBody: Member,
     userID: number
   ): Promise<boolean> {
-    const user = await getRepository(User).findOneOrFail(userID);
+    const user = await this.userRepository.findOneOrFail({where: {id: userID}});
     const member = this.repository.create(memberBody);
     if (!user) {
       return false;
@@ -121,7 +110,7 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       return true;
     }
 
-    const staff = await getRepository(Staff).findOneOrFail({ user });
+    const staff = await this.staffRepository.findOneOrFail({ where: {user: {id: user.id}} });
 
     if (staff && staff?.organisation?.id === member?.organisation?.id) {
       return true;
@@ -130,18 +119,12 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     return false;
   }
 
-  /**
-   * Check if the current user can update a member in the organisation
-   * and if he has the right to do that
-   * @param memberID
-   * @param userID
-   */
   public async isUserCanUpdateMember(
     memberID: number,
     userID: number
   ): Promise<boolean> {
-    const user = await getRepository(User).findOneOrFail(userID);
-    const member = await this.repository.findOneOrFail(memberID);
+    const user = await this.userRepository.findOneOrFail({where:{id:userID}});
+    const member = await this.repository.findOneOrFail({where: {id: memberID}});
     if (
       user?.group?.name === EXISTING_GROUPS.ADMIN ||
       user?.group?.name === EXISTING_GROUPS.MANAGER
@@ -149,7 +132,7 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       return true;
     }
 
-    const staff = await getRepository(Staff).findOne({ user });
+    const staff = await this.staffRepository.findOne({ where: {user: {id: user.id}} });
 
     if (staff && staff?.organisation?.id === member?.organisation?.id) {
       return true;

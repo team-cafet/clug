@@ -1,10 +1,13 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-  const history = useHistory();
-  history.push('/login');
-  //Until this page is designed to welcome prospect or client, redirect straight to login page.
+  const navigate = useNavigate();
+  useEffect(() => {
+    //Until this page is designed to welcome prospect or client, redirect straight to login page.
+    navigate('/login');
+  }, [navigate])
+
   return (
     <>
       <h1>Bienvenue sur Clug App</h1>

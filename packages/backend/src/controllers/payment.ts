@@ -5,10 +5,11 @@ import { Request, Response } from 'express';
 import { PaymentRequest } from '../models/PaymentRequest';
 import { Membership } from '../models/Membership';
 import { Member } from '../models/Member';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 export class PaymentCtrl extends RESTController<Payment> {
   constructor() {
-    super(getRepository(Payment));
+    super(Payment);
   }
 
   public createPaymentWithoutRequest = async (
@@ -19,7 +20,7 @@ export class PaymentCtrl extends RESTController<Payment> {
     if (!payment || !membership) return res.status(400).send('wrong request');
     let newPayment;
     try {
-      const transacResult = await getConnection().transaction(
+      await TypeORMService.getInstance().getDataSource().transaction(
         async (transactionalEntityManager) => {
           const newRequest = await this.createPaymentRequest(
             transactionalEntityManager,

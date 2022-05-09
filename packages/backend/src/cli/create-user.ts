@@ -1,10 +1,11 @@
 import { Person } from '../models/Person';
 import { DeepPartial, getRepository } from 'typeorm';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 import { User } from '../models/User';
 
 const createUser = async (data: DeepPartial<User>): Promise<User> => {
-  const userRepo = getRepository(User);
+  const userRepo = TypeORMService.getInstance().getRepository(User);
   const userData = userRepo.create([data]);
   return userData[0].save();
 };

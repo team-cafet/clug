@@ -8,21 +8,21 @@ import {
   DeleteDateColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   BeforeInsert,
   BeforeUpdate,
-  getRepository,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { hash } from 'bcrypt';
 import { BCRYPT_SALT_ROUND } from '../config/auth';
-import logger from '../util/logger';
+import logger from '../libs/functions/logger';
 import { Group } from './Group';
 import { PaymentRequest } from './PaymentRequest';
 import { Staff } from './Staff';
 import { Member } from './Member';
 import { Organisation } from './Organisation';
 import { Person } from './Person';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 @Entity()
 export class User extends BaseEntity {
@@ -102,9 +102,10 @@ export class User extends BaseEntity {
    * @returns the organisation or null if the user is not in an organisation
    */
   async getUserOrganisation(): Promise<Organisation | null> {
-    const userRepo = getRepository(User);
-    const currentUser = await userRepo.findOne(this.id, {
-      relations: ['staffs'],
+    const userRepo = TypeORMService.getInstance().getRepository(User);
+    const currentUser = await userRepo.findOne({
+      where: {id: this.id},
+      relations: ['staffs']
     });
     const staffs = currentUser.staffs;
 
@@ -112,8 +113,11 @@ export class User extends BaseEntity {
       return null;
     }
 
-    const loadedStaff = await getRepository(Staff).findOneOrFail(staffs[0].id, {
-      relations: ['organisation'],
+    const loadedStaff = await TypeORMService.getInstance().getRepository(Staff).findOneOrFail({
+      where: {
+        id: staffs[0].id
+      },
+      relations: ['organisation']
     });
 
     const organisation = loadedStaff.organisation;

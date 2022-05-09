@@ -117,6 +117,9 @@ services:
     ports:
       - '4566:4566'
     environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=eu-west-1 
       - EDGE_PORT=4566
       - SERVICES=s3
       - DEBUG=1

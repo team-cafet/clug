@@ -2,17 +2,20 @@ import { EXISTING_GROUPS } from '../config/auth';
 import { Factory } from '../libs/classes/Factory';
 import { ISeeds } from '../libs/interfaces/ISeeds';
 import { Group } from '../models/Group';
-import { getConnection, getRepository } from 'typeorm';
 import { StaffFactory } from './factory/StaffFactory';
 import { Organisation } from '../models/Organisation';
+import { TypeORMService } from '../libs/services/TypeORMService';
 
 export class StaffSeeds implements ISeeds {
+  private groupRepository = TypeORMService.getInstance().getRepository(Group);
+  private organisationRepository = TypeORMService.getInstance().getRepository(Organisation);
+
   private async getStaffUserGroup() {
-    return getRepository(Group).findOneOrFail({name:EXISTING_GROUPS.MANAGER});
+    return this.groupRepository.findOneOrFail({where: {name:EXISTING_GROUPS.MANAGER}});
   }
 
   private async getFiveFirstOrganisation(): Promise<Organisation[]>{
-    return await getRepository(Organisation).find({take: 5});
+    return await this.organisationRepository.find({take: 5});
   }
 
   async run(): Promise<void> {
@@ -29,6 +32,6 @@ export class StaffSeeds implements ISeeds {
     userStaffForTesting.user.person.email = 'staff@test.ch';
     staffs.push(userStaffForTesting);
 
-    await getConnection().manager.save(staffs);
+    await TypeORMService.getInstance().getDataSource().manager.save(staffs);
   }
 }
