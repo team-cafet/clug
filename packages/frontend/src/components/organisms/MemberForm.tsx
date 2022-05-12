@@ -25,7 +25,6 @@ import { NotificationFailed } from '../molecules/Notifications/NotificationFaile
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
 import { Thumb } from '../molecules/Thumb';
 import { IUser } from '../../libs/interfaces/user.interface';
-import { PersonResponsibleForm } from './PersonResponsibleForm';
 
 interface IFormValue {
   global: string;
@@ -238,12 +237,8 @@ export const MemberForm = (props: IProps) => {
             </NotificationSuccess>
           )}
 
-          <ErrorMessage
-            name="global"
-          >
-            {msg => (
-              <NotificationFailed>{msg}</NotificationFailed>
-            )}
+          <ErrorMessage name="global">
+            {(msg) => <NotificationFailed>{msg}</NotificationFailed>}
           </ErrorMessage>
 
           {/* General member information */}
@@ -361,7 +356,40 @@ export const MemberForm = (props: IProps) => {
             </div>
 
             <div className="form-row">
-              {responsibleChecked ? <PersonResponsibleForm /> : ''}
+              {responsibleChecked ? (
+                <div className="form-responsibleContact">
+                  <p className="light-text small-text">
+                    Veuillez rentrer les informations concernant la personne
+                    responsable du membre:
+                  </p>
+                  <div className="form-row">
+                    <FormGroup
+                      label="Nom"
+                      type="text"
+                      formnikError={undefined}
+                      name="firstName"
+                      className="col-3"
+                    />
+                    <FormGroup
+                      label="Prénom"
+                      type="text"
+                      formnikError={undefined}
+                      name="lastName"
+                      className="col-3"
+                    />
+
+                    <FormGroup
+                      label="Téléphone"
+                      type="text"
+                      formnikError={undefined}
+                      name="phone"
+                      className="col-6"
+                    />
+                  </div>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
 
             <h2>Abonnement</h2>
