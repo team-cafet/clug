@@ -72,6 +72,13 @@ export class User extends BaseEntity {
   @JoinColumn()
   person: Person;
 
+  @OneToOne(() => Person, {
+    cascade: true,
+    eager: true,
+  })
+  @JoinColumn({name: 'responsiblePersonId'})
+  person_responsible: Person;
+
   // ----------------------------- Timestamps
 
   @CreateDateColumn()
