@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, Dropdown, Spinner } from 'react-bootstrap';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
 import { IMember } from '../../../libs/interfaces/member.interface';
 import { memberService } from '../../../services/member.service';
@@ -14,7 +14,7 @@ import { faDollar, faPen } from '@fortawesome/free-solid-svg-icons';
 import { IMembership } from '../../../libs/interfaces/membership.interface';
 import { IPayment } from '../../../libs/interfaces/payment.interface';
 import { paymentService } from '../../../services/payment.service';
-import { membershipService } from '../../../services/membership.service';
+import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 
 export const Member = () => {
   const [members, , setMembers] = useGetAllFromService<IMember>({
@@ -23,9 +23,12 @@ export const Member = () => {
 
   //Check if any membership are not link to a payment
   const isABadBoy = (member: IMember) => {
-    const gdMemberShip = member.memberships?.filter((membership) => !!!membership.paymentRequest?.payment)
-    return gdMemberShip && gdMemberShip.length > 0
-  }
+    const gdMemberShip = member.memberships?.filter(
+      (membership) => !!!membership.paymentRequest?.payment
+    );
+    return gdMemberShip && gdMemberShip.length > 0;
+  };
+
   //isAGoodBoy(members[0])
   const COLUMNS: any[] = [
     {
@@ -45,7 +48,7 @@ export const Member = () => {
       id: 'gotPayment',
       disableFilters: true,
       disableSortBy: true,
-      Cell: (cell: any) => <GotPaymentBtn memberId={cell.value} />,
+      Cell: (cell: any) => <GotPaymentBtn member={cell.row.original} />,
     },
     {
       Header: '',
@@ -70,7 +73,6 @@ export const Member = () => {
     },
   ];
 
-  
   const DATA = useMemo(() => {
     return members
       .sort(
@@ -82,7 +84,7 @@ export const Member = () => {
         name: `${member.user?.firstname} ${member.user?.lastname}`,
         negativeBalance: member.balance < 0,
         memberships: member.memberships,
-        isABAdBoy: isABadBoy(member),
+        isABadBoy: isABadBoy(member),
       }));
   }, [members]);
 
@@ -125,28 +127,27 @@ const GoToMemberBtn = (props: { id: number }) => {
   );
 };
 
-const GotPaymentBtn = (props: { memberId: number }) => {
-  const [member, setMember] = useState<IMember | undefined>(undefined);
+interface MemberCustom {
+  id: number;
+  name: string;
+  isABAdBoy: boolean;
+  negativeBalance: boolean;
+  memberships: IMembership[];
+}
 
-  
-  useEffect(() => {
-    const getAMember = async () => {
-      /* const result = null//await memberService.getByID(props.memberId);
-      if (result?.data) {
-        setMember(result.data);
-      } */
-    };
-    getAMember();
-  }, [props.memberId]);
-
+const GotPaymentBtn = (props: { member: MemberCustom }) => {
+  //console.log(props.member);
+  //const [memberships, setMemberships] = useState<IMembership[]>(props.member.memberships);
+  const [alreadyRequested] = useState<boolean>(false);
+  //COPIED FROM WHAT WAS MADE IN PAYMENT PAGE
   const createPayment = async (memberShip: IMembership): Promise<void> => {
-    /* if (!memberShip.plan) return;
+    if (!memberShip.plan) return;
     let paymentData: IPayment = {
       amount: memberShip.plan.price,
       date: new Date(),
       hasBeenCanceled: false,
     };
-
+    //capte pas la cuisine faite ici
     try {
       let newPayment;
       if (alreadyRequested) {
@@ -160,39 +161,82 @@ const GotPaymentBtn = (props: { memberId: number }) => {
         });
       }
       if (newPayment) {
-        paymentReceived();
+        //paymentReceived();
       }
     } catch (error) {
       console.error(error);
-    } */
+    }
   };
-  if (!member) return <Spinner animation="grow" variant="primary" size="sm" />;
+  /*  const getNotPaidMemberships = async (): Promise<void> => {
+    const memberships = await membershipService.getNotPaid();
+    setMemberships(memberships?.data);
+  };
+  const paymentReceived = async () => {
+    await getNotPaidMemberships();
+  }; */
+  if (!props.member.memberships)
+    return <Spinner animation="grow" variant="primary" size="sm" />;
   else
     return (
       <>
-        {member.memberships === undefined || member.memberships.length <= 1 ? (
+        {props.member.memberships === undefined ||
+        props.member.memberships.length <= 1 ? (
           <ButtonWithConfirmation
             modal={{
               title: 'Supprimer',
-              body: `Valider que le paiement est reçu pour`,
+              body: `Valider que le paiement est reçu pour ${props.member.name} ?`,
               cancelText: 'Annuler',
               acceptText: 'Oui',
             }}
             onYes={async () => {
-              if (member.memberships) return (createPayment(member.memberships[0]));
+              if (props.member.memberships)
+                return createPayment(props.member.memberships[0]);
             }}
             onNo={() => {}}
             className="btn-icon"
             title="Paiement reçu"
             disabled={
-              member.memberships === undefined ||
-              member.memberships.length === 0
+              props.member.memberships === undefined ||
+              props.member.memberships.length === 0
             }
           >
             <FontAwesomeIcon icon={faDollar} />
           </ButtonWithConfirmation>
         ) : (
-          <div>HOLA</div>
+          <div>
+            <Dropdown>
+              <Dropdown.Toggle>
+                <FontAwesomeIcon icon={faDollar} />
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {props.member.memberships.map((membership) => (
+                  <DropdownItem>
+                    <ButtonWithConfirmation
+                      modal={{
+                        title: 'Supprimer',
+                        body: `Valider que le paiement de l'abonnement finissant le ${membership.endDate} est reçu pour ${props.member.name} ?`,
+                        cancelText: 'Annuler',
+                        acceptText: 'Oui',
+                      }}
+                      onYes={async () => {
+                        if (props.member.memberships)
+                          return createPayment(membership);
+                      }}
+                      onNo={() => {}}
+                      className="btn-icon"
+                      title="Paiement reçu"
+                      disabled={
+                        props.member.memberships === undefined ||
+                        props.member.memberships.length === 0
+                      }
+                    >
+                      Fin: {membership.endDate}
+                    </ButtonWithConfirmation>
+                  </DropdownItem>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         )}
       </>
     );
