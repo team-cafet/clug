@@ -101,11 +101,10 @@ export const MemberForm = (props: IProps) => {
       errors.user.person.email = 'Requis';
     }
 
-
-    /* if (!values.user.person.birthdate) {
+    if (!values.user.person.birthdate) {
       errors.user = { ...errors.user };
       errors.user.person.birthdate = 'Requis';
-    } */
+    }
 
     if (responsibleChecked && !values.user.person_responsible?.email) {
       errors.user = { ...errors.user };
@@ -172,6 +171,7 @@ export const MemberForm = (props: IProps) => {
       delete values.user.person_responsible;
     }
 
+    //Need help on one to one relationship deletion
     console.log(values.user);
 
     try {
@@ -325,7 +325,7 @@ export const MemberForm = (props: IProps) => {
               label="Date de naissance"
               type="date"
               formnikError={errors.user?.person?.birthdate}
-              name="use.person.birthdate"
+              name="user.person.birthdate"
             />
 
             <FormGroup
