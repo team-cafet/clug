@@ -6,7 +6,6 @@ import {
   Row,
   Col,
   Form as FormBootstrap,
-  ToggleButton,
 } from 'react-bootstrap';
 import { ReactComponent as EditIcon } from '../../assets/edit.svg';
 import { Link, useNavigate } from 'react-router-dom';
@@ -77,6 +76,13 @@ export const MemberForm = (props: IProps) => {
         streetNumber: undefined,
         postalCode: undefined,
       },
+      person_responsible: {
+        email: '',
+        firstname: '',
+        lastname: '',
+        phone: '',
+        birthdate: '',
+      },
     },
     global: '',
     memberships: [],
@@ -95,9 +101,16 @@ export const MemberForm = (props: IProps) => {
       errors.user.person.email = 'Requis';
     }
 
-    if (!values.user.person.birthdate) {
+
+    /* if (!values.user.person.birthdate) {
       errors.user = { ...errors.user };
       errors.user.person.birthdate = 'Requis';
+    } */
+
+    if (responsibleChecked && !values.user.person_responsible?.email) {
+      errors.user = { ...errors.user };
+      errors.user.person_responsible = {};
+      errors.user.person_responsible.email = 'Requis';
     }
 
     return errors;
@@ -153,6 +166,13 @@ export const MemberForm = (props: IProps) => {
         console.error(err);
       }
     }
+
+    if (!responsibleChecked) {
+      //@ts-ignore  Hello Arthur <3, I was struggling with typing and formik error handling, bisous.
+      delete values.user.person_responsible;
+    }
+
+    console.log(values.user);
 
     try {
       if (props.member?.id) {
@@ -368,22 +388,22 @@ export const MemberForm = (props: IProps) => {
                     <FormGroup
                       label="Nom"
                       type="text"
-                      formnikError={undefined}
-                      name="user.person_responsible.firstname"
+                      formnikError={errors.user?.person_responsible?.lastname}
+                      name="user.person_responsible.lastname"
                       className="col-3"
                     />
                     <FormGroup
                       label="Prénom"
                       type="text"
-                      formnikError={undefined}
-                      name="user.person_responsible.lastname"
+                      formnikError={errors.user?.person_responsible?.firstname}
+                      name="user.person_responsible.firstname"
                       className="col-3"
                     />
 
                     <FormGroup
                       label="Téléphone"
                       type="text"
-                      formnikError={undefined}
+                      formnikError={errors.user?.person_responsible?.phone}
                       name="user.person_responsible.phone"
                       className="col-6"
                     />
@@ -393,8 +413,9 @@ export const MemberForm = (props: IProps) => {
                     <FormGroup
                       label="Email"
                       type="text"
-                      formnikError={undefined}
+                      formnikError={errors.user?.person_responsible?.email}
                       name="user.person_responsible.email"
+                      className="col-12"
                     />
                   </div>
                 </div>
