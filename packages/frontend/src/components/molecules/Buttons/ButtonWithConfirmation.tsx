@@ -3,7 +3,7 @@ import { Button, ButtonProps } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 
 interface IProps extends ButtonProps {
-  variant?: 'primary' | 'secondary' | 'success' | 'danger';
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'outline-primary' | 'outline-secondary';
   className?: string;
   id?: string;
   onYes: () => void;
@@ -34,6 +34,7 @@ export const ButtonWithConfirmation = (props: IProps) => {
         onClick={handleShow}
         title={props.title}
         disabled={props.disabled}
+        variant={props.variant}
       >
         {props.children}
       </Button>
@@ -48,7 +49,7 @@ export const ButtonWithConfirmation = (props: IProps) => {
         </Modal.Header>
         <Modal.Body>{props.modal.body}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="outline-primary" onClick={handleClose}>
             {props.modal.cancelText}
           </Button>
           <Button variant="primary" onClick={handleYes}>

@@ -5,18 +5,18 @@ import { ButtonProps } from 'react-bootstrap';
 import { ButtonWithConfirmation } from './ButtonWithConfirmation';
 
 interface IProps extends ButtonProps {
-  variant?: 'primary' | 'secondary' | 'success' | 'danger';
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'outline-primary' | 'outline-secondary';
   className?: string;
-  id?: string;
   buttontext: string;
   item: string;
   onYes: () => void;
+  title?: string;
 }
 
-export const DeleteBtnWithConfirmation = (props: IProps) => {
+export default function DeleteBtnWithConfirmation({variant, className, buttontext, item, onYes, title}: IProps): JSX.Element {
   const modalProps = {
     title: 'Supprimer',
-    body: `Voulez-vous vraiment supprimer ${props.item}`,
+    body: `Voulez-vous vraiment supprimer ${item} ?`,
     cancelText: 'Annuler',
     acceptText: 'Oui',
   };
@@ -24,13 +24,14 @@ export const DeleteBtnWithConfirmation = (props: IProps) => {
   return (
     <ButtonWithConfirmation
       modal={modalProps}
-      onYes={props.onYes}
+      onYes={onYes}
       onNo={() => {}}
-      className={`${props.className}`}
-      title={props.title}
+      className={className}
+      title={title}
+      variant={variant}
     >
       <FontAwesomeIcon icon={faTrashAlt} />
-      {props.buttontext}
+      {buttontext && ' ' + buttontext}
     </ButtonWithConfirmation>
   );
 };

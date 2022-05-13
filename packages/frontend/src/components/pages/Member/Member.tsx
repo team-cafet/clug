@@ -7,7 +7,7 @@ import { memberService } from '../../../services/member.service';
 import { DataTable } from '../../molecules/DataTable';
 import './Member.scss';
 import '../../organisms/forms.scss';
-import { DeleteBtnWithConfirmation } from '../../molecules/Buttons/DeleteBtnWithConfirmation';
+import DeleteBtnWithConfirmation from '../../molecules/Buttons/DeleteBtnWithConfirmation';
 import { ButtonWithConfirmation } from '../../molecules/Buttons/ButtonWithConfirmation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollar, faPen } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,9 @@ import { IMembership } from '../../../libs/interfaces/membership.interface';
 import { IPayment } from '../../../libs/interfaces/payment.interface';
 import { paymentService } from '../../../services/payment.service';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
+import Flex from '../../atoms/Flex';
+import { AddButton } from '../../molecules/Buttons/AddButton';
+import { css } from '@emotion/css';
 
 export const Member = () => {
   const [members, , setMembers] = useGetAllFromService<IMember>({
@@ -90,21 +93,15 @@ export const Member = () => {
 
   return (
     <>
-      <h1>Membres</h1>
-      <div className="container">
-        <div className="row">
-          <Link
-            to="/admin/members/add"
-            className="btn btn-secondary add"
-            title="Ajouter un membre"
-          >
-            +
-          </Link>
-        </div>
-        <div className="row">
+      <Flex justify="space-between">
+        <h1>Membres</h1>
+        <AddButton linkTo="/admin/members/add" title="Ajouter un membre" />
+      </Flex>
+        <div className="row overflow">
           <DataTable
             data={DATA}
             columns={COLUMNS}
+            className={css({td: {verticalAlign: 'middle'}})}
             customRowProps={(row: any) => ({
               className: DATA[row.index]?.negativeBalance
                 ? 'member-table__row--negative-balance'
@@ -112,7 +109,6 @@ export const Member = () => {
             })}
           />
         </div>
-      </div>
     </>
   );
 };

@@ -43,8 +43,6 @@ button.btn, a.btn {
     border-radius: 100%;
     line-height: 2.9rem;
     padding: 0;
-    margin-left: auto;
-    margin-top: -2rem;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -65,22 +63,6 @@ button.btn, a.btn {
     fill: #fff;
     opacity: 1;
 }
-
-.save-cancel-group {
-    display: flex;
-    justify-content: space-evenly;
-    .btn-primary {
-        width: 70%;
-        margin-left: 2rem;
-    }
-    a {
-        width: 30%;
-       .btn-secondary {
-           width: 100%;
-       }
-    }
-}
-
 
 .btn-delete {
     padding: 0;

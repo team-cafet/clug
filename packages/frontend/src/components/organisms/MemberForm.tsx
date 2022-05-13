@@ -19,10 +19,15 @@ import moment from 'moment';
 import { getPlanTypeName } from '../../services/data-mapping.service';
 import { membershipService } from '../../services/membership.service';
 import { IMembership } from '../../libs/interfaces/membership.interface';
-import { DeleteBtnWithConfirmation } from '../molecules/Buttons/DeleteBtnWithConfirmation';
+import DeleteBtnWithConfirmation from '../molecules/Buttons/DeleteBtnWithConfirmation';
 import { NotificationFailed } from '../molecules/Notifications/NotificationFailed';
 import { NotificationSuccess } from '../molecules/Notifications/NotificationSuccess';
 import { Thumb } from '../molecules/Thumb';
+import { ButtonWithConfirmation } from '../molecules/Buttons/ButtonWithConfirmation';
+import Flex from '../atoms/Flex';
+import { css } from '@emotion/css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 interface IFormValue {
   global: string;
@@ -249,14 +254,14 @@ export const MemberForm = (props: IProps) => {
           />
 
           {/* General member information */}
-          <div className="memberForm">
+          <Flex direction="column" align="stretch" className="memberForm">
             <Container className="mb-5">
               <Row className="justify-content-center mb-3">
                 <div className="d-flex justify-content-center">
                   <Thumb src={thumbPicture} />
                   <Button className="clug-file-input btn btn-primary">
                     <label htmlFor="picture">
-                      <EditIcon title="Modifier pic" className="whiteIcon" />
+                      <FontAwesomeIcon icon={faPen} title="Modifier l'image de profil" size='lg' />
                     </label>
                   </Button>
                 </div>
@@ -356,7 +361,7 @@ export const MemberForm = (props: IProps) => {
             </div>
 
             <h2>Abonnement</h2>
-            <div className="form-row">
+            <Flex direction="column">
               <label htmlFor="membershipSelect">type</label>
               <Field
                 as="select"
@@ -394,39 +399,62 @@ export const MemberForm = (props: IProps) => {
                 className="form-control"
                 disabled={isMembershipSet()}
               ></Field>
-
-              <Button
-                variant="secondary"
-                className="cancel"
+              <ButtonWithConfirmation
+                variant="outline-primary"
                 hidden={!isMembershipSet()}
-                onClick={terminateMembership}
+                modal={{
+                  title: "Interrompre l'abonnement",
+                  body: `Voulez-vous vraiment interrompre l'abonnement?`,
+                  cancelText: 'Annuler',
+                  acceptText: 'Oui',
+                }}
+                onYes={terminateMembership}
+                onNo={() => {}}
+                className={css({ marginTop: '5px', alignSelf: 'center' })}
               >
-                Interrompre l'abonnement
-              </Button>
-            </div>
+                Interrompre
+              </ButtonWithConfirmation>
+            </Flex>
 
             <hr />
 
             {props.member?.id && (
               <DeleteBtnWithConfirmation
-                buttontext="Supprimer ce membre"
+                buttontext="Supprimer"
                 item={`${initialValues.user.firstname}`}
                 onYes={() => deleteMember()}
+                variant="outline-secondary"
+                className={css({ alignSelf: 'center' })}
               />
             )}
-          </div>
+          </Flex>
 
-          <div className="save-cancel-group memberForm">
-            <Link to="/admin/members">
-              <Button variant="secondary" className="cancel">
+          <Flex align="stretch" grow={1} className="memberForm">
+            <Link
+              to="/admin/members"
+              className={css({
+                flexGrow: 1,
+                margin: '3px',
+                display: 'flex',
+                '&:hover': {textDecoration: 'none'}
+              })}
+            >
+              <Button
+                variant="outline-primary"
+                className={css({ flexGrow: 1 })}
+              >
                 Annuler
               </Button>
             </Link>
-
-            <Button variant="primary" type="submit" disabled={isSubmitting}>
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={isSubmitting}
+              className={css({ flexGrow: 1,margin: '3px' })}
+            >
               Sauver
             </Button>
-          </div>
+          </Flex>
         </Form>
       )}
     </Formik>
