@@ -52,7 +52,9 @@ export const MemberForm = (props: IProps) => {
         : undefined
     ).format('YYYY-MM-DD')
   );
-  const [responsibleChecked, setResponsibleChecked] = useState(false);
+  const [responsibleChecked, setResponsibleChecked] = useState(
+    !!props.member?.user?.person_responsible
+  );
 
   const [thumbPicture, setThumbPicture] = useState<string | File | null>(
     props.member ? memberService.getMemberPictureURL(props.member) : null
@@ -367,14 +369,14 @@ export const MemberForm = (props: IProps) => {
                       label="Nom"
                       type="text"
                       formnikError={undefined}
-                      name="firstName"
+                      name="user.person_responsible.firstname"
                       className="col-3"
                     />
                     <FormGroup
                       label="Prénom"
                       type="text"
                       formnikError={undefined}
-                      name="lastName"
+                      name="user.person_responsible.lastname"
                       className="col-3"
                     />
 
@@ -382,8 +384,17 @@ export const MemberForm = (props: IProps) => {
                       label="Téléphone"
                       type="text"
                       formnikError={undefined}
-                      name="phone"
+                      name="user.person_responsible.phone"
                       className="col-6"
+                    />
+                  </div>
+
+                  <div className="form-row">
+                    <FormGroup
+                      label="Email"
+                      type="text"
+                      formnikError={undefined}
+                      name="user.person_responsible.email"
                     />
                   </div>
                 </div>

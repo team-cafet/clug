@@ -6,4 +6,5 @@ export interface IUser {
   organisation: IOrganisation;
   person: IPerson;
   pictureURL?: string;
+  person_responsible?: IPerson;
 }
