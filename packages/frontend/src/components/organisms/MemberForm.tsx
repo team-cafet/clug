@@ -168,7 +168,7 @@ export const MemberForm = (props: IProps) => {
 
     if (!responsibleChecked) {
       //@ts-ignore  Hello Arthur <3, I was struggling with typing and formik error handling, bisous.
-      values.user.person_responsible = null;
+      delete values.user.person_responsible;
     }
 
     //Need help on one to one relationship deletion

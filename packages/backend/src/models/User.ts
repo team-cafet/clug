@@ -72,10 +72,9 @@ export class User extends BaseEntity {
   @JoinColumn()
   person: Person;
 
-  @OneToOne(() => Person, (person) => person.responsible_of_user,{
+  @ManyToOne(() => Person, (person) => person.responsible_of,{
     cascade: true,
     eager: true,
-    orphanedRowAction: 'delete'
   })
   @JoinColumn({ name: 'responsiblePersonId' })
   person_responsible: Person;

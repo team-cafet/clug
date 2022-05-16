@@ -8,6 +8,7 @@ import {
   DeleteDateColumn,
   BaseEntity,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from './User';
 
@@ -89,8 +90,8 @@ export class Person extends BaseEntity {
   @OneToOne(() => User)
   user: User;
 
-  @OneToOne(() => User, (user) => user.person_responsible, {
-    orphanedRowAction: 'delete'
-  })
-  responsible_of_user: User;
+  @OneToMany(() => User, (users) => users.person_responsible, {
+    orphanedRowAction: 'delete',
+  }) // Maybe do a separate call and do transaction at the same time
+  responsible_of: User[];
 }
