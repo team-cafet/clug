@@ -168,11 +168,11 @@ export const MemberForm = (props: IProps) => {
 
     if (!responsibleChecked) {
       //@ts-ignore  Hello Arthur <3, I was struggling with typing and formik error handling, bisous.
-      delete values.user.person_responsible;
+      values.user.person_responsible = null;
     }
 
     //Need help on one to one relationship deletion
-    console.log(values.user);
+    console.log(values.user.person_responsible);
 
     try {
       if (props.member?.id) {
@@ -183,7 +183,6 @@ export const MemberForm = (props: IProps) => {
             plan: selectedMembershipPlanID,
           });
         }
-
         const response = await memberService.update(props.member.id, values);
 
         const completeURL = response?.data

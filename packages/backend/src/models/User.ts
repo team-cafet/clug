@@ -72,11 +72,12 @@ export class User extends BaseEntity {
   @JoinColumn()
   person: Person;
 
-  @OneToOne(() => Person, {
+  @OneToOne(() => Person, (person) => person.responsible_of_user,{
     cascade: true,
     eager: true,
+    orphanedRowAction: 'delete'
   })
-  @JoinColumn({name: 'responsiblePersonId'})
+  @JoinColumn({ name: 'responsiblePersonId' })
   person_responsible: Person;
 
   // ----------------------------- Timestamps
@@ -111,8 +112,8 @@ export class User extends BaseEntity {
   async getUserOrganisation(): Promise<Organisation | null> {
     const userRepo = TypeORMService.getInstance().getRepository(User);
     const currentUser = await userRepo.findOne({
-      where: {id: this.id},
-      relations: ['staffs']
+      where: { id: this.id },
+      relations: ['staffs'],
     });
     const staffs = currentUser.staffs;
 
@@ -120,12 +121,14 @@ export class User extends BaseEntity {
       return null;
     }
 
-    const loadedStaff = await TypeORMService.getInstance().getRepository(Staff).findOneOrFail({
-      where: {
-        id: staffs[0].id
-      },
-      relations: ['organisation']
-    });
+    const loadedStaff = await TypeORMService.getInstance()
+      .getRepository(Staff)
+      .findOneOrFail({
+        where: {
+          id: staffs[0].id,
+        },
+        relations: ['organisation'],
+      });
 
     const organisation = loadedStaff.organisation;
 

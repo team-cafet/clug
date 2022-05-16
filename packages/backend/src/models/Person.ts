@@ -88,4 +88,9 @@ export class Person extends BaseEntity {
 
   @OneToOne(() => User)
   user: User;
+
+  @OneToOne(() => User, (user) => user.person_responsible, {
+    orphanedRowAction: 'delete'
+  })
+  responsible_of_user: User;
 }
