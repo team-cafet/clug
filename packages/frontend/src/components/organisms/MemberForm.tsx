@@ -171,9 +171,6 @@ export const MemberForm = (props: IProps) => {
       delete values.user.person_responsible;
     }
 
-    //Need help on one to one relationship deletion
-    console.log(values.user.person_responsible);
-
     try {
       if (props.member?.id) {
         if (!isMembershipSet()) {
@@ -193,14 +190,6 @@ export const MemberForm = (props: IProps) => {
         const response = await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
-        });
-
-        const memberResult = response?.data;
-
-        await membershipService.add({
-          member: memberResult,
-          startDate: membershipStartDate,
-          plan: selectedMembershipPlanID,
         });
 
         backToMemberPage();

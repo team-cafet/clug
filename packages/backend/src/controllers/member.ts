@@ -10,7 +10,7 @@ import { OrganisationCtrl } from './organisation';
 import { OrganisationRESTController } from '../libs/classes/OrganisationRESTController';
 import logger from '../libs/functions/logger';
 import { TypeORMService } from '../libs/services/TypeORMService';
-import { Repository } from 'typeorm';
+import { DataSource, DeepPartial, Repository } from 'typeorm';
 
 export class MemberCtrl extends OrganisationRESTController<Member> {
   public S3_PICTURE_BUCKET = (): string => 'member-pictures';
@@ -28,15 +28,10 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
 
     this.options = {
       findAllOptions: {
-        relations: ['user','user.person'],
+        relations: ['user', 'user.person'],
       },
       findOneOptions: {
-        relations: [
-          'user',
-          'memberships',
-          'memberships.plan',
-          'user.person'
-        ],
+        relations: ['user', 'memberships', 'memberships.plan', 'user.person'],
       },
     };
   }
@@ -48,7 +43,12 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     if (req.file) {
       const filename = `${Date.now()}-${req.file.originalname}`;
 
-      if (!S3FileManager.checkFileTypeFromName(filename, this.AUTHORIZED_IMAGE_EXTENSION())) {
+      if (
+        !S3FileManager.checkFileTypeFromName(
+          filename,
+          this.AUTHORIZED_IMAGE_EXTENSION()
+        )
+      ) {
         return res.sendStatus(400);
       }
 
@@ -88,7 +88,7 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       filename,
       this.AUTHORIZED_IMAGE_EXTENSION()
     );
-    
+
     res.set('Content-Type', file.contentType);
     return res.send(file.file);
   };
@@ -97,7 +97,9 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     memberBody: Member,
     userID: number
   ): Promise<boolean> {
-    const user = await this.userRepository.findOneOrFail({where: {id: userID}});
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userID },
+    });
     const member = this.repository.create(memberBody);
     if (!user) {
       return false;
@@ -110,7 +112,9 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       return true;
     }
 
-    const staff = await this.staffRepository.findOneOrFail({ where: {user: {id: user.id}} });
+    const staff = await this.staffRepository.findOneOrFail({
+      where: { user: { id: user.id } },
+    });
 
     if (staff && staff?.organisation?.id === member?.organisation?.id) {
       return true;
@@ -123,8 +127,12 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     memberID: number,
     userID: number
   ): Promise<boolean> {
-    const user = await this.userRepository.findOneOrFail({where:{id:userID}});
-    const member = await this.repository.findOneOrFail({where: {id: memberID}});
+    const user = await this.userRepository.findOneOrFail({
+      where: { id: userID },
+    });
+    const member = await this.repository.findOneOrFail({
+      where: { id: memberID },
+    });
     if (
       user?.group?.name === EXISTING_GROUPS.ADMIN ||
       user?.group?.name === EXISTING_GROUPS.MANAGER
@@ -132,7 +140,9 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
       return true;
     }
 
-    const staff = await this.staffRepository.findOne({ where: {user: {id: user.id}} });
+    const staff = await this.staffRepository.findOne({
+      where: { user: { id: user.id } },
+    });
 
     if (staff && staff?.organisation?.id === member?.organisation?.id) {
       return true;
@@ -143,5 +153,16 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
     }
 
     return false;
+  }
+
+  public async storeWithMembership(body: Member): Promise<Member> {
+    const entity = this.repository.create(body);
+    let response = new Member;
+    await TypeORMService.getInstance()
+      .getDataSource()
+      .transaction(async (transactionalEntityManager) => {
+        response = await transactionalEntityManager.save(entity);
+      });
+    return response;
   }
 }

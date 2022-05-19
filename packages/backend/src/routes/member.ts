@@ -54,7 +54,7 @@ export const memberRouter = (): IRouter => {
       member.organisation = req.body.organisation;
       member.memberships = req.body.memberships;
 
-      const data = await memberCtrl.store(member);
+      const data = await memberCtrl.storeWithMembership(member);
       res.send(data);
     }
   );
