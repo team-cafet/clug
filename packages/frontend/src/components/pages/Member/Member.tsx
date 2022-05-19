@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Dropdown, Spinner } from 'react-bootstrap';
 import { useGetAllFromService } from '../../../hooks/useGetAllFromService';
@@ -132,10 +132,7 @@ interface MemberCustom {
 }
 
 const GotPaymentBtn = (props: { member: MemberCustom }) => {
-  //console.log(props.member);
-  //const [memberships, setMemberships] = useState<IMembership[]>(props.member.memberships);
-  const [alreadyRequested] = useState<boolean>(false);
-  //COPIED FROM WHAT WAS MADE IN PAYMENT PAGE
+
   const createPayment = async (memberShip: IMembership): Promise<void> => {
     if (!memberShip.plan) return;
     let paymentData: IPayment = {
@@ -143,33 +140,29 @@ const GotPaymentBtn = (props: { member: MemberCustom }) => {
       date: new Date(),
       hasBeenCanceled: false,
     };
-    //capte pas la cuisine faite ici
+    //NO MEMBER ASSOCIATED TO MEMBERSHIP!!!
+    console.log(memberShip.member);
     try {
       let newPayment;
-      if (alreadyRequested) {
-        paymentData.paymentRequest = memberShip.paymentRequest;
-        paymentData.member = memberShip.member;
-        newPayment = await paymentService.add(paymentData);
-      } else {
-        newPayment = await paymentService.createPaymentWithoutRequest({
+      newPayment = await paymentService.createPaymentWithoutRequest({
           payment: paymentData,
           membership: memberShip,
         });
-      }
+      
       if (newPayment) {
-        //paymentReceived();
+        console.log(newPayment);
       }
     } catch (error) {
       console.error(error);
     }
   };
-  /*  const getNotPaidMemberships = async (): Promise<void> => {
+ /*    const getNotPaidMemberships = async (): Promise<void> => {
     const memberships = await membershipService.getNotPaid();
     setMemberships(memberships?.data);
   };
   const paymentReceived = async () => {
     await getNotPaidMemberships();
-  }; */
+  };  */
   if (!props.member.memberships)
     return <Spinner animation="grow" variant="primary" size="sm" />;
   else
