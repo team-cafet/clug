@@ -64,7 +64,7 @@ export const memberRouter = (): IRouter => {
   app.put(
     '/:id',
     [writePermission, check('user.person.email').isEmail()],
-    memberCtrl.put
+    memberCtrl.putAndCheckResponsible
   );
 
   app.delete('/:id', writePermission, async (req, res) => {

@@ -157,11 +157,31 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
 
   public async storeWithMembership(body: Member): Promise<Member> {
     const entity = this.repository.create(body);
-    let response = new Member;
+    let response = new Member();
     await TypeORMService.getInstance()
       .getDataSource()
       .transaction(async (transactionalEntityManager) => {
         response = await transactionalEntityManager.save(entity);
+      });
+    return response;
+  }
+
+  public async putAndCheckResponsible(body: Member): Promise<Member> {
+    let response = new Member();
+    console.log(this);// seems to be null RIP
+    await this.findOneByID(body.id);
+    
+    const entity = this.repository.create(body);
+    await TypeORMService.getInstance()
+      .getDataSource()
+      .transaction(async (transactionalEntityManager) => {
+        response = await transactionalEntityManager.save(entity);
+        if (!!body.user.person_responsible) {
+          const id = body.user.id;
+          await transactionalEntityManager.query(
+            `UPDATE user SET responsiblePersonId = NULL WHERE PesronCode=${id}`
+          );
+        }
       });
     return response;
   }

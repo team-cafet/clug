@@ -173,13 +173,6 @@ export const MemberForm = (props: IProps) => {
 
     try {
       if (props.member?.id) {
-        if (!isMembershipSet()) {
-          await membershipService.add({
-            member: props.member,
-            startDate: membershipStartDate,
-            plan: selectedMembershipPlanID,
-          });
-        }
         const response = await memberService.update(props.member.id, values);
 
         const completeURL = response?.data
@@ -187,7 +180,7 @@ export const MemberForm = (props: IProps) => {
           : null;
         setThumbPicture(completeURL);
       } else {
-        const response = await memberService.add({
+        await memberService.add({
           ...values,
           organisation: { id: props.organisationID },
         });
