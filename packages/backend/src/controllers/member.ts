@@ -28,7 +28,7 @@ export class MemberCtrl extends OrganisationRESTController<Member> {
 
     this.options = {
       findAllOptions: {
-        relations: ['user'],
+        relations: ['user', 'memberships', 'memberships.paymentRequest', 'memberships.paymentRequest.payment'],
       },
       findOneOptions: {
         relations: [

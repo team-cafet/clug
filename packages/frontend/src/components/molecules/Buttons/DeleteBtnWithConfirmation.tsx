@@ -1,20 +1,22 @@
+import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {} from 'react';
-import { ReactComponent as DeleteIcon } from '../../../assets/delete.svg';
+import { ButtonProps } from 'react-bootstrap';
 import { ButtonWithConfirmation } from './ButtonWithConfirmation';
 
-interface IProps {
-  variant?: 'primary' | 'secondary' | 'success' | 'danger';
+interface IProps extends ButtonProps {
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'outline-primary' | 'outline-secondary';
   className?: string;
-  id?: string;
   buttontext: string;
   item: string;
   onYes: () => void;
+  title?: string;
 }
 
-export const DeleteBtnWithConfirmation = (props: IProps) => {
+export default function DeleteBtnWithConfirmation({variant, className, buttontext, item, onYes, title}: IProps): JSX.Element {
   const modalProps = {
     title: 'Supprimer',
-    body: `Voulez-vous vraiment supprimer ${props.item}`,
+    body: `Voulez-vous vraiment supprimer ${item} ?`,
     cancelText: 'Annuler',
     acceptText: 'Oui',
   };
@@ -22,11 +24,14 @@ export const DeleteBtnWithConfirmation = (props: IProps) => {
   return (
     <ButtonWithConfirmation
       modal={modalProps}
-      onYes={props.onYes}
+      onYes={onYes}
       onNo={() => {}}
+      className={className}
+      title={title}
+      variant={variant}
     >
-      <DeleteIcon title="Supprimer" />
-      {props.buttontext}
+      <FontAwesomeIcon icon={faTrashAlt} />
+      {buttontext && ' ' + buttontext}
     </ButtonWithConfirmation>
   );
 };

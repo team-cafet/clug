@@ -5,14 +5,15 @@ import { IMembershipPlan } from '../../../libs/interfaces/membershipPlan.interfa
 import { getPlanTypeName } from '../../../services/data-mapping.service';
 import { membershipPlanService } from '../../../services/membership-plan.service';
 import { DataTable } from '../../molecules/DataTable';
-import { ReactComponent as EditIcon } from '../../../assets/edit.svg';
-import { DeleteBtnWithConfirmation } from '../../molecules/Buttons/DeleteBtnWithConfirmation';
+import DeleteBtnWithConfirmation from '../../molecules/Buttons/DeleteBtnWithConfirmation';
+import Flex from '../../atoms/Flex';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { AddButton } from '../../molecules/Buttons/AddButton';
+import { css } from '@emotion/css';
 
 export const MembershipPlan = () => {
-  const [
-    plans,,
-    setMembershipPlans,
-  ] = useGetAllFromService<IMembershipPlan>({
+  const [plans, , setMembershipPlans] = useGetAllFromService<IMembershipPlan>({
     service: membershipPlanService,
   });
 
@@ -28,10 +29,6 @@ export const MembershipPlan = () => {
     }));
 
   const COLUMNS = [
-    {
-      Header: 'Nom',
-      accessor: 'name',
-    },
     {
       Header: 'Type',
       accessor: 'type',
@@ -49,7 +46,7 @@ export const MembershipPlan = () => {
       disableSortBy: true,
       Cell: (cell: any) => (
         <Link to={`/admin/membershipPlans/update/${cell.value}`}>
-          <EditIcon title="Modifier" />
+          <FontAwesomeIcon icon={faPen} title={"Modifier l'abonnement"} />
         </Link>
       ),
     },
@@ -69,6 +66,7 @@ export const MembershipPlan = () => {
             copyData.splice(cell.index, 1);
             setMembershipPlans(copyData);
           }}
+          className="warning btn-icon"
         />
       ),
     },
@@ -76,16 +74,20 @@ export const MembershipPlan = () => {
 
   return (
     <>
-      <h1>Gestion des abonnements</h1>
-      <div className="row">
-        <Link
-          to="/admin/membershipPlans/add"
-          className="btn btn-secondary add"
+      <Flex justify="space-between">
+        <h1>Gestion des abonnements</h1>
+        <AddButton
+          linkTo="/admin/membershipPlans/add"
           title="Ajouter un abonnement"
-        >
-          +
-        </Link>
-        <DataTable data={DATA} columns={COLUMNS} />
+        />
+      </Flex>
+
+      <div className="row overflow">
+        <DataTable
+          data={DATA}
+          columns={COLUMNS}
+          className={css({ td: { verticalAlign: 'middle' } })}
+        />
       </div>
     </>
   );

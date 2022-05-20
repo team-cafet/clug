@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
-import { Button } from '../atoms/Button';
 import { IMembershipPlan } from '../../libs/interfaces/membershipPlan.interface';
 import { membershipPlanService } from '../../services/membership-plan.service';
 import { getPlanTypeName } from '../../services/data-mapping.service';
+import { Button } from 'react-bootstrap';
+import { css } from '@emotion/css';
 
 interface IFormValue {
   price?: number;
@@ -126,12 +127,16 @@ export const MembershipPlanForm = (props: IProps) => {
               <option value="true">oui</option>
               <option value="false">non</option>
             </Field>
-            <Button variant="primary" type="submit" disabled={isSubmitting}>
-              Sauver
-            </Button>
-            <Link to="/admin/membershipPlans">
-              <Button variant="secondary">Annuler</Button>
+            <Link to="/admin/membershipPlans" className={css({
+                margin: '3px',
+              })}>
+              <Button variant="outline-primary">Annuler</Button>
             </Link>
+            <Button variant="primary" type="submit" disabled={isSubmitting} className={css({
+                margin: '3px',
+              })}>
+              Enregistrer
+            </Button>
           </Form>
         )}
       </Formik>

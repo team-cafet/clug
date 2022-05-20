@@ -57,6 +57,6 @@ export class PaymentRequest extends BaseEntity {
   @OneToOne((type) => Membership, (membership) => membership.paymentRequest)
   membership: Membership;
 
-  @OneToOne((type) => Payment, (payment) => payment.paymentRequest)
+  @OneToOne((type) => Payment, (payment) => payment.paymentRequest, {eager: true})
   payment: Payment;
 }

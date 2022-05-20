@@ -1,7 +1,15 @@
 // Import Bootstrap and its default variables
-$theme-colors: ("primary": #3cddb4,
+$theme-colors: ("primary": #2dc8a2,
   "secondary": #ff581a,
   "danger": #ff4136);
+
+$border-radius:               8px;
+$border-radius-lg:            15px;
+$border-radius-sm:            5px;
+$yiq-text-dark:             #403f3f;
+$yiq-text-light:            #fdfdfd;
+$body-bg:                   #fdfdfd;
+$body-color:                #403f3f;
 @import '~bootstrap/scss/bootstrap.scss';
 @import './theming/alerts.scss';
 @import './theming/button.scss';
@@ -17,7 +25,7 @@ sans-serif;
 $enable-grid-classes: false;
 /* colors */
 
-$primary: #3cddb4;
+$primary: #2dc8a2;
 $primary-dark: darken($primary, 10%);
 $primary-light: lighten($primary, 10%);
 $secondary: #ff581a;
@@ -28,9 +36,9 @@ $danger: #c10903;
 $danger-bg: lighten($danger, 55%);
 $info: #0f81c7;
 $warning: #ff581a;
-$light-text: #ececec;
-$dark-text: #565656;
-$bg-light: #f5faf9;
+$light-text: #{$yiq-text-light};
+$dark-text: #{$body-color};
+$bg-light: #{$body-bg};
 $primary-o-25: rgba(60, 221, 180, 0.25);
 $secondary-o-25:rgba(255, 88, 26, 0.25);
 
@@ -46,7 +54,8 @@ html {
   --c-light-primary: #{$primary-light};
   --c-background-color: #{$bg-light};
   --c-danger: #{$danger};
-  --c-danger-bg: #{$danger-bg};
+  --c-danger-bg: #{$danger-bg}; 
+  --c-warning: #{$warning}; 
 
   /* text */
 
@@ -59,7 +68,7 @@ html {
   --text-size: 1rem;
 
   /* shapes */
-  --c-radius: 15px;
+  --c-radius: #{$border-radius};
 
   /* shadows */
   --c-boxshadow-block: 0px 0px 10px rgba(0, 0, 0, 0.1) ;
@@ -69,7 +78,6 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: var(--c-dark-text);
   font-family: $font-family-base;
 }
 
