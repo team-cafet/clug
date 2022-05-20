@@ -2,6 +2,10 @@
   "name": "frontend-v2",
   "version": "0.1.0",
   "private": true,
+  "engines" : { 
+    "npm" : ">=7.0.0",
+    "node" : ">=16.0.0"
+  },
   "dependencies": {
     "@emotion/css": "^11.9.0",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -14,29 +18,24 @@
     "@types/jest": "^24.9.1",
     "@types/node": "^12.20.14",
     "@types/react": "^16.14.8",
-    "@types/react-dom": "^16.9.13",
-    "@types/react-router-dom": "^5.1.5",
-    "audit": "0.0.6",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.2",
     "emotion": "^11.0.0",
     "fix": "0.0.6",
     "formik": "^2.2.9",
-    "moment": "^2.29.1",
-    "node-sass": "^6.0.0",
+    "moment": "^2.29.3",
+    "node-sass": "^7.0.1",
     "react": "^17.0.2",
-    "react-bootstrap": "^1.6.1",
-    "react-dom": "^16.13.1",
-    "react-icons": "^3.10.0",
+    "react-bootstrap": "^1.6.4",
+    "react-dom": "^17.0.2",
     "react-responsive": "^8.1.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3",
-    "react-select": "^4.3.1",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
     "react-table": "^7.7.0",
-    "typescript": "^3.9.7"
+    "typescript": "^4.6.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -60,10 +59,9 @@
   },
   "proxy": "http://backend:3001",
   "devDependencies": {
-    "@types/react-responsive": "^8.0.2",
-    "@types/react-select": "^4.0.15",
-    "@types/react-table": "^7.7.1",
+    "@types/react-responsive": "^8.0.5",
+    "@types/react-table": "^7.7.11",
     "fs-extra": "^9.0.1",
-    "prettier": "^2.3.1"
+    "prettier": "^2.6.2"
   }
 }

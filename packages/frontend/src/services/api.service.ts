@@ -64,7 +64,7 @@ export async function makeApiRequest(
   }
 
   if (options?.formdata) {
-    instance.defaults.headers['Content-Type'] = 'multipart/form-data';    
+    instance.defaults.headers.common['Content-Type'] = 'multipart/form-data';    
     body = buildFormData(body);
   }
 
@@ -149,7 +149,7 @@ export class APIResource {
    * Get a specific resource record
    * @param {*} id
    */
-  getByID(id: number) {
+  getByID(id: number|string) {
     return GET(`${this.resourceURL}/${id}`);
   }
 

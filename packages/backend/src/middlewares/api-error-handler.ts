@@ -1,4 +1,4 @@
-import logger from '../util/logger';
+import logger from '../libs/functions/logger';
 
 export const apiErrorHandler = (err, req, res, next) => {
   logger.warn(JSON.stringify(err));

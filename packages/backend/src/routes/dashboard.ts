@@ -1,4 +1,4 @@
-import { Router, IRouter } from 'express';
+import { IRouter } from 'express';
 import PromiseRouter from 'express-promise-router';
 import ExpressJWTPermissions from 'express-jwt-permissions';
 import { DashboardCtrl } from '../controllers/dashboard';

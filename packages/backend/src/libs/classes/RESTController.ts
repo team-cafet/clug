@@ -4,21 +4,27 @@ import {
   DeleteResult,
   FindOneOptions,
   DeepPartial,
+  EntityTarget,
 } from 'typeorm';
 import { APIError } from './APIError';
 import { Request, Response } from 'express';
 import { APIMessageList } from './APIMessageList';
+import { TypeORMService } from '../services/TypeORMService';
 
 export class RESTController<T> {
+  protected repository: Repository<T>;
+
   constructor(
-    protected repository: Repository<T>,
+    protected entity: EntityTarget<T>,
     protected options:
-      | undefined
-      | {
-          findAllOptions?: FindManyOptions;
-          findOneOptions?: FindOneOptions;
-        } = undefined
-  ) {}
+    | undefined
+    | {
+      findAllOptions?: FindManyOptions;
+      findOneOptions?: FindOneOptions;
+    } = undefined
+  ) {
+    this.repository = TypeORMService.getInstance().getRepository(entity);
+  }
 
   public findAll(
     options: FindManyOptions | undefined = undefined
@@ -36,32 +42,28 @@ export class RESTController<T> {
   ): Promise<T> {
     if (!options && this.options?.findOneOptions) {
       options = this.options.findOneOptions;
+    } else if (!options) {
+      options = { where: {}};
     }
 
-    try {
-      return this.repository.findOneOrFail(id, options ? options : {});
+    options.where = {...options?.where, id};
+
+    try {           
+      return this.repository.findOneOrFail(options ? options : {});
     } catch (err) {
       throw new APIError(404, APIMessageList.NO_RESOURCE_FOUND_WITH_ID(id));
     }
   }
 
   public async store(body: DeepPartial<T>): Promise<T> {
-    try {
-      const entity = this.repository.create(body);
-      return this.repository.save(entity as DeepPartial<T>);
-    } catch (err) {
-      throw new APIError(500, APIMessageList.UNEXPECTED_ERROR(err));
-    }
+    const entity = this.repository.create(body);
+    return this.repository.save(entity as DeepPartial<T>);
   }
 
   public async update(id: number, body: DeepPartial<T>): Promise<T> {
     const entity = await this.findOneByID(id);
-    try {
-      this.repository.merge(entity, body);
-      return this.repository.save(entity as DeepPartial<T>);
-    } catch (err) {
-      throw new APIError(500, APIMessageList.UNEXPECTED_ERROR(err));
-    }
+    this.repository.merge(entity, body);
+    return this.repository.save(entity as DeepPartial<T>);
   }
 
   public async remove(id: number): Promise<DeleteResult> {

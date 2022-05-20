@@ -1,5 +1,4 @@
 import { Organisation } from '../../models/Organisation';
-import { getConnection, getRepository } from 'typeorm';
 import { RESTController } from '../../libs/classes/RESTController';
 import { Request, Response } from 'express';
 import { APIError } from '../../libs/classes/APIError';
@@ -7,10 +6,11 @@ import { Staff } from '../../models/Staff';
 import { Group } from '../../models/Group';
 import { EXISTING_GROUPS } from '../../config/auth';
 import { User } from '../../models/User';
+import { TypeORMService } from '../../libs/services/TypeORMService';
 
 export class OrganisationController extends RESTController<Organisation> {
   constructor() {
-    super(getRepository(Organisation));
+    super(Organisation);
   }
   
   public findAll(): Promise<Organisation[]> {
@@ -30,9 +30,13 @@ export class OrganisationController extends RESTController<Organisation> {
       let staff = null;
       let organisation = null;
       
-      await getConnection().transaction(
+      await TypeORMService.getInstance().getDataSource().transaction(
         async (transactionalEntityManager) => {
-          const userGroup = await transactionalEntityManager.getRepository(Group).findOne({'name': EXISTING_GROUPS.USER});
+          const userGroup = await transactionalEntityManager.getRepository(Group).findOne({
+            where: {
+              'name': EXISTING_GROUPS.USER
+            }
+          });
           
           const user = await transactionalEntityManager.getRepository(User).create([{ ...req.body.user, group: userGroup.id}]);
 

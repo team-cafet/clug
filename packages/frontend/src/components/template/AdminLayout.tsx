@@ -78,10 +78,10 @@ export const AdminLayout = (props: IProps) => {
             <NavLink
               key={index}
               to={link.to}
-              activeStyle={{
+              style={ props => ( props.isActive ? {
                 fontWeight: "bold",
                 color: "var(--c-primary)"
-              }}
+              }: {})}
               onClick={() => {
                 if (!isDesktopOrLaptop) {
                   setIsMenuOpen(!isMenuOpen);

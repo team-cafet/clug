@@ -10,7 +10,6 @@ import {
   BaseEntity
 } from 'typeorm';
 import { Member } from './Member';
-import { Club } from './Club';
 import { MembershipPlan } from './MembershipPlan';
 import { Staff } from './Staff';
 
@@ -40,9 +39,6 @@ export class Organisation extends BaseEntity {
 
   @OneToMany((type) => Member, (member) => member.organisation, { nullable: true })
   members?: Member[];
-
-  @OneToMany((type) => Club, (club) => club.organisation)
-  clubs?: Club[];
 
   @OneToMany(
     (type) => MembershipPlan,

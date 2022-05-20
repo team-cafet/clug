@@ -1,19 +1,7 @@
 import { initApp } from './app';
-import { loadORM } from './util/loadorm';
-import { connectionOptions } from './config/database';
-import {loadEnv} from './util/loadenv';
+import boot from './boot';
 
-(async () => {
-  try {
-    loadEnv();
-    await loadORM(connectionOptions());
-    server();
-  } catch (err) {
-    console.log(err);
-  }
-})();
-
-export const server = () => {
+boot().finally(() => {
   const app = initApp();
   app.listen(app.get('port'), () => {
     console.log(
@@ -23,4 +11,4 @@ export const server = () => {
     );
     console.log('  Press CTRL-C to stop\n');
   });
-};
+});
