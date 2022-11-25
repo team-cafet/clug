@@ -30,5 +30,19 @@
   "typescript.referencesCodeLens.enabled": false,
   "typescript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.quoteStyle": "single",
-  "editor.rulers": [100]
+  "editor.rulers": [
+    100
+  ],
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "test",
+      "database": "clug-db",
+      "username": "postgres",
+      "password": ".Clug-123"
+    }
+  ]
 }

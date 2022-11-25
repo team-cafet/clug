@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
 } from 'typeorm';
-import { User } from './User';
+import { User } from './user.model';
 
 @Entity()
 export class Group {

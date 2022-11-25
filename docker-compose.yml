@@ -1,151 +1,35 @@
 version: '3.7'
 
 services:
-  backend:
-    build: 
-      context: ./packages/backend/
-      dockerfile: Dockerfile.dev
-
-    command: npm run docker:dev
-
-    depends_on:
-      - db
-
-    volumes:
-      - './packages/backend/:/code/'
-      # Persist installed node_modules into a named volume.
-      - 'api_node_modules_data:/code/node_modules'
-
-      # Below is how you must create the docker-compose in production
-      # Mount each required directory and file independently instead of mounting
-      # the entire current directory. Otherwise the `node_modules` directory
-      # from the developer's machine is mounted into the container as well.
-      # There is no guarantee that this machine is running the same architecture
-      # as the container's image. In that case, packages with C code compiled on
-      # the machine, such as bcrypt, might not work in the container.
-      # - './packages/backend/package.json:/code/package.json'
-      # - './packages/backend/package-lock.json:/code/package-lock.json'
-      # - './packages/backend/tsconfig.json:/code/tsconfig.json:ro'
-
-    environment:
-      DATABASE_NAME: clug-db
-      DATABASE_HOST: db
-      DATABASE_PORT: 5432
-      DATABASE_USERNAME: postgres
-      DATABASE_PASSWORD: .Clug-123
-      JWT_SECRET: iE1oP/5tO0H9knqiqqaOvXQGDGyRSx0BxxnbkD7Lhzw=
-      DATABASE_DROPSCHEMA: "false"
-      DATABASE_SYNCHRONIZE: "true"
-
-    ports:
-      - 3001:3001
-
-  frontend:
-    build: 
-      context: ./packages/frontend/
-      dockerfile: Dockerfile.dev
-
-    tty: true
-    command: npm run start
-
-    volumes:
-      - './packages/frontend/:/code/'
-      # Persist installed node_modules into a named volume.
-      - 'frontend_node_modules_data:/code/node_modules'
-
-      # Below is how you must create the docker-compose in production
-      # Mount each required directory and file independently instead of mounting
-      # the entire current directory. Otherwise the `node_modules` directory
-      # from the developer's machine is mounted into the container as well.
-      # There is no guarantee that this machine is running the same architecture
-      # as the container's image. In that case, packages with C code compiled on
-      # the machine, such as bcrypt, might not work in the container.
-      # - './packages/frontend/public:/code/public'
-      # - './packages/frontend/package.json:/code/package.json'
-      # - './packages/frontend/package-lock.json:/code/package-lock.json'
-      # - './packages/frontend/tsconfig.json:/code/tsconfig.json:ro'
-    
-    links:
-      - backend
-
-    ports:
-      - 3000:3000
-    restart: always
-
-  backoffice:
-    build: 
-      context: ./packages/backoffice/
-      dockerfile: Dockerfile.dev
-
-    tty: true
-    command: npm run start
-
-    volumes:
-      - './packages/backoffice/:/code/'
-      # Persist installed node_modules into a named volume.
-      - 'backoffice_node_modules_data:/code/node_modules'
-
-    links:
-      - backend
-
-    ports:
-      - 3002:3000
-      - 3010:3010
-    restart: always
-
   db:
-    image: postgres:12-alpine
+    image: postgres:15.1-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: .Clug-123
       POSTGRES_DB: clug-db
     restart: always
+    ports:
+      - '5432:5432'
     volumes:
-      # Persist data in a named volume. Run `docker-compose down -v` to
-      # permanently delete it.
       - "db_data:/var/lib/postgresql/data"
   
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-
-  localstack-s3:
-    image: localstack/localstack:latest
-    container_name: localstack-s3
-    ports:
-      - '4566:4566'
-    environment:
-      - AWS_ACCESS_KEY_ID=test
-      - AWS_SECRET_ACCESS_KEY=test
-      - AWS_DEFAULT_REGION=eu-west-1 
-      - EDGE_PORT=4566
-      - SERVICES=s3
-      - DEBUG=1
-      - DATA_DIR=/tmp/localstack/data
-      - DOCKER_HOST=unix:///var/run/docker.sock
-    volumes:
-      - ./.localstack:/tmp/localstack
-      - ./docker/aws:/docker-entrypoint-initaws.d
+  # localstack-s3:
+  #   image: localstack/localstack:latest
+  #   container_name: localstack-s3
+  #   ports:
+  #     - '4566:4566'
+  #   environment:
+  #     - AWS_ACCESS_KEY_ID=test
+  #     - AWS_SECRET_ACCESS_KEY=test
+  #     - AWS_DEFAULT_REGION=eu-west-1 
+  #     - EDGE_PORT=4566
+  #     - SERVICES=s3
+  #     - DEBUG=1
+  #     - DATA_DIR=/tmp/localstack/data
+  #     - DOCKER_HOST=unix:///var/run/docker.sock
+  #   volumes:
+  #     - ./.localstack:/tmp/localstack
+  #     - ./docker/aws:/docker-entrypoint-initaws.d
         
 volumes:
   db_data:
-  api_node_modules_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./packages/backend/node_modules
-  frontend_node_modules_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./packages/frontend/node_modules
-  backoffice_node_modules_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./packages/backoffice/node_modules
